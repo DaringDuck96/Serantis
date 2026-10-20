@@ -1,6 +1,6 @@
 # Serantis
 
-A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10.
+A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and DaringDuck96.
 
 ## What's in it
 
@@ -31,4 +31,4 @@ Everyone playing together needs the same mods. A server gets the same jars in it
 
 ## License
 
-All Ahrivaea mods are © jeffreystu10, All Rights Reserved. They're shared here for the Serantis group. Please don't re-upload them elsewhere without permission.
+All Ahrivaea mods are © jeffreystu10 and DaringDuck96, All Rights Reserved. Please don't re-upload them elsewhere without permission.
