@@ -58,7 +58,9 @@ public final class MoveEngine {
 
     /** A new unit gets the creature's saved moves (party creatures) or three random ones. */
     public static void assignNewUnit(Battle b, Unit u) {
-        if (u.isPlayer || !MoveBook.available()) return;
+        if (u.isPlayer) return;
+        if (u.side == Unit.Side.ENEMY) state(u).trait = EnemyBrain.roll(b.random);
+        if (!MoveBook.available()) return;
         List<MoveSpec> specs = null;
         if (u.side == Unit.Side.PLAYER && u.partySlot >= 0) {
             ServerPlayer player = b.player();
@@ -448,7 +450,7 @@ public final class MoveEngine {
         return best;
     }
 
-    private static boolean blockedRepeat(Battle b, Unit u, MoveSpec spec) {
+    static boolean blockedRepeat(Battle b, Unit u, MoveSpec spec) {
         UnitState st = state(u);
         return spec.has("no_consecutive") && spec.id.equals(st.lastMoveId) && st.lastMoveTurn == b.turn - 1;
     }

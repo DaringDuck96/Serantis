@@ -9,6 +9,7 @@ import dev.ahrivaea.creature.Influence;
 import dev.ahrivaea.creature.Species;
 import dev.ahrivaea.creature.Variant;
 import dev.serantis.battle.moves.BattleAccess;
+import dev.serantis.battle.moves.EnemyBrain;
 import dev.serantis.battle.moves.MoveBook;
 import dev.serantis.battle.moves.MoveEngine;
 import org.spongepowered.asm.mixin.Final;
@@ -33,6 +34,7 @@ public abstract class BattleMixin implements BattleAccess {
     @Shadow @Final public List<Battle.Defeated> defeated;
 
     @Shadow private void strike(Unit attacker, Unit target, BattleMove move) { }
+    @Shadow private void attack(Unit attacker, Unit target, BattleMove move, boolean counter) { }
     @Shadow private void knockOut(Unit unit) { }
     @Shadow void say(String line) { }
     @Shadow DamageCalc.Result preview(Unit attacker, Unit target, BattleMove move) { return null; }
@@ -44,6 +46,7 @@ public abstract class BattleMixin implements BattleAccess {
 
     // ---- BattleAccess
     @Override public void serantis$strike(Unit a, Unit t, BattleMove m) { strike(a, t, m); }
+    @Override public void serantis$attack(Unit a, Unit t, BattleMove m, boolean counter) { attack(a, t, m, counter); }
     @Override public void serantis$knockOut(Unit u) { knockOut(u); }
     @Override public void serantis$say(String line) { say(line); }
     @Override public DamageCalc.Result serantis$preview(Unit a, Unit t, BattleMove m) { return preview(a, t, m); }
@@ -97,6 +100,19 @@ public abstract class BattleMixin implements BattleAccess {
     // ---- turn changes
     @Inject(method = "startEnemyPhase", at = @At("RETURN"))
     private void serantis$enemyPhase(CallbackInfo ci) { MoveEngine.sync((Battle) (Object) this); }
+
+    // Each enemy acts according to its mentality (EnemyBrain). When the queue is empty the creatures mod
+    // ends the enemy phase as usual.
+    @Inject(method = "enemyStep", at = @At("HEAD"), cancellable = true)
+    private void serantis$enemyStep(CallbackInfoReturnable<Boolean> cir) {
+        Battle self = (Battle) (Object) this;
+        while (!enemyQueue.isEmpty() && !enemyQueue.getFirst().alive()) enemyQueue.removeFirst();
+        if (enemyQueue.isEmpty() || self.phase != Battle.Phase.ENEMY) return;
+        Unit unit = enemyQueue.removeFirst();
+        EnemyBrain.act(self, unit);
+        checkEnd();
+        cir.setReturnValue(self.phase == Battle.Phase.ENEMY);
+    }
 
     @Inject(method = "enemyStep", at = @At("RETURN"))
     private void serantis$afterEnemyStep(CallbackInfoReturnable<Boolean> cir) { MoveEngine.sync((Battle) (Object) this); }

@@ -13,7 +13,8 @@
     "UnitMixin",
     "BattlesMixin",
     "CaughtCreatureMixin",
-    "DamageCalcMixin"
+    "DamageCalcMixin",
+    "BattlesInvoker"
   ],
   "client": [
     "client.PartyScreenMixin",

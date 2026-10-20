@@ -19,7 +19,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Ahrivaea Creatures: Batch 3** | 109 more creatures from the Monster Batch 3.0 Book: 87 that spawn across the Overworld, Nether and End, 2 summoned bosses (Harbinger of Calamity, False Hydra), and 20 End dragons. They use all the same battle, recruiting, riding and base-job rules, and all have their models. |
 | **Serantis Starters** | The 12 starter creatures, one for each influence: Sixpaw Marauder, Cinder Pangolith, Rime Chimaera, Stormstrider, Delver Horror, Hydrabill, Grove Behemoth, Runeback Basilisk, Voidshell, Dawn Owlbear, Gloomgazer and Feyheart. They're the only creatures offered on the starter screen, each given in its own influence, and they also live in the wild as Rare creatures like any other. |
 | **Serantis End Dragons** | Whenever the Ender Dragon is summoned in the End (on your first visit, or by placing End Crystals on the exit portal), one of the 20 End dragons appears on top of the exit portal instead, picked at random, at Level 20. They never spawn any other way. |
-| **Serantis Battle and Spawning** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line. Spawns roll their rarity first (70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary), can be any level from 1 to 20, and have a 1% chance of being Mutated. Creatures fight with 3 moves each from the Move Dex. |
+| **Serantis Battle and Spawning** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line. Spawns roll their rarity first (70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary), can be any level from 1 to 20, and have a 1% chance of being Mutated. Creatures fight with 3 moves each from the Move Dex, and every wild enemy gets a random battle mentality. |
 
 ### Battle stats and levels
 
@@ -42,6 +42,21 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - Statuses: Bleeding and Poison lose 5% of max HP each turn; Burning deals its stated damage each turn; Frozen, Stunned and Asleep skip turns (Asleep wakes when hit); Immobilized can't move; Slowed moves 2 fewer tiles; Confused attacks a random nearby unit half the time; Frightened deals about 30% less damage.
 - Counter Stance: Defense +2 until the user's next turn, and anyone who damages it before then takes 25% of that damage back as recoil.
 - Waiting for Stage 2 (not learnable yet): Charged Shot, Inferno Ring, Blazing Meteor, Frozen Ground, Storm Cloud, Sinkhole, Event Horizon and Eternal Night. Pushes, pulls and teleports on other moves are skipped for now.
+
+### Enemy mentalities
+
+Every wild creature in a battle gets one of six mentalities at random, shown next to its name on the battle screen:
+
+| Mentality | How it fights |
+|---|---|
+| Aggression | Charges the nearest opponent at full speed. |
+| Smart Aggression | Charges the player at full speed. |
+| Support | Heals, buffs and protects its allies and stays back. It attacks only when there's no one to support. |
+| Mixed | Rotates through Aggression, Smart Aggression and Support, one per turn. |
+| Archer | Uses ranged moves and keeps its distance. It only goes into melee when it has no ranged move. |
+| Hunter | Goes after the opponent who has taken the most damage, or the nearest one if nobody is hurt yet. |
+
+All of them use the terrain. When choosing where to stand they prefer cells that are behind a wall or a ledge two or more blocks high, and cells on higher ground than their opponents. Higher ground also doubles crit chance. Cover only affects where they choose to stand. Attacks through cover still hit normally.
 
 ### Starters
 

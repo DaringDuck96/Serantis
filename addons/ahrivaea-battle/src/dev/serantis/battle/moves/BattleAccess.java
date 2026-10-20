@@ -11,6 +11,7 @@ import java.util.Map;
 /** Added to the creatures mod's Battle: its private helpers, plus state the move engine keeps per battle. */
 public interface BattleAccess {
     void serantis$strike(Unit attacker, Unit target, BattleMove move);
+    void serantis$attack(Unit attacker, Unit target, BattleMove move, boolean counter);
     void serantis$knockOut(Unit unit);
     void serantis$say(String line);
     DamageCalc.Result serantis$preview(Unit attacker, Unit target, BattleMove move);
