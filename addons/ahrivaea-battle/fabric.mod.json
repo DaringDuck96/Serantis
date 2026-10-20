@@ -1,0 +1,23 @@
+{
+    "schemaVersion": 1,
+    "id": "serantis_battle",
+    "version": "0.1.0",
+    "name": "Serantis Battle Stats",
+    "description": "Creature battle stats from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1, and can appear in the wild at any level from 1 to 20.",
+    "authors": [
+        "jeffreystu10",
+        "DaringDuck96"
+    ],
+    "license": "All-Rights-Reserved",
+    "icon": "assets/serantis_battle/icon.png",
+    "environment": "*",
+    "mixins": [
+        "serantis_battle.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "~26.3",
+        "java": ">=25",
+        "ahrivaea": "*"
+    }
+}

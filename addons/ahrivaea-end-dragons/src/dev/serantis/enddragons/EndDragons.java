@@ -55,7 +55,7 @@ public final class EndDragons {
         RandomSource random = level.getRandom();
         Species dragon = pool.get(random.nextInt(pool.size()));
         Influence influence = dragon.formOrDefault(Influence.NONE);
-        int lvl = 30 + random.nextInt(16);                       // Legendary range, 30-45
+        int lvl = 20;                                            // the max level; End dragons are the strongest fights
         int x = (int) Math.floor(p.x());
         int z = (int) Math.floor(p.z());
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);   // on top of the exit portal
