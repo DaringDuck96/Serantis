@@ -59,7 +59,7 @@
           "text": "Smelting ores"
         }
       ],
-      "size": 4.2,
+      "size": 6.5,
       "wave": 3
     }
   },
@@ -72,6 +72,6 @@
     "luck": 66,
     "charisma": 59
   },
-  "size": 1.0,
+  "size": 1.6,
   "movement": "walk"
 }

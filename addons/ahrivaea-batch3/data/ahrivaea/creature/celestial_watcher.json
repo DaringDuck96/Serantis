@@ -56,7 +56,7 @@
           "text": "Dark-area exploration and lighting"
         }
       ],
-      "size": 4.2,
+      "size": 6.24,
       "wave": 3
     }
   },
@@ -69,6 +69,6 @@
     "luck": 83,
     "charisma": 91
   },
-  "size": 1.0,
+  "size": 1.6,
   "movement": "fly"
 }
