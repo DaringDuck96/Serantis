@@ -16,17 +16,21 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Ahrivaea Fast Minecarts** | Minecarts up to 30 blocks/second (vanilla: 8), using the newer minecart physics so they stay on the rails. |
 | **Ahrivaea Handheld Lights** | Holding a torch, lantern or other light lights up the area around you as you walk. |
 | **Ahrivaea Woodcutting** | The stonecutter cuts wood: logs into planks, stairs, slabs, fences, doors, stripped logs and more. |
-| **Ahrivaea Creatures: Batch 3** | 109 more creatures from the Monster Batch 3.0 Book: 87 that spawn across the Overworld, Nether and End, 2 summoned bosses (Harbinger of Calamity, False Hydra), and 20 End dragons. They use all the same battle, recruiting, riding and base-job rules. 89 have their models so far; the 20 End dragons appear as plain bodies tinted in their influence's colour until theirs are added. |
-
+| **Ahrivaea Creatures: Batch 3** | 109 more creatures from the Monster Batch 3.0 Book: 87 that spawn across the Overworld, Nether and End, 2 summoned bosses (Harbinger of Calamity, False Hydra), and 20 End dragons. They use all the same battle, recruiting, riding and base-job rules, and all have their models. |
 | **Serantis Starters** | The 12 starter creatures, one for each influence: Sixpaw Marauder, Cinder Pangolith, Rime Chimaera, Stormstrider, Delver Horror, Hydrabill, Grove Behemoth, Runeback Basilisk, Voidshell, Dawn Owlbear, Gloomgazer and Feyheart. They're the only creatures offered on the starter screen, each given in its own influence, and they also live in the wild as Rare creatures like any other. |
+| **Serantis End Dragons** | Whenever the Ender Dragon is summoned in the End (on your first visit, or by placing End Crystals on the exit portal), one of the 20 End dragons appears on top of the exit portal instead, picked at random, at level 30–45. They never spawn any other way. |
 
 ### Starters
 
 The starter list lives in `addons/ahrivaea-starters/serantis_starters/starters.txt`, one creature per line, in the order they appear on the starter screen. Any creature can go on it. If none of the listed creatures are loaded, the starter screen falls back to the creatures mod's original list.
 
-### About the Batch 3 bosses and dragons
+### End dragons
 
-The book says the Harbinger of Calamity, the False Hydra and the 20 End dragons are summoned. The creatures mod has no summoning system yet, so for now they don't appear in the wild. A server operator can bring one out with the mod's `/ahrivaea spawn` command.
+The 20 End dragons (Lindworm, Ddraig Goch, Hrimwyrm, Piasa, Fafnir, Gargouille, Mokele mbembe, Ouroboros, Fairy Dragon, Azi Dahaka, Ladon, Seraphim, Rendmaw, Arcanum, Bastion, Galewing, Fortune, Regalia, The First Dragon and The Last Dragon) only appear when the Ender Dragon is summoned in the End. The creatures mod still marks the vanilla dragon fight as won the moment the Ender Dragon appears, so the exit portal opens as before; the End dragon is there to battle and recruit. The list is in `addons/ahrivaea-end-dragons/serantis_end_dragons/dragons.txt`.
+
+### About the Batch 3 bosses
+
+The book says the Harbinger of Calamity (summoned like a Warden) and the False Hydra (summoned like a Wither) are summoned. That isn't built yet, so for now they don't appear in the wild. A server operator can bring one out with the mod's `/ahrivaea spawn` command.
 
 ## How to install
 

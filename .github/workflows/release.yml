@@ -31,6 +31,21 @@ jobs:
           distribution: temurin
           java-version: "25"
 
+      # Minecraft 26.x jars use Mojang's own names, so add-on code can compile straight against them.
+      - name: Fetch Minecraft and its libraries for compiling add-on code
+        run: |
+          set -e
+          mkdir -p "$RUNNER_TEMP/mc"
+          manifest="$(curl -sSf https://piston-meta.mojang.com/mc/game/version_manifest_v2.json)"
+          vurl="$(echo "$manifest" | jq -r '[.versions[] | select(.id | test("^26\\.3(\\.[0-9]+)?$"))][0].url')"
+          curl -sSf "$vurl" -o "$RUNNER_TEMP/version.json"
+          echo "Minecraft $(jq -r .id "$RUNNER_TEMP/version.json")"
+          curl -sSfL "$(jq -r .downloads.client.url "$RUNNER_TEMP/version.json")" -o "$RUNNER_TEMP/mc/minecraft.jar"
+          jq -r '.libraries[] | .downloads.artifact.url // empty' "$RUNNER_TEMP/version.json" | sort -u | while read -r u; do
+            curl -sSfL "$u" -o "$RUNNER_TEMP/mc/$(basename "$u")"
+          done
+          echo "MC_CP=$(ls "$RUNNER_TEMP"/mc/*.jar | tr '\n' ':')" >> "$GITHUB_ENV"
+
       - name: Build add-on jars
         run: |
           set -e
@@ -44,7 +59,7 @@ jobs:
             if [ -d "$dir/src" ]; then
               classes="$(mktemp -d)"
               javac --release 25 -implicit:none -proc:none -Xlint:-options -d "$classes" \
-                -cp "$CREATURES" -sourcepath tools/compile-stubs $(find "$dir/src" -name '*.java')
+                -cp "$CREATURES:$MC_CP" -sourcepath tools/compile-stubs $(find "$dir/src" -name '*.java')
               (cd "$classes" && zip -qr "$jar" .)
             fi
             echo "built mods/${name}-${ver}.jar"

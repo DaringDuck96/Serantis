@@ -1,0 +1,22 @@
+# The dragons that can appear when the Ender Dragon is summoned in the End.
+# One is picked at random each time. One creature id per line.
+lindworm
+ddraig_goch
+hrimwyrm
+piasa
+fafnir
+gargouille
+mokele_mbembe
+ouroboros
+fairy_dragon
+azi_dahaka
+ladon
+seraphim
+rendmaw
+arcanum
+bastion
+galewing
+fortune
+regalia
+the_first_dragon
+the_last_dragon

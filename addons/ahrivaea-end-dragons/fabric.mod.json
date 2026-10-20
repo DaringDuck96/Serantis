@@ -1,0 +1,24 @@
+{
+    "schemaVersion": 1,
+    "id": "serantis_end_dragons",
+    "version": "0.1.0",
+    "name": "Serantis End Dragons",
+    "description": "Whenever the Ender Dragon is summoned in the End, one of 20 End dragons appears in its place, picked at random. They never spawn any other way.",
+    "authors": [
+        "jeffreystu10",
+        "DaringDuck96"
+    ],
+    "license": "All-Rights-Reserved",
+    "icon": "assets/serantis_end_dragons/icon.png",
+    "environment": "*",
+    "mixins": [
+        "serantis_end_dragons.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "~26.3",
+        "java": ">=25",
+        "ahrivaea": "*",
+        "ahrivaea_batch3": "*"
+    }
+}

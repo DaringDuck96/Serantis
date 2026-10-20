@@ -22,7 +22,10 @@ PREFIX = {"coral": "water", "briar": "nature", "astral": "arcane", "duskborn": "
 ALIASES = {"blooming_horror": "bloom_eye_horror", "scrap_goblin": "scrap_gobblin",   # artist name -> book name
            "shardheart_colossus": "shardheart", "snowfang_wolf": "snowfang",
            "one_eyed_colossus": "one_eye_colossus", "rime_chimera": "rime_chimaera",
-           "feyhart": "feyheart"}
+           "feyhart": "feyheart",
+           # End dragons: file names lost their accents
+           "y_ddraig_goch": "ddraig_goch", "mok_l_mb_mb": "mokele_mbembe", "a_i_dah_ka": "azi_dahaka",
+           "saraph": "seraphim", "f_fnir": "fafnir", "hr_mwyrm": "hrimwyrm"}
 SIZE_CLASS = {"small": 0.7, "medium": 1.0, "large": 1.6, "extra_large": 1.6}
 FPS = 24                                                   # sampling rate for smooth curves
 
