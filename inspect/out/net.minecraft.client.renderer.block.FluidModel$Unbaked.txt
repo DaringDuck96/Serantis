@@ -1,0 +1,160 @@
+Compiled from "FluidModel.java"
+public final class net.minecraft.client.renderer.block.FluidModel$Unbaked extends java.lang.Record {
+  private final net.minecraft.client.resources.model.sprite.Material stillMaterial;
+
+  private final net.minecraft.client.resources.model.sprite.Material flowingMaterial;
+
+  private final net.minecraft.client.resources.model.sprite.Material overlayMaterial;
+
+  private final net.minecraft.client.color.block.BlockTintSource tintSource;
+
+  public net.minecraft.client.renderer.block.FluidModel$Unbaked(net.minecraft.client.resources.model.sprite.Material, net.minecraft.client.resources.model.sprite.Material, net.minecraft.client.resources.model.sprite.Material, net.minecraft.client.color.block.BlockTintSource);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field stillMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field flowingMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+        14: aload_0
+        15: aload_3
+        16: putfield      #16                 // Field overlayMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+        19: aload_0
+        20: aload         4
+        22: putfield      #19                 // Field tintSource:Lnet/minecraft/client/color/block/BlockTintSource;
+        25: return
+
+  public net.minecraft.client.renderer.block.FluidModel bake(net.minecraft.client.resources.model.sprite.MaterialBaker, net.minecraft.client.resources.model.ModelDebugName);
+    Code:
+         0: aload_0
+         1: aload_0
+         2: getfield      #7                  // Field stillMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+         5: aload_1
+         6: ldc           #23                 // String still
+         8: aload_2
+         9: invokevirtual #25                 // Method getAndValidateMaterial:(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/MaterialBaker;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+        12: astore_3
+        13: aload_0
+        14: aload_0
+        15: getfield      #13                 // Field flowingMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+        18: aload_1
+        19: ldc           #29                 // String flowing
+        21: aload_2
+        22: invokevirtual #25                 // Method getAndValidateMaterial:(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/MaterialBaker;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+        25: astore        4
+        27: aload_0
+        28: getfield      #16                 // Field overlayMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+        31: ifnull        49
+        34: aload_0
+        35: aload_0
+        36: getfield      #16                 // Field overlayMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+        39: aload_1
+        40: ldc           #31                 // String overlay
+        42: aload_2
+        43: invokevirtual #25                 // Method getAndValidateMaterial:(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/sprite/MaterialBaker;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+        46: goto          50
+        49: aconst_null
+        50: astore        5
+        52: aload_3
+        53: invokestatic  #33                 // Method getTransparency:(Lnet/minecraft/client/resources/model/sprite/Material$Baked;)Lcom/mojang/blaze3d/platform/Transparency;
+        56: aload         4
+        58: invokestatic  #33                 // Method getTransparency:(Lnet/minecraft/client/resources/model/sprite/Material$Baked;)Lcom/mojang/blaze3d/platform/Transparency;
+        61: invokevirtual #37                 // Method com/mojang/blaze3d/platform/Transparency.or:(Lcom/mojang/blaze3d/platform/Transparency;)Lcom/mojang/blaze3d/platform/Transparency;
+        64: astore        6
+        66: aload         5
+        68: ifnull        83
+        71: aload         6
+        73: aload         5
+        75: invokestatic  #33                 // Method getTransparency:(Lnet/minecraft/client/resources/model/sprite/Material$Baked;)Lcom/mojang/blaze3d/platform/Transparency;
+        78: invokevirtual #37                 // Method com/mojang/blaze3d/platform/Transparency.or:(Lcom/mojang/blaze3d/platform/Transparency;)Lcom/mojang/blaze3d/platform/Transparency;
+        81: astore        6
+        83: new           #43                 // class net/minecraft/client/renderer/block/FluidModel
+        86: dup
+        87: aload         6
+        89: invokestatic  #45                 // Method net/minecraft/client/renderer/chunk/ChunkSectionLayer.byTransparency:(Lcom/mojang/blaze3d/platform/Transparency;)Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;
+        92: aload_3
+        93: aload         4
+        95: aload         5
+        97: aload_0
+        98: getfield      #19                 // Field tintSource:Lnet/minecraft/client/color/block/BlockTintSource;
+       101: invokespecial #51                 // Method net/minecraft/client/renderer/block/FluidModel."<init>":(Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;Lnet/minecraft/client/resources/model/sprite/Material$Baked;Lnet/minecraft/client/resources/model/sprite/Material$Baked;Lnet/minecraft/client/resources/model/sprite/Material$Baked;Lnet/minecraft/client/color/block/BlockTintSource;)V
+       104: areturn
+
+  private net.minecraft.client.resources.model.sprite.Material$Baked getAndValidateMaterial(net.minecraft.client.resources.model.sprite.Material, net.minecraft.client.resources.model.sprite.MaterialBaker, java.lang.String, net.minecraft.client.resources.model.ModelDebugName);
+    Code:
+         0: aload_2
+         1: aload_1
+         2: aload         4
+         4: invokevirtual #54                 // Method net/minecraft/client/resources/model/sprite/MaterialBaker.get:(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+         7: astore        5
+         9: aload         5
+        11: invokevirtual #60                 // Method net/minecraft/client/resources/model/sprite/Material$Baked.sprite:()Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+        14: invokevirtual #66                 // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.atlasLocation:()Lnet/minecraft/resources/Identifier;
+        17: getstatic     #72                 // Field net/minecraft/client/renderer/texture/TextureAtlas.LOCATION_BLOCKS:Lnet/minecraft/resources/Identifier;
+        20: invokevirtual #78                 // Method net/minecraft/resources/Identifier.equals:(Ljava/lang/Object;)Z
+        23: ifne          34
+        26: aload_2
+        27: aload_3
+        28: aload         4
+        30: invokevirtual #84                 // Method net/minecraft/client/resources/model/sprite/MaterialBaker.reportMissingReference:(Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+        33: areturn
+        34: aload         5
+        36: areturn
+
+  private static com.mojang.blaze3d.platform.Transparency getTransparency(net.minecraft.client.resources.model.sprite.Material$Baked);
+    Code:
+         0: aload_0
+         1: invokevirtual #88                 // Method net/minecraft/client/resources/model/sprite/Material$Baked.forceTranslucent:()Z
+         4: ifeq          11
+         7: getstatic     #92                 // Field com/mojang/blaze3d/platform/Transparency.TRANSLUCENT:Lcom/mojang/blaze3d/platform/Transparency;
+        10: areturn
+        11: aload_0
+        12: invokevirtual #60                 // Method net/minecraft/client/resources/model/sprite/Material$Baked.sprite:()Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+        15: invokevirtual #96                 // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.transparency:()Lcom/mojang/blaze3d/platform/Transparency;
+        18: areturn
+
+  public final java.lang.String toString();
+    Code:
+         0: aload_0
+         1: invokedynamic #100,  0            // InvokeDynamic #0:toString:(Lnet/minecraft/client/renderer/block/FluidModel$Unbaked;)Ljava/lang/String;
+         6: areturn
+
+  public final int hashCode();
+    Code:
+         0: aload_0
+         1: invokedynamic #104,  0            // InvokeDynamic #0:hashCode:(Lnet/minecraft/client/renderer/block/FluidModel$Unbaked;)I
+         6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #108,  0            // InvokeDynamic #0:equals:(Lnet/minecraft/client/renderer/block/FluidModel$Unbaked;Ljava/lang/Object;)Z
+         7: ireturn
+
+  public net.minecraft.client.resources.model.sprite.Material stillMaterial();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field stillMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+         4: areturn
+
+  public net.minecraft.client.resources.model.sprite.Material flowingMaterial();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field flowingMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+         4: areturn
+
+  public net.minecraft.client.resources.model.sprite.Material overlayMaterial();
+    Code:
+         0: aload_0
+         1: getfield      #16                 // Field overlayMaterial:Lnet/minecraft/client/resources/model/sprite/Material;
+         4: areturn
+
+  public net.minecraft.client.color.block.BlockTintSource tintSource();
+    Code:
+         0: aload_0
+         1: getfield      #19                 // Field tintSource:Lnet/minecraft/client/color/block/BlockTintSource;
+         4: areturn
+}
