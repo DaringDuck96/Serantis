@@ -128,7 +128,7 @@ Milestones in eight areas pay out golden apples (see Golden apples), each tier w
 | Creatures Recruited | 5 Making Friends · 25 Petting Zoo · 100 Animal Magnetism · 200 Creature Hoarder · 300 Noah Would Be Proud · 400 Zookeeper Supreme | 2 · 4 · 8 · 16 · 32 · 48 |
 | Creatures Seen | 5 Wait, What Was That? · 25 Bird Watcher · 50 Taking Field Notes · 150 I've Seen Things · 300 Walking Encyclopedia · 434 (every form) Seen It All | 2 · 4 · 8 · 16 · 32 · 48 |
 | Items Smelted | 100 Hot Stuff · 1,000 Cooking With Lava · 10,000 Total Smeltdown · 100,000 Industrial Revolution · 1,000,000 Forge of the Gods | 3 · 6 · 12 · 24 · 48 |
-| Blocks Walked | 100 Stretch Your Legs · 1,000 Out for a Stroll · 10,000 Are We There Yet? · 100,000 Who Needs Horses? · 1,000,000 Walked to the Moon | 3 · 6 · 12 · 24 · 48 |
+| Blocks Walked | 10,000 Stretch Your Legs · 50,000 Out for a Stroll · 250,000 Are We There Yet? · 1,000,000 Who Needs Horses? · 5,000,000 Walked to the Moon | 3 · 6 · 12 · 24 · 48 |
 | Experience Gained | 100 Shiny Green Orbs · 1,000 Book Smart · 10,000 Big Brain Energy · 100,000 Seasoned Veteran · 1,000,000 Ascended | 3 · 6 · 12 · 24 · 48 |
 | Times Defeated | 1 Oops · 5 Respawn Regular · 10 Fall Damage Enthusiast · 50 Death's Frequent Flyer · 100 Immortal (Technically) | 2 · 4 · 8 · 16 · 32 |
 
