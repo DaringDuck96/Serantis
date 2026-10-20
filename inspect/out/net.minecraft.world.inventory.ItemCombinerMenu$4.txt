@@ -1,6 +1,0 @@
-Compiled from "ItemCombinerMenu.java"
-class net.minecraft.world.inventory.ItemCombinerMenu$4 extends net.minecraft.world.SimpleContainer {
-  final net.minecraft.world.inventory.ItemCombinerMenu this$0;
-  net.minecraft.world.inventory.ItemCombinerMenu$4(net.minecraft.world.inventory.ItemCombinerMenu, int);
-  public void setChanged();
-}

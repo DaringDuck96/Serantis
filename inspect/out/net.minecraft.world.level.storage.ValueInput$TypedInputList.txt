@@ -1,5 +1,0 @@
-Compiled from "ValueInput.java"
-public interface net.minecraft.world.level.storage.ValueInput$TypedInputList<T> extends java.lang.Iterable<T> {
-  public abstract boolean isEmpty();
-  public abstract java.util.stream.Stream<T> stream();
-}

@@ -1,11 +1,72 @@
 Compiled from "Block.java"
 final class net.minecraft.world.level.block.Block$ShapePairKey extends java.lang.Record {
   private final net.minecraft.world.phys.shapes.VoxelShape first;
+
   private final net.minecraft.world.phys.shapes.VoxelShape second;
+
   private net.minecraft.world.level.block.Block$ShapePairKey(net.minecraft.world.phys.shapes.VoxelShape, net.minecraft.world.phys.shapes.VoxelShape);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field first:Lnet/minecraft/world/phys/shapes/VoxelShape;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field second:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        14: return
+
   public boolean equals(java.lang.Object);
+    Code:
+         0: aload_1
+         1: instanceof    #8                  // class net/minecraft/world/level/block/Block$ShapePairKey
+         4: ifeq          38
+         7: aload_1
+         8: checkcast     #8                  // class net/minecraft/world/level/block/Block$ShapePairKey
+        11: astore_2
+        12: aload_0
+        13: getfield      #7                  // Field first:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        16: aload_2
+        17: getfield      #7                  // Field first:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        20: if_acmpne     38
+        23: aload_0
+        24: getfield      #13                 // Field second:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        27: aload_2
+        28: getfield      #13                 // Field second:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        31: if_acmpne     38
+        34: iconst_1
+        35: goto          39
+        38: iconst_0
+        39: ireturn
+
   public int hashCode();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field first:Lnet/minecraft/world/phys/shapes/VoxelShape;
+         4: invokestatic  #16                 // Method java/lang/System.identityHashCode:(Ljava/lang/Object;)I
+         7: bipush        31
+         9: imul
+        10: aload_0
+        11: getfield      #13                 // Field second:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        14: invokestatic  #16                 // Method java/lang/System.identityHashCode:(Ljava/lang/Object;)I
+        17: iadd
+        18: ireturn
+
   public final java.lang.String toString();
+    Code:
+         0: aload_0
+         1: invokedynamic #22,  0             // InvokeDynamic #0:toString:(Lnet/minecraft/world/level/block/Block$ShapePairKey;)Ljava/lang/String;
+         6: areturn
+
   public net.minecraft.world.phys.shapes.VoxelShape first();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field first:Lnet/minecraft/world/phys/shapes/VoxelShape;
+         4: areturn
+
   public net.minecraft.world.phys.shapes.VoxelShape second();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field second:Lnet/minecraft/world/phys/shapes/VoxelShape;
+         4: areturn
 }

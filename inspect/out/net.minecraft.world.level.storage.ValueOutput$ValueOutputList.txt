@@ -1,6 +1,0 @@
-Compiled from "ValueOutput.java"
-public interface net.minecraft.world.level.storage.ValueOutput$ValueOutputList {
-  public abstract net.minecraft.world.level.storage.ValueOutput addChild();
-  public abstract void discardLast();
-  public abstract boolean isEmpty();
-}

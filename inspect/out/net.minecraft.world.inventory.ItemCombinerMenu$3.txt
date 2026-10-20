@@ -1,8 +1,0 @@
-Compiled from "ItemCombinerMenu.java"
-class net.minecraft.world.inventory.ItemCombinerMenu$3 extends net.minecraft.world.inventory.Slot {
-  final net.minecraft.world.inventory.ItemCombinerMenu this$0;
-  net.minecraft.world.inventory.ItemCombinerMenu$3(net.minecraft.world.inventory.ItemCombinerMenu, net.minecraft.world.Container, int, int, int);
-  public boolean mayPlace(net.minecraft.world.item.ItemStack);
-  public boolean mayPickup(net.minecraft.world.entity.player.Player);
-  public void onTake(net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack);
-}
