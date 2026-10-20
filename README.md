@@ -116,6 +116,22 @@ Feed golden apples to creatures in your party to raise their stats. This lets we
 | Legendary | no effect | — |
 
 The gain goes on the stat's Level 20 value, like the rest of the stat, so it is scaled down at lower levels. Stats are whole numbers, so halves and quarters are counted exactly and the stat goes up each time they add up to a whole point; the apple screen shows the exact total. Apples count everywhere the stat does: battles, max health, movement, work speed and riding. They are saved with the creature and kept when it is sent out, boxed or assigned to a base.
+
+### Achievements
+
+Milestones in seven areas pay out golden apples (see Golden apples). They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: your progress toward each next tier, every tier and what it pays (hover a tier for details), and how many golden apples you've earned so far.
+
+| Achievement | Tiers | Golden apples per tier |
+|---|---|---|
+| Blocks Placed | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
+| Battles Won | 1 · 10 · 50 · 100 · 250 · 500 | 2 · 4 · 8 · 16 · 32 · 48 |
+| Creatures Recruited | 5 · 25 · 100 · 200 · 300 · 400 | 2 · 4 · 8 · 16 · 32 · 48 |
+| Creatures Seen | 5 · 25 · 50 · 150 · 300 · 434 (every creature form) | 2 · 4 · 8 · 16 · 32 · 48 |
+| Items Smelted | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
+| Blocks Walked | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
+| Experience Gained | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
+
+That's 702 golden apples in all. Where the counts come from: blocks placed and blocks walked (walking, sprinting and crouching) are Minecraft's own statistics, so they include everything you did before this update; battles won and creatures recruited are the creatures mod's statistics; creatures seen is your creature dex; items smelted counts items you take out of furnaces, smokers and blast furnaces; experience gained counts all XP you earn (from mining, battles and anything else), not XP you spend.
 ### Experience and the skill tree
 
 **One XP currency.** Battles give ordinary Minecraft XP (about 10 per creature defeated), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.

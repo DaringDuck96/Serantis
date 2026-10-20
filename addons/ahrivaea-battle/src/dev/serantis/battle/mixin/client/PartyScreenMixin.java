@@ -45,6 +45,9 @@ public abstract class PartyScreenMixin extends Screen {
         Button sendOut = null;
         for (var child : children())
             if (child instanceof Button b && "Send out".equals(b.getMessage().getString())) sendOut = b;
+        addRenderableWidget(Button.builder(Component.literal("Achievements"),
+                        b -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.AchievementScreen(self)))
+                .bounds(width - 96, 6, 90, 20).build());
         if (sendOut == null || chosen() == null) return;
         int slot = selected;
         Button apple = Button.builder(Component.literal("Apple"),

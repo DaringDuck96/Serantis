@@ -26,7 +26,8 @@
     "LivingEntityDropsMixin",
     "BlockSkillsMixin",
     "ItemCombinerMenuAccessor",
-    "AnvilMenuSkillsMixin"
+    "AnvilMenuSkillsMixin",
+    "FurnaceResultSlotMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

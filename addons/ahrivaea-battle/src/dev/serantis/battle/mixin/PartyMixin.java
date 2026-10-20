@@ -34,6 +34,7 @@ public abstract class PartyMixin {
 
     private static void serantis$migrate(Player player) {
         XpBank.RAW.set(true);
+        dev.serantis.battle.Achievements.NOT_GAINED.set(true);
         try {
             int old = Party.xp(player);
             if (old > 0) {
@@ -41,6 +42,7 @@ public abstract class PartyMixin {
                 player.giveExperiencePoints(old);
             }
         } finally {
+            dev.serantis.battle.Achievements.NOT_GAINED.set(false);
             XpBank.RAW.set(false);
         }
     }

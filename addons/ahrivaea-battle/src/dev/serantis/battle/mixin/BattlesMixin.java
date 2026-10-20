@@ -87,6 +87,12 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if ("serantis_achievements".equals(kind)) {   // the Achievements page wants fresh numbers
+                dev.serantis.battle.Achievements.check(player);
+                dev.ahrivaea.party.PartySync.sync(player);
+                cir.setReturnValue(null);
+                return;
+            }
             if (kind.startsWith("serantis_trade_")) {     // creature trades between players
                 dev.serantis.battle.Trades.handle(player, o);
                 cir.setReturnValue(null);

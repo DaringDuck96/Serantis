@@ -23,6 +23,7 @@ public abstract class PartySyncMixin {
     private static void serantis$you(net.minecraft.server.level.ServerPlayer player, CallbackInfoReturnable<JsonObject> cir) {
         JsonObject o = cir.getReturnValue();
         if (o != null) dev.serantis.battle.Trades.describe(player, o);
+        if (o != null) dev.serantis.battle.Achievements.describe(player, o);
         if (o == null || !o.has("character") || !o.get("character").isJsonObject()) return;
         JsonObject c = o.getAsJsonObject("character");
         int owned = dev.serantis.battle.skills.Skills.owned(player).size();

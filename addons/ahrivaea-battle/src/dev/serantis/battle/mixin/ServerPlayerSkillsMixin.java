@@ -15,6 +15,11 @@ public abstract class ServerPlayerSkillsMixin {
         var mine = ((SkillHolder) (Object) this).serantis$skills();
         mine.clear();
         mine.addAll(((SkillHolder) (Object) old).serantis$skills());
+        var a = (dev.serantis.battle.Achievements.Holder) (Object) this;
+        var b = (dev.serantis.battle.Achievements.Holder) (Object) old;
+        a.serantis$addSmelted(b.serantis$smelted() - a.serantis$smelted());
+        a.serantis$addXpGained(b.serantis$xpGained() - a.serantis$xpGained());
+        for (var t : dev.serantis.battle.Achievements.TRACKS) a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
         // XP is the main currency: it's kept through death.
         ServerPlayer self = (ServerPlayer) (Object) this;
         self.experienceLevel = old.experienceLevel;
@@ -26,5 +31,12 @@ public abstract class ServerPlayerSkillsMixin {
     @Inject(method = "die", at = @At("HEAD"))
     private void serantis$died(net.minecraft.world.damagesource.DamageSource source, CallbackInfo ci) {
         dev.serantis.battle.Wear.defeat((ServerPlayer) (Object) this, "You died.");
+    }
+
+    // Achievements are checked (and paid) every 5 seconds.
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void serantis$achievements(CallbackInfo ci) {
+        ServerPlayer self = (ServerPlayer) (Object) this;
+        if (self.tickCount % 100 == 37) dev.serantis.battle.Achievements.check(self);
     }
 }

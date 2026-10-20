@@ -15,10 +15,26 @@ import java.util.Set;
 
 /** Players remember the skill tree nodes they've bought. */
 @Mixin(Player.class)
-public abstract class PlayerSkillsMixin implements SkillHolder {
+public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder {
     @Unique private final Set<String> serantis$skills = new LinkedHashSet<>();
 
     @Override public Set<String> serantis$skills() { return serantis$skills; }
+
+    // Achievements: items smelted, experience gained, and tiers already paid.
+    @Unique private long serantis$smelted, serantis$xpGained;
+    @Unique private final java.util.Map<String, Integer> serantis$claimed = new java.util.HashMap<>();
+
+    @Override public long serantis$smelted() { return serantis$smelted; }
+    @Override public void serantis$addSmelted(long n) { serantis$smelted += n; }
+    @Override public long serantis$xpGained() { return serantis$xpGained; }
+    @Override public void serantis$addXpGained(long n) { serantis$xpGained += n; }
+    @Override public int serantis$claimed(String track) { return serantis$claimed.getOrDefault(track, 0); }
+    @Override public void serantis$setClaimed(String track, int tiers) { serantis$claimed.put(track, tiers); }
+
+    @Inject(method = "giveExperiencePoints", at = @At("HEAD"))
+    private void serantis$countXp(int amount, CallbackInfo ci) {
+        if (amount > 0 && !((Player) (Object) this).level().isClientSide() && !dev.serantis.battle.Achievements.NOT_GAINED.get()) serantis$xpGained += amount;
+    }
 
     // XP is kept through death, so dying drops no XP orbs.
     @Inject(method = "getBaseExperienceReward", at = @At("HEAD"), cancellable = true)
@@ -29,11 +45,18 @@ public abstract class PlayerSkillsMixin implements SkillHolder {
     @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
     private void serantis$saveSkills(ValueOutput out, CallbackInfo ci) {
         out.putString("SerantisSkills", String.join(",", serantis$skills));
+        out.putLong("SerantisSmelted", serantis$smelted);
+        out.putLong("SerantisXpGained", serantis$xpGained);
+        out.putString("SerantisAchievements", dev.serantis.battle.Achievements.encode(this));
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
     private void serantis$loadSkills(ValueInput in, CallbackInfo ci) {
         serantis$skills.clear();
         for (String s : in.getStringOr("SerantisSkills", "").split(",")) if (!s.isBlank()) serantis$skills.add(s.trim());
+        serantis$smelted = in.getLongOr("SerantisSmelted", 0L);
+        serantis$xpGained = in.getLongOr("SerantisXpGained", 0L);
+        serantis$claimed.clear();
+        dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
     }
 }

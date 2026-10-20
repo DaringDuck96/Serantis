@@ -36,6 +36,9 @@ public final class XpBank {
         p.experienceLevel = 0;
         p.experienceProgress = 0f;
         p.totalExperience = 0;
-        if (left > 0) p.giveExperiencePoints(left);
+        if (left > 0) {
+            dev.serantis.battle.Achievements.NOT_GAINED.set(true);   // giving back the rest isn't new XP
+            try { p.giveExperiencePoints(left); } finally { dev.serantis.battle.Achievements.NOT_GAINED.set(false); }
+        }
     }
 }
