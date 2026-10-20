@@ -26,6 +26,8 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
 
     @Override public long serantis$smelted() { return serantis$smelted; }
     @Override public void serantis$addSmelted(long n) { serantis$smelted += n; }
+    @Unique private final java.util.Set<String> serantis$biomes = new java.util.LinkedHashSet<>();
+    @Override public java.util.Set<String> serantis$biomes() { return serantis$biomes; }
     @Override public long serantis$planted() { return serantis$planted; }
     @Override public void serantis$addPlanted(long n) { serantis$planted += n; }
     @Override public long serantis$xpGained() { return serantis$xpGained; }
@@ -50,6 +52,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         out.putLong("SerantisSmelted", serantis$smelted);
         out.putLong("SerantisXpGained", serantis$xpGained);
         out.putLong("SerantisPlanted", serantis$planted);
+        out.putString("SerantisBiomes", String.join(",", serantis$biomes));
         out.putString("SerantisAchievements", dev.serantis.battle.Achievements.encode(this));
     }
 
@@ -60,6 +63,8 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$smelted = in.getLongOr("SerantisSmelted", 0L);
         serantis$xpGained = in.getLongOr("SerantisXpGained", 0L);
         serantis$planted = in.getLongOr("SerantisPlanted", 0L);
+        serantis$biomes.clear();
+        for (String s : in.getStringOr("SerantisBiomes", "").split(",")) if (!s.isBlank()) serantis$biomes.add(s.trim());
         serantis$claimed.clear();
         dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
     }

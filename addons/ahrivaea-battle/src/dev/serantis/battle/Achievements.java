@@ -50,6 +50,8 @@ public final class Achievements {
                     new String[]{"Hot Stuff", "Cooking With Lava", "Total Smeltdown", "Industrial Revolution", "Forge of the Gods"}),
             new Track("planted", "Seeds Planted", "seeds planted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
                     new String[]{"Seeds of Doubt", "Green Thumb", "Down on the Farm", "Old MacDonald Had a Lot", "Feed the World"}),
+            new Track("biomes", "Biomes Visited", "biomes visited", new long[]{3, 8, 15, 20, 30}, new int[]{1, 2, 3, 4, 6},
+                    new String[]{"Day Tripper", "Sightseer", "Backpacker", "Globetrotter", "Professional Tourist"}),
             new Track("walked", "Blocks Walked", "blocks walked", new long[]{10_000, 50_000, 250_000, 1_000_000, 5_000_000}, FIVE,
                     new String[]{"Stretch Your Legs", "Out for a Stroll", "Are We There Yet?", "Who Needs Horses?", "Walked to the Moon"}),
             new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
@@ -66,6 +68,8 @@ public final class Achievements {
     public interface Holder {
         long serantis$smelted();
         void serantis$addSmelted(long n);
+        /** Every biome the player has stood in (ids like minecraft:plains). */
+        java.util.Set<String> serantis$biomes();
         long serantis$planted();
         void serantis$addPlanted(long n);
         long serantis$xpGained();
@@ -92,6 +96,7 @@ public final class Achievements {
             case "seen" -> Dex.count(p, 1);
             case "smelted" -> h.serantis$smelted();
             case "planted" -> h.serantis$planted();
+            case "biomes" -> h.serantis$biomes().size();
             case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;
             case "xp" -> h.serantis$xpGained();
