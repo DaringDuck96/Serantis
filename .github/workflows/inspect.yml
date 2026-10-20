@@ -52,7 +52,8 @@ jobs:
               *) c="$line"; flags="-c -p -constants";;
             esac
             for jar in $JARS; do
-              for n in $(unzip -Z1 "$jar" | grep -E "^$(echo "$c" | sed 's#\\.#/#g; s#\\$#\\\\$#g')(\\\$[^/]*)?\\.class$" | sed 's/\.class$//' | tr / .); do
+              p="$(echo "$c" | tr . /)"; p="${p//\$/\\\$}"
+              for n in $(unzip -Z1 "$jar" | grep -E "^${p}(\\\$[^/]*)?\\.class$" | sed 's/\.class$//' | tr / .); do
                 javap $flags -cp "$CP" "$n" > "inspect/out/$n.txt" || true
               done
             done
