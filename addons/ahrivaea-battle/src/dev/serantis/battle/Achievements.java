@@ -48,6 +48,8 @@ public final class Achievements {
                     new String[]{"Wait, What Was That?", "Bird Watcher", "Taking Field Notes", "I've Seen Things", "Walking Encyclopedia", "Seen It All"}),
             new Track("smelted", "Items Smelted", "items smelted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
                     new String[]{"Hot Stuff", "Cooking With Lava", "Total Smeltdown", "Industrial Revolution", "Forge of the Gods"}),
+            new Track("armor", "Armor Crafted", "armor pieces crafted", new long[]{5, 10, 25, 100, 250}, new int[]{2, 4, 8, 16, 32},
+                    new String[]{"Suit Up", "Fashion Forward", "Runway Ready", "Tin Can Collector", "Walking Armory"}),
             new Track("planted", "Seeds Planted", "seeds planted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
                     new String[]{"Seeds of Doubt", "Green Thumb", "Down on the Farm", "Old MacDonald Had a Lot", "Feed the World"}),
             new Track("biomes", "Biomes Visited", "biomes visited", new long[]{3, 8, 15, 20, 30}, new int[]{1, 2, 3, 4, 6},
@@ -86,6 +88,30 @@ public final class Achievements {
         return (int) Math.min(Integer.MAX_VALUE, total);
     }
 
+    private static List<Item> armor;
+
+    /** Helmets, chestplates, leggings and boots (anything worn in those slots, except elytra), from every mod. */
+    private static List<Item> armorItems() {
+        if (armor == null) {
+            List<Item> out = new ArrayList<>();
+            for (Item item : BuiltInRegistries.ITEM) {
+                var eq = item.components().get(net.minecraft.core.component.DataComponents.EQUIPPABLE);
+                if (eq == null || item == Items.ELYTRA) continue;
+                var slot = eq.slot();
+                if (slot == net.minecraft.world.entity.EquipmentSlot.HEAD || slot == net.minecraft.world.entity.EquipmentSlot.CHEST
+                        || slot == net.minecraft.world.entity.EquipmentSlot.LEGS || slot == net.minecraft.world.entity.EquipmentSlot.FEET) out.add(item);
+            }
+            armor = out;
+        }
+        return armor;
+    }
+
+    private static long armorCrafted(ServerStatsCounter stats) {
+        long total = 0;
+        for (Item item : armorItems()) total += stats.getValue(Stats.ITEM_CRAFTED, item);
+        return total;
+    }
+
     public static long value(ServerPlayer p, String id) {
         ServerStatsCounter stats = p.getStats();
         Holder h = (Holder) p;
@@ -96,6 +122,7 @@ public final class Achievements {
             case "seen" -> Dex.count(p, 1);
             case "smelted" -> h.serantis$smelted();
             case "planted" -> h.serantis$planted();
+            case "armor" -> armorCrafted(stats);
             case "biomes" -> h.serantis$biomes().size();
             case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;

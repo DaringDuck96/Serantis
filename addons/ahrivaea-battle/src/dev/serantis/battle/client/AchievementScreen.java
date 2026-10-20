@@ -16,7 +16,7 @@ import java.util.List;
 /** The achievement log (opened from the party screen). See Achievements on the server. */
 public class AchievementScreen extends Screen {
     private static final int GOLD = 0xFFF2C94C, W = 360, ROW = 31, HEAD = 42;
-    private static final Item[] ICONS = {Items.BRICKS, Items.IRON_SWORD, Items.LEAD, Items.SPYGLASS, Items.FURNACE, Items.WHEAT_SEEDS, Items.MAP, Items.LEATHER_BOOTS, Items.EXPERIENCE_BOTTLE, Items.SKELETON_SKULL};
+    private static final Item[] ICONS = {Items.BRICKS, Items.IRON_SWORD, Items.LEAD, Items.SPYGLASS, Items.FURNACE, Items.IRON_CHESTPLATE, Items.WHEAT_SEEDS, Items.MAP, Items.LEATHER_BOOTS, Items.EXPERIENCE_BOTTLE, Items.SKELETON_SKULL};
     private static final String[] ROMAN = {"I", "II", "III", "IV", "V", "VI"};
 
     private final Screen parent;
