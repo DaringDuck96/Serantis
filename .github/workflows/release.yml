@@ -10,6 +10,7 @@ on:
       - "mods/**"
       - "README.md"
       - "VERSION"
+      - ".github/workflows/release.yml"
   workflow_dispatch:
 
 permissions:
@@ -27,6 +28,15 @@ jobs:
           zip -r "Serantis-${VERSION}.zip" mods README.md
           echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
           echo "ZIP=Serantis-${VERSION}.zip" >> "$GITHUB_ENV"
+
+      # Shows up as a download at the bottom of this run's page in the Actions tab.
+      - name: Upload mods as a download on the Actions run
+        uses: actions/upload-artifact@v4
+        with:
+          name: Serantis-${{ env.VERSION }}
+          path: |
+            mods/
+            README.md
 
       - name: Publish release
         env:
