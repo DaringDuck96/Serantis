@@ -1,0 +1,157 @@
+Compiled from "GrindstoneMenu.java"
+class net.minecraft.world.inventory.GrindstoneMenu$4 extends net.minecraft.world.inventory.Slot {
+  final net.minecraft.world.inventory.ContainerLevelAccess val$access;
+
+  final net.minecraft.world.inventory.GrindstoneMenu this$0;
+
+  net.minecraft.world.inventory.GrindstoneMenu$4(net.minecraft.world.inventory.GrindstoneMenu, net.minecraft.world.Container, int, int, int, net.minecraft.world.inventory.ContainerLevelAccess);
+    Code:
+         0: aload_0
+         1: aload         6
+         3: putfield      #3                  // Field val$access:Lnet/minecraft/world/inventory/ContainerLevelAccess;
+         6: aload_0
+         7: aload_1
+         8: dup
+         9: invokestatic  #9                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+        12: pop
+        13: putfield      #15                 // Field this$0:Lnet/minecraft/world/inventory/GrindstoneMenu;
+        16: aload_0
+        17: aload_2
+        18: iload_3
+        19: iload         4
+        21: iload         5
+        23: invokespecial #19                 // Method net/minecraft/world/inventory/Slot."<init>":(Lnet/minecraft/world/Container;III)V
+        26: return
+
+  public boolean mayPlace(net.minecraft.world.item.ItemStack);
+    Code:
+         0: iconst_0
+         1: ireturn
+
+  public void onTake(net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack);
+    Code:
+         0: aload_0
+         1: getfield      #3                  // Field val$access:Lnet/minecraft/world/inventory/ContainerLevelAccess;
+         4: aload_0
+         5: invokedynamic #25,  0             // InvokeDynamic #0:accept:(Lnet/minecraft/world/inventory/GrindstoneMenu$4;)Ljava/util/function/BiConsumer;
+        10: invokeinterface #29,  2           // InterfaceMethod net/minecraft/world/inventory/ContainerLevelAccess.execute:(Ljava/util/function/BiConsumer;)V
+        15: aload_0
+        16: getfield      #15                 // Field this$0:Lnet/minecraft/world/inventory/GrindstoneMenu;
+        19: getfield      #35                 // Field net/minecraft/world/inventory/GrindstoneMenu.repairSlots:Lnet/minecraft/world/Container;
+        22: iconst_0
+        23: getstatic     #39                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        26: invokeinterface #45,  3           // InterfaceMethod net/minecraft/world/Container.setItem:(ILnet/minecraft/world/item/ItemStack;)V
+        31: aload_0
+        32: getfield      #15                 // Field this$0:Lnet/minecraft/world/inventory/GrindstoneMenu;
+        35: getfield      #35                 // Field net/minecraft/world/inventory/GrindstoneMenu.repairSlots:Lnet/minecraft/world/Container;
+        38: iconst_1
+        39: getstatic     #39                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        42: invokeinterface #45,  3           // InterfaceMethod net/minecraft/world/Container.setItem:(ILnet/minecraft/world/item/ItemStack;)V
+        47: return
+
+  private int getExperienceAmount(net.minecraft.world.level.Level);
+    Code:
+         0: iconst_0
+         1: istore_2
+         2: iload_2
+         3: aload_0
+         4: aload_0
+         5: getfield      #15                 // Field this$0:Lnet/minecraft/world/inventory/GrindstoneMenu;
+         8: getfield      #35                 // Field net/minecraft/world/inventory/GrindstoneMenu.repairSlots:Lnet/minecraft/world/Container;
+        11: iconst_0
+        12: invokeinterface #51,  2           // InterfaceMethod net/minecraft/world/Container.getItem:(I)Lnet/minecraft/world/item/ItemStack;
+        17: invokevirtual #55                 // Method getExperienceFromItem:(Lnet/minecraft/world/item/ItemStack;)I
+        20: iadd
+        21: istore_2
+        22: iload_2
+        23: aload_0
+        24: aload_0
+        25: getfield      #15                 // Field this$0:Lnet/minecraft/world/inventory/GrindstoneMenu;
+        28: getfield      #35                 // Field net/minecraft/world/inventory/GrindstoneMenu.repairSlots:Lnet/minecraft/world/Container;
+        31: iconst_1
+        32: invokeinterface #51,  2           // InterfaceMethod net/minecraft/world/Container.getItem:(I)Lnet/minecraft/world/item/ItemStack;
+        37: invokevirtual #55                 // Method getExperienceFromItem:(Lnet/minecraft/world/item/ItemStack;)I
+        40: iadd
+        41: istore_2
+        42: iload_2
+        43: ifle          70
+        46: iload_2
+        47: i2d
+        48: ldc2_w        #59                 // double 2.0d
+        51: ddiv
+        52: invokestatic  #61                 // Method java/lang/Math.ceil:(D)D
+        55: d2i
+        56: istore_3
+        57: iload_3
+        58: aload_1
+        59: invokevirtual #67                 // Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;
+        62: iload_3
+        63: invokeinterface #73,  2           // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+        68: iadd
+        69: ireturn
+        70: iconst_0
+        71: ireturn
+
+  private int getExperienceFromItem(net.minecraft.world.item.ItemStack);
+    Code:
+         0: iconst_0
+         1: istore_2
+         2: aload_1
+         3: invokestatic  #79                 // Method net/minecraft/world/item/enchantment/EnchantmentHelper.getEnchantmentsForCrafting:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/enchantment/ItemEnchantments;
+         6: astore_3
+         7: aload_3
+         8: invokevirtual #85                 // Method net/minecraft/world/item/enchantment/ItemEnchantments.entrySet:()Ljava/util/Set;
+        11: invokeinterface #91,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+        16: astore        4
+        18: aload         4
+        20: invokeinterface #97,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        25: ifeq          95
+        28: aload         4
+        30: invokeinterface #103,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        35: checkcast     #107                // class it/unimi/dsi/fastutil/objects/Object2IntMap$Entry
+        38: astore        5
+        40: aload         5
+        42: invokeinterface #109,  1          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap$Entry.getKey:()Ljava/lang/Object;
+        47: checkcast     #112                // class net/minecraft/core/Holder
+        50: astore        6
+        52: aload         5
+        54: invokeinterface #114,  1          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap$Entry.getIntValue:()I
+        59: istore        7
+        61: aload         6
+        63: getstatic     #118                // Field net/minecraft/tags/EnchantmentTags.CURSE:Lnet/minecraft/tags/TagKey;
+        66: invokeinterface #124,  2          // InterfaceMethod net/minecraft/core/Holder.is:(Lnet/minecraft/tags/TagKey;)Z
+        71: ifne          92
+        74: iload_2
+        75: aload         6
+        77: invokeinterface #128,  1          // InterfaceMethod net/minecraft/core/Holder.value:()Ljava/lang/Object;
+        82: checkcast     #131                // class net/minecraft/world/item/enchantment/Enchantment
+        85: iload         7
+        87: invokevirtual #133                // Method net/minecraft/world/item/enchantment/Enchantment.getMinCost:(I)I
+        90: iadd
+        91: istore_2
+        92: goto          18
+        95: iload_2
+        96: ireturn
+
+  private void lambda$onTake$0(net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_1
+         1: instanceof    #136                // class net/minecraft/server/level/ServerLevel
+         4: ifeq          25
+         7: aload_1
+         8: checkcast     #136                // class net/minecraft/server/level/ServerLevel
+        11: astore_3
+        12: aload_3
+        13: aload_2
+        14: invokestatic  #138                // Method net/minecraft/world/phys/Vec3.atCenterOf:(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/world/phys/Vec3;
+        17: aload_0
+        18: aload_1
+        19: invokevirtual #144                // Method getExperienceAmount:(Lnet/minecraft/world/level/Level;)I
+        22: invokestatic  #148                // Method net/minecraft/world/entity/ExperienceOrb.award:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;I)V
+        25: aload_1
+        26: sipush        1042
+        29: aload_2
+        30: iconst_0
+        31: invokevirtual #156                // Method net/minecraft/world/level/Level.levelEvent:(ILnet/minecraft/core/BlockPos;I)V
+        34: return
+}

@@ -1,0 +1,27 @@
+Compiled from "GrindstoneMenu.java"
+class net.minecraft.world.inventory.GrindstoneMenu$1 extends net.minecraft.world.SimpleContainer {
+  final net.minecraft.world.inventory.GrindstoneMenu this$0;
+
+  net.minecraft.world.inventory.GrindstoneMenu$1(net.minecraft.world.inventory.GrindstoneMenu, int);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: dup
+         3: invokestatic  #1                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+         6: pop
+         7: putfield      #7                  // Field this$0:Lnet/minecraft/world/inventory/GrindstoneMenu;
+        10: aload_0
+        11: iload_2
+        12: invokespecial #13                 // Method net/minecraft/world/SimpleContainer."<init>":(I)V
+        15: return
+
+  public void setChanged();
+    Code:
+         0: aload_0
+         1: invokespecial #19                 // Method net/minecraft/world/SimpleContainer.setChanged:()V
+         4: aload_0
+         5: getfield      #7                  // Field this$0:Lnet/minecraft/world/inventory/GrindstoneMenu;
+         8: aload_0
+         9: invokevirtual #23                 // Method net/minecraft/world/inventory/GrindstoneMenu.slotsChanged:(Lnet/minecraft/world/Container;)V
+        12: return
+}
