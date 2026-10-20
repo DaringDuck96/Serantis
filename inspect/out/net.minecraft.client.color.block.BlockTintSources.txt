@@ -1,0 +1,17 @@
+Compiled from "BlockTintSources.java"
+public class net.minecraft.client.color.block.BlockTintSources {
+  public net.minecraft.client.color.block.BlockTintSources();
+  public static net.minecraft.client.color.block.BlockTintSource constant(int);
+  public static net.minecraft.client.color.block.BlockTintSource constant(int, int);
+  public static net.minecraft.client.color.block.BlockTintSource doubleTallGrass();
+  public static net.minecraft.client.color.block.BlockTintSource grass();
+  public static net.minecraft.client.color.block.BlockTintSource grassBlock();
+  public static net.minecraft.client.color.block.BlockTintSource sugarCane();
+  public static net.minecraft.client.color.block.BlockTintSource foliage();
+  public static net.minecraft.client.color.block.BlockTintSource dryFoliage();
+  public static net.minecraft.client.color.block.BlockTintSource water();
+  public static net.minecraft.client.color.block.BlockTintSource waterParticles();
+  public static net.minecraft.client.color.block.BlockTintSource redstone();
+  public static net.minecraft.client.color.block.BlockTintSource stem();
+  private static int lambda$constant$0(int, net.minecraft.world.level.block.state.BlockState);
+}

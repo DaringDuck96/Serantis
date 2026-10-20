@@ -1,0 +1,20 @@
+Compiled from "Material.java"
+public final class net.minecraft.client.resources.model.sprite.Material extends java.lang.Record {
+  private final net.minecraft.resources.Identifier sprite;
+  private final boolean forceTranslucent;
+  private static final com.mojang.serialization.Codec<net.minecraft.client.resources.model.sprite.Material> SIMPLE_CODEC;
+  private static final com.mojang.serialization.Codec<net.minecraft.client.resources.model.sprite.Material> FULL_CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.client.resources.model.sprite.Material> CODEC;
+  public net.minecraft.client.resources.model.sprite.Material(net.minecraft.resources.Identifier);
+  public net.minecraft.client.resources.model.sprite.Material(net.minecraft.resources.Identifier, boolean);
+  public net.minecraft.client.resources.model.sprite.Material withSuffix(java.lang.String);
+  public net.minecraft.client.resources.model.sprite.Material withForceTranslucent(boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.resources.Identifier sprite();
+  public boolean forceTranslucent();
+  private static com.mojang.datafixers.util.Either lambda$static$1(net.minecraft.client.resources.model.sprite.Material);
+  private static com.mojang.datafixers.kinds.App lambda$static$0(com.mojang.serialization.codecs.RecordCodecBuilder$Instance);
+  static {};
+}

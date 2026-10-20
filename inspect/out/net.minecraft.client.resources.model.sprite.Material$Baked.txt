@@ -1,0 +1,11 @@
+Compiled from "Material.java"
+public final class net.minecraft.client.resources.model.sprite.Material$Baked extends java.lang.Record {
+  private final net.minecraft.client.renderer.texture.TextureAtlasSprite sprite;
+  private final boolean forceTranslucent;
+  public net.minecraft.client.resources.model.sprite.Material$Baked(net.minecraft.client.renderer.texture.TextureAtlasSprite, boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.renderer.texture.TextureAtlasSprite sprite();
+  public boolean forceTranslucent();
+}

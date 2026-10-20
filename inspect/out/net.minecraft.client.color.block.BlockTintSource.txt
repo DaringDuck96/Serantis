@@ -1,0 +1,25 @@
+Compiled from "BlockTintSource.java"
+public interface net.minecraft.client.color.block.BlockTintSource {
+  public abstract int color(net.minecraft.world.level.block.state.BlockState);
+
+  public default int colorInWorld(net.minecraft.world.level.block.state.BlockState, net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokeinterface #1,  2            // InterfaceMethod color:(Lnet/minecraft/world/level/block/state/BlockState;)I
+         7: ireturn
+
+  public default int colorAsTerrainParticle(net.minecraft.world.level.block.state.BlockState, net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: aload_3
+         4: invokeinterface #7,  4            // InterfaceMethod colorInWorld:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I
+         9: ireturn
+
+  public default java.util.Set<net.minecraft.world.level.block.state.properties.Property<?>> relevantProperties();
+    Code:
+         0: invokestatic  #11                 // InterfaceMethod java/util/Set.of:()Ljava/util/Set;
+         3: areturn
+}

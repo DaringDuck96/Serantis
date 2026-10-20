@@ -1,0 +1,6 @@
+Compiled from "BlockTintSources.java"
+class net.minecraft.client.color.block.BlockTintSources$6 implements net.minecraft.client.color.block.BlockTintSource {
+  net.minecraft.client.color.block.BlockTintSources$6();
+  public int color(net.minecraft.world.level.block.state.BlockState);
+  public int colorInWorld(net.minecraft.world.level.block.state.BlockState, net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.core.BlockPos);
+}
