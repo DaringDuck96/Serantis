@@ -66,6 +66,38 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - Enemies avoid zones and red meteor areas, try not to catch their own side in them, hit charging creatures with interrupts when they can, and only charge a Charged Shot when standing still.
 - **Flying creatures** pass over ground zones, but ranged attacks (moves that reach more than 1 tile) hit them 1.25× as hard.
 
+### Temperaments
+
+Every creature gets one of 25 temperaments at random when it first appears and keeps it for good. That includes wild creatures, starters and recruits, and it's kept when the creature is caught or sent out. Each temperament raises one stat by 0.5 per level and lowers another by 0.5 per level (+10 / −10 at Level 20). It affects battles, max health, movement (Speed), work speed (Charisma) and riding. Creatures that existed before temperaments were added get one the first time they're loaded. A creature's temperament shows after its name on the party screen and in its battle tags. Starters also get their 3 random moves the moment they're picked.
+
+| Temperament | Raises | Lowers |
+|---|---|---|
+| Adamant | Attack | Magic |
+| Brave | Attack | Speed |
+| Bold | Defense | Attack |
+| Relaxed | Defense | Speed |
+| Impenetrable | Defense | Luck |
+| Hardy | HP | Charisma |
+| Stalwart | HP | Speed |
+| Vital | HP | Magic |
+| Swift | Speed | Defense |
+| Hasty | Speed | HP |
+| Nimble | Speed | Attack |
+| Cunning | Luck | Defense |
+| Fortunate | Luck | HP |
+| Fickle | Luck | Charisma |
+| Wise | Magic | Attack |
+| Mystic | Magic | Defense |
+| Focused | Magic | Luck |
+| Scholarly | Magic | Speed |
+| Charming | Charisma | Attack |
+| Regal | Charisma | Speed |
+| Inspiring | Charisma | Luck |
+| Intimidating | Attack | Charisma |
+| Guardian | Defense | Magic |
+| Tenacious | HP | Luck |
+| Trickster | Charisma | Magic |
+
 ### Movement and work speed
 
 - **Battle movement** comes from Speed and level. Level 1 creatures move 2 to 4 tiles a turn and Level 20 creatures 7 to 10, with the range rising in a straight line between. Where a creature falls in its level's range depends on its Speed: Level 20 Speed 44 is the slowest and 103 the fastest. For example, a typical creature (Speed 62) moves 3 tiles at Level 1, 5 at Level 10 and 8 at Level 20. Speed changes, Slowed, extra movement and terrain costs still apply on top. The player's own movement is unchanged.

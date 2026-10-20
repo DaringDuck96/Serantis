@@ -8,4 +8,6 @@ import java.util.List;
 public interface UnitAccess {
     UnitState serantis$state();
     void serantis$setMoves(List<BattleMove> moves);
+    /** Replaces the unit's stats (temperament), keeping its health at the same share of the new max. */
+    void serantis$setStats(dev.ahrivaea.creature.Stats stats);
 }

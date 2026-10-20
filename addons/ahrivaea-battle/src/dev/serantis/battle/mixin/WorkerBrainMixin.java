@@ -18,7 +18,7 @@ public abstract class WorkerBrainMixin {
     @Inject(method = "speed", at = @At("HEAD"), cancellable = true)
     private void serantis$speed(CallbackInfoReturnable<Double> cir) {
         if (self == null || self.getInfluence() == null) return;
-        self.getSpecies().ifPresent(species ->
-                cir.setReturnValue(Pace.workSpeed(self.getCreatureLevel(), species.statsFor(self.getInfluence()).charisma())));
+        if (self.getSpecies().isPresent())         // getStats includes its temperament
+            cir.setReturnValue(Pace.workSpeed(self.getCreatureLevel(), self.getStats().charisma()));
     }
 }

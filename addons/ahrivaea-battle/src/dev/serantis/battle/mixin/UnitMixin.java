@@ -22,7 +22,17 @@ public abstract class UnitMixin implements UnitAccess {
     @Shadow @Mutable @Final public List<BattleMove> moves;
     @Shadow @Final public boolean isPlayer;
     @Shadow @Final public int level;
-    @Shadow @Final public dev.ahrivaea.creature.Stats stats;
+    @Shadow @Mutable @Final public dev.ahrivaea.creature.Stats stats;
+    @Shadow @Mutable @Final public int maxHp;
+    @Shadow public int hp;
+
+    @Override
+    public void serantis$setStats(dev.ahrivaea.creature.Stats next) {
+        int oldMax = maxHp;
+        this.stats = next;
+        this.maxHp = Math.max(1, next.maxHealth(level));
+        this.hp = oldMax <= 0 ? maxHp : Math.max(hp > 0 ? 1 : 0, Math.min(maxHp, (int) Math.round(hp * (double) maxHp / oldMax)));
+    }
 
     // Movement per turn from Speed and level (see Pace). The player keeps the creatures mod's own.
     @Inject(method = "squares", at = @At("HEAD"), cancellable = true)

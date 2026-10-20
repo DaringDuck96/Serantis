@@ -21,6 +21,8 @@ public interface BattleAccess {
     void serantis$setLastPhase(Battle.Phase phase);
     /** Moves of knocked-out units, keyed by their entry in the battle's defeated list, for recruiting. */
     Map<Object, String> serantis$defeatedMoves();
+    /** Temperaments of knocked-out units, the same way. */
+    Map<Object, String> serantis$defeatedTemperaments();
     /** Zones, pending attacks and forced movement (Stage 2). */
     Field serantis$field();
 }

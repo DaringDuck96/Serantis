@@ -16,7 +16,8 @@
     "DamageCalcMixin",
     "BattlesInvoker",
     "WorkerBrainMixin",
-    "BasesMixin"
+    "BasesMixin",
+    "PartySyncMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

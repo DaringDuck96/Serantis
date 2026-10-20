@@ -31,6 +31,7 @@ public final class UnitState {
     public boolean recoil;
     public String trait;        // enemy mentality (see EnemyBrain)
     public int size = 1;        // tiles per side its body covers (see Body)
+    public String temperament;  // see Temperament
     public String lastMoveId;
     public int lastMoveTurn = -99;
     public int startX = Integer.MIN_VALUE, startZ;
@@ -73,6 +74,7 @@ public final class UnitState {
     /** Short labels for the battle screen, e.g. "Burn, Atk-2". */
     public String tags() {
         StringBuilder sb = new StringBuilder();
+        if (temperament != null) add(sb, temperament);
         if (trait != null) add(sb, trait);
         for (String s : new String[]{"burning", "bleeding", "poison", "freeze", "stun", "sleep", "confused", "frightened", "immobilized", "slowed", "doom"}) {
             if (has(s)) add(sb, switch (s) {

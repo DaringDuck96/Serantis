@@ -65,6 +65,11 @@ public abstract class BattleMixin implements BattleAccess {
     @Override public List<Unit> serantis$enemyQueue() { return enemyQueue; }
     @Override public Battle.Phase serantis$lastPhase() { return serantis$lastPhase; }
     @Override public void serantis$setLastPhase(Battle.Phase phase) { serantis$lastPhase = phase; }
+    @Unique private Map<Object, String> serantis$defeatedTemperaments;
+    @Override public Map<Object, String> serantis$defeatedTemperaments() {
+        if (serantis$defeatedTemperaments == null) serantis$defeatedTemperaments = new IdentityHashMap<>();
+        return serantis$defeatedTemperaments;
+    }
     @Override public Map<Object, String> serantis$defeatedMoves() {
         if (serantis$defeatedMoves == null) serantis$defeatedMoves = new IdentityHashMap<>();
         return serantis$defeatedMoves;
@@ -224,6 +229,8 @@ public abstract class BattleMixin implements BattleAccess {
         if (defeated.size() > serantis$defeatedBefore) {
             String moves = MoveEngine.encodeUnit(unit);
             if (moves != null) serantis$defeatedMoves().put(defeated.get(defeated.size() - 1), moves);
+            String temperament = MoveEngine.state(unit).temperament;
+            if (temperament != null) serantis$defeatedTemperaments().put(defeated.get(defeated.size() - 1), temperament);
         }
     }
 }

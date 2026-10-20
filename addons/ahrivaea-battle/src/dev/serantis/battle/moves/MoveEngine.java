@@ -63,6 +63,12 @@ public final class MoveEngine {
         state(u).size = u.isPlayer || u.influence == null ? 1 : Footprints.tiles(u.speciesId, u.influence.getSerializedName());
         if (state(u).size > 1) settle(b, u);
         if (u.isPlayer) return;
+        String temperament = null;
+        if (u.side == Unit.Side.PLAYER && u.partySlot >= 0 && b.player() != null) {
+            List<CaughtCreature> party = Party.get(b.player());
+            if (u.partySlot < party.size()) temperament = ((MovesHolder) (Object) party.get(u.partySlot)).serantis$temperament();
+        }
+        setTemperament(u, temperament != null ? temperament : dev.serantis.battle.Temperament.roll(b.random));
         if (u.side == Unit.Side.ENEMY) state(u).trait = EnemyBrain.roll(b.random);
         if (!MoveBook.available()) return;
         List<MoveSpec> specs = null;
@@ -96,6 +102,16 @@ public final class MoveEngine {
         dev.serantis.battle.mixin.BattlesInvoker.serantis$placeEntity(b, u);
     }
 
+    /** Gives a unit its temperament and the stats that go with it. */
+    static void setTemperament(Unit u, String temperament) {
+        if (temperament == null || u.speciesId == null || u.influence == null) return;
+        UnitState st = state(u);
+        if (temperament.equals(st.temperament)) return;
+        st.temperament = temperament;
+        dev.ahrivaea.creature.Species.get(u.speciesId).ifPresent(sp ->
+                ((UnitAccess) (Object) u).serantis$setStats(dev.serantis.battle.Temperament.apply(sp.statsFor(u.influence), temperament, u.level)));
+    }
+
     /** Once the battle is set up: wild creatures keep the moves saved on them (or save the ones just rolled). */
     public static void assignFromWorld(Battle b) {
         if (b == null || !MoveBook.available()) return;
@@ -104,6 +120,7 @@ public final class MoveEngine {
             Entity e = b.level.getEntity(u.entity);
             if (!(e instanceof CreatureEntity)) continue;
             MovesHolder h = (MovesHolder) (Object) e;
+            setTemperament(u, h.serantis$temperament());
             List<MoveSpec> saved = MoveBook.decode(h.serantis$moves());
             if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved));
             else h.serantis$setMoves(encodeUnit(u));

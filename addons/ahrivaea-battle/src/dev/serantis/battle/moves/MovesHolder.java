@@ -4,4 +4,7 @@ package dev.serantis.battle.moves;
 public interface MovesHolder {
     String serantis$moves();
     void serantis$setMoves(String moves);
+    /** Its temperament (see Temperament). */
+    String serantis$temperament();
+    void serantis$setTemperament(String temperament);
 }

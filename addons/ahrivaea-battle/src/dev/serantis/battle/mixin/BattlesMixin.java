@@ -73,6 +73,8 @@ public abstract class BattlesMixin {
         if (index >= 0 && index < battle.defeated.size()) {
             String moves = ((BattleAccess) (Object) battle).serantis$defeatedMoves().get(battle.defeated.get(index));
             if (moves != null) ((MovesHolder) (Object) caught).serantis$setMoves(moves);
+            String temperament = ((BattleAccess) (Object) battle).serantis$defeatedTemperaments().get(battle.defeated.get(index));
+            if (temperament != null) ((MovesHolder) (Object) caught).serantis$setTemperament(temperament);
         }
         return Party.addAnywhere(player, caught);
     }

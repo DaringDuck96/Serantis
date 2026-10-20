@@ -3,6 +3,11 @@ package dev.serantis.battle.mixin;
 import dev.ahrivaea.creature.CreatureEntity;
 import dev.ahrivaea.party.CaughtCreature;
 import dev.serantis.battle.BattleStats;
+import dev.serantis.battle.Temperament;
+import dev.ahrivaea.creature.Influence;
+import dev.ahrivaea.creature.Species;
+import dev.ahrivaea.creature.Stats;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import dev.serantis.battle.moves.MovesHolder;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -18,9 +23,32 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(CreatureEntity.class)
 public abstract class CreatureEntityMixin implements MovesHolder {
     @Unique private String serantis$moves;
+    @Unique private String serantis$temperament;
 
     @Override public String serantis$moves() { return serantis$moves; }
     @Override public void serantis$setMoves(String moves) { serantis$moves = moves; }
+    @Override public String serantis$temperament() {
+        if (serantis$temperament == null) serantis$temperament = Temperament.roll(((CreatureEntity) (Object) this).getRandom());
+        return serantis$temperament;
+    }
+    @Override public void serantis$setTemperament(String temperament) { serantis$temperament = temperament; }
+
+    // A creature gets its temperament when it first appears, and it changes its stats (max health here).
+    @Inject(method = "setup", at = @At("HEAD"))
+    private void serantis$rollTemperament(Species species, Influence influence, int level, float health, CallbackInfo ci) {
+        serantis$temperament();
+    }
+
+    @Redirect(method = "setup", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/creature/Species;statsFor(Ldev/ahrivaea/creature/Influence;)Ldev/ahrivaea/creature/Stats;"))
+    private Stats serantis$setupStats(Species species, Influence influence, Species s, Influence i, int level, float health) {
+        return Temperament.apply(species.statsFor(influence), serantis$temperament(), level);
+    }
+
+    @Inject(method = "getStats", at = @At("RETURN"), cancellable = true)
+    private void serantis$stats(CallbackInfoReturnable<Stats> cir) {
+        if (((CreatureEntity) (Object) this).level().isClientSide()) return;      // temperaments live on the server
+        cir.setReturnValue(Temperament.apply(cir.getReturnValue(), serantis$temperament(), ((CreatureEntity) (Object) this).getCreatureLevel()));
+    }
 
     // A creature's level is kept within 0-20 when it is set up (was 0-50).
     @ModifyConstant(method = "setup", constant = @Constant(intValue = 50))
@@ -32,23 +60,29 @@ public abstract class CreatureEntityMixin implements MovesHolder {
     @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
     private void serantis$saveMoves(ValueOutput out, CallbackInfo ci) {
         if (serantis$moves != null) out.putString("SerantisMoves", serantis$moves);
+        if (serantis$temperament != null) out.putString("SerantisTemperament", serantis$temperament);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
     private void serantis$loadMoves(ValueInput in, CallbackInfo ci) {
         String saved = in.getStringOr("SerantisMoves", "");
         if (!saved.isEmpty()) serantis$moves = saved;
+        String temperament = in.getStringOr("SerantisTemperament", "");
+        if (!temperament.isEmpty()) serantis$temperament = temperament;
     }
 
     // ...and carried over when it's caught or sent out from the party.
     @Inject(method = "toCaught", at = @At("RETURN"))
     private void serantis$toCaught(CallbackInfoReturnable<CaughtCreature> cir) {
         if (serantis$moves != null && cir.getReturnValue() != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setMoves(serantis$moves);
+        if (cir.getReturnValue() != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setTemperament(serantis$temperament());
     }
 
-    @Inject(method = "applyCaught", at = @At("RETURN"))
+    @Inject(method = "applyCaught", at = @At("HEAD"))
     private void serantis$applyCaught(CaughtCreature caught, CallbackInfo ci) {
         String moves = ((MovesHolder) (Object) caught).serantis$moves();
         if (moves != null) serantis$moves = moves;
+        String temperament = ((MovesHolder) (Object) caught).serantis$temperament();
+        if (temperament != null) serantis$temperament = temperament;
     }
 }
