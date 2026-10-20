@@ -33,7 +33,10 @@
     "client.BattleScreenMixin",
     "client.StarterScreenMixin",
     "client.BattleClientMixin",
-    "client.BaseScreenMixin"
+    "client.BaseScreenMixin",
+    "client.PartyClientAccessor",
+    "client.MultiPlayerGameModeMixin",
+    "client.MinecraftTradeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

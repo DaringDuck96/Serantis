@@ -87,6 +87,11 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if (kind.startsWith("serantis_trade_")) {     // creature trades between players
+                dev.serantis.battle.Trades.handle(player, o);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_apple".equals(kind)) {      // a golden apple fed from the party screen
                 dev.serantis.battle.Apples.feed(player, o.has("slot") ? o.get("slot").getAsInt() : -1, o.has("stat") ? o.get("stat").getAsString() : "");
                 cir.setReturnValue(null);

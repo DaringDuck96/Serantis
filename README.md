@@ -144,6 +144,10 @@ The gain goes on the stat's Level 20 value, like the rest of the stat, so it is 
 
 Right after you recruit a creature in battle, or pick your starter, a box pops up to name it (up to 20 characters). **Keep** leaves it with its species name. A named creature shows its name over its head, in battle and on the party screen, where its temperament and species follow in brackets, e.g. "Sparky (Brave Scrap Goblin)". Names are saved with the creature and kept when it's sent out, boxed or levelled up.
 
+
+### Trading creatures
+
+Right-click another player and choose **Send trade request**. They get a request to accept or decline (it expires after 60 seconds). If they accept, a trade screen opens for both of you: each picks one creature from their party, sees what the other is offering (level, influence, rarity, HP, movement and stats), and presses **Confirm trade**. When both have confirmed, the two creatures swap owners, keeping their level, moves, temperament, name and golden apples. Changing a pick means both have to confirm again, and either player can cancel at any time (closing the screen cancels too). You can't trade during a battle, and only creatures in your party can be traded.
 ### Movement and work speed
 
 - **Battle movement** comes from Speed and level. Level 1 creatures move 2 to 4 tiles a turn and Level 20 creatures 7 to 10, with the range rising in a straight line between. Where a creature falls in its level's range depends on its Speed: Level 20 Speed 44 is the slowest and 103 the fastest. For example, a typical creature (Speed 62) moves 3 tiles at Level 1, 5 at Level 10 and 8 at Level 20. Speed changes, Slowed, extra movement and terrain costs still apply on top. The player's own movement is unchanged.
