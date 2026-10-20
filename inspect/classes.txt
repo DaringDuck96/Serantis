@@ -1,13 +1,6 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-net.minecraft.world.item.crafting.CraftingRecipe
-net.minecraft.world.item.crafting.ShapelessRecipe
-sig:net.minecraft.world.item.crafting.CustomRecipe
-sig:net.minecraft.world.item.crafting.RecipeSerializer
-net.minecraft.world.inventory.ResultSlot
-find:net/minecraft/world/item/crafting/
-sig:net.minecraft.world.item.Item
-net.minecraft.world.level.material.FlowingFluid
-asset:assets/minecraft/blockstates/water.json
-asset:data/minecraft/tags/fluid/water.json
-asset:data/minecraft/recipe/cake.json
-asset:data/minecraft/recipe/white_banner.json
+sig:net.minecraft.world.item.crafting.NormalCraftingRecipe
+sig:net.minecraft.world.item.ItemStackTemplate
+sig:net.minecraft.world.item.crafting.CraftingInput
+sig:net.minecraft.core.NonNullList
+net.minecraft.world.level.material.WaterFluid
