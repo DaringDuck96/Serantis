@@ -1,10 +1,16 @@
 name: Release
 
-# Push a tag like v0.1.0 and this builds Serantis-0.1.0.zip and publishes it as a GitHub Release.
+# Whenever the mods, README or VERSION change on main, this builds Serantis-<VERSION>.zip
+# and publishes it as a GitHub Release. To ship an update: swap the jars in mods/,
+# bump the number in VERSION, and push. It can also be run by hand from the Actions tab.
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
+    paths:
+      - "mods/**"
+      - "README.md"
+      - "VERSION"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,14 +23,20 @@ jobs:
 
       - name: Build zip
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="$(tr -d '[:space:]' < VERSION)"
           zip -r "Serantis-${VERSION}.zip" mods README.md
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
           echo "ZIP=Serantis-${VERSION}.zip" >> "$GITHUB_ENV"
 
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" "$ZIP" \
-            --title "Serantis $GITHUB_REF_NAME" \
-            --notes "Download **$ZIP**, unzip it, and copy every \`.jar\` from its \`mods\` folder into your \`.minecraft/mods\` folder. Full steps are in the README."
+          TAG="v${VERSION}"
+          NOTES="Download **${ZIP}**, unzip it, and copy every \`.jar\` from its \`mods\` folder into your \`.minecraft/mods\` folder. Full steps are in the README."
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            # Same version pushed again: replace the zip so the download is always current.
+            gh release upload "$TAG" "$ZIP" --clobber
+          else
+            gh release create "$TAG" "$ZIP" --target "$GITHUB_SHA" --title "Serantis $TAG" --notes "$NOTES" --latest
+          fi
