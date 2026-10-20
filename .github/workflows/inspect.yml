@@ -3,6 +3,7 @@ name: Inspect
 # Tooling only (branch "inspect"). For each line of inspect/classes.txt:
 #   a.b.C          full disassembly (javap -c) of the class and its nested classes
 #   sig:a.b.C      member signatures only (javap -p), for very large classes
+#   find:regex     list class files (in every jar) whose path matches the regex, into find.txt
 #   asset:path     copy that file out of the Minecraft jar (e.g. assets/minecraft/textures/item/bucket.png)
 # Classes are looked up in Minecraft 26.3 and in Fabric API (all its modules). Output -> inspect/out/.
 on:
@@ -45,12 +46,13 @@ jobs:
           grep -v '^#' inspect/classes.txt | while read -r line; do
             [ -n "$line" ] || continue
             case "$line" in
+              find:*) pat="${line#find:}"; for jar in $JARS; do unzip -Z1 "$jar" | grep -E '\.class$' | grep -E "$pat" | sed "s#^#$(basename $jar): #"; done >> inspect/out/find.txt; continue;;
               asset:*) p="${line#asset:}"; unzip -p "$RUNNER_TEMP/mc/minecraft.jar" "$p" > "inspect/out/$(echo "$p" | tr / _)" || true; continue;;
               sig:*) c="${line#sig:}"; flags="-p -constants";;
               *) c="$line"; flags="-c -p -constants";;
             esac
             for jar in $JARS; do
-              for n in $(unzip -Z1 "$jar" | grep -E "^${c//.//}(\\\$[^/]*)?\\.class$" | sed 's/\.class$//' | tr / .); do
+              for n in $(unzip -Z1 "$jar" | grep -E "^$(echo "$c" | sed 's#\\.#/#g; s#\\$#\\\\$#g')(\\\$[^/]*)?\\.class$" | sed 's/\.class$//' | tr / .); do
                 javap $flags -cp "$CP" "$n" > "inspect/out/$n.txt" || true
               done
             done
