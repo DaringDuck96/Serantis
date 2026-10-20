@@ -59,7 +59,7 @@
           "text": "Base defense"
         }
       ],
-      "size": 2.4,
+      "size": 1.71,
       "wave": 3
     }
   },
@@ -72,6 +72,6 @@
     "luck": 71,
     "charisma": 76
   },
-  "size": 1.0,
+  "size": 0.7,
   "movement": "walk"
 }

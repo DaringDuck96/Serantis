@@ -2,6 +2,14 @@
 
 The creatures already work without art: until a model is added, each one shows as a plain body tinted in its influence's colour. Drop files into the paths below and push; the add-on jar is rebuilt automatically.
 
+Blockbench `.bbmodel` packs (normal, `_enraged`, `_mutated`, `_enraged_mutated`) can be converted straight into these files with:
+
+```
+python3 tools/convert_bbmodels.py addons/ahrivaea-batch3 <influence-prefix>_<creature>_<size>_models.zip ...
+```
+
+It also sets each creature's size from its model.
+
 For a creature with id `ID` and influence `INF`, the existing mod expects:
 
 ```

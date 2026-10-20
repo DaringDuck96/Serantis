@@ -58,7 +58,7 @@
           "text": "Tree farming"
         }
       ],
-      "size": 2.4,
+      "size": 1.13,
       "wave": 3
     }
   },
@@ -71,6 +71,6 @@
     "luck": 74,
     "charisma": 62
   },
-  "size": 1.0,
+  "size": 0.7,
   "movement": "walk"
 }
