@@ -1,5 +1,6 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-sig:net.minecraft.world.entity.player.Player
-sig:net.minecraft.client.Minecraft
-net.minecraft.client.multiplayer.MultiPlayerGameMode
-sig:net.minecraft.client.player.LocalPlayer
+net.minecraft.world.inventory.FurnaceResultSlot
+sig:net.minecraft.stats.Stats
+sig:net.minecraft.stats.StatsCounter
+sig:net.minecraft.stats.ServerStatsCounter
+sig:net.minecraft.server.level.ServerPlayer
