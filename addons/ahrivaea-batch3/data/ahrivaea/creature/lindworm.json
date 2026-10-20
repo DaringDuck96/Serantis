@@ -1,7 +1,7 @@
 {
   "name": "Lindworm",
   "forms": {
-    "none": {
+    "nature": {
       "stats": {
         "hp": 88,
         "attack": 96,
@@ -15,12 +15,12 @@
       "drops": [],
       "jobs": [
         {
-          "job": "transport",
-          "text": "Item pickup"
+          "job": "growth",
+          "text": "Crop growth support"
         },
         {
-          "job": "defense",
-          "text": "Base defense"
+          "job": "logging",
+          "text": "Tree farming"
         }
       ],
       "size": 16.27,
