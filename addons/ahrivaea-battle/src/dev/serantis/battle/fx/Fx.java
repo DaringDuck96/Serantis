@@ -2,46 +2,34 @@ package dev.serantis.battle.fx;
 
 import dev.ahrivaea.battle.Battle;
 import dev.ahrivaea.battle.Unit;
-import net.minecraft.world.entity.Entity;
+import dev.serantis.battle.moves.Field;
 
 /**
- * Battle feedback on the creatures themselves:
- *   attacks make the attacker wiggle;
- *   damage flashes orange, healing green, boosts blue, a miss flashes the target white, a crit red.
- * Several in the same moment on one creature: the most important wins (crit, miss, damage, heal, boost).
+ * Battle feedback, shown on the battle grid tile under the creature (or player) it happened to:
+ *   attacking shakes the attacker's tile;
+ *   damage lights the tile orange, healing green, boosts blue, a miss white, a crit red.
+ * Several flashes on one tile at the same moment: the most important wins (crit, miss, damage, heal, boost).
  */
 public final class Fx {
-    public static final int BUFF = 1, HEAL = 2, DAMAGE = 3, MISS = 4, CRIT = 5;
-    public static final float FLASH_TICKS = 12f, WIGGLE_TICKS = 10f;
+    public static final int BUFF = 1, HEAL = 2, DAMAGE = 3, MISS = 4, CRIT = 5, ATTACK = 6;
 
     private Fx() {}
 
-    public static int priority(int kind) { return kind; }   // kinds are numbered by importance
-
-    /** ARGB the model is tinted toward (white is done with the overlay instead). */
+    /** Colour of a tile flash (alpha is added when drawing). */
     public static int color(int kind) {
         return switch (kind) {
-            case DAMAGE -> 0xFFFF9030;   // orange
-            case HEAL -> 0xFF50FF50;     // green
-            case BUFF -> 0xFF5080FF;     // blue
-            case CRIT -> 0xFFFF2020;     // red
-            default -> 0xFFFFFFFF;
+            case DAMAGE -> 0xFF8A1E;     // orange
+            case HEAL -> 0x3CE05A;       // green
+            case BUFF -> 0x3C78FF;       // blue
+            case MISS -> 0xFFFFFF;       // white
+            case CRIT -> 0xFF1E1E;       // red
+            default -> 0xFFFFFF;         // the attack shake
         };
     }
 
-    private static FxHolder holder(Battle b, Unit u) {
-        if (b == null || u == null || u.entity == null || b.level == null) return null;
-        Entity e = b.level.getEntity(u.entity);
-        return e instanceof FxHolder h ? h : null;
-    }
-
     public static void flash(Battle b, Unit u, int kind) {
-        FxHolder h = holder(b, u);
-        if (h != null) h.serantis$flash(kind);
+        if (b != null && u != null) Field.of(b).fx(b, u, kind);
     }
 
-    public static void wiggle(Battle b, Unit u) {
-        FxHolder h = holder(b, u);
-        if (h != null) h.serantis$wiggle();
-    }
+    public static void wiggle(Battle b, Unit u) { flash(b, u, ATTACK); }
 }

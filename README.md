@@ -68,18 +68,18 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 
 ### Battle effects
 
-Creatures react on the field as the battle plays out:
+The battle grid tile under each creature (and under the player) reacts as the battle plays out:
 
-| What happened | Effect |
+| What happened | Tile |
 |---|---|
-| Attacks | The attacker wiggles |
+| Attacks | The attacker's tile shakes |
 | Takes damage (hits, burns, poison, zones, recoil) | Flashes orange |
-| Critical hit | The target flashes red |
-| Attack misses | The target flashes white |
+| Critical hit | The target's tile flashes red |
+| Attack misses | The target's tile flashes white |
 | Healed | Flashes green |
 | Boosted (stat up, extra movement, Counter Stance) | Flashes blue |
 
-If several happen to one creature at once, the most important one shows, in the order red, white, orange, green, blue. These play on creatures only, not on the player.
+If several flashes hit one tile at the same moment, the most important one shows, in the order red, white, orange, green, blue.
 
 ### Enemy mentalities
 

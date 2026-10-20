@@ -6,6 +6,7 @@ import dev.ahrivaea.battle.BattleGrid;
 import dev.ahrivaea.battle.Pathing;
 import dev.ahrivaea.client.battle.BattleClient;
 import dev.ahrivaea.client.battle.BattleScreen;
+import dev.serantis.battle.fx.Fx;
 import dev.serantis.battle.moves.Field;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +16,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +36,13 @@ public abstract class BattleScreenMixin {
     @Shadow private static JsonObject state() { return null; }
     @Shadow private Pathing.Occupancy occupancy(JsonObject unit, String side) { return null; }
     @Shadow private void fillCell(GuiGraphicsExtractor g, int x, int z, int color) { }
+    @Shadow public abstract double[] cellRect(int x, int z);
+
+    // Tile effects playing now: {cell, kind, start millis}. One battle screen at a time, so static is fine.
+    private static final List<long[]> serantis$playing = new ArrayList<>();
+    private static long serantis$seen = 0;
+    private static int serantis$battle = -1;
+    private static final long SERANTIS_FLASH_MS = 650, SERANTIS_SHAKE_MS = 450;
 
     private static int serantis$zoneColor(String kind) {
         return switch (kind) {
@@ -61,6 +71,44 @@ public abstract class BattleScreenMixin {
             for (JsonElement c : z.getAsJsonArray("cells")) {
                 int i = c.getAsInt();
                 fillCell(g, i % grid.size, i / grid.size, color);
+            }
+        }
+        serantis$drawFx(g, st, grid);
+    }
+
+    // Attacks shake the attacker's tile; damage, crits, misses, heals and boosts light up the tile in colour.
+    private void serantis$drawFx(GuiGraphicsExtractor g, JsonObject st, BattleGrid grid) {
+        long now = System.currentTimeMillis();
+        if (st.has("serantis_fx_battle") && st.get("serantis_fx_battle").getAsInt() != serantis$battle) {
+            serantis$battle = st.get("serantis_fx_battle").getAsInt();
+            serantis$seen = 0;
+            serantis$playing.clear();
+        }
+        if (st.has("serantis_fx")) {
+            long newest = serantis$seen;
+            for (JsonElement el : st.getAsJsonArray("serantis_fx")) {
+                JsonObject e = el.getAsJsonObject();
+                long id = e.get("id").getAsLong();
+                if (id <= serantis$seen) continue;
+                serantis$playing.removeIf(p -> p[0] == e.get("cell").getAsLong() && p[1] != Fx.ATTACK && e.get("kind").getAsInt() != Fx.ATTACK);
+                serantis$playing.add(new long[]{e.get("cell").getAsLong(), e.get("kind").getAsLong(), now});
+                newest = Math.max(newest, id);
+            }
+            serantis$seen = newest;
+        }
+        serantis$playing.removeIf(p -> now - p[2] > Math.max(SERANTIS_FLASH_MS, SERANTIS_SHAKE_MS));
+        for (long[] p : serantis$playing) {
+            int cell = (int) p[0], kind = (int) p[1];
+            float t = (now - p[2]) / (float) (kind == Fx.ATTACK ? SERANTIS_SHAKE_MS : SERANTIS_FLASH_MS);
+            if (t >= 1f) continue;
+            double[] r = cellRect(cell % grid.size, cell / grid.size);
+            if (kind == Fx.ATTACK) {
+                int dx = (int) Math.round(Math.sin(t * Math.PI * 6) * 4 * (1 - t));
+                int alpha = (int) (110 * (1 - t));
+                g.fill((int) r[0] + 1 + dx, (int) r[1] + 1, (int) r[2] + dx, (int) r[3], (alpha << 24) | Fx.color(kind));
+            } else {
+                int alpha = (int) (190 * (1 - t));
+                g.fill((int) r[0] + 1, (int) r[1] + 1, (int) r[2], (int) r[3], (alpha << 24) | Fx.color(kind));
             }
         }
     }

@@ -59,6 +59,26 @@ public final class Field {
     public final List<Zone> zones = new ArrayList<>();
     public final List<Pending> pending = new ArrayList<>();
 
+    /** Recent tile effects for the battle screen (see Fx): {id, cell, kind, game tick, unit id}. */
+    private final List<long[]> fx = new ArrayList<>();
+    private final int fxBattle = new java.util.Random().nextInt(Integer.MAX_VALUE);
+    private int fxNext = 1;
+    private static final int FX_KEEP_TICKS = 60;
+
+    public void fx(Battle b, Unit u, int kind) {
+        long now = b.level.getGameTime();
+        fx.removeIf(e -> now - e[3] > FX_KEEP_TICKS);
+        if (kind != dev.serantis.battle.fx.Fx.ATTACK) {
+            for (long[] e : fx) {
+                if (e[3] != now || e[4] != u.id || e[2] == dev.serantis.battle.fx.Fx.ATTACK) continue;
+                if (e[2] >= kind) return;           // something more important already showed this moment
+                e[0] = fxNext++; e[1] = idx(b, u.x, u.z); e[2] = kind;
+                return;
+            }
+        }
+        fx.add(new long[]{fxNext++, idx(b, u.x, u.z), kind, now, u.id});
+    }
+
     public static Field of(Battle b) { return ((BattleAccess) (Object) b).serantis$field(); }
     private static BattleAccess acc(Battle b) { return (BattleAccess) (Object) b; }
     static boolean lava(Unit u) { return u.influence == Influence.FIRE; }
@@ -148,9 +168,11 @@ public final class Field {
         if (!u.alive() || damage <= 0) return;
         u.hp = Math.max(0, u.hp - damage);
         acc(b).serantis$say(u.name + " takes " + damage + " damage from " + source + ".");
-        dev.serantis.battle.fx.Fx.flash(b, u, dev.serantis.battle.fx.Fx.DAMAGE);
+        b2fx(b, u);
         if (!u.alive()) acc(b).serantis$knockOut(u);
     }
+
+    private static void b2fx(Battle b, Unit u) { dev.serantis.battle.fx.Fx.flash(b, u, dev.serantis.battle.fx.Fx.DAMAGE); }
 
     /** Start of a side's turn: its zones tick down, opponents standing on burning ground burn, its pending attacks resolve. */
     public void startTurn(Battle b, Unit.Side side) {
@@ -418,6 +440,16 @@ public final class Field {
         for (Zone z : zones) arr.add(zoneJson(z.kind, z.owner, z.cells, z.turns));
         for (Pending p : pending) if ("meteor".equals(p.kind)) arr.add(zoneJson("meteor", p.user.side, p.cells, 1));
         view.add("serantis_zones", arr);
+        JsonArray effects = new JsonArray();
+        for (long[] e : fx) {
+            JsonObject o = new JsonObject();
+            o.addProperty("id", e[0]);
+            o.addProperty("cell", e[1]);
+            o.addProperty("kind", e[2]);
+            effects.add(o);
+        }
+        view.add("serantis_fx", effects);
+        view.addProperty("serantis_fx_battle", fxBattle);
     }
 
     private static JsonObject zoneJson(String kind, Unit.Side owner, Set<Integer> cells, int turns) {
