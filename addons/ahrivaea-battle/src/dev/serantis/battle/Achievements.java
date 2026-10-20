@@ -28,7 +28,8 @@ import java.util.List;
  * Counts come from Minecraft's own statistics where it keeps them (blocks placed = block items used,
  * blocks walked = walking + sprinting + crouching distance, battles won and creatures recruited are the
  * creatures mod's statistics), from the creature dex (creatures seen), and from Serantis's own counters
- * (items smelted, taken out of a furnace by the player; experience gained).
+ * (items smelted, taken out of a furnace by the player; seeds planted, crops a player plants by hand;
+ * experience gained).
  */
 public final class Achievements {
     public record Track(String id, String name, String verb, long[] tiers, int[] apples, String[] titles) {}
@@ -47,6 +48,8 @@ public final class Achievements {
                     new String[]{"Wait, What Was That?", "Bird Watcher", "Taking Field Notes", "I've Seen Things", "Walking Encyclopedia", "Seen It All"}),
             new Track("smelted", "Items Smelted", "items smelted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
                     new String[]{"Hot Stuff", "Cooking With Lava", "Total Smeltdown", "Industrial Revolution", "Forge of the Gods"}),
+            new Track("planted", "Seeds Planted", "seeds planted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+                    new String[]{"Seeds of Doubt", "Green Thumb", "Down on the Farm", "Old MacDonald Had a Lot", "Feed the World"}),
             new Track("walked", "Blocks Walked", "blocks walked", new long[]{10_000, 50_000, 250_000, 1_000_000, 5_000_000}, FIVE,
                     new String[]{"Stretch Your Legs", "Out for a Stroll", "Are We There Yet?", "Who Needs Horses?", "Walked to the Moon"}),
             new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
@@ -63,6 +66,8 @@ public final class Achievements {
     public interface Holder {
         long serantis$smelted();
         void serantis$addSmelted(long n);
+        long serantis$planted();
+        void serantis$addPlanted(long n);
         long serantis$xpGained();
         void serantis$addXpGained(long n);
         int serantis$claimed(String track);
@@ -86,6 +91,7 @@ public final class Achievements {
             case "recruited" -> stats.getValue(Stats.CUSTOM, Villagers.CREATURES_RECRUITED);
             case "seen" -> Dex.count(p, 1);
             case "smelted" -> h.serantis$smelted();
+            case "planted" -> h.serantis$planted();
             case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;
             case "xp" -> h.serantis$xpGained();

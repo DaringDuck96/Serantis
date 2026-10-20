@@ -27,7 +27,8 @@
     "BlockSkillsMixin",
     "ItemCombinerMenuAccessor",
     "AnvilMenuSkillsMixin",
-    "FurnaceResultSlotMixin"
+    "FurnaceResultSlotMixin",
+    "BlockItemPlantedMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

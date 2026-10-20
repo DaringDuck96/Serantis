@@ -21,11 +21,13 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Override public Set<String> serantis$skills() { return serantis$skills; }
 
     // Achievements: items smelted, experience gained, and tiers already paid.
-    @Unique private long serantis$smelted, serantis$xpGained;
+    @Unique private long serantis$smelted, serantis$xpGained, serantis$planted;
     @Unique private final java.util.Map<String, Integer> serantis$claimed = new java.util.HashMap<>();
 
     @Override public long serantis$smelted() { return serantis$smelted; }
     @Override public void serantis$addSmelted(long n) { serantis$smelted += n; }
+    @Override public long serantis$planted() { return serantis$planted; }
+    @Override public void serantis$addPlanted(long n) { serantis$planted += n; }
     @Override public long serantis$xpGained() { return serantis$xpGained; }
     @Override public void serantis$addXpGained(long n) { serantis$xpGained += n; }
     @Override public int serantis$claimed(String track) { return serantis$claimed.getOrDefault(track, 0); }
@@ -47,6 +49,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         out.putString("SerantisSkills", String.join(",", serantis$skills));
         out.putLong("SerantisSmelted", serantis$smelted);
         out.putLong("SerantisXpGained", serantis$xpGained);
+        out.putLong("SerantisPlanted", serantis$planted);
         out.putString("SerantisAchievements", dev.serantis.battle.Achievements.encode(this));
     }
 
@@ -56,6 +59,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         for (String s : in.getStringOr("SerantisSkills", "").split(",")) if (!s.isBlank()) serantis$skills.add(s.trim());
         serantis$smelted = in.getLongOr("SerantisSmelted", 0L);
         serantis$xpGained = in.getLongOr("SerantisXpGained", 0L);
+        serantis$planted = in.getLongOr("SerantisPlanted", 0L);
         serantis$claimed.clear();
         dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
     }

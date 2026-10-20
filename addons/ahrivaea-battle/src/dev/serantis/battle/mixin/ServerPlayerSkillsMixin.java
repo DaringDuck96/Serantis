@@ -19,6 +19,7 @@ public abstract class ServerPlayerSkillsMixin {
         var b = (dev.serantis.battle.Achievements.Holder) (Object) old;
         a.serantis$addSmelted(b.serantis$smelted() - a.serantis$smelted());
         a.serantis$addXpGained(b.serantis$xpGained() - a.serantis$xpGained());
+        a.serantis$addPlanted(b.serantis$planted() - a.serantis$planted());
         for (var t : dev.serantis.battle.Achievements.TRACKS) a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
         // XP is the main currency: it's kept through death.
         ServerPlayer self = (ServerPlayer) (Object) this;
