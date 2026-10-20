@@ -1,0 +1,8 @@
+Compiled from "Minecraft.java"
+class net.minecraft.client.Minecraft$1 implements java.lang.Runnable {
+  private boolean threadStarted;
+  final net.minecraft.client.main.GameConfig val$gameConfig;
+  final net.minecraft.client.Minecraft this$0;
+  net.minecraft.client.Minecraft$1();
+  public void run();
+}

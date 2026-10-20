@@ -1,0 +1,14 @@
+Compiled from "Player.java"
+public final class net.minecraft.world.entity.player.Player$BedSleepingProblem extends java.lang.Record {
+  private final net.minecraft.network.chat.Component message;
+  public static final net.minecraft.world.entity.player.Player$BedSleepingProblem TOO_FAR_AWAY;
+  public static final net.minecraft.world.entity.player.Player$BedSleepingProblem OBSTRUCTED;
+  public static final net.minecraft.world.entity.player.Player$BedSleepingProblem OTHER_PROBLEM;
+  public static final net.minecraft.world.entity.player.Player$BedSleepingProblem NOT_SAFE;
+  public net.minecraft.world.entity.player.Player$BedSleepingProblem(net.minecraft.network.chat.Component);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.network.chat.Component message();
+  static {};
+}
