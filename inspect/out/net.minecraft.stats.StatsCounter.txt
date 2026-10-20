@@ -1,0 +1,9 @@
+Compiled from "StatsCounter.java"
+public class net.minecraft.stats.StatsCounter {
+  protected final it.unimi.dsi.fastutil.objects.Object2IntMap<net.minecraft.stats.Stat<?>> stats;
+  public net.minecraft.stats.StatsCounter();
+  public void increment(net.minecraft.world.entity.player.Player, net.minecraft.stats.Stat<?>, int);
+  public void setValue(net.minecraft.world.entity.player.Player, net.minecraft.stats.Stat<?>, int);
+  public <T> int getValue(net.minecraft.stats.StatType<T>, T);
+  public int getValue(net.minecraft.stats.Stat<?>);
+}
