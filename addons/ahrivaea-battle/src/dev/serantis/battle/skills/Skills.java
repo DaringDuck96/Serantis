@@ -95,7 +95,16 @@ public final class Skills {
         node("industry_6", "Industry", 6, 5, "Tireless", "+10% mining speed; breaking blocks uses half the hunger", after("industry_5", "swift_4"), 0, 0, 0, 0, 0, 0, 0, 0, 10);
     }
 
+    /** The last answer each player got when trying to learn a skill (shown on the tree screen). */
+    private static final Map<java.util.UUID, String> LAST = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger("serantis_skills");
+
     private Skills() {}
+
+    public static void answer(ServerPlayer p, String message) {
+        LAST.put(p.getUUID(), message);
+        LOG.info("{} skill tree: {}", p.getPlainTextName(), message);
+    }
 
     public static Set<String> owned(Player p) { return ((SkillHolder) (Object) p).serantis$skills(); }
     public static boolean has(Player p, String id) { return p != null && owned(p).contains(id); }
@@ -162,6 +171,8 @@ public final class Skills {
         o.addProperty("next", cost(owned(p).size()));
         o.addProperty("count", owned(p).size());
         o.addProperty("total", NODES.size());
+        String last = LAST.get(p.getUUID());
+        if (last != null) o.addProperty("message", last);
         JsonArray nodes = new JsonArray();
         for (Node n : NODES.values()) {
             JsonObject j = new JsonObject();

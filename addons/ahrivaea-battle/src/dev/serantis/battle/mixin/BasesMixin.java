@@ -21,12 +21,24 @@ public abstract class BasesMixin {
         try { o = com.google.gson.JsonParser.parseString(json).getAsJsonObject(); } catch (RuntimeException e) { return; }
         if (!o.has("kind") || !"serantis_skill".equals(o.get("kind").getAsString())) return;
         ci.cancel();
-        if (!o.has("pos") || !o.has("job")) return;
+        if (!o.has("pos") || !o.has("job")) { dev.serantis.battle.skills.Skills.answer(player, "The request was missing its base or skill."); return; }
         var p = o.getAsJsonArray("pos");
         net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(p.get(0).getAsInt(), p.get(1).getAsInt(), p.get(2).getAsInt());
         dev.ahrivaea.base.BaseCoreBlockEntity core = Bases.coreAt(player.level(), pos);
-        if (core == null || player.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) > 4096) return;
-        String msg = dev.serantis.battle.skills.Skills.buy(player, core, o.get("job").getAsString());
+        if (core == null) { dev.serantis.battle.skills.Skills.answer(player, "Couldn't find your Base Core at " + pos.toShortString() + "."); return; }
+        if (player.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) > 4096) {
+            dev.serantis.battle.skills.Skills.answer(player, "You're too far from your Base Core.");
+            Bases.send(player, core);
+            return;
+        }
+        String msg;
+        try {
+            msg = dev.serantis.battle.skills.Skills.buy(player, core, o.get("job").getAsString());
+        } catch (RuntimeException e) {
+            msg = "Something went wrong learning that skill (" + e + ").";
+            org.slf4j.LoggerFactory.getLogger("serantis_skills").error("Skill purchase failed", e);
+        }
+        dev.serantis.battle.skills.Skills.answer(player, msg);
         player.sendOverlayMessage(net.minecraft.network.chat.Component.literal(msg));
         Bases.send(player, core);
     }

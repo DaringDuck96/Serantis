@@ -44,6 +44,8 @@ public class SkillTreeScreen extends Screen {
     private final Map<String, Long> learnedAt = new HashMap<>();
     private final java.util.Set<String> knownOwned = new java.util.HashSet<>();
     private String pending;
+    private long pendingAt;
+    private String lastMessage;
     private int colW, left, top, gap, tileW, tileH;
 
     public SkillTreeScreen(BaseScreen parent) {
@@ -75,6 +77,10 @@ public class SkillTreeScreen extends Screen {
         tileW = colW - 12;
         tiles.clear();
         JsonObject d = data();
+        if (d != null && d.has("message")) {
+            String m = d.get("message").getAsString();
+            if (!m.equals(lastMessage)) { lastMessage = m; pendingAt = 0; }
+        }
         if (d != null) {
             for (JsonElement el : d.getAsJsonArray("nodes")) {
                 JsonObject n = el.getAsJsonObject();
@@ -108,6 +114,8 @@ public class SkillTreeScreen extends Screen {
             for (Tile t : tiles)
                 if (t.contains(event.x(), event.y()) && learnable(t)) {
                     pending = t.id;
+                    pendingAt = System.currentTimeMillis();
+                    lastMessage = null;
                     if (parent != null) parent.send("serantis_skill", 0, t.id);
                     return true;
                 }
@@ -187,6 +195,17 @@ public class SkillTreeScreen extends Screen {
                 g.fill(gapX - 1, Math.min(ry, ty), gapX, Math.max(ry, ty) + 1, lineCol);
                 hLine(g, right ? gapX : req.x + req.w, right ? req.x : gapX, ry, lineCol);
             }
+        }
+
+        // What happened with the last skill you tried to learn
+        String status = null;
+        int statusColor = 0xFFB0B0C0;
+        if (pendingAt > 0 && now - pendingAt > 3000) { status = "No answer from the server yet. Try again, or reopen your Base Core."; statusColor = 0xFFFF8A7A; }
+        else if (pendingAt > 0) status = "Learning…";
+        else if (lastMessage != null) { status = lastMessage; statusColor = lastMessage.startsWith("Learned") ? 0xFF7FE08A : 0xFFFF8A7A; }
+        if (status != null) {
+            if (font.width(status) > width - 20) status = font.plainSubstrByWidth(status, width - 26) + "…";
+            g.centeredText(font, status, width / 2, top + 6 * gap + 2, statusColor);
         }
 
         // Skill tiles
