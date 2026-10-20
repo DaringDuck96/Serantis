@@ -18,6 +18,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /** The party screen shows each creature's temperament, its stats with it, and its battle movement. */
 @Mixin(PartySync.class)
 public abstract class PartySyncMixin {
+    // The "You" page: level = skill nodes owned, XP = your XP bar, next = what the next node costs.
+    @Inject(method = "view", at = @At("RETURN"))
+    private static void serantis$you(net.minecraft.server.level.ServerPlayer player, CallbackInfoReturnable<JsonObject> cir) {
+        JsonObject o = cir.getReturnValue();
+        if (o == null || !o.has("character") || !o.get("character").isJsonObject()) return;
+        JsonObject c = o.getAsJsonObject("character");
+        int owned = dev.serantis.battle.skills.Skills.owned(player).size();
+        c.addProperty("level", owned);
+        c.addProperty("xp", dev.serantis.battle.skills.XpBank.points(player));
+        c.addProperty("xpNext", dev.serantis.battle.skills.Skills.cost(owned));
+        c.addProperty("points", 0);
+    }
+
     @Redirect(method = "describe", at = @At(value = "INVOKE",
             target = "Ldev/ahrivaea/creature/Species;statsFor(Ldev/ahrivaea/creature/Influence;)Ldev/ahrivaea/creature/Stats;"))
     private static Stats serantis$stats(Species species, Influence influence, CaughtCreature caught) {

@@ -535,7 +535,7 @@ public final class MoveEngine {
         if (st.has("immobilized")) return 0;
         int speed = st.stage("speed"), tiles = st.tiles();
         if (b != null && Field.of(b).inSink(b, u)) { speed = Math.min(0, speed); tiles = Math.min(0, tiles); }   // no bonuses in a Sinkhole
-        int sq = (int) Math.round(base * (1 + 0.1 * speed)) + tiles;
+        int sq = (int) Math.round(base * (1 + 0.1 * speed)) + tiles + st.bonusTiles;
         if (st.has("slowed")) sq -= 2;
         return Math.max(0, sq);
     }

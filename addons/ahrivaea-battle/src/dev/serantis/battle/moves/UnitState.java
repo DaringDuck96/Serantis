@@ -32,6 +32,7 @@ public final class UnitState {
     public String trait;        // enemy mentality (see EnemyBrain)
     public int size = 1;        // tiles per side its body covers (see Body)
     public String temperament;  // see Temperament
+    public int bonusTiles;      // extra battle movement (the player's Swiftness nodes)
     public String lastMoveId;
     public int lastMoveTurn = -99;
     public int startX = Integer.MIN_VALUE, startZ;
