@@ -1,3 +1,0 @@
-Compiled from "Block.java"
-public interface net.minecraft.world.level.block.Block$UpdateFlags extends java.lang.annotation.Annotation {
-}
