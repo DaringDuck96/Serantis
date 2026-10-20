@@ -58,8 +58,13 @@ jobs:
             (cd "$dir" && zip -qr "$jar" . -x '*.md' -x 'src/*')
             if [ -d "$dir/src" ]; then
               classes="$(mktemp -d)"
-              javac --release 25 -implicit:none -proc:none -Xlint:-options -d "$classes" \
-                -cp "$CREATURES:$MC_CP" -sourcepath tools/compile-stubs $(find "$dir/src" -name '*.java')
+              if ! javac --release 25 -implicit:none -proc:none -Xlint:-options -d "$classes" \
+                -cp "$CREATURES:$MC_CP" -sourcepath tools/compile-stubs $(find "$dir/src" -name '*.java') 2> "$RUNNER_TEMP/javac.txt"; then
+                # Surface compiler errors as annotations so they show on the run page.
+                grep -E "error:" "$RUNNER_TEMP/javac.txt" | head -10 | while read -r l; do echo "::error title=javac ($name)::$l"; done
+                cat "$RUNNER_TEMP/javac.txt"
+                exit 1
+              fi
               (cd "$classes" && zip -qr "$jar" .)
             fi
             echo "built mods/${name}-${ver}.jar"
