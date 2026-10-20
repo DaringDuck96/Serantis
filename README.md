@@ -69,7 +69,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 ### Movement and work speed
 
 - **Battle movement** comes from Speed and level. Level 1 creatures move 2 to 4 tiles a turn and Level 20 creatures 7 to 10, with the range rising in a straight line between. Where a creature falls in its level's range depends on its Speed: Level 20 Speed 44 is the slowest and 103 the fastest. For example, a typical creature (Speed 62) moves 3 tiles at Level 1, 5 at Level 10 and 8 at Level 20. Speed changes, Slowed, extra movement and terrain costs still apply on top. The player's own movement is unchanged.
-- **Work speed at a base** comes from Charisma at the creature's level (Level 1 = 50% of its Level 20 Charisma): Charisma ÷ 63, between 25% and 200%. A typical Level 20 creature works at 100%, the most charming at about 180%, and a Level 1 creature at roughly 40–90%. The base screen shows each worker's speed.
+- **Work speed at a base** starts at 50% for every creature at Level 1 and climbs with level, faster the higher its Charisma: 50% + (level − 1) ÷ 19 × (Level 20 Charisma ÷ 63). At Level 20 a typical creature (Charisma 63) works at 150%, the most charming (115) about 230% and the least (51) about 130%. At Level 10 those are about 100%, 140% and 90%. The base screen shows each worker's speed.
 
 ### Creature sizes and terrain
 

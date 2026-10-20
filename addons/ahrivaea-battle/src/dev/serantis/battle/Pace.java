@@ -10,9 +10,10 @@ package dev.serantis.battle;
  * with the limits rising in a straight line in between. Stat changes in battle (Speed +/-, Slowed,
  * extra movement) still apply on top.
  *
- * Base work speed comes from Charisma at the creature's level (Level 1 = 50% of its Level 20 Charisma):
- * work speed = Charisma / 63, so a typical Level 20 creature (Charisma 63) works at 100%. Between 25%
- * and 200%.
+ * Base work speed starts at 50% for every creature at Level 1 and climbs with level, faster the
+ * higher its Charisma: work speed = 50% + (level - 1) / 19 x (Level 20 Charisma / 63). A typical
+ * creature (Charisma 63) reaches 150% at Level 20, the most charming (115) about 230%, the least (51)
+ * about 130%.
  */
 public final class Pace {
     public static final int SLOWEST_SPEED = 44, FASTEST_SPEED = 103;
@@ -28,7 +29,7 @@ public final class Pace {
     }
 
     public static double workSpeed(int level, int charisma20) {
-        double charisma = charisma20 * BattleStats.levelScale(level);
-        return Math.max(0.25, Math.min(2.0, charisma / TYPICAL_CHARISMA));
+        double lv = (BattleStats.clampLevel(level) - 1) / (double) (BattleStats.MAX_LEVEL - 1);
+        return 0.5 + lv * (charisma20 / TYPICAL_CHARISMA);
     }
 }
