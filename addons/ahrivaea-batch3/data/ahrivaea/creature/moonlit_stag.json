@@ -59,7 +59,7 @@
           "text": "Crop growth support"
         }
       ],
-      "size": 4.2,
+      "size": 3.87,
       "wave": 3
     }
   },
@@ -72,6 +72,6 @@
     "luck": 74,
     "charisma": 76
   },
-  "size": 1.0,
+  "size": 1.6,
   "movement": "walk"
 }
