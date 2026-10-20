@@ -11,6 +11,8 @@ import dev.ahrivaea.creature.Variant;
 import dev.serantis.battle.moves.BattleAccess;
 import dev.serantis.battle.moves.EnemyBrain;
 import dev.serantis.battle.moves.Field;
+import dev.serantis.battle.moves.Body;
+import dev.ahrivaea.battle.BattleGrid;
 import dev.serantis.battle.fx.Fx;
 import dev.serantis.battle.moves.MoveBook;
 import dev.serantis.battle.moves.MoveEngine;
@@ -115,15 +117,39 @@ public abstract class BattleMixin implements BattleAccess {
         return MoveEngine.squares((Battle) (Object) this, unit, unit.squares());
     }
 
-    // Frozen Ground and Sinkhole tiles cost 2 movement.
+    // ---- bodies bigger than one tile, and terrain that costs extra movement (see Body)
     @Inject(method = "reachable", at = @At("HEAD"), cancellable = true)
-    private void serantis$slowReach(Unit unit, CallbackInfoReturnable<Map<Integer, Integer>> cir) {
+    private void serantis$reach(Unit unit, CallbackInfoReturnable<Map<Integer, Integer>> cir) {
         Battle self = (Battle) (Object) this;
-        Field field = serantis$field();
-        if (unit.flies() || !field.slowsAny(unit.side)) return;
-        int budget = MoveEngine.squares(self, unit, unit.squares());
-        cir.setReturnValue(Field.reach(self.grid, unit.x, unit.z, budget, false, unit.influence == Influence.FIRE,
-                self.occupancy(unit), cell -> field.slows(unit.side, cell)));
+        cir.setReturnValue(Body.reach(self, unit, MoveEngine.squares(self, unit, unit.squares())));
+    }
+
+    @Inject(method = "unitAt", at = @At("HEAD"), cancellable = true)
+    private void serantis$unitAt(int x, int z, CallbackInfoReturnable<Unit> cir) {
+        cir.setReturnValue(Body.unitAt((Battle) (Object) this, x, z));
+    }
+
+    @Inject(method = "canStop", at = @At("HEAD"), cancellable = true)
+    private void serantis$canStop(Unit unit, int x, int z, CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(Body.canStop((Battle) (Object) this, unit, x, z));
+    }
+
+    // Ranges, adjacency and item reach are measured between bodies, not corner tiles.
+    @Redirect(method = {"act", "attack", "strike", "preview", "itemCheck", "useItem"},
+            at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Pathing;distance(IIII)I"))
+    private int serantis$distance(int x1, int z1, int x2, int z2) {
+        return Body.distance((Battle) (Object) this, x1, z1, x2, z2);
+    }
+
+    // High ground: the highest tile under each body. Flyers are never on the ground, so never have high ground.
+    @Redirect(method = {"strike", "preview"}, at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/BattleGrid;y(II)I", ordinal = 0))
+    private int serantis$attackerHeight(BattleGrid grid, int x, int z, Unit attacker, Unit target, BattleMove move) {
+        return attacker.flies() ? -100000 : Body.height((Battle) (Object) this, attacker);
+    }
+
+    @Redirect(method = {"strike", "preview"}, at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/BattleGrid;y(II)I", ordinal = 1))
+    private int serantis$targetHeight(BattleGrid grid, int x, int z, Unit attacker, Unit target, BattleMove move) {
+        return Body.height((Battle) (Object) this, target);
     }
 
     // ---- player actions

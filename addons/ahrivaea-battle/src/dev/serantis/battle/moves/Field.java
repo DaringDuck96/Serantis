@@ -72,11 +72,11 @@ public final class Field {
             for (long[] e : fx) {
                 if (e[3] != now || e[4] != u.id || e[2] == dev.serantis.battle.fx.Fx.ATTACK) continue;
                 if (e[2] >= kind) return;           // something more important already showed this moment
-                e[0] = fxNext++; e[1] = idx(b, u.x, u.z); e[2] = kind;
+                e[0] = fxNext++; e[1] = idx(b, u.x, u.z); e[2] = kind; e[5] = Body.size(u);
                 return;
             }
         }
-        fx.add(new long[]{fxNext++, idx(b, u.x, u.z), kind, now, u.id});
+        fx.add(new long[]{fxNext++, idx(b, u.x, u.z), kind, now, u.id, Body.size(u)});
     }
 
     public static Field of(Battle b) { return ((BattleAccess) (Object) b).serantis$field(); }
@@ -132,16 +132,27 @@ public final class Field {
         return false;
     }
 
-    /** Standing in an opponent's Sinkhole: no movement bonuses. */
-    public boolean inSink(Battle b, Unit u) {
-        if (u.flies()) return false;
-        int c = idx(b, u.x, u.z);
-        for (Zone z : zones) if ("sink".equals(z.kind) && z.cells.contains(c)) return true;
+    /** True if any tile of the unit's body is among these cells. */
+    public static boolean inside(Battle b, Unit u, Set<Integer> cells) {
+        for (int c : Body.cells(b, u)) if (cells.contains(c)) return true;
         return false;
     }
 
-    /** How bad a cell is for a unit of this side to stand in or walk through (for the enemy AI). */
+    /** Standing in a Sinkhole: no movement bonuses. */
+    public boolean inSink(Battle b, Unit u) {
+        if (u.flies()) return false;
+        for (Zone z : zones) if ("sink".equals(z.kind) && inside(b, u, z.cells)) return true;
+        return false;
+    }
+
+    /** How bad it is for this unit to stand with its corner on this cell (for the enemy AI). */
     public double danger(Battle b, Unit u, int cell) {
+        double worst = 0;
+        for (int c : Body.cells(b.grid, cell % b.grid.size, cell / b.grid.size, Body.size(u))) worst = Math.max(worst, tileDanger(b, u, c));
+        return worst;
+    }
+
+    private double tileDanger(Battle b, Unit u, int cell) {
         double d = 0;
         for (Zone z : zones) {
             if (!z.cells.contains(cell) || (z.ground() && u.flies())) continue;
@@ -187,9 +198,8 @@ public final class Field {
         }
         for (Unit u : new ArrayList<>(b.units)) {
             if (u.side != side || !u.alive() || u.flies()) continue;
-            int c = idx(b, u.x, u.z);
             for (Zone z : new ArrayList<>(zones))
-                if ("burning".equals(z.kind) && z.cells.contains(c)) hurt(b, u, z.damage, zoneName(z.kind));
+                if ("burning".equals(z.kind) && inside(b, u, z.cells)) hurt(b, u, z.damage, zoneName(z.kind));
         }
         for (Pending p : new ArrayList<>(pending)) {
             if (p.user.side != side) continue;
@@ -201,7 +211,7 @@ public final class Field {
                 continue;
             }
             if ("charge".equals(p.kind)) {
-                if (!p.target.alive() || !p.move.reaches(Pathing.distance(p.user.x, p.user.z, p.target.x, p.target.z))) {
+                if (!p.target.alive() || !p.move.reaches(Body.gap(p.user, p.target))) {
                     acc.serantis$say(p.user.name + "'s " + p.spec.name + " has nothing to hit.");
                     continue;
                 }
@@ -221,7 +231,7 @@ public final class Field {
         for (Zone z : new ArrayList<>(zones)) {
             if (z.ground()) continue;
             List<Unit> inside = new ArrayList<>();
-            for (Unit u : b.units) if (u.alive() && u.side == side && z.cells.contains(idx(b, u.x, u.z))) inside.add(u);
+            for (Unit u : b.units) if (u.alive() && u.side == side && inside(b, u, z.cells)) inside.add(u);
             if (inside.isEmpty()) continue;
             switch (z.kind) {
                 case "storm" -> hurt(b, inside.get(b.random.nextInt(inside.size())), z.damage, "lightning from " + zoneName(z.kind));
@@ -257,18 +267,19 @@ public final class Field {
 
     private static void place(Battle b, Unit u) { BattlesInvoker.serantis$placeEntity(b, u); }
 
-    private static boolean open(Battle b, Unit u, int nx, int nz) {
-        return b.grid.inside(nx, nz) && b.canStop(u, nx, nz) && Pathing.canStep(b.grid, u.x, u.z, nx, nz, u.flies(), lava(u));
+    /** The whole body can be shoved one tile this way and stop there. */
+    private static boolean open(Battle b, Unit u, int dx, int dz) {
+        return Body.stepCost(Body.ctx(b, u), u.x, u.z, Body.size(u), dx, dz, u.flies(), lava(u), Body.swims(u)) >= 0
+                && b.canStop(u, u.x + dx, u.z + dz);
     }
 
-    /** Moves a unit up to n tiles in one direction, stopping at anything in the way. Returns the cells it entered. */
+    /** Moves a unit up to n tiles in one direction, stopping at anything in the way. Returns the tiles its body moved onto. */
     static List<Integer> slide(Battle b, Unit u, int dx, int dz, int n) {
         List<Integer> path = new ArrayList<>();
         for (int k = 0; k < n; k++) {
-            int nx = u.x + dx, nz = u.z + dz;
-            if (!open(b, u, nx, nz)) break;
-            u.x = nx; u.z = nz;
-            path.add(idx(b, nx, nz));
+            if (!open(b, u, dx, dz)) break;
+            u.x += dx; u.z += dz;
+            path.addAll(Body.cells(b, u));
         }
         if (!path.isEmpty()) place(b, u);
         return path;
@@ -280,11 +291,15 @@ public final class Field {
         return new int[]{0, Integer.signum(dz)};
     }
 
+    /** Twice the centre of a unit's body (so it stays a whole number). */
+    private static int cx2(Unit u) { return 2 * u.x + Body.size(u) - 1; }
+    private static int cz2(Unit u) { return 2 * u.z + Body.size(u) - 1; }
+
     /** Pushes a unit away from (ox, oz); a unit standing on that cell is pushed away from the attacker instead. */
     public void push(Battle b, Unit a, Unit u, int ox, int oz, int n) {
         if (!u.alive()) return;
-        int[] dir = axis(b, u.x - ox, u.z - oz);
-        if (dir == null) dir = axis(b, u.x - a.x, u.z - a.z);
+        int[] dir = axis(b, cx2(u) - (2 * ox), cz2(u) - (2 * oz));
+        if (dir == null) dir = axis(b, cx2(u) - cx2(a), cz2(u) - cz2(a));
         if (dir == null) return;
         List<Integer> path = slide(b, u, dir[0], dir[1], n);
         if (path.isEmpty()) return;
@@ -297,17 +312,17 @@ public final class Field {
         if (!u.alive()) return;
         List<Integer> path = new ArrayList<>();
         for (int k = 0; k < n; k++) {
-            int dx = tx - u.x, dz = tz - u.z;
-            if (Math.abs(dx) + Math.abs(dz) <= (stopNext ? 1 : 0)) break;
+            if (Body.gap(u.x, u.z, Body.size(u), tx, tz, 1) <= (stopNext ? 1 : 0)) break;
+            int dx = 2 * tx - cx2(u), dz = 2 * tz - cz2(u);
             int[][] tries = Math.abs(dx) >= Math.abs(dz)
                     ? new int[][]{{Integer.signum(dx), 0}, {0, Integer.signum(dz)}}
                     : new int[][]{{0, Integer.signum(dz)}, {Integer.signum(dx), 0}};
             boolean moved = false;
             for (int[] t : tries) {
                 if (t[0] == 0 && t[1] == 0) continue;
-                if (open(b, u, u.x + t[0], u.z + t[1])) {
+                if (open(b, u, t[0], t[1])) {
                     u.x += t[0]; u.z += t[1];
-                    path.add(idx(b, u.x, u.z));
+                    path.addAll(Body.cells(b, u));
                     moved = true;
                     break;
                 }
@@ -333,7 +348,7 @@ public final class Field {
             u.x = s[0]; u.z = s[1];
             place(b, u);
             acc(b).serantis$say(u.name + " is flung through the rift!");
-            enter(b, u, List.of(idx(b, u.x, u.z)));
+            enter(b, u, Body.cells(b, u));
             return;
         }
     }
@@ -352,85 +367,34 @@ public final class Field {
         }
     }
 
-    /** The attacker rushes to an open tile next to its target (Phantom Charge). */
+    /** The attacker rushes to an open spot right next to its target (Phantom Charge). */
     public void dash(Battle b, Unit a, Unit t) {
-        if (Pathing.distance(a.x, a.z, t.x, t.z) <= 1) return;
+        if (Body.gap(a, t) <= 1) return;
+        int an = Body.size(a), tn = Body.size(t);
         int[] best = null;
-        for (int[] d : new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}) {
-            int x = t.x + d[0], z = t.z + d[1];
-            if (!b.grid.inside(x, z) || !b.canStop(a, x, z)) continue;
-            if (best == null || Pathing.distance(a.x, a.z, x, z) < Pathing.distance(a.x, a.z, best[0], best[1])) best = new int[]{x, z};
-        }
+        for (int x = t.x - an; x <= t.x + tn; x++)
+            for (int z = t.z - an; z <= t.z + tn; z++) {
+                if (Body.gap(x, z, an, t.x, t.z, tn) != 1 || !b.canStop(a, x, z)) continue;
+                if (best == null || Pathing.distance(a.x, a.z, x, z) < Pathing.distance(a.x, a.z, best[0], best[1])) best = new int[]{x, z};
+            }
         if (best == null) return;
         a.x = best[0]; a.z = best[1];
         place(b, a);
         acc(b).serantis$say(a.name + " rushes at " + t.name + "!");
-        enter(b, a, List.of(idx(b, a.x, a.z)));
+        enter(b, a, Body.cells(b, a));
     }
 
-    // ------------------------------------------------------------------ pathing with slow tiles
+    // ------------------------------------------------------------------ hazards on the way
 
-    /** Like the creatures mod's reachable-cell search, but slow tiles cost 2 movement. */
-    public static Map<Integer, Integer> reach(BattleGrid g, int sx, int sz, int budget, boolean flies, boolean lava,
-                                              Pathing.Occupancy occ, IntPredicate slow) {
-        Map<Integer, Integer> best = new HashMap<>();
-        PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[2]));
-        best.put(sx + sz * g.size, 0);
-        q.add(new int[]{sx, sz, 0});
-        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-        while (!q.isEmpty()) {
-            int[] c = q.poll();
-            if (c[2] > best.get(c[0] + c[1] * g.size) || c[2] >= budget) continue;
-            for (int[] d : dirs) {
-                int nx = c[0] + d[0], nz = c[1] + d[1];
-                if (!g.inside(nx, nz) || !Pathing.canStep(g, c[0], c[1], nx, nz, flies, lava) || occ.at(nx, nz) == 2) continue;
-                int n = nx + nz * g.size;
-                int cost = c[2] + (slow != null && slow.test(n) ? 2 : 1);
-                if (cost > budget) continue;
-                Integer old = best.get(n);
-                if (old != null && old <= cost) continue;
-                best.put(n, cost);
-                q.add(new int[]{nx, nz, cost});
-            }
-        }
-        return best;
-    }
-
-    /** The cells a unit most likely walked through to get from (fx, fz) to (gx, gz), avoiding hazards when it can. */
+    /** The tiles a unit's body most likely passed over going from (fx, fz) to (gx, gz), avoiding hazards when it can. */
     public List<Integer> walked(Battle b, Unit u, int fx, int fz, int gx, int gz) {
-        BattleGrid g = b.grid;
-        int goal = idx(b, gx, gz), start = idx(b, fx, fz);
-        if (goal == start) return List.of();
-        Pathing.Occupancy occ = b.occupancy(u);
-        boolean flies = u.flies(), lava = lava(u);
-        Map<Integer, Integer> dist = new HashMap<>();
-        Map<Integer, Integer> from = new HashMap<>();
-        PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-        dist.put(start, 0);
-        q.add(new int[]{start, 0});
-        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-        while (!q.isEmpty()) {
-            int[] c = q.poll();
-            if (c[1] > dist.get(c[0])) continue;
-            if (c[0] == goal) break;
-            int cx = c[0] % g.size, cz = c[0] / g.size;
-            for (int[] d : dirs) {
-                int nx = cx + d[0], nz = cz + d[1];
-                if (!g.inside(nx, nz) || !Pathing.canStep(g, cx, cz, nx, nz, flies, lava)) continue;
-                int n = idx(b, nx, nz);
-                if (n != goal && n != idx(b, u.x, u.z) && occ.at(nx, nz) == 2) continue;
-                int cost = c[1] + (slows(u.side, n) && !flies ? 2000 : 1000) + (int) danger(b, u, n);
-                Integer old = dist.get(n);
-                if (old != null && old <= cost) continue;
-                dist.put(n, cost);
-                from.put(n, c[0]);
-                q.add(new int[]{n, cost});
-            }
-        }
-        if (!from.containsKey(goal)) return List.of(goal);
-        List<Integer> path = new ArrayList<>();
-        for (int c = goal; c != start; c = from.get(c)) path.add(0, c);
-        return path;
+        int n = Body.size(u);
+        List<Integer> corners = Body.route(Body.ctx(b, u), fx, fz, gx, gz, n, u.flies(), lava(u), Body.swims(u),
+                cell -> danger(b, u, cell));
+        List<Integer> tiles = new ArrayList<>();
+        for (int c : corners)
+            for (int t : Body.cells(b.grid, c % b.grid.size, c / b.grid.size, n)) if (!tiles.contains(t)) tiles.add(t);
+        return tiles;
     }
 
     // ------------------------------------------------------------------ battle screen
@@ -446,6 +410,7 @@ public final class Field {
             o.addProperty("id", e[0]);
             o.addProperty("cell", e[1]);
             o.addProperty("kind", e[2]);
+            o.addProperty("size", e[5]);
             effects.add(o);
         }
         view.add("serantis_fx", effects);

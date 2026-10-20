@@ -66,22 +66,22 @@ public final class EnemyBrain {
 
         boolean focusReachable = focus != null && reachableFocus(b, u, focus, reach);
         Field field = Field.of(b);
-        int ox = u.x, oz = u.z;
+        int ox = u.x, oz = u.z, n = Body.size(u);
         Plan best = null;
         for (Map.Entry<Integer, Integer> cell : reach.entrySet()) {
             int cx = cell.getKey() % size, cz = cell.getKey() / size;
             if (!b.canStop(u, cx, cz)) continue;
             u.x = cx; u.z = cz;
-            double terrain = terrain(b, cx, cz, foes) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
+            double terrain = terrain(b, cx, cz, foes, u.flies()) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
             Unit closest = nearest(u, foes);
-            double nearestFoe = Pathing.distance(cx, cz, closest.x, closest.z);
+            double nearestFoe = Body.gap(cx, cz, n, closest.x, closest.z, Body.size(closest));
 
             if ("Support".equals(mind)) {
                 for (BattleMove m : u.moves) {
                     MoveSpec s = MoveBook.of(m);
                     if (s == null || MoveEngine.blockedRepeat(b, u, s)) continue;
                     for (Unit t : s.support() || "any".equals(s.target) ? friends : List.<Unit>of()) {
-                        int d = Pathing.distance(cx, cz, t.x, t.z);
+                        int d = Body.gap(cx, cz, n, t.x, t.z, Body.size(t));
                         if (!("self".equals(s.target) ? t == u : m.reaches(d) || (t == u && "self_or_ally".equals(s.target)))) continue;
                         if ("ally".equals(s.target) && t == u) continue;
                         double v = supportValue(b, u, t, s, foes);
@@ -95,7 +95,7 @@ public final class EnemyBrain {
 
             for (Unit t : foes) {
                 if (focusReachable && t != focus) continue;      // locked on while the focus is in reach
-                int d = Pathing.distance(cx, cz, t.x, t.z);
+                int d = Body.gap(cx, cz, n, t.x, t.z, Body.size(t));
                 for (BattleMove m : u.moves) {
                     if (!m.reaches(d)) continue;
                     MoveSpec s = MoveBook.of(m);
@@ -143,11 +143,11 @@ public final class EnemyBrain {
         for (Map.Entry<Integer, Integer> cell : reach.entrySet()) {
             int cx = cell.getKey() % size, cz = cell.getKey() / size;
             if (!b.canStop(u, cx, cz)) continue;
-            int d = Pathing.distance(cx, cz, goal.x, goal.z);
-            double score = -Math.abs(d - ideal) * 10 + terrain(b, cx, cz, foes) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
+            int d = Body.gap(cx, cz, n, goal.x, goal.z, Body.size(goal));
+            double score = -Math.abs(d - ideal) * 10 + terrain(b, cx, cz, foes, u.flies()) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
             if ("Support".equals(mind) && !friends.isEmpty()) {
                 Unit ally = nearestOther(u, friends);
-                if (ally != null) score -= Pathing.distance(cx, cz, ally.x, ally.z) * 3;
+                if (ally != null) score -= Body.gap(cx, cz, n, ally.x, ally.z, Body.size(ally)) * 3;
             }
             if (score > bestScore) { bestScore = score; bestCell = cell.getKey(); }
         }
@@ -170,7 +170,7 @@ public final class EnemyBrain {
     private static boolean reachableFocus(Battle b, Unit u, Unit focus, Map<Integer, Integer> reach) {
         int size = b.grid.size;
         for (int cell : reach.keySet()) {
-            int d = Pathing.distance(cell % size, cell / size, focus.x, focus.z);
+            int d = Body.gap(cell % size, cell / size, Body.size(u), focus.x, focus.z, Body.size(focus));
             for (BattleMove m : u.moves) {
                 MoveSpec s = MoveBook.of(m);
                 if ((s == null || s.damaging()) && m.reaches(d)) return true;
@@ -200,7 +200,7 @@ public final class EnemyBrain {
         UnitState ts = MoveEngine.state(t);
         double v = 0;
         Unit nearFoe = nearest(t, foes);
-        boolean threatened = nearFoe != null && Pathing.distance(t.x, t.z, nearFoe.x, nearFoe.z) <= 6;
+        boolean threatened = nearFoe != null && Body.gap(t, nearFoe) <= 6;
         for (var e : s.effects) {
             String type = MoveSpec.str(e, "type");
             if ("heal".equals(type)) {
@@ -228,8 +228,9 @@ public final class EnemyBrain {
         for (com.google.gson.JsonObject e : s.effects)
             if ("zone".equals(MoveSpec.str(e, "type")) && MoveSpec.str(e, "cells") != null) shape = MoveSpec.str(e, "cells");
         java.util.Set<Integer> cells = Field.cells(b, t.x, t.z, shape, Math.max(1, s.radius));
-        int n = cells.contains(cx + cz * b.grid.size) ? 1 : 0;
-        for (Unit o : b.units) if (o != u && o.alive() && o.side == u.side && cells.contains(o.x + o.z * b.grid.size)) n++;
+        int n = 0;
+        for (int c : Body.cells(b.grid, cx, cz, Body.size(u))) if (cells.contains(c)) { n = 1; break; }
+        for (Unit o : b.units) if (o != u && o.alive() && o.side == u.side && Field.inside(b, o, cells)) n++;
         return n;
     }
 
@@ -240,9 +241,9 @@ public final class EnemyBrain {
         for (Unit o : b.units) {
             if (!o.alive() || o.side == u.side) continue;
             int d = switch (s.shape) {
-                case "self_radius" -> Pathing.distance(u.x, u.z, o.x, o.z);
-                case "square" -> Math.max(Math.abs(o.x - t.x), Math.abs(o.z - t.z));
-                default -> Pathing.distance(t.x, t.z, o.x, o.z);
+                case "self_radius" -> Body.gap(u, o);
+                case "square" -> Body.squareGap(t.x, t.z, Body.size(t), o.x, o.z, Body.size(o));
+                default -> Body.gap(t, o);
             };
             if (d <= Math.max(1, s.radius)) n++;
         }
@@ -251,13 +252,13 @@ public final class EnemyBrain {
 
     private static Unit nearest(Unit from, List<Unit> list) {
         Unit best = null;
-        for (Unit o : list) if (best == null || Pathing.distance(from.x, from.z, o.x, o.z) < Pathing.distance(from.x, from.z, best.x, best.z)) best = o;
+        for (Unit o : list) if (best == null || Body.gap(from, o) < Body.gap(from, best)) best = o;
         return best;
     }
 
     private static Unit nearestOther(Unit from, List<Unit> list) {
         Unit best = null;
-        for (Unit o : list) if (o != from && (best == null || Pathing.distance(from.x, from.z, o.x, o.z) < Pathing.distance(from.x, from.z, best.x, best.z))) best = o;
+        for (Unit o : list) if (o != from && (best == null || Body.gap(from, o) < Body.gap(from, best))) best = o;
         return best;
     }
 
@@ -275,7 +276,7 @@ public final class EnemyBrain {
     // ---------------------------------------------------------------- terrain
 
     /** Bonus for standing here: cover from opponents, and height above them. */
-    public static double terrain(Battle b, int x, int z, List<Unit> foes) {
+    public static double terrain(Battle b, int x, int z, List<Unit> foes, boolean flies) {
         BattleGrid g = b.grid;
         int h = g.y(x, z);
         double score = 0, avg = 0;
@@ -283,7 +284,7 @@ public final class EnemyBrain {
             avg += g.y(f.x, f.z);
             if (covered(g, x, z, f.x, f.z)) score += COVER;
         }
-        if (!foes.isEmpty()) score += Math.max(0, Math.min(3, h - avg / foes.size())) * HIGH_GROUND;
+        if (!foes.isEmpty() && !flies) score += Math.max(0, Math.min(3, h - avg / foes.size())) * HIGH_GROUND;   // flyers never have high ground
         return score;
     }
 

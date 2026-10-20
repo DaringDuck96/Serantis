@@ -40,7 +40,7 @@ public final class MoveEngine {
 
     public static UnitState state(Unit u) { return ((UnitAccess) (Object) u).serantis$state(); }
     private static BattleAccess acc(Battle b) { return (BattleAccess) (Object) b; }
-    private static int dist(Unit a, Unit b) { return Pathing.distance(a.x, a.z, b.x, b.z); }
+    private static int dist(Unit a, Unit b) { return Body.gap(a, b); }
     private static int scaled(int sheetAmount, Unit source) { return Math.max(1, (int) Math.round(sheetAmount * K * Stats.levelScale(source.level))); }
     private static Unit.Side other(Unit.Side s) { return s == Unit.Side.PLAYER ? Unit.Side.ENEMY : Unit.Side.PLAYER; }
     private static String s(JsonObject o, String k) { return MoveSpec.str(o, k); }
@@ -60,6 +60,8 @@ public final class MoveEngine {
 
     /** A new unit gets the creature's saved moves (party creatures) or three random ones. */
     public static void assignNewUnit(Battle b, Unit u) {
+        state(u).size = u.isPlayer || u.influence == null ? 1 : Footprints.tiles(u.speciesId, u.influence.getSerializedName());
+        if (state(u).size > 1) settle(b, u);
         if (u.isPlayer) return;
         if (u.side == Unit.Side.ENEMY) state(u).trait = EnemyBrain.roll(b.random);
         if (!MoveBook.available()) return;
@@ -80,6 +82,18 @@ public final class MoveEngine {
         }
         if (specs == null) specs = MoveBook.roll(u.influence, b.random);
         ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(specs));
+    }
+
+    /** Moves a big creature to the nearest spot its whole body fits (or makes it smaller if none does). */
+    static void settle(Battle b, Unit u) {
+        UnitState st = state(u);
+        for (int n = st.size; n >= 1; n--) {
+            st.size = n;
+            if (Body.canStop(b, u, u.x, u.z)) break;
+            int[] fit = Body.nearestFit(Body.ctx(b, u), u.x, u.z, n, u.flies(), Body.lava(u));
+            if (fit != null) { u.x = fit[0]; u.z = fit[1]; break; }
+        }
+        dev.serantis.battle.mixin.BattlesInvoker.serantis$placeEntity(b, u);
     }
 
     /** Once the battle is set up: wild creatures keep the moves saved on them (or save the ones just rolled). */
@@ -247,11 +261,11 @@ public final class MoveEngine {
         Unit a = p.user;
         for (Unit u : new ArrayList<>(b.units)) {
             if (!a.alive()) break;
-            if (u == a || !u.alive() || !p.cells.contains(u.x + u.z * b.grid.size)) continue;   // anyone under it, friend or foe
+            if (u == a || !u.alive() || !Field.inside(b, u, p.cells)) continue;   // anyone under it, friend or foe
             if (hitUnit(b, a, u, p.spec, p.move)) onHit(b, a, u, p.spec);
         }
         boolean any = false;
-        for (Unit u : b.units) if (u.alive() && p.cells.contains(u.x + u.z * b.grid.size)) any = true;
+        for (Unit u : b.units) if (u.alive() && u != a && Field.inside(b, u, p.cells)) any = true;
         if (!any) acc(b).serantis$say("It hits nothing but ground.");
     }
 
@@ -301,7 +315,8 @@ public final class MoveEngine {
             case "target_radius", "cross" -> { for (Unit u : b.units) if (u.alive() && u.side == foe && dist(t, u) <= Math.max(1, spec.radius)) out.add(u); }
             case "square" -> {
                 int r = Math.max(1, spec.radius);
-                for (Unit u : b.units) if (u.alive() && u.side == foe && Math.abs(u.x - t.x) <= r && Math.abs(u.z - t.z) <= r) out.add(u);
+                for (Unit u : b.units)
+                    if (u.alive() && u.side == foe && Body.squareGap(t.x, t.z, Body.size(t), u.x, u.z, Body.size(u)) <= r) out.add(u);
             }
             case "arc" -> {
                 out.add(t);
@@ -310,7 +325,7 @@ public final class MoveEngine {
             case "line", "line_first" -> {
                 for (int[] c : line(a, t, spec.max))
                     for (Unit u : b.units)
-                        if (u.alive() && u.side == foe && u.x == c[0] && u.z == c[1] && !out.contains(u)) out.add(u);
+                        if (u.alive() && u.side == foe && Body.covers(u.x, u.z, Body.size(u), c[0], c[1]) && !out.contains(u)) out.add(u);
                 if ("line_first".equals(spec.shape) && out.size() > 1) out = new ArrayList<>(out.subList(0, 1));
                 if (out.isEmpty()) out.add(t);
             }
@@ -509,7 +524,7 @@ public final class MoveEngine {
         if (r == null) return null;
         double hit = Math.max(0, Math.min(1, r.hitChance() + state(a).stage("accuracy") / 100.0));
         double crit = r.critChance();
-        if (b.grid.y(a.x, a.z) - b.grid.y(t.x, t.z) >= 1) crit = Math.min(1, crit * 2);
+        if (!a.flies() && Body.height(b, a) - Body.height(b, t) >= 1) crit = Math.min(1, crit * 2);   // flyers never have high ground
         MoveSpec spec = MoveBook.of(m);
         int hits = spec == null ? 1 : spec.hits;
         int damage = r.damage();
@@ -661,6 +676,8 @@ public final class MoveEngine {
             JsonObject uj = el.getAsJsonObject();
             Unit u = b.unit(uj.get("id").getAsInt());
             if (u == null) continue;
+            uj.addProperty("serantis_size", Body.size(u));
+            uj.addProperty("serantis_swims", Body.swims(u));
             String tags = state(u).tags();
             Field.Pending p = field.pendingOf(u);
             if (p != null) tags = ("charge".equals(p.kind) ? "Charging" : "Meteor falling") + (tags.isEmpty() ? "" : ", " + tags);

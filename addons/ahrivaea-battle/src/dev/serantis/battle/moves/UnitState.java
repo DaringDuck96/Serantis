@@ -30,6 +30,7 @@ public final class UnitState {
     public final List<Effect> effects = new ArrayList<>();
     public boolean recoil;
     public String trait;        // enemy mentality (see EnemyBrain)
+    public int size = 1;        // tiles per side its body covers (see Body)
     public String lastMoveId;
     public int lastMoveTurn = -99;
     public int startX = Integer.MIN_VALUE, startZ;

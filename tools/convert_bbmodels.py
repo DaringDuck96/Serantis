@@ -26,7 +26,7 @@ ALIASES = {"blooming_horror": "bloom_eye_horror",                               
            # End dragons: file names lost their accents
            "y_ddraig_goch": "ddraig_goch", "mok_l_mb_mb": "mokele_mbembe", "a_i_dah_ka": "azi_dahaka",
            "saraph": "seraphim", "f_fnir": "fafnir", "hr_mwyrm": "hrimwyrm"}
-SIZE_CLASS = {"small": 0.7, "medium": 1.0, "large": 1.6, "extra_large": 1.6}
+SIZE_CLASS = {"small": 0.7, "medium": 1.0, "large": 1.6, "extra_large": 1.6, "xx_large": 1.6}
 FPS = 24                                                   # sampling rate for smooth curves
 
 def r(x, n=4):
@@ -159,9 +159,18 @@ def animations(bb):
         anims[name] = entry
     return {"format_version": "1.8.0", "animations": anims}
 
+def record_size(cid, sclass):
+    """Keeps tools/model_sizes.tsv (the source of battle footprints) in step with the model names."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "model_sizes.tsv")
+    lines = open(path).read().splitlines()
+    head = [l for l in lines if l.startswith("#")]
+    rows = dict(l.split("\t") for l in lines if l and not l.startswith("#"))
+    rows[cid] = sclass
+    open(path, "w").write("\n".join(head + [f"{k}\t{v}" for k, v in sorted(rows.items())]) + "\n")
+
 # ---------------- one creature ----------------
 def creature_of(label, creature_dir):
-    m = re.match(r"([a-z]+)_(.+?)_(small|medium|extra_large|large)_models$", label)
+    m = re.match(r"([a-z]+)_(.+?)_(small|medium|xx_large|extra_large|large)_models$", label)
     if not m: raise SystemExit(f"Can't read creature from '{label}'")
     prefix, name, sclass = m.groups()
     name = ALIASES.get(name, name)
@@ -209,6 +218,7 @@ def convert(addon, src):
     c["forms"][infl]["size"] = size
     c["size"] = SIZE_CLASS[sclass]
     json.dump(c, open(cpath, "w"), indent=2); open(cpath, "a").write("\n")
+    record_size(cid, sclass)
     nb = len(geo["minecraft:geometry"][0]["bones"]); nc = sum(len(b.get("cubes", [])) for b in geo["minecraft:geometry"][0]["bones"])
     print(f"{cid:22} {infl:8} {nb:3} bones {nc:4} cubes  anims={','.join(anim['animations'])}  size={size} ({sclass})" + ("  NOTE: " + "; ".join(notes) if notes else ""))
 

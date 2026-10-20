@@ -7,7 +7,8 @@ import dev.ahrivaea.battle.Pathing;
 import dev.ahrivaea.client.battle.BattleClient;
 import dev.ahrivaea.client.battle.BattleScreen;
 import dev.serantis.battle.fx.Fx;
-import dev.serantis.battle.moves.Field;
+import dev.serantis.battle.moves.Body;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,6 +35,7 @@ public abstract class BattleScreenMixin {
     @Shadow private static JsonObject unit(int id) { return null; }
     @Shadow private void sendAction(String kind, int target) { }
     @Shadow private static JsonObject state() { return null; }
+    @Shadow private static List<JsonObject> units() { return null; }
     @Shadow private Pathing.Occupancy occupancy(JsonObject unit, String side) { return null; }
     @Shadow private void fillCell(GuiGraphicsExtractor g, int x, int z, int color) { }
     @Shadow public abstract double[] cellRect(int x, int z);
@@ -73,6 +75,15 @@ public abstract class BattleScreenMixin {
                 fillCell(g, i % grid.size, i / grid.size, color);
             }
         }
+        List<JsonObject> all = units();
+        if (all != null)
+            for (JsonObject u : all) {
+                int n = serantis$size(u);
+                if (n <= 1 || u.get("hp").getAsInt() <= 0) continue;
+                int color = "PLAYER".equals(u.get("side").getAsString()) ? 0x3A4C8CFF : 0x3AFF5A4C;
+                int ux = u.get("x").getAsInt(), uz = u.get("z").getAsInt();
+                for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) fillCell(g, ux + i, uz + j, color);
+            }
         serantis$drawFx(g, st, grid);
     }
 
@@ -91,7 +102,7 @@ public abstract class BattleScreenMixin {
                 long id = e.get("id").getAsLong();
                 if (id <= serantis$seen) continue;
                 serantis$playing.removeIf(p -> p[0] == e.get("cell").getAsLong() && p[1] != Fx.ATTACK && e.get("kind").getAsInt() != Fx.ATTACK);
-                serantis$playing.add(new long[]{e.get("cell").getAsLong(), e.get("kind").getAsLong(), now});
+                serantis$playing.add(new long[]{e.get("cell").getAsLong(), e.get("kind").getAsLong(), now, e.has("size") ? e.get("size").getAsLong() : 1});
                 newest = Math.max(newest, id);
             }
             serantis$seen = newest;
@@ -101,35 +112,79 @@ public abstract class BattleScreenMixin {
             int cell = (int) p[0], kind = (int) p[1];
             float t = (now - p[2]) / (float) (kind == Fx.ATTACK ? SERANTIS_SHAKE_MS : SERANTIS_FLASH_MS);
             if (t >= 1f) continue;
-            double[] r = cellRect(cell % grid.size, cell / grid.size);
-            if (kind == Fx.ATTACK) {
-                int dx = (int) Math.round(Math.sin(t * Math.PI * 6) * 4 * (1 - t));
-                int alpha = (int) (110 * (1 - t));
-                g.fill((int) r[0] + 1 + dx, (int) r[1] + 1, (int) r[2] + dx, (int) r[3], (alpha << 24) | Fx.color(kind));
-            } else {
-                int alpha = (int) (190 * (1 - t));
-                g.fill((int) r[0] + 1, (int) r[1] + 1, (int) r[2], (int) r[3], (alpha << 24) | Fx.color(kind));
-            }
+            int n = (int) p[3];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++) {
+                    int x = cell % grid.size + i, z = cell / grid.size + j;
+                    if (!grid.inside(x, z)) continue;
+                    double[] r = cellRect(x, z);
+                    if (kind == Fx.ATTACK) {
+                        int dx = (int) Math.round(Math.sin(t * Math.PI * 6) * 4 * (1 - t));
+                        int alpha = (int) (110 * (1 - t));
+                        g.fill((int) r[0] + 1 + dx, (int) r[1] + 1, (int) r[2] + dx, (int) r[3], (alpha << 24) | Fx.color(kind));
+                    } else {
+                        int alpha = (int) (190 * (1 - t));
+                        g.fill((int) r[0] + 1, (int) r[1] + 1, (int) r[2], (int) r[3], (alpha << 24) | Fx.color(kind));
+                    }
+                }
         }
     }
 
-    // Frozen Ground and Sinkhole tiles cost 2 movement (matches the server).
-    @Inject(method = "reach", at = @At("HEAD"), cancellable = true)
-    private void serantis$reach(JsonObject unit, CallbackInfoReturnable<Map<Integer, Integer>> cir) {
+    // ---- bodies bigger than one tile, and terrain costs (the same rules as the server, see Body)
+    private static int serantis$size(JsonObject u) {
+        return u != null && u.has("serantis_size") ? u.get("serantis_size").getAsInt() : 1;
+    }
+
+    /** Distance from the selected creature (at the tile it's moving to) to a target, body to body. */
+    private int serantis$gap(JsonObject actor, JsonObject target) {
+        return Body.gap(destX, destZ, serantis$size(actor), target.get("x").getAsInt(), target.get("z").getAsInt(), serantis$size(target));
+    }
+
+    private Body.Ctx serantis$ctx(JsonObject unit) {
         JsonObject st = state();
         BattleGrid grid = BattleClient.grid();
-        if (st == null || grid == null || !st.has("serantis_zones") || unit.get("flies").getAsBoolean()) return;
-        String side = unit.get("side").getAsString();
+        Pathing.Occupancy occ = occupancy(unit, unit.get("side").getAsString());
         Set<Integer> slow = new HashSet<>();
-        for (JsonElement el : st.getAsJsonArray("serantis_zones")) {
-            JsonObject z = el.getAsJsonObject();
-            String kind = z.get("kind").getAsString();
-            if (!("ice".equals(kind) || "sink".equals(kind))) continue;      // slow tiles slow everyone
-            for (JsonElement c : z.getAsJsonArray("cells")) slow.add(c.getAsInt());
-        }
-        if (slow.isEmpty()) return;
-        cir.setReturnValue(Field.reach(grid, unit.get("x").getAsInt(), unit.get("z").getAsInt(), unit.get("squares").getAsInt(),
-                false, unit.get("lava").getAsBoolean(), occupancy(unit, side), slow::contains));
+        if (st != null && st.has("serantis_zones"))
+            for (JsonElement el : st.getAsJsonArray("serantis_zones")) {
+                JsonObject z = el.getAsJsonObject();
+                String kind = z.get("kind").getAsString();
+                if (!("ice".equals(kind) || "sink".equals(kind))) continue;
+                for (JsonElement c : z.getAsJsonArray("cells")) slow.add(c.getAsInt());
+            }
+        return Body.ctx(grid, occ, slow::contains);
+    }
+
+    @Inject(method = "unitAt", at = @At("HEAD"), cancellable = true)
+    private static void serantis$unitAt(int x, int z, CallbackInfoReturnable<JsonObject> cir) {
+        List<JsonObject> all = units();
+        if (all == null) return;
+        for (JsonObject u : all)
+            if (u.get("hp").getAsInt() > 0 && Body.covers(u.get("x").getAsInt(), u.get("z").getAsInt(), serantis$size(u), x, z)) {
+                cir.setReturnValue(u);
+                return;
+            }
+        cir.setReturnValue(null);
+    }
+
+    @Inject(method = "canStop", at = @At("HEAD"), cancellable = true)
+    private void serantis$canStop(JsonObject unit, int x, int z, CallbackInfoReturnable<Boolean> cir) {
+        if (BattleClient.grid() == null) return;
+        cir.setReturnValue(Body.canStop(serantis$ctx(unit), x, z, serantis$size(unit),
+                unit.get("flies").getAsBoolean(), unit.get("lava").getAsBoolean()));
+    }
+
+    @Inject(method = "reach", at = @At("HEAD"), cancellable = true)
+    private void serantis$reach(JsonObject unit, CallbackInfoReturnable<Map<Integer, Integer>> cir) {
+        if (BattleClient.grid() == null) return;
+        boolean swims = unit.has("serantis_swims") && unit.get("serantis_swims").getAsBoolean();
+        cir.setReturnValue(Body.reach(serantis$ctx(unit), unit.get("x").getAsInt(), unit.get("z").getAsInt(), serantis$size(unit),
+                unit.get("squares").getAsInt(), unit.get("flies").getAsBoolean(), unit.get("lava").getAsBoolean(), swims));
+    }
+
+    @Redirect(method = "validTarget", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Pathing;distance(IIII)I"))
+    private int serantis$targetDistance(int x1, int z1, int x2, int z2, JsonObject actor, JsonObject target) {
+        return target == null ? Pathing.distance(x1, z1, x2, z2) : serantis$gap(actor, target);
     }
 
     private static String serantis$targetType(JsonObject actor, int move) {
@@ -145,7 +200,7 @@ public abstract class BattleScreenMixin {
         if (target == null || target.get("hp").getAsInt() <= 0) { cir.setReturnValue(false); return; }
         JsonObject m = actor.getAsJsonArray("moves").get(pending).getAsJsonObject();
         boolean self = target.get("id").getAsInt() == actor.get("id").getAsInt();
-        int d = Pathing.distance(destX, destZ, target.get("x").getAsInt(), target.get("z").getAsInt());
+        int d = serantis$gap(actor, target);
         boolean inRange = d >= m.get("min").getAsInt() && d <= m.get("max").getAsInt();
         boolean ok = switch (type) {
             case "self" -> self;

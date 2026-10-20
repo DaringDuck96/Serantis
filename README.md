@@ -66,6 +66,13 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - Enemies avoid zones and red meteor areas, try not to catch their own side in them, hit charging creatures with interrupts when they can, and only charge a Charged Shot when standing still.
 - **Flying creatures** pass over ground zones, but ranged attacks (moves that reach more than 1 tile) hit them 1.25× as hard.
 
+### Creature sizes and terrain
+
+- **Big creatures cover more of the grid:** small and medium creatures cover 1 tile, large 2×2, extra large 3×3 and XX large 4×4. A big creature can be targeted on any of its tiles, and its range is measured from its nearest edge. It needs room for its whole body to move or stop, and zones, area attacks, pushes and pulls all count every tile it covers. Each creature's size comes from the size word in its model pack's file name (`tools/model_sizes.tsv`). For creatures from the original creatures mod, which came without named models, it's judged from the model's size (under 3.6 blocks → 1×1, 3.6–7.5 → 2×2, 7.5 and up → 3×3). Every creature's size is listed in `books/Creature_Footprints.xlsx` (judged ones highlighted). Edit `tools/model_sizes.tsv` and rerun `tools/build_footprints.py` to change any.
+- **Arenas grow** by 2 tiles per size step of the biggest creature in the fight (2×2 → +2, 3×3 → +4, 4×4 → +6), up to 19×19.
+- **Difficult terrain costs extra movement.** Each tile costs 1, plus 2 per block climbed (going down is free), plus 2 for shallow water and 3 for deep water. Swimmers pay nothing extra for water. Frozen Ground and Sinkholes add 1. The blue movement preview on the battle screen shows all of this.
+- **Flying creatures are always in the air.** Every tile costs them 1, they pass over ground zones, and they never get high ground (no extra hit or crit chance from height).
+
 ### Battle effects
 
 The battle grid tile under each creature (and under the player) reacts as the battle plays out:
