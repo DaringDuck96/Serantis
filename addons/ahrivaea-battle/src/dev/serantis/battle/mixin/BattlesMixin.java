@@ -86,7 +86,13 @@ public abstract class BattlesMixin {
     private static void serantis$rename(ServerPlayer player, String json, CallbackInfoReturnable<String> cir) {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
-            if (!o.has("kind") || !"serantis_rename".equals(o.get("kind").getAsString())) return;
+            String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if ("serantis_apple".equals(kind)) {      // a golden apple fed from the party screen
+                dev.serantis.battle.Apples.feed(player, o.has("slot") ? o.get("slot").getAsInt() : -1, o.has("stat") ? o.get("stat").getAsString() : "");
+                cir.setReturnValue(null);
+                return;
+            }
+            if (!"serantis_rename".equals(kind)) return;
             cir.setReturnValue(dev.serantis.battle.Naming.rename(player, o.has("name") ? o.get("name").getAsString() : ""));
         } catch (RuntimeException e) {
             // not ours

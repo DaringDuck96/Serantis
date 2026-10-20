@@ -25,6 +25,10 @@ public abstract class CreatureEntityMixin implements MovesHolder {
     @Unique private String serantis$moves;
     @Unique private String serantis$temperament;
     @Unique private String serantis$nickname;
+    @Unique private String serantis$apples;
+
+    @Override public String serantis$apples() { return serantis$apples; }
+    @Override public void serantis$setApples(String apples) { serantis$apples = apples; }
 
     @Override public String serantis$nickname() { return serantis$nickname; }
     @Override public void serantis$setNickname(String nickname) { serantis$nickname = nickname; }
@@ -51,13 +55,15 @@ public abstract class CreatureEntityMixin implements MovesHolder {
 
     @Redirect(method = "setup", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/creature/Species;statsFor(Ldev/ahrivaea/creature/Influence;)Ldev/ahrivaea/creature/Stats;"))
     private Stats serantis$setupStats(Species species, Influence influence, Species s, Influence i, int level, float health) {
-        return Temperament.apply(species.statsFor(influence), serantis$temperament(), level);
+        return dev.serantis.battle.Apples.full(species.statsFor(influence), serantis$temperament(), serantis$apples, species.id(), influence, level);
     }
 
     @Inject(method = "getStats", at = @At("RETURN"), cancellable = true)
     private void serantis$stats(CallbackInfoReturnable<Stats> cir) {
         if (((CreatureEntity) (Object) this).level().isClientSide()) return;      // temperaments live on the server
-        cir.setReturnValue(Temperament.apply(cir.getReturnValue(), serantis$temperament(), ((CreatureEntity) (Object) this).getCreatureLevel()));
+        CreatureEntity self = (CreatureEntity) (Object) this;
+        cir.setReturnValue(dev.serantis.battle.Apples.full(cir.getReturnValue(), serantis$temperament(), serantis$apples,
+                self.getSpeciesId(), self.getInfluence(), self.getCreatureLevel()));
     }
 
     // A creature's level is kept within 0-20 when it is set up (was 0-50).
@@ -72,6 +78,7 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         if (serantis$moves != null) out.putString("SerantisMoves", serantis$moves);
         if (serantis$temperament != null) out.putString("SerantisTemperament", serantis$temperament);
         if (serantis$nickname != null) out.putString("SerantisName", serantis$nickname);
+        if (serantis$apples != null) out.putString("SerantisApples", serantis$apples);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
@@ -82,6 +89,8 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         if (!temperament.isEmpty()) serantis$temperament = temperament;
         String nickname = in.getStringOr("SerantisName", "");
         if (!nickname.isEmpty()) serantis$nickname = nickname;
+        String apples = in.getStringOr("SerantisApples", "");
+        if (!apples.isEmpty()) serantis$apples = apples;
     }
 
     // ...and carried over when it's caught or sent out from the party.
@@ -90,6 +99,7 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         if (serantis$moves != null && cir.getReturnValue() != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setMoves(serantis$moves);
         if (cir.getReturnValue() != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setTemperament(serantis$temperament());
         if (cir.getReturnValue() != null && serantis$nickname != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setNickname(serantis$nickname);
+        if (cir.getReturnValue() != null && serantis$apples != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setApples(serantis$apples);
     }
 
     @Inject(method = "applyCaught", at = @At("HEAD"))
@@ -99,5 +109,6 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         String temperament = ((MovesHolder) (Object) caught).serantis$temperament();
         if (temperament != null) serantis$temperament = temperament;
         serantis$nickname = ((MovesHolder) (Object) caught).serantis$nickname();
+        serantis$apples = ((MovesHolder) (Object) caught).serantis$apples();
     }
 }

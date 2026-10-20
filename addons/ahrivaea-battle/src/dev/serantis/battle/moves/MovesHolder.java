@@ -10,4 +10,7 @@ public interface MovesHolder {
     /** The name its player gave it, or null. */
     String serantis$nickname();
     void serantis$setNickname(String nickname);
+    /** Golden apples eaten per stat, "hp,attack,defense,speed,magic,luck,charisma" (see Apples). */
+    default String serantis$apples() { return null; }
+    default void serantis$setApples(String apples) { }
 }

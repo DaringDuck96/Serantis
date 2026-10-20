@@ -31,6 +31,8 @@ public final class UnitState {
     public boolean recoil;
     public String trait;        // enemy mentality (see EnemyBrain)
     public int size = 1;        // tiles per side its body covers (see Body)
+    /** Temperament and apples last applied to its stats. */
+    public String statsKey;
     public String temperament;  // see Temperament
     public int bonusTiles;      // extra battle movement (the player's Swiftness nodes)
     public String lastMoveId;

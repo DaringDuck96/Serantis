@@ -64,8 +64,7 @@ public abstract class BasesMixin {
         if (c != null && c.influence() != null) {
             var species = Species.get(c.species());
             if (species.isPresent()) {
-                var stats = dev.serantis.battle.Temperament.apply(species.get().statsFor(c.influence()),
-                        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$temperament(), level);
+                var stats = dev.serantis.battle.Apples.of(c, species.get().statsFor(c.influence()));
                 return Pace.workSpeed(level, stats.charisma());
             }
         }

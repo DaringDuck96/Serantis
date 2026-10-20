@@ -34,7 +34,7 @@ public abstract class PartySyncMixin {
     @Redirect(method = "describe", at = @At(value = "INVOKE",
             target = "Ldev/ahrivaea/creature/Species;statsFor(Ldev/ahrivaea/creature/Influence;)Ldev/ahrivaea/creature/Stats;"))
     private static Stats serantis$stats(Species species, Influence influence, CaughtCreature caught) {
-        return Temperament.apply(species.statsFor(influence), ((MovesHolder) (Object) caught).serantis$temperament(), caught.level());
+        return dev.serantis.battle.Apples.of(caught, species.statsFor(influence));
     }
 
     @Redirect(method = "describe", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/creature/Stats;squaresPerTurn()I"))
@@ -50,6 +50,7 @@ public abstract class PartySyncMixin {
         Temperament.Kind k = Temperament.of(h.serantis$temperament());
         String species = o.get("name").getAsString(), nick = h.serantis$nickname();
         if (k != null) o.addProperty("temperament", k.name());
+        dev.serantis.battle.Apples.describe(caught, o);
         String extra = (k != null ? k.name() : "") + (nick != null && !nick.isEmpty() ? (k != null ? " " : "") + species : "");
         String shown = nick != null && !nick.isEmpty() ? nick : species;
         o.addProperty("name", extra.isEmpty() ? shown : shown + " (" + extra + ")");

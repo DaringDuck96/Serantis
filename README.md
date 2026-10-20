@@ -101,6 +101,20 @@ Every creature gets one of 25 temperaments at random when it first appears and k
 | Tenacious | HP | Luck |
 | Trickster | Charisma | Magic |
 
+
+### Golden apples
+
+Feed golden apples to creatures in your party to raise their stats. This lets weaker creatures keep up late in the game. On the party screen, pick a creature and press **Apple**, then choose the stat. Each apple uses one golden apple from your inventory (none in Creative). Every stat of every creature can take up to 10 apples. How much each apple adds depends on the creature's rarity:
+
+| Rarity | Per apple | After 10 apples |
+|---|---|---|
+| Common | +2 | +20 |
+| Uncommon | +1 | +10 |
+| Rare | +0.5 | +5 |
+| Super Rare | +0.25 | +2.5 |
+| Legendary | no effect | — |
+
+The gain goes on the stat's Level 20 value, like the rest of the stat, so it is scaled down at lower levels. Stats are whole numbers, so halves and quarters are counted exactly and the stat goes up each time they add up to a whole point; the apple screen shows the exact total. Apples count everywhere the stat does: battles, max health, movement, work speed and riding. They are saved with the creature and kept when it is sent out, boxed or assigned to a base.
 ### Experience and the skill tree
 
 **One XP currency.** Battles give ordinary Minecraft XP (about 10 per creature defeated), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.

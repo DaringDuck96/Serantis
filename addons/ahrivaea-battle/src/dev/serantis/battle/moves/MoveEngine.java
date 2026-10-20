@@ -63,16 +63,17 @@ public final class MoveEngine {
         state(u).size = u.isPlayer || u.influence == null ? 1 : Footprints.tiles(u.speciesId, u.influence.getSerializedName());
         if (state(u).size > 1) settle(b, u);
         if (u.isPlayer) return;
-        String temperament = null;
+        String temperament = null, apples = null;
         if (u.side == Unit.Side.PLAYER && u.partySlot >= 0 && b.player() != null) {
             List<CaughtCreature> party = Party.get(b.player());
             if (u.partySlot < party.size()) {
                 MovesHolder h = (MovesHolder) (Object) party.get(u.partySlot);
                 temperament = h.serantis$temperament();
+                apples = h.serantis$apples();
                 if (h.serantis$nickname() != null && !h.serantis$nickname().isEmpty()) ((UnitAccess) (Object) u).serantis$setName(h.serantis$nickname());
             }
         }
-        setTemperament(u, temperament != null ? temperament : dev.serantis.battle.Temperament.roll(b.random));
+        setTemperament(u, temperament != null ? temperament : dev.serantis.battle.Temperament.roll(b.random), apples);
         if (u.side == Unit.Side.ENEMY) state(u).trait = EnemyBrain.roll(b.random);
         if (!MoveBook.available()) return;
         List<MoveSpec> specs = null;
@@ -107,13 +108,16 @@ public final class MoveEngine {
     }
 
     /** Gives a unit its temperament and the stats that go with it. */
-    static void setTemperament(Unit u, String temperament) {
+    /** Its temperament and golden apples, applied to its battle stats. */
+    static void setTemperament(Unit u, String temperament, String apples) {
         if (temperament == null || u.speciesId == null || u.influence == null) return;
         UnitState st = state(u);
-        if (temperament.equals(st.temperament)) return;
+        String key = temperament + "|" + (apples == null ? "" : apples);
+        if (key.equals(st.statsKey)) return;
         st.temperament = temperament;
+        st.statsKey = key;
         dev.ahrivaea.creature.Species.get(u.speciesId).ifPresent(sp ->
-                ((UnitAccess) (Object) u).serantis$setStats(dev.serantis.battle.Temperament.apply(sp.statsFor(u.influence), temperament, u.level)));
+                ((UnitAccess) (Object) u).serantis$setStats(dev.serantis.battle.Apples.full(sp.statsFor(u.influence), temperament, apples, u.speciesId, u.influence, u.level)));
     }
 
     /** Once the battle is set up: wild creatures keep the moves saved on them (or save the ones just rolled). */
@@ -124,7 +128,7 @@ public final class MoveEngine {
             Entity e = b.level.getEntity(u.entity);
             if (!(e instanceof CreatureEntity)) continue;
             MovesHolder h = (MovesHolder) (Object) e;
-            setTemperament(u, h.serantis$temperament());
+            setTemperament(u, h.serantis$temperament(), h.serantis$apples());
             List<MoveSpec> saved = MoveBook.decode(h.serantis$moves());
             if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved));
             else h.serantis$setMoves(encodeUnit(u));
