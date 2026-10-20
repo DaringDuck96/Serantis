@@ -1,12 +1,14 @@
 name: Inspect
 
-# Tooling only (branch "inspect"): disassembles the Minecraft classes listed in inspect/classes.txt
-# with javap and commits the output to inspect/out/, so add-on code can be checked against the
-# real Minecraft 26.3 names before it ships.
+# Tooling only (branch "inspect"). For each line of inspect/classes.txt:
+#   a.b.C          full disassembly (javap -c) of the class and its nested classes
+#   sig:a.b.C      member signatures only (javap -p), for very large classes
+#   asset:path     copy that file out of the Minecraft jar (e.g. assets/minecraft/textures/item/bucket.png)
+# Classes are looked up in Minecraft 26.3 and in Fabric API (all its modules). Output -> inspect/out/.
 on:
   push:
     branches: [inspect]
-    paths: ["inspect/classes.txt"]
+    paths: ["inspect/classes.txt", ".github/workflows/inspect.yml"]
 
 permissions:
   contents: write
@@ -20,24 +22,37 @@ jobs:
         with:
           distribution: temurin
           java-version: "25"
-      - name: Fetch Minecraft
+      - name: Fetch Minecraft and Fabric API
         run: |
           set -e
-          mkdir -p "$RUNNER_TEMP/mc"
+          mkdir -p "$RUNNER_TEMP/mc" "$RUNNER_TEMP/fapi"
           manifest="$(curl -sSf https://piston-meta.mojang.com/mc/game/version_manifest_v2.json)"
           vurl="$(echo "$manifest" | jq -r '[.versions[] | select(.id | test("^26\\.3(\\.[0-9]+)?$"))][0].url')"
           curl -sSf "$vurl" -o "$RUNNER_TEMP/version.json"
           curl -sSfL "$(jq -r .downloads.client.url "$RUNNER_TEMP/version.json")" -o "$RUNNER_TEMP/mc/minecraft.jar"
+          meta="$(curl -sSf https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml)"
+          fv="$(echo "$meta" | grep -oE '<version>[^<]*\+26\.3[^<]*</version>' | sed -E 's#</?version>##g' | tail -1)"
+          echo "Fabric API $fv"
+          curl -sSfL "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/$fv/fabric-api-$fv.jar" -o "$RUNNER_TEMP/fapi/fabric-api.jar"
+          cd "$RUNNER_TEMP/fapi" && unzip -qo fabric-api.jar 'META-INF/jars/*' && ls META-INF/jars | head -80
+          echo "$fv" > "$GITHUB_WORKSPACE/inspect/fabric-api-version.txt"
       - name: Disassemble
         run: |
           set -e
           rm -rf inspect/out && mkdir -p inspect/out
-          JAR="$RUNNER_TEMP/mc/minecraft.jar"
-          grep -v '^#' inspect/classes.txt | while read -r c; do
-            [ -n "$c" ] || continue
-            # every nested class too (anonymous slots and the like)
-            for n in $(unzip -Z1 "$JAR" | grep -E "^${c//.//}(\\\$[^/]*)?\\.class$" | sed 's/\.class$//' | tr / .); do
-              javap -c -p -constants -cp "$JAR" "$n" > "inspect/out/$n.txt" || true
+          JARS="$RUNNER_TEMP/mc/minecraft.jar $(ls $RUNNER_TEMP/fapi/META-INF/jars/*.jar | tr '\n' ' ')"
+          CP="$(echo $JARS | tr ' ' ':')"
+          grep -v '^#' inspect/classes.txt | while read -r line; do
+            [ -n "$line" ] || continue
+            case "$line" in
+              asset:*) p="${line#asset:}"; unzip -p "$RUNNER_TEMP/mc/minecraft.jar" "$p" > "inspect/out/$(echo "$p" | tr / _)" || true; continue;;
+              sig:*) c="${line#sig:}"; flags="-p -constants";;
+              *) c="$line"; flags="-c -p -constants";;
+            esac
+            for jar in $JARS; do
+              for n in $(unzip -Z1 "$jar" | grep -E "^${c//.//}(\\\$[^/]*)?\\.class$" | sed 's/\.class$//' | tr / .); do
+                javap $flags -cp "$CP" "$n" > "inspect/out/$n.txt" || true
+              done
             done
           done
           ls inspect/out
@@ -45,6 +60,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git add inspect/out
+          git add inspect
           git commit -m "Inspect output [skip ci]" || true
           git push

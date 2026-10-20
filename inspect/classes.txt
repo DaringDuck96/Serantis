@@ -1,2 +1,27 @@
-# Minecraft classes to disassemble (one per line)
-net.minecraft.world.inventory.GrindstoneMenu
+# Minecraft classes to disassemble (see the workflow for the syntax)
+net.minecraft.world.level.material.WaterFluid
+net.minecraft.world.level.block.LiquidBlock
+net.minecraft.world.item.BucketItem
+sig:net.minecraft.world.level.material.FlowingFluid
+sig:net.minecraft.world.level.material.Fluid
+sig:net.minecraft.world.level.material.Fluids
+sig:net.minecraft.world.level.block.Blocks
+sig:net.minecraft.world.item.Items
+sig:net.minecraft.world.item.Item$Properties
+sig:net.minecraft.world.level.block.state.BlockBehaviour$Properties
+sig:net.minecraft.core.registries.BuiltInRegistries
+sig:net.minecraft.core.Registry
+sig:net.minecraft.resources.ResourceKey
+sig:net.minecraft.core.registries.Registries
+sig:net.minecraft.world.item.DyeColor
+sig:net.minecraft.client.renderer.ItemBlockRenderTypes
+sig:net.minecraft.client.renderer.chunk.ChunkSectionLayer
+net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
+sig:net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
+sig:net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
+sig:net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+sig:net.fabricmc.api.ClientModInitializer
+asset:assets/minecraft/textures/item/bucket.png
+asset:assets/minecraft/textures/item/water_bucket.png
+asset:assets/minecraft/items/water_bucket.json
+asset:assets/minecraft/models/item/water_bucket.json
