@@ -59,7 +59,7 @@
           "text": "Mining stone and ores"
         }
       ],
-      "size": 1.6,
+      "size": 2.81,
       "wave": 3
     }
   },
@@ -72,6 +72,6 @@
     "luck": 76,
     "charisma": 71
   },
-  "size": 0.7,
+  "size": 1.0,
   "movement": "walk"
 }

@@ -53,7 +53,7 @@
           "text": "Enchanting support"
         }
       ],
-      "size": 2.4,
+      "size": 4.55,
       "wave": 3
     }
   },
@@ -66,6 +66,6 @@
     "luck": 76,
     "charisma": 65
   },
-  "size": 1.0,
+  "size": 1.6,
   "movement": "walk"
 }

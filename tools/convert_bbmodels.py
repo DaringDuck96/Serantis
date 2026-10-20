@@ -20,7 +20,8 @@ PREFIX = {"coral": "water", "briar": "nature", "astral": "arcane", "duskborn": "
           "umbral": "void", "gossamer": "fae", "hallowed": "radiant", "old": "none",
           "arcane": "arcane"}
 ALIASES = {"blooming_horror": "bloom_eye_horror", "scrap_goblin": "scrap_gobblin",   # artist name -> book name
-           "shardheart_colossus": "shardheart", "snowfang_wolf": "snowfang"}
+           "shardheart_colossus": "shardheart", "snowfang_wolf": "snowfang",
+           "one_eyed_colossus": "one_eye_colossus"}
 SIZE_CLASS = {"small": 0.7, "medium": 1.0, "large": 1.6, "extra_large": 1.6}
 FPS = 24                                                   # sampling rate for smooth curves
 
