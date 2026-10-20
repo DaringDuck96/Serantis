@@ -1,3 +1,3 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-net.minecraft.world.level.block.Block
-net.minecraft.world.inventory.AnvilMenu
+sig:net.minecraft.world.item.ItemStack
+sig:net.minecraft.world.entity.EquipmentSlot
