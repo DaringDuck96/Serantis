@@ -1,0 +1,2 @@
+# Minecraft classes to disassemble (one per line)
+net.minecraft.world.inventory.GrindstoneMenu
