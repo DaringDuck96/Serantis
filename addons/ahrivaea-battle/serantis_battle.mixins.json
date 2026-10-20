@@ -17,11 +17,14 @@
     "BattlesInvoker",
     "WorkerBrainMixin",
     "BasesMixin",
-    "PartySyncMixin"
+    "PartySyncMixin",
+    "StartersNamingMixin"
   ],
   "client": [
     "client.PartyScreenMixin",
-    "client.BattleScreenMixin"
+    "client.BattleScreenMixin",
+    "client.StarterScreenMixin",
+    "client.BattleClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

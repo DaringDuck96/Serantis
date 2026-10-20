@@ -24,6 +24,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class CreatureEntityMixin implements MovesHolder {
     @Unique private String serantis$moves;
     @Unique private String serantis$temperament;
+    @Unique private String serantis$nickname;
+
+    @Override public String serantis$nickname() { return serantis$nickname; }
+    @Override public void serantis$setNickname(String nickname) { serantis$nickname = nickname; }
+
+    // A named creature shows its name over its head instead of its species.
+    @Inject(method = "displayName", at = @At("RETURN"), cancellable = true)
+    private void serantis$displayName(CallbackInfoReturnable<String> cir) {
+        if (serantis$nickname != null && !serantis$nickname.isEmpty()) cir.setReturnValue(serantis$nickname);
+    }
 
     @Override public String serantis$moves() { return serantis$moves; }
     @Override public void serantis$setMoves(String moves) { serantis$moves = moves; }
@@ -61,6 +71,7 @@ public abstract class CreatureEntityMixin implements MovesHolder {
     private void serantis$saveMoves(ValueOutput out, CallbackInfo ci) {
         if (serantis$moves != null) out.putString("SerantisMoves", serantis$moves);
         if (serantis$temperament != null) out.putString("SerantisTemperament", serantis$temperament);
+        if (serantis$nickname != null) out.putString("SerantisName", serantis$nickname);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
@@ -69,6 +80,8 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         if (!saved.isEmpty()) serantis$moves = saved;
         String temperament = in.getStringOr("SerantisTemperament", "");
         if (!temperament.isEmpty()) serantis$temperament = temperament;
+        String nickname = in.getStringOr("SerantisName", "");
+        if (!nickname.isEmpty()) serantis$nickname = nickname;
     }
 
     // ...and carried over when it's caught or sent out from the party.
@@ -76,6 +89,7 @@ public abstract class CreatureEntityMixin implements MovesHolder {
     private void serantis$toCaught(CallbackInfoReturnable<CaughtCreature> cir) {
         if (serantis$moves != null && cir.getReturnValue() != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setMoves(serantis$moves);
         if (cir.getReturnValue() != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setTemperament(serantis$temperament());
+        if (cir.getReturnValue() != null && serantis$nickname != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setNickname(serantis$nickname);
     }
 
     @Inject(method = "applyCaught", at = @At("HEAD"))
@@ -84,5 +98,6 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         if (moves != null) serantis$moves = moves;
         String temperament = ((MovesHolder) (Object) caught).serantis$temperament();
         if (temperament != null) serantis$temperament = temperament;
+        serantis$nickname = ((MovesHolder) (Object) caught).serantis$nickname();
     }
 }

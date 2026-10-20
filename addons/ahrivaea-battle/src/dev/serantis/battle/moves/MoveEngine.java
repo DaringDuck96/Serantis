@@ -66,7 +66,11 @@ public final class MoveEngine {
         String temperament = null;
         if (u.side == Unit.Side.PLAYER && u.partySlot >= 0 && b.player() != null) {
             List<CaughtCreature> party = Party.get(b.player());
-            if (u.partySlot < party.size()) temperament = ((MovesHolder) (Object) party.get(u.partySlot)).serantis$temperament();
+            if (u.partySlot < party.size()) {
+                MovesHolder h = (MovesHolder) (Object) party.get(u.partySlot);
+                temperament = h.serantis$temperament();
+                if (h.serantis$nickname() != null && !h.serantis$nickname().isEmpty()) ((UnitAccess) (Object) u).serantis$setName(h.serantis$nickname());
+            }
         }
         setTemperament(u, temperament != null ? temperament : dev.serantis.battle.Temperament.roll(b.random));
         if (u.side == Unit.Side.ENEMY) state(u).trait = EnemyBrain.roll(b.random);

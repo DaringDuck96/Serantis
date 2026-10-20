@@ -24,6 +24,10 @@ public abstract class UnitMixin implements UnitAccess {
     @Shadow @Final public int level;
     @Shadow @Mutable @Final public dev.ahrivaea.creature.Stats stats;
     @Shadow @Mutable @Final public int maxHp;
+    @Shadow @Mutable @Final public String name;
+
+    @Override
+    public void serantis$setName(String next) { this.name = next; }
     @Shadow public int hp;
 
     @Override

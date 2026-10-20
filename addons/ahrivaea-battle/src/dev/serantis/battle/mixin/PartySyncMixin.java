@@ -32,9 +32,13 @@ public abstract class PartySyncMixin {
     @Inject(method = "describe", at = @At("RETURN"))
     private static void serantis$temperament(CaughtCreature caught, CallbackInfoReturnable<JsonObject> cir) {
         JsonObject o = cir.getReturnValue();
-        Temperament.Kind k = Temperament.of(((MovesHolder) (Object) caught).serantis$temperament());
-        if (o == null || k == null) return;
-        o.addProperty("temperament", k.name());
-        if (o.has("name")) o.addProperty("name", o.get("name").getAsString() + " (" + k.name() + ")");
+        if (o == null || !o.has("name")) return;
+        MovesHolder h = (MovesHolder) (Object) caught;
+        Temperament.Kind k = Temperament.of(h.serantis$temperament());
+        String species = o.get("name").getAsString(), nick = h.serantis$nickname();
+        if (k != null) o.addProperty("temperament", k.name());
+        String extra = (k != null ? k.name() : "") + (nick != null && !nick.isEmpty() ? (k != null ? " " : "") + species : "");
+        String shown = nick != null && !nick.isEmpty() ? nick : species;
+        o.addProperty("name", extra.isEmpty() ? shown : shown + " (" + extra + ")");
     }
 }

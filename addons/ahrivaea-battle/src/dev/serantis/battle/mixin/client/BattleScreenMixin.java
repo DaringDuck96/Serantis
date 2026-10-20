@@ -212,6 +212,21 @@ public abstract class BattleScreenMixin {
         cir.setReturnValue(ok);
     }
 
+    // After recruiting a creature, offer to name it.
+    @Inject(method = "recruit", at = @At("TAIL"))
+    private void serantis$nameRecruit(int index, CallbackInfo ci) {
+        JsonObject st = state();
+        if (st == null || !st.has("result") || !st.get("result").isJsonObject()) return;
+        JsonObject result = st.getAsJsonObject("result");
+        if (!result.has("recruits")) return;
+        var list = result.getAsJsonArray("recruits");
+        if (index < 0 || index >= list.size()) return;
+        JsonObject e = list.get(index).getAsJsonObject();
+        if (e.has("why") && !e.get("why").isJsonNull() && !e.get("why").getAsString().isEmpty()) return;   // can't recruit this one
+        dev.serantis.battle.client.RenameScreen.open((net.minecraft.client.gui.screens.Screen) (Object) this,
+                e.has("name") ? e.get("name").getAsString() : "creature");
+    }
+
     // Moves that only affect the user happen as soon as they're chosen.
     @Inject(method = "chooseMove", at = @At("HEAD"), cancellable = true)
     private void serantis$chooseMove(int move, CallbackInfo ci) {

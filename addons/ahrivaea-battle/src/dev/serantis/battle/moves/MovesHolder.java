@@ -7,4 +7,7 @@ public interface MovesHolder {
     /** Its temperament (see Temperament). */
     String serantis$temperament();
     void serantis$setTemperament(String temperament);
+    /** The name its player gave it, or null. */
+    String serantis$nickname();
+    void serantis$setNickname(String nickname);
 }

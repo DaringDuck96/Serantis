@@ -76,6 +76,20 @@ public abstract class BattlesMixin {
             String temperament = ((BattleAccess) (Object) battle).serantis$defeatedTemperaments().get(battle.defeated.get(index));
             if (temperament != null) ((MovesHolder) (Object) caught).serantis$setTemperament(temperament);
         }
-        return Party.addAnywhere(player, caught);
+        boolean added = Party.addAnywhere(player, caught);
+        if (added) dev.serantis.battle.Naming.offer(sp, caught);
+        return added;
+    }
+
+    // Names chosen on the screen come back as a battle action.
+    @Inject(method = "handle", at = @At("HEAD"), cancellable = true)
+    private static void serantis$rename(ServerPlayer player, String json, CallbackInfoReturnable<String> cir) {
+        try {
+            com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
+            if (!o.has("kind") || !"serantis_rename".equals(o.get("kind").getAsString())) return;
+            cir.setReturnValue(dev.serantis.battle.Naming.rename(player, o.has("name") ? o.get("name").getAsString() : ""));
+        } catch (RuntimeException e) {
+            // not ours
+        }
     }
 }

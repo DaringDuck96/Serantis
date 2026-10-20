@@ -26,6 +26,10 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
     @Shadow @Final @Mutable public static Codec<CaughtCreature> CODEC;
     @Unique private String serantis$moves;
     @Unique private String serantis$temperament;
+    @Unique private String serantis$nickname;
+
+    @Override public String serantis$nickname() { return serantis$nickname; }
+    @Override public void serantis$setNickname(String nickname) { serantis$nickname = nickname; }
 
     @Override public String serantis$moves() { return serantis$moves; }
     @Override public void serantis$setMoves(String moves) { serantis$moves = moves; }
@@ -60,5 +64,6 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
     private void serantis$copy(CaughtCreature next) {
         if (next != null && serantis$moves != null) ((MovesHolder) (Object) next).serantis$setMoves(serantis$moves);
         if (next != null && serantis$temperament != null) ((MovesHolder) (Object) next).serantis$setTemperament(serantis$temperament);
+        if (next != null && serantis$nickname != null) ((MovesHolder) (Object) next).serantis$setNickname(serantis$nickname);
     }
 }

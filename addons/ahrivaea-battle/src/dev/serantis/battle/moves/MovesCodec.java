@@ -10,6 +10,7 @@ import dev.ahrivaea.party.CaughtCreature;
 public final class MovesCodec implements Codec<CaughtCreature> {
     private static final String KEY = "serantis_moves";
     private static final String TEMPERAMENT = "serantis_temperament";
+    private static final String NAME = "serantis_name";
     private final Codec<CaughtCreature> inner;
 
     private MovesCodec(Codec<CaughtCreature> inner) { this.inner = inner; }
@@ -25,6 +26,8 @@ public final class MovesCodec implements Codec<CaughtCreature> {
         String moves = h.serantis$moves(), temperament = h.serantis$temperament();
         if (moves != null && !moves.isEmpty()) base = base.flatMap(t -> ops.mergeToMap(t, ops.createString(KEY), ops.createString(moves)));
         if (temperament != null) base = base.flatMap(t -> ops.mergeToMap(t, ops.createString(TEMPERAMENT), ops.createString(temperament)));
+        String nickname = h.serantis$nickname();
+        if (nickname != null) base = base.flatMap(t -> ops.mergeToMap(t, ops.createString(NAME), ops.createString(nickname)));
         return base;
     }
 
@@ -35,6 +38,8 @@ public final class MovesCodec implements Codec<CaughtCreature> {
                     .ifPresent(s -> ((MovesHolder) (Object) pair.getFirst()).serantis$setMoves(s));
             ops.get(input, TEMPERAMENT).flatMap(ops::getStringValue).result()
                     .ifPresent(s -> ((MovesHolder) (Object) pair.getFirst()).serantis$setTemperament(s));
+            ops.get(input, NAME).flatMap(ops::getStringValue).result()
+                    .ifPresent(s -> ((MovesHolder) (Object) pair.getFirst()).serantis$setNickname(s));
             return pair;
         });
     }
