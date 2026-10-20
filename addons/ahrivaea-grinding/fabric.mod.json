@@ -1,0 +1,22 @@
+{
+    "schemaVersion": 1,
+    "id": "serantis_grinding",
+    "version": "0.1.0",
+    "name": "Serantis Grinding",
+    "description": "Grindstones grind cobblestone into gravel and gravel into sand, 2 for 1 (a stack of 64 makes 32).",
+    "authors": [
+        "jeffreystu10",
+        "DaringDuck96"
+    ],
+    "license": "All-Rights-Reserved",
+    "icon": "assets/serantis_grinding/icon.png",
+    "environment": "*",
+    "mixins": [
+        "serantis_grinding.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "~26.3",
+        "java": ">=25"
+    }
+}
