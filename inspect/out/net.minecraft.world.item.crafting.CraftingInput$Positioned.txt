@@ -1,0 +1,15 @@
+Compiled from "CraftingInput.java"
+public final class net.minecraft.world.item.crafting.CraftingInput$Positioned extends java.lang.Record {
+  private final net.minecraft.world.item.crafting.CraftingInput input;
+  private final int left;
+  private final int top;
+  public static final net.minecraft.world.item.crafting.CraftingInput$Positioned EMPTY;
+  public net.minecraft.world.item.crafting.CraftingInput$Positioned(net.minecraft.world.item.crafting.CraftingInput, int, int);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.item.crafting.CraftingInput input();
+  public int left();
+  public int top();
+  static {};
+}
