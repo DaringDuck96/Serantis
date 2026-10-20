@@ -1,7 +1,0 @@
-Compiled from "Registry.java"
-public interface net.minecraft.core.Registry$PendingTags<T> {
-  public abstract net.minecraft.resources.ResourceKey<? extends net.minecraft.core.Registry<? extends T>> key();
-  public abstract net.minecraft.core.HolderLookup$RegistryLookup<T> lookup();
-  public abstract void apply();
-  public abstract int size();
-}

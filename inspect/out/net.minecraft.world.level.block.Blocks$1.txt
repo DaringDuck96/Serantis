@@ -1,5 +1,0 @@
-Compiled from "Blocks.java"
-class net.minecraft.world.level.block.Blocks$1 {
-  static final int[] $SwitchMap$net$minecraft$world$level$block$WeatheringCopper$WeatherState;
-  static {};
-}

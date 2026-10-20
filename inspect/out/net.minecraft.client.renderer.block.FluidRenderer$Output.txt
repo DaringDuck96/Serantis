@@ -1,0 +1,4 @@
+Compiled from "FluidRenderer.java"
+public interface net.minecraft.client.renderer.block.FluidRenderer$Output {
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer getBuilder(net.minecraft.client.renderer.chunk.ChunkSectionLayer);
+}

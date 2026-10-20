@@ -1,5 +1,0 @@
-Compiled from "FlowingFluid.java"
-class net.minecraft.world.level.material.FlowingFluid$1 extends it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap<net.minecraft.world.level.material.FlowingFluid$BlockStatePairKey> {
-  net.minecraft.world.level.material.FlowingFluid$1(int);
-  protected void rehash(int);
-}

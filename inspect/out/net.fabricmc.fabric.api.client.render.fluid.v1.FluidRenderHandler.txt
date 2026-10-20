@@ -1,4 +1,0 @@
-Compiled from "FluidRenderHandler.java"
-public interface net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler {
-  public default void renderFluid(net.minecraft.client.renderer.block.FluidRenderer, net.minecraft.core.BlockPos, net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.client.renderer.block.FluidRenderer$Output, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.FluidState);
-}

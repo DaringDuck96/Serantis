@@ -1,0 +1,1195 @@
+Compiled from "FluidRenderer.java"
+public class net.minecraft.client.renderer.block.FluidRenderer {
+  private static final float MAX_FLUID_HEIGHT = 0.8888889f;
+
+  private final net.minecraft.client.renderer.block.FluidStateModelSet fluidModels;
+
+  public net.minecraft.client.renderer.block.FluidRenderer(net.minecraft.client.renderer.block.FluidStateModelSet);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field fluidModels:Lnet/minecraft/client/renderer/block/FluidStateModelSet;
+         9: return
+
+  private static boolean isNeighborSameFluid(net.minecraft.world.level.material.FluidState, net.minecraft.world.level.material.FluidState);
+    Code:
+         0: aload_1
+         1: invokevirtual #13                 // Method net/minecraft/world/level/material/FluidState.getType:()Lnet/minecraft/world/level/material/Fluid;
+         4: aload_0
+         5: invokevirtual #13                 // Method net/minecraft/world/level/material/FluidState.getType:()Lnet/minecraft/world/level/material/Fluid;
+         8: invokevirtual #19                 // Method net/minecraft/world/level/material/Fluid.isSame:(Lnet/minecraft/world/level/material/Fluid;)Z
+        11: ireturn
+
+  private static boolean isFaceOccludedByState(net.minecraft.core.Direction, float, net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: aload_2
+         1: aload_0
+         2: invokevirtual #25                 // Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;
+         5: invokevirtual #31                 // Method net/minecraft/world/level/block/state/BlockState.getFaceOcclusionShape:(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+         8: astore_3
+         9: aload_3
+        10: invokestatic  #37                 // Method net/minecraft/world/phys/shapes/Shapes.empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;
+        13: if_acmpne     18
+        16: iconst_0
+        17: ireturn
+        18: aload_3
+        19: invokestatic  #43                 // Method net/minecraft/world/phys/shapes/Shapes.block:()Lnet/minecraft/world/phys/shapes/VoxelShape;
+        22: if_acmpne     56
+        25: fload_1
+        26: fconst_1
+        27: fcmpl
+        28: ifne          35
+        31: iconst_1
+        32: goto          36
+        35: iconst_0
+        36: istore        4
+        38: aload_0
+        39: getstatic     #46                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+        42: if_acmpne     50
+        45: iload         4
+        47: ifeq          54
+        50: iconst_1
+        51: goto          55
+        54: iconst_0
+        55: ireturn
+        56: dconst_0
+        57: dconst_0
+        58: dconst_0
+        59: dconst_1
+        60: fload_1
+        61: f2d
+        62: dconst_1
+        63: invokestatic  #50                 // Method net/minecraft/world/phys/shapes/Shapes.box:(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        66: astore        4
+        68: aload         4
+        70: aload_3
+        71: aload_0
+        72: invokestatic  #54                 // Method net/minecraft/world/phys/shapes/Shapes.blockOccludes:(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/core/Direction;)Z
+        75: ireturn
+
+  private static boolean isFaceOccludedByNeighbor(net.minecraft.core.Direction, float, net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: aload_0
+         1: fload_1
+         2: aload_2
+         3: invokestatic  #58                 // Method isFaceOccludedByState:(Lnet/minecraft/core/Direction;FLnet/minecraft/world/level/block/state/BlockState;)Z
+         6: ireturn
+
+  private static boolean isFaceOccludedBySelf(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.Direction);
+    Code:
+         0: aload_1
+         1: invokevirtual #25                 // Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;
+         4: fconst_1
+         5: aload_0
+         6: invokestatic  #58                 // Method isFaceOccludedByState:(Lnet/minecraft/core/Direction;FLnet/minecraft/world/level/block/state/BlockState;)Z
+         9: ireturn
+
+  public static boolean shouldRenderFace(net.minecraft.world.level.material.FluidState, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.Direction, net.minecraft.world.level.material.FluidState);
+    Code:
+         0: aload_0
+         1: aload_3
+         2: invokestatic  #62                 // Method isNeighborSameFluid:(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/material/FluidState;)Z
+         5: ifne          20
+         8: aload_1
+         9: aload_2
+        10: invokestatic  #66                 // Method isFaceOccludedBySelf:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z
+        13: ifne          20
+        16: iconst_1
+        17: goto          21
+        20: iconst_0
+        21: ireturn
+
+  public void tesselate(net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.core.BlockPos, net.minecraft.client.renderer.block.FluidRenderer$Output, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.FluidState);
+    Code:
+         0: aload_1
+         1: aload_2
+         2: getstatic     #70                 // Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;
+         5: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+         8: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        13: astore        6
+        15: aload         6
+        17: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+        20: astore        7
+        22: aload_1
+        23: aload_2
+        24: getstatic     #46                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+        27: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+        30: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        35: astore        8
+        37: aload         8
+        39: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+        42: astore        9
+        44: aload_1
+        45: aload_2
+        46: getstatic     #89                 // Field net/minecraft/core/Direction.NORTH:Lnet/minecraft/core/Direction;
+        49: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+        52: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        57: astore        10
+        59: aload         10
+        61: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+        64: astore        11
+        66: aload_1
+        67: aload_2
+        68: getstatic     #92                 // Field net/minecraft/core/Direction.SOUTH:Lnet/minecraft/core/Direction;
+        71: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+        74: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        79: astore        12
+        81: aload         12
+        83: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+        86: astore        13
+        88: aload_1
+        89: aload_2
+        90: getstatic     #95                 // Field net/minecraft/core/Direction.WEST:Lnet/minecraft/core/Direction;
+        93: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+        96: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       101: astore        14
+       103: aload         14
+       105: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+       108: astore        15
+       110: aload_1
+       111: aload_2
+       112: getstatic     #98                 // Field net/minecraft/core/Direction.EAST:Lnet/minecraft/core/Direction;
+       115: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       118: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       123: astore        16
+       125: aload         16
+       127: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+       130: astore        17
+       132: aload         5
+       134: aload         9
+       136: invokestatic  #62                 // Method isNeighborSameFluid:(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/material/FluidState;)Z
+       139: ifne          146
+       142: iconst_1
+       143: goto          147
+       146: iconst_0
+       147: istore        18
+       149: aload         5
+       151: aload         4
+       153: getstatic     #70                 // Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;
+       156: aload         7
+       158: invokestatic  #101                // Method shouldRenderFace:(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z
+       161: ifeq          181
+       164: getstatic     #70                 // Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;
+       167: ldc           #105                // float 0.8888889f
+       169: aload         6
+       171: invokestatic  #106                // Method isFaceOccludedByNeighbor:(Lnet/minecraft/core/Direction;FLnet/minecraft/world/level/block/state/BlockState;)Z
+       174: ifne          181
+       177: iconst_1
+       178: goto          182
+       181: iconst_0
+       182: istore        19
+       184: aload         5
+       186: aload         4
+       188: getstatic     #89                 // Field net/minecraft/core/Direction.NORTH:Lnet/minecraft/core/Direction;
+       191: aload         11
+       193: invokestatic  #101                // Method shouldRenderFace:(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z
+       196: istore        20
+       198: aload         5
+       200: aload         4
+       202: getstatic     #92                 // Field net/minecraft/core/Direction.SOUTH:Lnet/minecraft/core/Direction;
+       205: aload         13
+       207: invokestatic  #101                // Method shouldRenderFace:(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z
+       210: istore        21
+       212: aload         5
+       214: aload         4
+       216: getstatic     #95                 // Field net/minecraft/core/Direction.WEST:Lnet/minecraft/core/Direction;
+       219: aload         15
+       221: invokestatic  #101                // Method shouldRenderFace:(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z
+       224: istore        22
+       226: aload         5
+       228: aload         4
+       230: getstatic     #98                 // Field net/minecraft/core/Direction.EAST:Lnet/minecraft/core/Direction;
+       233: aload         17
+       235: invokestatic  #101                // Method shouldRenderFace:(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z
+       238: istore        23
+       240: iload         18
+       242: ifne          271
+       245: iload         19
+       247: ifne          271
+       250: iload         23
+       252: ifne          271
+       255: iload         22
+       257: ifne          271
+       260: iload         20
+       262: ifne          271
+       265: iload         21
+       267: ifne          271
+       270: return
+       271: aload_0
+       272: getfield      #7                  // Field fluidModels:Lnet/minecraft/client/renderer/block/FluidStateModelSet;
+       275: aload         5
+       277: invokevirtual #109                // Method net/minecraft/client/renderer/block/FluidStateModelSet.get:(Lnet/minecraft/world/level/material/FluidState;)Lnet/minecraft/client/renderer/block/FluidModel;
+       280: astore        24
+       282: aload_3
+       283: aload         24
+       285: invokevirtual #115                // Method net/minecraft/client/renderer/block/FluidModel.layer:()Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;
+       288: invokeinterface #121,  2          // InterfaceMethod net/minecraft/client/renderer/block/FluidRenderer$Output.getBuilder:(Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;)Lcom/mojang/blaze3d/vertex/VertexConsumer;
+       293: astore        25
+       295: aload         24
+       297: invokevirtual #127                // Method net/minecraft/client/renderer/block/FluidModel.tintSource:()Lnet/minecraft/client/color/block/BlockTintSource;
+       300: ifnull        320
+       303: aload         24
+       305: invokevirtual #127                // Method net/minecraft/client/renderer/block/FluidModel.tintSource:()Lnet/minecraft/client/color/block/BlockTintSource;
+       308: aload         4
+       310: aload_1
+       311: aload_2
+       312: invokeinterface #131,  4          // InterfaceMethod net/minecraft/client/color/block/BlockTintSource.colorInWorld:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I
+       317: goto          321
+       320: iconst_m1
+       321: istore        26
+       323: aload_1
+       324: invokeinterface #139,  1          // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.cardinalLighting:()Lnet/minecraft/world/level/CardinalLighting;
+       329: astore        27
+       331: aload         5
+       333: invokevirtual #13                 // Method net/minecraft/world/level/material/FluidState.getType:()Lnet/minecraft/world/level/material/Fluid;
+       336: astore        28
+       338: aload_0
+       339: aload_1
+       340: aload         28
+       342: aload_2
+       343: aload         4
+       345: aload         5
+       347: invokevirtual #143                // Method getHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)F
+       350: fstore        33
+       352: fload         33
+       354: fconst_1
+       355: fcmpl
+       356: iflt          374
+       359: fconst_1
+       360: fstore        29
+       362: fconst_1
+       363: fstore        30
+       365: fconst_1
+       366: fstore        31
+       368: fconst_1
+       369: fstore        32
+       371: goto          554
+       374: aload_0
+       375: aload_1
+       376: aload         28
+       378: aload_2
+       379: invokevirtual #147                // Method net/minecraft/core/BlockPos.north:()Lnet/minecraft/core/BlockPos;
+       382: aload         10
+       384: aload         11
+       386: invokevirtual #143                // Method getHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)F
+       389: fstore        34
+       391: aload_0
+       392: aload_1
+       393: aload         28
+       395: aload_2
+       396: invokevirtual #151                // Method net/minecraft/core/BlockPos.south:()Lnet/minecraft/core/BlockPos;
+       399: aload         12
+       401: aload         13
+       403: invokevirtual #143                // Method getHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)F
+       406: fstore        35
+       408: aload_0
+       409: aload_1
+       410: aload         28
+       412: aload_2
+       413: invokevirtual #154                // Method net/minecraft/core/BlockPos.east:()Lnet/minecraft/core/BlockPos;
+       416: aload         16
+       418: aload         17
+       420: invokevirtual #143                // Method getHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)F
+       423: fstore        36
+       425: aload_0
+       426: aload_1
+       427: aload         28
+       429: aload_2
+       430: invokevirtual #157                // Method net/minecraft/core/BlockPos.west:()Lnet/minecraft/core/BlockPos;
+       433: aload         14
+       435: aload         15
+       437: invokevirtual #143                // Method getHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)F
+       440: fstore        37
+       442: aload_0
+       443: aload_1
+       444: aload         28
+       446: fload         33
+       448: fload         34
+       450: fload         36
+       452: aload_2
+       453: getstatic     #89                 // Field net/minecraft/core/Direction.NORTH:Lnet/minecraft/core/Direction;
+       456: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       459: getstatic     #98                 // Field net/minecraft/core/Direction.EAST:Lnet/minecraft/core/Direction;
+       462: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       465: invokevirtual #160                // Method calculateAverageHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;FFFLnet/minecraft/core/BlockPos;)F
+       468: fstore        29
+       470: aload_0
+       471: aload_1
+       472: aload         28
+       474: fload         33
+       476: fload         34
+       478: fload         37
+       480: aload_2
+       481: getstatic     #89                 // Field net/minecraft/core/Direction.NORTH:Lnet/minecraft/core/Direction;
+       484: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       487: getstatic     #95                 // Field net/minecraft/core/Direction.WEST:Lnet/minecraft/core/Direction;
+       490: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       493: invokevirtual #160                // Method calculateAverageHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;FFFLnet/minecraft/core/BlockPos;)F
+       496: fstore        30
+       498: aload_0
+       499: aload_1
+       500: aload         28
+       502: fload         33
+       504: fload         35
+       506: fload         36
+       508: aload_2
+       509: getstatic     #92                 // Field net/minecraft/core/Direction.SOUTH:Lnet/minecraft/core/Direction;
+       512: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       515: getstatic     #98                 // Field net/minecraft/core/Direction.EAST:Lnet/minecraft/core/Direction;
+       518: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       521: invokevirtual #160                // Method calculateAverageHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;FFFLnet/minecraft/core/BlockPos;)F
+       524: fstore        31
+       526: aload_0
+       527: aload_1
+       528: aload         28
+       530: fload         33
+       532: fload         35
+       534: fload         37
+       536: aload_2
+       537: getstatic     #92                 // Field net/minecraft/core/Direction.SOUTH:Lnet/minecraft/core/Direction;
+       540: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       543: getstatic     #95                 // Field net/minecraft/core/Direction.WEST:Lnet/minecraft/core/Direction;
+       546: invokevirtual #73                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+       549: invokevirtual #160                // Method calculateAverageHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;FFFLnet/minecraft/core/BlockPos;)F
+       552: fstore        32
+       554: aload_2
+       555: invokevirtual #164                // Method net/minecraft/core/BlockPos.getX:()I
+       558: bipush        15
+       560: iand
+       561: i2f
+       562: fstore        34
+       564: aload_2
+       565: invokevirtual #170                // Method net/minecraft/core/BlockPos.getY:()I
+       568: bipush        15
+       570: iand
+       571: i2f
+       572: fstore        35
+       574: aload_2
+       575: invokevirtual #173                // Method net/minecraft/core/BlockPos.getZ:()I
+       578: bipush        15
+       580: iand
+       581: i2f
+       582: fstore        36
+       584: ldc           #176                // float 0.001f
+       586: fstore        37
+       588: iload         19
+       590: ifeq          598
+       593: ldc           #176                // float 0.001f
+       595: goto          599
+       598: fconst_0
+       599: fstore        38
+       601: iload         18
+       603: ifeq          1035
+       606: getstatic     #46                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+       609: fload         30
+       611: fload         32
+       613: invokestatic  #177                // Method java/lang/Math.min:(FF)F
+       616: fload         31
+       618: fload         29
+       620: invokestatic  #177                // Method java/lang/Math.min:(FF)F
+       623: invokestatic  #177                // Method java/lang/Math.min:(FF)F
+       626: aload         8
+       628: invokestatic  #106                // Method isFaceOccludedByNeighbor:(Lnet/minecraft/core/Direction;FLnet/minecraft/world/level/block/state/BlockState;)Z
+       631: ifne          1035
+       634: fload         30
+       636: ldc           #176                // float 0.001f
+       638: fsub
+       639: fstore        30
+       641: fload         32
+       643: ldc           #176                // float 0.001f
+       645: fsub
+       646: fstore        32
+       648: fload         31
+       650: ldc           #176                // float 0.001f
+       652: fsub
+       653: fstore        31
+       655: fload         29
+       657: ldc           #176                // float 0.001f
+       659: fsub
+       660: fstore        29
+       662: aload         5
+       664: aload_1
+       665: aload_2
+       666: invokevirtual #183                // Method net/minecraft/world/level/material/FluidState.getFlow:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/Vec3;
+       669: astore        47
+       671: aload         47
+       673: getfield      #187                // Field net/minecraft/world/phys/Vec3.x:D
+       676: dconst_0
+       677: dcmpl
+       678: ifne          748
+       681: aload         47
+       683: getfield      #193                // Field net/minecraft/world/phys/Vec3.z:D
+       686: dconst_0
+       687: dcmpl
+       688: ifne          748
+       691: aload         24
+       693: invokevirtual #196                // Method net/minecraft/client/renderer/block/FluidModel.stillMaterial:()Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+       696: invokevirtual #200                // Method net/minecraft/client/resources/model/sprite/Material$Baked.sprite:()Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+       699: astore        48
+       701: aload         48
+       703: invokevirtual #206                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU0:()F
+       706: fstore        39
+       708: aload         48
+       710: invokevirtual #212                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV0:()F
+       713: fstore        43
+       715: fload         39
+       717: fstore        40
+       719: aload         48
+       721: invokevirtual #215                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV1:()F
+       724: fstore        44
+       726: aload         48
+       728: invokevirtual #218                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU1:()F
+       731: fstore        41
+       733: fload         44
+       735: fstore        45
+       737: fload         41
+       739: fstore        42
+       741: fload         43
+       743: fstore        46
+       745: goto          927
+       748: aload         47
+       750: getfield      #193                // Field net/minecraft/world/phys/Vec3.z:D
+       753: aload         47
+       755: getfield      #187                // Field net/minecraft/world/phys/Vec3.x:D
+       758: invokestatic  #221                // Method net/minecraft/util/Mth.atan2:(DD)D
+       761: d2f
+       762: ldc           #227                // float 1.5707964f
+       764: fsub
+       765: fstore        48
+       767: fload         48
+       769: f2d
+       770: invokestatic  #228                // Method net/minecraft/util/Mth.sin:(D)F
+       773: ldc           #232                // float 0.25f
+       775: fmul
+       776: fstore        49
+       778: fload         48
+       780: f2d
+       781: invokestatic  #233                // Method net/minecraft/util/Mth.cos:(D)F
+       784: ldc           #232                // float 0.25f
+       786: fmul
+       787: fstore        50
+       789: ldc           #236                // float 0.5f
+       791: fstore        51
+       793: aload         24
+       795: invokevirtual #237                // Method net/minecraft/client/renderer/block/FluidModel.flowingMaterial:()Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+       798: invokevirtual #200                // Method net/minecraft/client/resources/model/sprite/Material$Baked.sprite:()Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+       801: astore        52
+       803: aload         52
+       805: ldc           #236                // float 0.5f
+       807: fload         50
+       809: fneg
+       810: fload         49
+       812: fsub
+       813: fadd
+       814: invokevirtual #240                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU:(F)F
+       817: fstore        39
+       819: aload         52
+       821: ldc           #236                // float 0.5f
+       823: fload         50
+       825: fneg
+       826: fload         49
+       828: fadd
+       829: fadd
+       830: invokevirtual #244                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV:(F)F
+       833: fstore        43
+       835: aload         52
+       837: ldc           #236                // float 0.5f
+       839: fload         50
+       841: fneg
+       842: fload         49
+       844: fadd
+       845: fadd
+       846: invokevirtual #240                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU:(F)F
+       849: fstore        40
+       851: aload         52
+       853: ldc           #236                // float 0.5f
+       855: fload         50
+       857: fload         49
+       859: fadd
+       860: fadd
+       861: invokevirtual #244                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV:(F)F
+       864: fstore        44
+       866: aload         52
+       868: ldc           #236                // float 0.5f
+       870: fload         50
+       872: fload         49
+       874: fadd
+       875: fadd
+       876: invokevirtual #240                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU:(F)F
+       879: fstore        41
+       881: aload         52
+       883: ldc           #236                // float 0.5f
+       885: fload         50
+       887: fload         49
+       889: fsub
+       890: fadd
+       891: invokevirtual #244                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV:(F)F
+       894: fstore        45
+       896: aload         52
+       898: ldc           #236                // float 0.5f
+       900: fload         50
+       902: fload         49
+       904: fsub
+       905: fadd
+       906: invokevirtual #240                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU:(F)F
+       909: fstore        42
+       911: aload         52
+       913: ldc           #236                // float 0.5f
+       915: fload         50
+       917: fneg
+       918: fload         49
+       920: fsub
+       921: fadd
+       922: invokevirtual #244                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV:(F)F
+       925: fstore        46
+       927: aload_0
+       928: aload_1
+       929: aload_2
+       930: invokevirtual #247                // Method getLightCoords:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I
+       933: istore        48
+       935: iload         26
+       937: aload         27
+       939: invokevirtual #251                // Method net/minecraft/world/level/CardinalLighting.up:()F
+       942: invokestatic  #256                // Method net/minecraft/util/ARGB.scaleRGB:(IF)I
+       945: istore        49
+       947: aload_0
+       948: aload         25
+       950: fload         34
+       952: fconst_0
+       953: fadd
+       954: fload         35
+       956: fload         30
+       958: fadd
+       959: fload         36
+       961: fconst_0
+       962: fadd
+       963: fload         39
+       965: fload         43
+       967: fload         34
+       969: fconst_0
+       970: fadd
+       971: fload         35
+       973: fload         32
+       975: fadd
+       976: fload         36
+       978: fconst_1
+       979: fadd
+       980: fload         40
+       982: fload         44
+       984: fload         34
+       986: fconst_1
+       987: fadd
+       988: fload         35
+       990: fload         31
+       992: fadd
+       993: fload         36
+       995: fconst_1
+       996: fadd
+       997: fload         41
+       999: fload         45
+      1001: fload         34
+      1003: fconst_1
+      1004: fadd
+      1005: fload         35
+      1007: fload         29
+      1009: fadd
+      1010: fload         36
+      1012: fconst_0
+      1013: fadd
+      1014: fload         42
+      1016: fload         46
+      1018: iload         49
+      1020: iload         48
+      1022: aload         5
+      1024: aload_1
+      1025: aload_2
+      1026: invokevirtual #262                // Method net/minecraft/core/BlockPos.above:()Lnet/minecraft/core/BlockPos;
+      1029: invokevirtual #265                // Method net/minecraft/world/level/material/FluidState.shouldRenderBackwardUpFace:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z
+      1032: invokevirtual #269                // Method addFace:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFFFFFFFFFFFFFFFFFIIZ)V
+      1035: iload         19
+      1037: ifeq          1172
+      1040: aload         24
+      1042: invokevirtual #196                // Method net/minecraft/client/renderer/block/FluidModel.stillMaterial:()Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+      1045: invokevirtual #200                // Method net/minecraft/client/resources/model/sprite/Material$Baked.sprite:()Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+      1048: astore        39
+      1050: aload         39
+      1052: invokevirtual #206                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU0:()F
+      1055: fstore        40
+      1057: aload         39
+      1059: invokevirtual #218                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU1:()F
+      1062: fstore        41
+      1064: aload         39
+      1066: invokevirtual #212                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV0:()F
+      1069: fstore        42
+      1071: aload         39
+      1073: invokevirtual #215                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV1:()F
+      1076: fstore        43
+      1078: aload_0
+      1079: aload_1
+      1080: aload_2
+      1081: invokevirtual #273                // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+      1084: invokevirtual #247                // Method getLightCoords:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I
+      1087: istore        44
+      1089: iload         26
+      1091: aload         27
+      1093: invokevirtual #276                // Method net/minecraft/world/level/CardinalLighting.down:()F
+      1096: invokestatic  #256                // Method net/minecraft/util/ARGB.scaleRGB:(IF)I
+      1099: istore        45
+      1101: aload_0
+      1102: aload         25
+      1104: fload         34
+      1106: fload         35
+      1108: fload         38
+      1110: fadd
+      1111: fload         36
+      1113: fload         40
+      1115: fload         42
+      1117: fload         34
+      1119: fconst_1
+      1120: fadd
+      1121: fload         35
+      1123: fload         38
+      1125: fadd
+      1126: fload         36
+      1128: fload         41
+      1130: fload         42
+      1132: fload         34
+      1134: fconst_1
+      1135: fadd
+      1136: fload         35
+      1138: fload         38
+      1140: fadd
+      1141: fload         36
+      1143: fconst_1
+      1144: fadd
+      1145: fload         41
+      1147: fload         43
+      1149: fload         34
+      1151: fload         35
+      1153: fload         38
+      1155: fadd
+      1156: fload         36
+      1158: fconst_1
+      1159: fadd
+      1160: fload         40
+      1162: fload         43
+      1164: iload         45
+      1166: iload         44
+      1168: iconst_0
+      1169: invokevirtual #269                // Method addFace:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFFFFFFFFFFFFFFFFFIIZ)V
+      1172: aload_0
+      1173: aload_1
+      1174: aload_2
+      1175: invokevirtual #247                // Method getLightCoords:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I
+      1178: istore        39
+      1180: getstatic     #279                // Field net/minecraft/core/Direction$Plane.HORIZONTAL:Lnet/minecraft/core/Direction$Plane;
+      1183: invokevirtual #285                // Method net/minecraft/core/Direction$Plane.iterator:()Ljava/util/Iterator;
+      1186: astore        40
+      1188: aload         40
+      1190: invokeinterface #289,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      1195: ifeq          1685
+      1198: aload         40
+      1200: invokeinterface #295,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      1205: checkcast     #26                 // class net/minecraft/core/Direction
+      1208: astore        41
+      1210: getstatic     #299                // Field net/minecraft/client/renderer/block/FluidRenderer$1.$SwitchMap$net$minecraft$core$Direction:[I
+      1213: aload         41
+      1215: invokevirtual #305                // Method net/minecraft/core/Direction.ordinal:()I
+      1218: iaload
+      1219: tableswitch   { // 1 to 4
+                       1: 1248
+                       2: 1291
+                       3: 1338
+                       4: 1381
+                 default: 1428
+            }
+      1248: fload         30
+      1250: fstore        42
+      1252: fload         29
+      1254: fstore        43
+      1256: fload         34
+      1258: fstore        44
+      1260: fload         34
+      1262: fconst_1
+      1263: fadd
+      1264: fstore        46
+      1266: fload         36
+      1268: ldc           #176                // float 0.001f
+      1270: fadd
+      1271: fstore        45
+      1273: fload         36
+      1275: ldc           #176                // float 0.001f
+      1277: fadd
+      1278: fstore        47
+      1280: iload         20
+      1282: istore        48
+      1284: aload         10
+      1286: astore        49
+      1288: goto          1436
+      1291: fload         31
+      1293: fstore        42
+      1295: fload         32
+      1297: fstore        43
+      1299: fload         34
+      1301: fconst_1
+      1302: fadd
+      1303: fstore        44
+      1305: fload         34
+      1307: fstore        46
+      1309: fload         36
+      1311: fconst_1
+      1312: fadd
+      1313: ldc           #176                // float 0.001f
+      1315: fsub
+      1316: fstore        45
+      1318: fload         36
+      1320: fconst_1
+      1321: fadd
+      1322: ldc           #176                // float 0.001f
+      1324: fsub
+      1325: fstore        47
+      1327: iload         21
+      1329: istore        48
+      1331: aload         12
+      1333: astore        49
+      1335: goto          1436
+      1338: fload         32
+      1340: fstore        42
+      1342: fload         30
+      1344: fstore        43
+      1346: fload         34
+      1348: ldc           #176                // float 0.001f
+      1350: fadd
+      1351: fstore        44
+      1353: fload         34
+      1355: ldc           #176                // float 0.001f
+      1357: fadd
+      1358: fstore        46
+      1360: fload         36
+      1362: fconst_1
+      1363: fadd
+      1364: fstore        45
+      1366: fload         36
+      1368: fstore        47
+      1370: iload         22
+      1372: istore        48
+      1374: aload         14
+      1376: astore        49
+      1378: goto          1436
+      1381: fload         29
+      1383: fstore        42
+      1385: fload         31
+      1387: fstore        43
+      1389: fload         34
+      1391: fconst_1
+      1392: fadd
+      1393: ldc           #176                // float 0.001f
+      1395: fsub
+      1396: fstore        44
+      1398: fload         34
+      1400: fconst_1
+      1401: fadd
+      1402: ldc           #176                // float 0.001f
+      1404: fsub
+      1405: fstore        46
+      1407: fload         36
+      1409: fstore        45
+      1411: fload         36
+      1413: fconst_1
+      1414: fadd
+      1415: fstore        47
+      1417: iload         23
+      1419: istore        48
+      1421: aload         16
+      1423: astore        49
+      1425: goto          1436
+      1428: new           #308                // class java/lang/UnsupportedOperationException
+      1431: dup
+      1432: invokespecial #310                // Method java/lang/UnsupportedOperationException."<init>":()V
+      1435: athrow
+      1436: iload         48
+      1438: ifeq          1682
+      1441: aload         41
+      1443: fload         42
+      1445: fload         43
+      1447: invokestatic  #311                // Method java/lang/Math.max:(FF)F
+      1450: aload         49
+      1452: invokestatic  #106                // Method isFaceOccludedByNeighbor:(Lnet/minecraft/core/Direction;FLnet/minecraft/world/level/block/state/BlockState;)Z
+      1455: ifne          1682
+      1458: aload         24
+      1460: invokevirtual #237                // Method net/minecraft/client/renderer/block/FluidModel.flowingMaterial:()Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+      1463: invokevirtual #200                // Method net/minecraft/client/resources/model/sprite/Material$Baked.sprite:()Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+      1466: astore        50
+      1468: iconst_0
+      1469: istore        51
+      1471: aload         24
+      1473: invokevirtual #314                // Method net/minecraft/client/renderer/block/FluidModel.overlayMaterial:()Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+      1476: ifnull        1515
+      1479: aload         49
+      1481: invokevirtual #317                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+      1484: astore        52
+      1486: aload         52
+      1488: instanceof    #321                // class net/minecraft/world/level/block/HalfTransparentBlock
+      1491: ifne          1502
+      1494: aload         52
+      1496: instanceof    #323                // class net/minecraft/world/level/block/LeavesBlock
+      1499: ifeq          1515
+      1502: aload         24
+      1504: invokevirtual #314                // Method net/minecraft/client/renderer/block/FluidModel.overlayMaterial:()Lnet/minecraft/client/resources/model/sprite/Material$Baked;
+      1507: invokevirtual #200                // Method net/minecraft/client/resources/model/sprite/Material$Baked.sprite:()Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+      1510: astore        50
+      1512: iconst_1
+      1513: istore        51
+      1515: aload         50
+      1517: fconst_0
+      1518: invokevirtual #240                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU:(F)F
+      1521: fstore        52
+      1523: aload         50
+      1525: ldc           #236                // float 0.5f
+      1527: invokevirtual #240                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU:(F)F
+      1530: fstore        53
+      1532: aload         50
+      1534: fconst_1
+      1535: fload         42
+      1537: fsub
+      1538: ldc           #236                // float 0.5f
+      1540: fmul
+      1541: invokevirtual #244                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV:(F)F
+      1544: fstore        54
+      1546: aload         50
+      1548: fconst_1
+      1549: fload         43
+      1551: fsub
+      1552: ldc           #236                // float 0.5f
+      1554: fmul
+      1555: invokevirtual #244                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV:(F)F
+      1558: fstore        55
+      1560: aload         50
+      1562: ldc           #236                // float 0.5f
+      1564: invokevirtual #244                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV:(F)F
+      1567: fstore        56
+      1569: aload         41
+      1571: invokevirtual #325                // Method net/minecraft/core/Direction.getAxis:()Lnet/minecraft/core/Direction$Axis;
+      1574: getstatic     #329                // Field net/minecraft/core/Direction$Axis.Z:Lnet/minecraft/core/Direction$Axis;
+      1577: if_acmpne     1588
+      1580: aload         27
+      1582: invokevirtual #335                // Method net/minecraft/world/level/CardinalLighting.north:()F
+      1585: goto          1593
+      1588: aload         27
+      1590: invokevirtual #337                // Method net/minecraft/world/level/CardinalLighting.west:()F
+      1593: fstore        57
+      1595: iload         26
+      1597: aload         27
+      1599: invokevirtual #251                // Method net/minecraft/world/level/CardinalLighting.up:()F
+      1602: fload         57
+      1604: fmul
+      1605: invokestatic  #256                // Method net/minecraft/util/ARGB.scaleRGB:(IF)I
+      1608: istore        58
+      1610: aload_0
+      1611: aload         25
+      1613: fload         44
+      1615: fload         35
+      1617: fload         42
+      1619: fadd
+      1620: fload         45
+      1622: fload         52
+      1624: fload         54
+      1626: fload         46
+      1628: fload         35
+      1630: fload         43
+      1632: fadd
+      1633: fload         47
+      1635: fload         53
+      1637: fload         55
+      1639: fload         46
+      1641: fload         35
+      1643: fload         38
+      1645: fadd
+      1646: fload         47
+      1648: fload         53
+      1650: fload         56
+      1652: fload         44
+      1654: fload         35
+      1656: fload         38
+      1658: fadd
+      1659: fload         45
+      1661: fload         52
+      1663: fload         56
+      1665: iload         58
+      1667: iload         39
+      1669: iload         51
+      1671: ifne          1678
+      1674: iconst_1
+      1675: goto          1679
+      1678: iconst_0
+      1679: invokevirtual #269                // Method addFace:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFFFFFFFFFFFFFFFFFIIZ)V
+      1682: goto          1188
+      1685: return
+
+  private void addFace(com.mojang.blaze3d.vertex.VertexConsumer, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, int, int, boolean);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: fload_2
+         3: fload_3
+         4: fload         4
+         6: iload         22
+         8: fload         5
+        10: fload         6
+        12: iload         23
+        14: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+        17: aload_0
+        18: aload_1
+        19: fload         7
+        21: fload         8
+        23: fload         9
+        25: iload         22
+        27: fload         10
+        29: fload         11
+        31: iload         23
+        33: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+        36: aload_0
+        37: aload_1
+        38: fload         12
+        40: fload         13
+        42: fload         14
+        44: iload         22
+        46: fload         15
+        48: fload         16
+        50: iload         23
+        52: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+        55: aload_0
+        56: aload_1
+        57: fload         17
+        59: fload         18
+        61: fload         19
+        63: iload         22
+        65: fload         20
+        67: fload         21
+        69: iload         23
+        71: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+        74: iload         24
+        76: ifeq          153
+        79: aload_0
+        80: aload_1
+        81: fload_2
+        82: fload_3
+        83: fload         4
+        85: iload         22
+        87: fload         5
+        89: fload         6
+        91: iload         23
+        93: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+        96: aload_0
+        97: aload_1
+        98: fload         17
+       100: fload         18
+       102: fload         19
+       104: iload         22
+       106: fload         20
+       108: fload         21
+       110: iload         23
+       112: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+       115: aload_0
+       116: aload_1
+       117: fload         12
+       119: fload         13
+       121: fload         14
+       123: iload         22
+       125: fload         15
+       127: fload         16
+       129: iload         23
+       131: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+       134: aload_0
+       135: aload_1
+       136: fload         7
+       138: fload         8
+       140: fload         9
+       142: iload         22
+       144: fload         10
+       146: fload         11
+       148: iload         23
+       150: invokevirtual #339                // Method vertex:(Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFIFFI)V
+       153: return
+
+  private float calculateAverageHeight(net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.world.level.material.Fluid, float, float, float, net.minecraft.core.BlockPos);
+    Code:
+         0: fload         5
+         2: fconst_1
+         3: fcmpl
+         4: ifge          14
+         7: fload         4
+         9: fconst_1
+        10: fcmpl
+        11: iflt          16
+        14: fconst_1
+        15: freturn
+        16: iconst_2
+        17: newarray       float
+        19: astore        7
+        21: fload         5
+        23: fconst_0
+        24: fcmpl
+        25: ifgt          35
+        28: fload         4
+        30: fconst_0
+        31: fcmpl
+        32: ifle          62
+        35: aload_0
+        36: aload_1
+        37: aload_2
+        38: aload         6
+        40: invokevirtual #343                // Method getHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/BlockPos;)F
+        43: fstore        8
+        45: fload         8
+        47: fconst_1
+        48: fcmpl
+        49: iflt          54
+        52: fconst_1
+        53: freturn
+        54: aload_0
+        55: aload         7
+        57: fload         8
+        59: invokevirtual #346                // Method addWeightedHeight:([FF)V
+        62: aload_0
+        63: aload         7
+        65: fload_3
+        66: invokevirtual #346                // Method addWeightedHeight:([FF)V
+        69: aload_0
+        70: aload         7
+        72: fload         5
+        74: invokevirtual #346                // Method addWeightedHeight:([FF)V
+        77: aload_0
+        78: aload         7
+        80: fload         4
+        82: invokevirtual #346                // Method addWeightedHeight:([FF)V
+        85: aload         7
+        87: iconst_0
+        88: faload
+        89: aload         7
+        91: iconst_1
+        92: faload
+        93: fdiv
+        94: freturn
+
+  private void addWeightedHeight(float[], float);
+    Code:
+         0: fload_2
+         1: ldc_w         #350                // float 0.8f
+         4: fcmpl
+         5: iflt          31
+         8: aload_1
+         9: iconst_0
+        10: dup2
+        11: faload
+        12: fload_2
+        13: ldc_w         #351                // float 10.0f
+        16: fmul
+        17: fadd
+        18: fastore
+        19: aload_1
+        20: iconst_1
+        21: dup2
+        22: faload
+        23: ldc_w         #351                // float 10.0f
+        26: fadd
+        27: fastore
+        28: goto          51
+        31: fload_2
+        32: fconst_0
+        33: fcmpl
+        34: iflt          51
+        37: aload_1
+        38: iconst_0
+        39: dup2
+        40: faload
+        41: fload_2
+        42: fadd
+        43: fastore
+        44: aload_1
+        45: iconst_1
+        46: dup2
+        47: faload
+        48: fconst_1
+        49: fadd
+        50: fastore
+        51: return
+
+  private float getHeight(net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.world.level.material.Fluid, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_1
+         1: aload_3
+         2: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+         7: astore        4
+         9: aload_0
+        10: aload_1
+        11: aload_2
+        12: aload_3
+        13: aload         4
+        15: aload         4
+        17: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+        20: invokevirtual #143                // Method getHeight:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)F
+        23: freturn
+
+  private float getHeight(net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.world.level.material.Fluid, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.FluidState);
+    Code:
+         0: aload_2
+         1: aload         5
+         3: invokevirtual #13                 // Method net/minecraft/world/level/material/FluidState.getType:()Lnet/minecraft/world/level/material/Fluid;
+         6: invokevirtual #19                 // Method net/minecraft/world/level/material/Fluid.isSame:(Lnet/minecraft/world/level/material/Fluid;)Z
+         9: ifeq          47
+        12: aload_1
+        13: aload_3
+        14: invokevirtual #262                // Method net/minecraft/core/BlockPos.above:()Lnet/minecraft/core/BlockPos;
+        17: invokeinterface #79,  2           // InterfaceMethod net/minecraft/client/renderer/block/BlockAndTintGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        22: astore        6
+        24: aload_2
+        25: aload         6
+        27: invokevirtual #85                 // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+        30: invokevirtual #13                 // Method net/minecraft/world/level/material/FluidState.getType:()Lnet/minecraft/world/level/material/Fluid;
+        33: invokevirtual #19                 // Method net/minecraft/world/level/material/Fluid.isSame:(Lnet/minecraft/world/level/material/Fluid;)Z
+        36: ifeq          41
+        39: fconst_1
+        40: freturn
+        41: aload         5
+        43: invokevirtual #352                // Method net/minecraft/world/level/material/FluidState.getOwnHeight:()F
+        46: freturn
+        47: aload         4
+        49: invokevirtual #355                // Method net/minecraft/world/level/block/state/BlockState.isSolid:()Z
+        52: ifne          57
+        55: fconst_0
+        56: freturn
+        57: ldc_w         #358                // float -1.0f
+        60: freturn
+
+  private void vertex(com.mojang.blaze3d.vertex.VertexConsumer, float, float, float, int, float, float, int);
+    Code:
+         0: aload_1
+         1: fload_2
+         2: fload_3
+         3: fload         4
+         5: iload         5
+         7: fload         6
+         9: fload         7
+        11: getstatic     #359                // Field net/minecraft/client/renderer/texture/OverlayTexture.NO_OVERLAY:I
+        14: iload         8
+        16: fconst_0
+        17: fconst_1
+        18: fconst_0
+        19: invokeinterface #365,  12         // InterfaceMethod com/mojang/blaze3d/vertex/VertexConsumer.addVertex:(FFFIFFIIFFF)V
+        24: return
+
+  private int getLightCoords(net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_1
+         1: aload_2
+         2: invokestatic  #371                // Method net/minecraft/util/LightCoordsUtil.getLightCoords:(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/core/BlockPos;)I
+         5: aload_1
+         6: aload_2
+         7: invokevirtual #262                // Method net/minecraft/core/BlockPos.above:()Lnet/minecraft/core/BlockPos;
+        10: invokestatic  #371                // Method net/minecraft/util/LightCoordsUtil.getLightCoords:(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/core/BlockPos;)I
+        13: invokestatic  #376                // Method net/minecraft/util/LightCoordsUtil.max:(II)I
+        16: ireturn
+}

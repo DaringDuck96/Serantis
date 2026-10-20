@@ -1,0 +1,46 @@
+Compiled from "FluidRenderer.java"
+class net.minecraft.client.renderer.block.FluidRenderer$1 {
+  static final int[] $SwitchMap$net$minecraft$core$Direction;
+
+  static {};
+    Code:
+         0: invokestatic  #1                  // Method net/minecraft/core/Direction.values:()[Lnet/minecraft/core/Direction;
+         3: arraylength
+         4: newarray       int
+         6: putstatic     #7                  // Field $SwitchMap$net$minecraft$core$Direction:[I
+         9: getstatic     #7                  // Field $SwitchMap$net$minecraft$core$Direction:[I
+        12: getstatic     #13                 // Field net/minecraft/core/Direction.NORTH:Lnet/minecraft/core/Direction;
+        15: invokevirtual #17                 // Method net/minecraft/core/Direction.ordinal:()I
+        18: iconst_1
+        19: iastore
+        20: goto          24
+        23: astore_0
+        24: getstatic     #7                  // Field $SwitchMap$net$minecraft$core$Direction:[I
+        27: getstatic     #23                 // Field net/minecraft/core/Direction.SOUTH:Lnet/minecraft/core/Direction;
+        30: invokevirtual #17                 // Method net/minecraft/core/Direction.ordinal:()I
+        33: iconst_2
+        34: iastore
+        35: goto          39
+        38: astore_0
+        39: getstatic     #7                  // Field $SwitchMap$net$minecraft$core$Direction:[I
+        42: getstatic     #26                 // Field net/minecraft/core/Direction.WEST:Lnet/minecraft/core/Direction;
+        45: invokevirtual #17                 // Method net/minecraft/core/Direction.ordinal:()I
+        48: iconst_3
+        49: iastore
+        50: goto          54
+        53: astore_0
+        54: getstatic     #7                  // Field $SwitchMap$net$minecraft$core$Direction:[I
+        57: getstatic     #29                 // Field net/minecraft/core/Direction.EAST:Lnet/minecraft/core/Direction;
+        60: invokevirtual #17                 // Method net/minecraft/core/Direction.ordinal:()I
+        63: iconst_4
+        64: iastore
+        65: goto          69
+        68: astore_0
+        69: return
+      Exception table:
+         from    to  target type
+             9    20    23   Class java/lang/NoSuchFieldError
+            24    35    38   Class java/lang/NoSuchFieldError
+            39    50    53   Class java/lang/NoSuchFieldError
+            54    65    68   Class java/lang/NoSuchFieldError
+}

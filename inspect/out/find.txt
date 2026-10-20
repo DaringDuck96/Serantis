@@ -1,0 +1,7 @@
+fabric-renderer-api-v1-17.0.16+79385d0b5d.jar: net/fabricmc/fabric/api/client/renderer/v1/render/ChunkSectionLayerHelper$1.class
+fabric-renderer-api-v1-17.0.16+79385d0b5d.jar: net/fabricmc/fabric/api/client/renderer/v1/render/ChunkSectionLayerHelper.class
+minecraft.jar: net/minecraft/client/renderer/block/FluidModel$Unbaked.class
+minecraft.jar: net/minecraft/client/renderer/block/FluidModel.class
+minecraft.jar: net/minecraft/client/renderer/block/FluidRenderer$1.class
+minecraft.jar: net/minecraft/client/renderer/block/FluidRenderer$Output.class
+minecraft.jar: net/minecraft/client/renderer/block/FluidRenderer.class
