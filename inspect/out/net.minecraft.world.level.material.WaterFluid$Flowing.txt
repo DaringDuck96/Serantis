@@ -1,0 +1,38 @@
+Compiled from "WaterFluid.java"
+public class net.minecraft.world.level.material.WaterFluid$Flowing extends net.minecraft.world.level.material.WaterFluid {
+  public net.minecraft.world.level.material.WaterFluid$Flowing();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method net/minecraft/world/level/material/WaterFluid."<init>":()V
+         4: return
+
+  protected void createFluidStateDefinition(net.minecraft.world.level.block.state.StateDefinition$Builder<net.minecraft.world.level.material.Fluid, net.minecraft.world.level.material.FluidState>);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #7                  // Method net/minecraft/world/level/material/WaterFluid.createFluidStateDefinition:(Lnet/minecraft/world/level/block/state/StateDefinition$Builder;)V
+         5: aload_1
+         6: iconst_1
+         7: anewarray     #11                 // class net/minecraft/world/level/block/state/properties/Property
+        10: dup
+        11: iconst_0
+        12: getstatic     #13                 // Field LEVEL:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+        15: aastore
+        16: invokevirtual #19                 // Method net/minecraft/world/level/block/state/StateDefinition$Builder.add:([Lnet/minecraft/world/level/block/state/properties/Property;)Lnet/minecraft/world/level/block/state/StateDefinition$Builder;
+        19: pop
+        20: return
+
+  public int getAmount(net.minecraft.world.level.material.FluidState);
+    Code:
+         0: aload_1
+         1: getstatic     #13                 // Field LEVEL:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+         4: invokevirtual #25                 // Method net/minecraft/world/level/material/FluidState.getValue:(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;
+         7: checkcast     #31                 // class java/lang/Integer
+        10: invokevirtual #33                 // Method java/lang/Integer.intValue:()I
+        13: ireturn
+
+  public boolean isSource(net.minecraft.world.level.material.FluidState);
+    Code:
+         0: iconst_0
+         1: ireturn
+}

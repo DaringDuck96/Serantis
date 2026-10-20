@@ -1,0 +1,13 @@
+Compiled from "FlowingFluid.java"
+final class net.minecraft.world.level.material.FlowingFluid$BlockStatePairKey extends java.lang.Record {
+  private final net.minecraft.world.level.block.state.BlockState first;
+  private final net.minecraft.world.level.block.state.BlockState second;
+  private final net.minecraft.core.Direction direction;
+  private net.minecraft.world.level.material.FlowingFluid$BlockStatePairKey(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.Direction);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public final java.lang.String toString();
+  public net.minecraft.world.level.block.state.BlockState first();
+  public net.minecraft.world.level.block.state.BlockState second();
+  public net.minecraft.core.Direction direction();
+}

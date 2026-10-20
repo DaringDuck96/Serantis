@@ -1,0 +1,12 @@
+Compiled from "Registry.java"
+class net.minecraft.core.Registry$1 implements net.minecraft.core.IdMap<net.minecraft.core.Holder<T>> {
+  final net.minecraft.core.Registry this$0;
+  net.minecraft.core.Registry$1(net.minecraft.core.Registry);
+  public int getId(net.minecraft.core.Holder<T>);
+  public net.minecraft.core.Holder<T> byId(int);
+  public int size();
+  public java.util.Iterator<net.minecraft.core.Holder<T>> iterator();
+  public java.lang.Object byId(int);
+  public int getId(java.lang.Object);
+  private static net.minecraft.core.Holder lambda$iterator$0(net.minecraft.core.Holder$Reference);
+}

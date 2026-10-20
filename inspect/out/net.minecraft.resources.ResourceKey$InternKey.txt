@@ -1,0 +1,11 @@
+Compiled from "ResourceKey.java"
+final class net.minecraft.resources.ResourceKey$InternKey extends java.lang.Record {
+  private final net.minecraft.resources.Identifier registry;
+  private final net.minecraft.resources.Identifier identifier;
+  private net.minecraft.resources.ResourceKey$InternKey(net.minecraft.resources.Identifier, net.minecraft.resources.Identifier);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.resources.Identifier registry();
+  public net.minecraft.resources.Identifier identifier();
+}

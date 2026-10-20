@@ -1,0 +1,23 @@
+Compiled from "ChunkSectionLayer.java"
+public final class net.minecraft.client.renderer.chunk.ChunkSectionLayer extends java.lang.Enum<net.minecraft.client.renderer.chunk.ChunkSectionLayer> {
+  public static final net.minecraft.client.renderer.chunk.ChunkSectionLayer SOLID;
+  public static final net.minecraft.client.renderer.chunk.ChunkSectionLayer CUTOUT;
+  public static final net.minecraft.client.renderer.chunk.ChunkSectionLayer TRANSLUCENT;
+  private final com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline;
+  private final com.mojang.renderpearl.api.pipeline.RenderPipeline multiDrawPipeline;
+  private final int bufferSize;
+  private final boolean translucent;
+  private final java.lang.String label;
+  private static final net.minecraft.client.renderer.chunk.ChunkSectionLayer[] $VALUES;
+  public static net.minecraft.client.renderer.chunk.ChunkSectionLayer[] values();
+  public static net.minecraft.client.renderer.chunk.ChunkSectionLayer valueOf(java.lang.String);
+  private net.minecraft.client.renderer.chunk.ChunkSectionLayer(com.mojang.renderpearl.api.pipeline.RenderPipeline, com.mojang.renderpearl.api.pipeline.RenderPipeline, int, boolean);
+  public static net.minecraft.client.renderer.chunk.ChunkSectionLayer byTransparency(com.mojang.blaze3d.platform.Transparency);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline(boolean);
+  public int bufferSize();
+  public java.lang.String label();
+  public boolean translucent();
+  public com.mojang.renderpearl.api.vertex.VertexFormat vertexFormat();
+  private static net.minecraft.client.renderer.chunk.ChunkSectionLayer[] $values();
+  static {};
+}

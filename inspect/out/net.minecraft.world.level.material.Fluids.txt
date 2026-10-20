@@ -1,0 +1,11 @@
+Compiled from "Fluids.java"
+public class net.minecraft.world.level.material.Fluids {
+  public static final net.minecraft.world.level.material.Fluid EMPTY;
+  public static final net.minecraft.world.level.material.FlowingFluid FLOWING_WATER;
+  public static final net.minecraft.world.level.material.FlowingFluid WATER;
+  public static final net.minecraft.world.level.material.FlowingFluid FLOWING_LAVA;
+  public static final net.minecraft.world.level.material.FlowingFluid LAVA;
+  public net.minecraft.world.level.material.Fluids();
+  private static <T extends net.minecraft.world.level.material.Fluid> T register(net.minecraft.resources.ResourceKey<net.minecraft.world.level.material.Fluid>, T);
+  static {};
+}

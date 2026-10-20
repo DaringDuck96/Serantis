@@ -1,0 +1,4 @@
+Compiled from "BuiltInRegistries.java"
+interface net.minecraft.core.registries.BuiltInRegistries$RegistryBootstrap<T> {
+  public abstract java.lang.Object run(net.minecraft.core.Registry<T>);
+}
