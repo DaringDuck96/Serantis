@@ -12,6 +12,7 @@ import dev.ahrivaea.creature.CreatureEntity;
 import dev.ahrivaea.creature.Stats;
 import dev.ahrivaea.party.CaughtCreature;
 import dev.ahrivaea.party.Party;
+import dev.serantis.battle.fx.Fx;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 
@@ -139,6 +140,7 @@ public final class MoveEngine {
             return;
         }
 
+        Fx.wiggle(b, a);
         Field field = Field.of(b);
         if (spec.has("charge") && !firing) {
             field.addPending("charge", a, t, m, spec, Set.of());
@@ -194,6 +196,7 @@ public final class MoveEngine {
                 return true;
             }
             acc.serantis$say(a.name + " used " + spec.name + " but missed " + u.name + ".");
+            Fx.flash(b, u, Fx.MISS);
             return false;
         }
         boolean landed = false;
@@ -244,11 +247,11 @@ public final class MoveEngine {
         Unit a = p.user;
         for (Unit u : new ArrayList<>(b.units)) {
             if (!a.alive()) break;
-            if (!u.alive() || u.side == a.side || !p.cells.contains(u.x + u.z * b.grid.size)) continue;
+            if (u == a || !u.alive() || !p.cells.contains(u.x + u.z * b.grid.size)) continue;   // anyone under it, friend or foe
             if (hitUnit(b, a, u, p.spec, p.move)) onHit(b, a, u, p.spec);
         }
         boolean any = false;
-        for (Unit u : b.units) if (u.alive() && u.side != a.side && p.cells.contains(u.x + u.z * b.grid.size)) any = true;
+        for (Unit u : b.units) if (u.alive() && p.cells.contains(u.x + u.z * b.grid.size)) any = true;
         if (!any) acc(b).serantis$say("It hits nothing but ground.");
     }
 
@@ -269,6 +272,7 @@ public final class MoveEngine {
             int r = Math.max(1, (int) Math.round(dealt * 0.25));
             a.hp = Math.max(0, a.hp - r);
             acc.serantis$say(a.name + " takes " + r + " recoil from " + u.name + "'s Counter Stance.");
+            Fx.flash(b, a, Fx.DAMAGE);
             if (!a.alive()) acc.serantis$knockOut(a);
         }
     }
@@ -388,7 +392,7 @@ public final class MoveEngine {
             else if ("movement".equals(type) && "self".equals(who)) addTiles(b, a, i(e, "amount", 0));
             else if ("cleanse".equals(type) && "allies_near_self".equals(who))
                 for (Unit u : allies(b, a, i(e, "radius", 1))) cleanse(b, u, i(e, "count", 1));
-            else if ("recoil_stance".equals(type)) { state(a).recoil = true; acc(b).serantis$say(a.name + " takes a Counter Stance."); }
+            else if ("recoil_stance".equals(type)) { state(a).recoil = true; acc(b).serantis$say(a.name + " takes a Counter Stance."); Fx.flash(b, a, Fx.BUFF); }
         }
     }
 
@@ -409,7 +413,7 @@ public final class MoveEngine {
                 }
                 case "cleanse" -> cleanse(b, t, i(e, "count", 1));
                 case "movement" -> addTiles(b, "self".equals(who) ? a : t, i(e, "amount", 0));
-                case "recoil_stance" -> { state(a).recoil = true; acc.serantis$say(a.name + " takes a Counter Stance."); }
+                case "recoil_stance" -> { state(a).recoil = true; acc.serantis$say(a.name + " takes a Counter Stance."); Fx.flash(b, a, Fx.BUFF); }
                 default -> { }
             }
         }
@@ -425,6 +429,7 @@ public final class MoveEngine {
         int before = u.hp;
         u.hp = Math.min(u.maxHp, u.hp + amount);
         acc(b).serantis$say(u.name + " recovers " + (u.hp - before) + " HP.");
+        Fx.flash(b, u, Fx.HEAL);
     }
 
     private static void cleanse(Battle b, Unit u, int count) {
@@ -437,6 +442,7 @@ public final class MoveEngine {
         UnitState st = state(u);
         if (amount > 0 && st.has("nobuff")) { acc(b).serantis$say(u.name + " can't be boosted right now."); return; }
         st.effects.add(new UnitState.Effect("stat", stat, amount, turns, ownTurn(b, u), 0));
+        if (amount > 0) Fx.flash(b, u, Fx.BUFF);
         String label = switch (stat) { case "attack" -> "Attack"; case "defense" -> "Defense"; case "magic" -> "Magic"; case "speed" -> "Speed"; default -> "Accuracy"; };
         acc(b).serantis$say(u.name + "'s " + label + (amount > 0 ? " +" : " ") + amount + ("accuracy".equals(stat) ? "%" : "") + " for " + turns + (turns == 1 ? " turn." : " turns."));
     }
@@ -444,6 +450,7 @@ public final class MoveEngine {
     private static void addTiles(Battle b, Unit u, int tiles) {
         if (tiles == 0) return;
         state(u).effects.add(new UnitState.Effect("move", "tiles", tiles, 1, ownTurn(b, u), 0));
+        if (tiles > 0) Fx.flash(b, u, Fx.BUFF);
         acc(b).serantis$say(u.name + "'s next move " + (tiles > 0 ? "+" : "") + tiles + " tiles.");
     }
 
@@ -509,8 +516,24 @@ public final class MoveEngine {
         double expected;
         if (spec != null && (spec.support() || (t.side == a.side))) { damage = 0; expected = 0; }
         else if (spec != null && m.move().power() <= 0) { damage = 0; expected = 0.5 * hit; }
-        else expected = damage * hit * (1 + crit) * hits;
+        else {
+            damage = flyerDamage(t, m, damage);
+            expected = damage * hit * (1 + crit) * hits;
+        }
         return new DamageCalc.Result(damage, r.multiplier(), hit, crit, expected);
+    }
+
+    /** Ranged attacks (moves that reach more than 1 tile) hit flying creatures 1.25x as hard. */
+    public static final double FLYER_BONUS = 1.25;
+
+    static int flyerDamage(Unit t, BattleMove m, int damage) {
+        return t != null && t.flies() && m.maxRange() > 1 && damage > 0 ? (int) Math.round(damage * FLYER_BONUS) : damage;
+    }
+
+    public static DamageCalc.Result flyerBonus(Unit t, BattleMove m, DamageCalc.Result r) {
+        if (r == null) return null;
+        int damage = flyerDamage(t, m, r.damage());
+        return damage == r.damage() ? r : new DamageCalc.Result(damage, r.multiplier(), r.hitChance(), r.critChance(), r.expected() * damage / Math.max(1, r.damage()));
     }
 
     /** Best damaging move this unit can use on the target from this distance (for the AI and counterattacks). */
@@ -597,6 +620,7 @@ public final class MoveEngine {
                 };
                 if (dmg > 0) {
                     u.hp = Math.max(0, u.hp - dmg);
+                    Fx.flash(b, u, Fx.DAMAGE);
                     acc.serantis$say(u.name + " takes " + dmg + " damage from " + (switch (e.key) {
                         case "bleeding" -> "bleeding"; case "poison" -> "poison"; case "burning" -> "burns"; default -> "the grasp"; }) + ".");
                     if (!u.alive()) acc.serantis$knockOut(u);

@@ -76,7 +76,7 @@ public abstract class BattleScreenMixin {
         for (JsonElement el : st.getAsJsonArray("serantis_zones")) {
             JsonObject z = el.getAsJsonObject();
             String kind = z.get("kind").getAsString();
-            if (!("ice".equals(kind) || "sink".equals(kind)) || side.equals(z.get("owner").getAsString())) continue;
+            if (!("ice".equals(kind) || "sink".equals(kind))) continue;      // slow tiles slow everyone
             for (JsonElement c : z.getAsJsonArray("cells")) slow.add(c.getAsInt());
         }
         if (slow.isEmpty()) return;

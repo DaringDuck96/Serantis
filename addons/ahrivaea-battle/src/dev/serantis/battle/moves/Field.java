@@ -24,8 +24,9 @@ import java.util.function.IntPredicate;
  * The battlefield's Stage 2 state: terrain zones left by moves, attacks waiting to happen (Charged Shot,
  * Blazing Meteor), and forced movement (pushes, pulls, teleports).
  *
- * Every zone belongs to the side that made it and only affects the other side. Flying creatures pass
- * over ground zones (burning ground, Inferno Ring, Frozen Ground, Sinkhole) but not the others.
+ * Zones affect every creature in them, friend or foe. A zone's turns count down at the start of the
+ * turns of the side that made it. Flying creatures pass over ground zones (burning ground, Inferno
+ * Ring, Frozen Ground, Sinkhole) but not the others.
  */
 public final class Field {
     public static final class Zone {
@@ -102,12 +103,12 @@ public final class Field {
 
     /** True if a cell costs 2 movement for units of this side (Frozen Ground, Sinkhole). */
     public boolean slows(Unit.Side side, int cell) {
-        for (Zone z : zones) if (z.slows() && z.owner != side && z.cells.contains(cell)) return true;
+        for (Zone z : zones) if (z.slows() && z.cells.contains(cell)) return true;
         return false;
     }
 
     public boolean slowsAny(Unit.Side side) {
-        for (Zone z : zones) if (z.slows() && z.owner != side) return true;
+        for (Zone z : zones) if (z.slows()) return true;
         return false;
     }
 
@@ -115,7 +116,7 @@ public final class Field {
     public boolean inSink(Battle b, Unit u) {
         if (u.flies()) return false;
         int c = idx(b, u.x, u.z);
-        for (Zone z : zones) if ("sink".equals(z.kind) && z.owner != u.side && z.cells.contains(c)) return true;
+        for (Zone z : zones) if ("sink".equals(z.kind) && z.cells.contains(c)) return true;
         return false;
     }
 
@@ -123,13 +124,13 @@ public final class Field {
     public double danger(Battle b, Unit u, int cell) {
         double d = 0;
         for (Zone z : zones) {
-            if (z.owner == u.side || !z.cells.contains(cell) || (z.ground() && u.flies())) continue;
+            if (!z.cells.contains(cell) || (z.ground() && u.flies())) continue;
             d += switch (z.kind) {
                 case "burning" -> 12; case "ring" -> 6; case "storm" -> 6; case "horizon", "night" -> 9;
                 case "sink" -> 3; default -> 2;
             };
         }
-        for (Pending p : pending) if ("meteor".equals(p.kind) && p.user.side != u.side && p.cells.contains(cell)) d += 40;
+        for (Pending p : pending) if ("meteor".equals(p.kind) && p.cells.contains(cell)) d += 40;
         return d;
     }
 
@@ -138,7 +139,7 @@ public final class Field {
         if (path.isEmpty() || u.flies()) return;
         for (Zone z : new ArrayList<>(zones)) {
             if (!u.alive()) return;
-            if (z.owner == u.side || !("burning".equals(z.kind) || "ring".equals(z.kind))) continue;
+            if (!("burning".equals(z.kind) || "ring".equals(z.kind))) continue;
             for (int c : path) if (z.cells.contains(c)) { hurt(b, u, z.damage, zoneName(z.kind)); break; }
         }
     }
@@ -147,6 +148,7 @@ public final class Field {
         if (!u.alive() || damage <= 0) return;
         u.hp = Math.max(0, u.hp - damage);
         acc(b).serantis$say(u.name + " takes " + damage + " damage from " + source + ".");
+        dev.serantis.battle.fx.Fx.flash(b, u, dev.serantis.battle.fx.Fx.DAMAGE);
         if (!u.alive()) acc(b).serantis$knockOut(u);
     }
 
@@ -165,7 +167,7 @@ public final class Field {
             if (u.side != side || !u.alive() || u.flies()) continue;
             int c = idx(b, u.x, u.z);
             for (Zone z : new ArrayList<>(zones))
-                if ("burning".equals(z.kind) && z.owner != side && z.cells.contains(c)) hurt(b, u, z.damage, zoneName(z.kind));
+                if ("burning".equals(z.kind) && z.cells.contains(c)) hurt(b, u, z.damage, zoneName(z.kind));
         }
         for (Pending p : new ArrayList<>(pending)) {
             if (p.user.side != side) continue;
@@ -192,10 +194,10 @@ public final class Field {
         }
     }
 
-    /** End of a side's turn: opponents' Storm Cloud, Event Horizon and Eternal Night hit units still inside. */
+    /** End of a side's turn: Storm Cloud, Event Horizon and Eternal Night hit that side's units still inside. */
     public void endTurn(Battle b, Unit.Side side) {
         for (Zone z : new ArrayList<>(zones)) {
-            if (z.owner == side || z.ground()) continue;
+            if (z.ground()) continue;
             List<Unit> inside = new ArrayList<>();
             for (Unit u : b.units) if (u.alive() && u.side == side && z.cells.contains(idx(b, u.x, u.z))) inside.add(u);
             if (inside.isEmpty()) continue;

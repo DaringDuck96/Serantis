@@ -11,6 +11,7 @@ import dev.ahrivaea.creature.Variant;
 import dev.serantis.battle.moves.BattleAccess;
 import dev.serantis.battle.moves.EnemyBrain;
 import dev.serantis.battle.moves.Field;
+import dev.serantis.battle.fx.Fx;
 import dev.serantis.battle.moves.MoveBook;
 import dev.serantis.battle.moves.MoveEngine;
 import org.spongepowered.asm.mixin.Final;
@@ -45,6 +46,7 @@ public abstract class BattleMixin implements BattleAccess {
     @Unique private Map<Object, String> serantis$defeatedMoves;
     @Unique private int serantis$defeatedBefore;
     @Unique private Field serantis$field;
+    @Unique private boolean serantis$struck, serantis$crit;
 
     @Override public Field serantis$field() {
         if (serantis$field == null) serantis$field = new Field();
@@ -69,9 +71,32 @@ public abstract class BattleMixin implements BattleAccess {
     // ---- using moves
     @Inject(method = "attack", at = @At("HEAD"), cancellable = true)
     private void serantis$attack(Unit attacker, Unit target, BattleMove move, boolean counter, CallbackInfo ci) {
-        if (MoveBook.of(move) == null) return;
+        if (MoveBook.of(move) == null) { Fx.wiggle((Battle) (Object) this, attacker); return; }
         MoveEngine.use((Battle) (Object) this, attacker, target, move, counter);
         ci.cancel();
+    }
+
+    // ---- strikes: the flyer bonus, and flashes for hits, crits and misses
+    @Inject(method = "strike", at = @At("HEAD"))
+    private void serantis$beforeStrike(Unit attacker, Unit target, BattleMove move, CallbackInfo ci) {
+        serantis$struck = false;
+        serantis$crit = false;
+    }
+
+    @Redirect(method = "strike", at = @At(value = "INVOKE",
+            target = "Ldev/ahrivaea/battle/DamageCalc;calculate(Ldev/ahrivaea/battle/DamageCalc$Fighter;Ldev/ahrivaea/battle/DamageCalc$Fighter;Ldev/ahrivaea/battle/DamageCalc$Move;ZDDLdev/ahrivaea/battle/DamageCalc$Extras;)Ldev/ahrivaea/battle/DamageCalc$Result;"))
+    private DamageCalc.Result serantis$calculate(DamageCalc.Fighter a, DamageCalc.Fighter d, DamageCalc.Move m, boolean crit,
+                                                 double x, double y, DamageCalc.Extras extras,
+                                                 Unit attacker, Unit target, BattleMove move) {
+        serantis$struck = true;
+        serantis$crit = crit;
+        return MoveEngine.flyerBonus(target, move, DamageCalc.calculate(a, d, m, crit, x, y, extras));
+    }
+
+    @Inject(method = "strike", at = @At("RETURN"))
+    private void serantis$afterStrike(Unit attacker, Unit target, BattleMove move, CallbackInfo ci) {
+        Battle self = (Battle) (Object) this;
+        Fx.flash(self, target, !serantis$struck ? Fx.MISS : serantis$crit ? Fx.CRIT : Fx.DAMAGE);
     }
 
     @Inject(method = "bestMove", at = @At("HEAD"), cancellable = true)

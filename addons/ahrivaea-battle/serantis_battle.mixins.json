@@ -18,7 +18,9 @@
   ],
   "client": [
     "client.PartyScreenMixin",
-    "client.BattleScreenMixin"
+    "client.BattleScreenMixin",
+    "client.CreatureRendererMixin",
+    "client.CreatureRenderStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1

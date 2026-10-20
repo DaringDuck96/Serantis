@@ -108,6 +108,7 @@ public final class EnemyBrain {
                     double score = r.expected() * areaCount(b, u, t, s) + (r.damage() >= t.hp && r.damage() > 0 ? 1000 : 0);
                     if (s != null && (s.has("charge") || s.has("delayed"))) score *= 0.6;     // it lands a turn later
                     if (s != null && s.has("interrupt") && field.pendingOf(t) != null) score += 30;
+                    if (s != null && (s.has("zone") || s.has("delayed"))) score -= 20 * alliesCaught(b, u, t, s, cx, cz);
                     if (t.isPlayer) score += "Smart Aggression".equals(mind) ? 40 : 15;
                     if (t == focus) score += 25;
                     if ("Hunter".equals(mind)) score += (t.maxHp - t.hp) * 0.2;
@@ -219,6 +220,17 @@ public final class EnemyBrain {
 
     private static int amount(com.google.gson.JsonObject e) {
         return e.has("amount") ? e.get("amount").getAsInt() : 1;
+    }
+
+    /** Allies (and itself) inside the zone or meteor area this move would leave around the target. */
+    private static int alliesCaught(Battle b, Unit u, Unit t, MoveSpec s, int cx, int cz) {
+        String shape = "square";
+        for (com.google.gson.JsonObject e : s.effects)
+            if ("zone".equals(MoveSpec.str(e, "type")) && MoveSpec.str(e, "cells") != null) shape = MoveSpec.str(e, "cells");
+        java.util.Set<Integer> cells = Field.cells(b, t.x, t.z, shape, Math.max(1, s.radius));
+        int n = cells.contains(cx + cz * b.grid.size) ? 1 : 0;
+        for (Unit o : b.units) if (o != u && o.alive() && o.side == u.side && cells.contains(o.x + o.z * b.grid.size)) n++;
+        return n;
     }
 
     /** How many opponents an area move would catch (1 for single-target moves). */

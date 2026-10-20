@@ -47,7 +47,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 
 - **Pushes and pulls:** Tackle, Uppercut, Boulder Toss, Shockwave, Flame Wave, Wind Burst and Tidal Wave push targets away from the user. Eruption pushes them out from where it lands. Tornado, Cyclone, Whirlpool and Gravity Well pull enemies toward the centre. Singularity pulls them in before it hits. Water Whip pulls its target toward the user. Walls, ledges that are too high, and other creatures stop a push or pull early.
 - **Other forced movement:** Void Rift throws its target 2 tiles to a random open tile. Geyser knocks its target 1 tile in a random open direction. Phantom Charge rushes the user next to its target before it hits.
-- **Zones:** each zone covers the 3×3 tiles around where it lands, except the Inferno Ring, which is the ring just outside its blast. Zones are coloured on the battle grid and only affect the caster's opponents.
+- **Zones:** each zone covers the 3×3 tiles around where it lands, except the Inferno Ring, which is the ring just outside its blast. Zones are coloured on the battle grid and affect every creature in them, friend or foe, so place them carefully.
 
 | Move | Zone | Lasts | Effect |
 |---|---|---|---|
@@ -55,15 +55,31 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | Inferno Ring | Ring of fire (red) | 2 turns | Damage for crossing it |
 | Frozen Ground | Ice (blue) | 3 turns | Each tile costs 2 movement |
 | Sinkhole | Sinkhole (brown) | 2 turns | Each tile costs 2 movement, and no movement bonuses while standing in it |
-| Storm Cloud | Storm (grey-blue) | 2 turns | One random enemy inside is struck at the end of each of their turns |
+| Storm Cloud | Storm (grey-blue) | 2 turns | At the end of each side's turn, one random creature of that side inside is struck |
 | Event Horizon | Void (violet) | 2 turns | Damage and Slowed at the end of each turn spent inside |
 | Eternal Night | Darkness (dark purple) | 2 turns | Damage and Defense −2 at the end of each turn spent inside |
 
   Flying creatures pass over burning ground, the Inferno Ring, Frozen Ground and Sinkholes. The blue movement preview on the battle screen counts slow tiles.
 - **Charged Shot:** the first turn, the user charges in place (it can't move that turn). At the start of its next turn it fires at the same target if it's still in range, and that uses up the turn.
-- **Blazing Meteor:** marks a 3×3 area in red where its target stood. At the start of the user's next turn it lands on anyone still in that area, and the user then acts normally.
+- **Blazing Meteor:** marks a 3×3 area in red where its target stood. At the start of the user's next turn it lands on everyone still in that area except the user, allies included. The user then acts normally.
 - **Interrupts:** Energy Pulse, Earth Spike, Geyser, Spell Nova and Light Burst cancel a charging Charged Shot or a falling Blazing Meteor when they hit its user. Stone Toss has a 25% chance to. Stunning, freezing or putting the user to sleep also cancels it, as does knocking it out.
-- Enemies avoid zones and red meteor areas, hit charging creatures with interrupts when they can, and only charge a Charged Shot when standing still.
+- Enemies avoid zones and red meteor areas, try not to catch their own side in them, hit charging creatures with interrupts when they can, and only charge a Charged Shot when standing still.
+- **Flying creatures** pass over ground zones, but ranged attacks (moves that reach more than 1 tile) hit them 1.25× as hard.
+
+### Battle effects
+
+Creatures react on the field as the battle plays out:
+
+| What happened | Effect |
+|---|---|
+| Attacks | The attacker wiggles |
+| Takes damage (hits, burns, poison, zones, recoil) | Flashes orange |
+| Critical hit | The target flashes red |
+| Attack misses | The target flashes white |
+| Healed | Flashes green |
+| Boosted (stat up, extra movement, Counter Stance) | Flashes blue |
+
+If several happen to one creature at once, the most important one shows, in the order red, white, orange, green, blue. These play on creatures only, not on the player.
 
 ### Enemy mentalities
 
