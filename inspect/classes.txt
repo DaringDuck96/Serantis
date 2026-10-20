@@ -1,6 +1,12 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-sig:net.minecraft.world.item.crafting.NormalCraftingRecipe
-sig:net.minecraft.world.item.ItemStackTemplate
-sig:net.minecraft.world.item.crafting.CraftingInput
-sig:net.minecraft.core.NonNullList
-net.minecraft.world.level.material.WaterFluid
+sig:net.minecraft.world.entity.player.Player
+sig:net.minecraft.server.level.ServerPlayer
+net.minecraft.world.inventory.AnvilMenu
+sig:net.minecraft.world.inventory.ItemCombinerMenu
+sig:net.minecraft.world.level.block.Block
+sig:net.minecraft.world.entity.LivingEntity
+sig:net.minecraft.world.entity.ai.attributes.Attributes
+sig:net.minecraft.world.entity.ExperienceOrb
+net.minecraft.world.level.block.DropExperienceBlock
+sig:net.minecraft.world.level.storage.ValueOutput
+sig:net.minecraft.world.level.storage.ValueInput
