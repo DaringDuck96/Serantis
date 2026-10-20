@@ -1,0 +1,77 @@
+{
+  "name": "Ashback Devourer",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 94,
+        "attack": 100,
+        "defense": 94,
+        "speed": 63,
+        "magic": 49,
+        "luck": 75,
+        "charisma": 65
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:basalt_deltas",
+          "minecraft:nether_wastes",
+          "minecraft:soul_sand_valley",
+          "minecraft:badlands"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.75,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:blaze_rod",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:nether_star",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Smelting ores"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 7.5,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 94,
+    "attack": 100,
+    "defense": 94,
+    "speed": 63,
+    "magic": 49,
+    "luck": 75,
+    "charisma": 65
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

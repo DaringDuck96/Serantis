@@ -1,0 +1,41 @@
+{
+  "name": "Bastion",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 87,
+        "attack": 89,
+        "defense": 100,
+        "speed": 81,
+        "magic": 89,
+        "luck": 73,
+        "charisma": 76
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 87,
+    "attack": 89,
+    "defense": 100,
+    "speed": 81,
+    "magic": 89,
+    "luck": 73,
+    "charisma": 76
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

@@ -1,0 +1,71 @@
+{
+  "name": "Bubble Stalker",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 60,
+        "attack": 97,
+        "defense": 56,
+        "speed": 100,
+        "magic": 60,
+        "luck": 77,
+        "charisma": 70
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_ocean",
+          "minecraft:deep_cold_ocean",
+          "minecraft:deep_frozen_ocean",
+          "minecraft:deep_lukewarm_ocean"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_shard",
+          "chance": 0.6,
+          "min": 2,
+          "max": 4
+        },
+        {
+          "item": "minecraft:cod",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:nautilus_shell",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 60,
+    "attack": 97,
+    "defense": 56,
+    "speed": 100,
+    "magic": 60,
+    "luck": 77,
+    "charisma": 70
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

@@ -1,0 +1,73 @@
+{
+  "name": "Hollow Grunt",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 73,
+        "attack": 73,
+        "defense": 73,
+        "speed": 73,
+        "magic": 80,
+        "luck": 79,
+        "charisma": 79
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:windswept_gravelly_hills",
+          "minecraft:dark_forest",
+          "minecraft:dripstone_caves",
+          "minecraft:plains",
+          "minecraft:meadow"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 73,
+    "attack": 73,
+    "defense": 73,
+    "speed": 73,
+    "magic": 80,
+    "luck": 79,
+    "charisma": 79
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

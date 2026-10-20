@@ -1,0 +1,71 @@
+{
+  "name": "Voltwing",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 63,
+        "attack": 90,
+        "defense": 58,
+        "speed": 100,
+        "magic": 58,
+        "luck": 79,
+        "charisma": 69
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:savanna",
+          "minecraft:windswept_savanna",
+          "minecraft:windswept_hills",
+          "minecraft:meadow"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:lightning_rod",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ],
+      "size": 1.6,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 63,
+    "attack": 90,
+    "defense": 58,
+    "speed": 100,
+    "magic": 58,
+    "luck": 79,
+    "charisma": 69
+  },
+  "size": 0.7,
+  "movement": "fly"
+}

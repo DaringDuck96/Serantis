@@ -1,0 +1,20 @@
+{
+    "schemaVersion": 1,
+    "id": "ahrivaea_batch3",
+    "version": "0.1.0",
+    "name": "Ahrivaea Creatures: Batch 3",
+    "description": "109 more creatures for Ahrivaea Creatures: 87 that spawn across the Overworld, Nether and End, 2 summoned bosses, and 20 End dragons.",
+    "authors": [
+        "jeffreystu10",
+        "DaringDuck96"
+    ],
+    "license": "All-Rights-Reserved",
+    "icon": "assets/ahrivaea_batch3/icon.png",
+    "environment": "*",
+    "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "~26.3",
+        "java": ">=25",
+        "ahrivaea": "*"
+    }
+}

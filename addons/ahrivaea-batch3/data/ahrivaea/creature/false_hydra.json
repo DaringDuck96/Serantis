@@ -1,0 +1,66 @@
+{
+  "name": "False Hydra",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 77,
+        "attack": 58,
+        "defense": 72,
+        "speed": 89,
+        "magic": 100,
+        "luck": 91,
+        "charisma": 99
+      },
+      "rarity": "Legendary",
+      "drops": [
+        {
+          "item": "minecraft:nether_star",
+          "chance": 1.0,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "chance": 1.0,
+          "min": 2,
+          "max": 4
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.75,
+          "min": 4,
+          "max": 8
+        },
+        {
+          "item": "minecraft:enchanted_golden_apple",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 11.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 77,
+    "attack": 58,
+    "defense": 72,
+    "speed": 89,
+    "magic": 100,
+    "luck": 91,
+    "charisma": 99
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

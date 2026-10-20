@@ -1,0 +1,41 @@
+{
+  "name": "Regalia",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 89,
+        "attack": 93,
+        "defense": 81,
+        "speed": 76,
+        "magic": 87,
+        "luck": 69,
+        "charisma": 100
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 89,
+    "attack": 93,
+    "defense": 81,
+    "speed": 76,
+    "magic": 87,
+    "luck": 69,
+    "charisma": 100
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

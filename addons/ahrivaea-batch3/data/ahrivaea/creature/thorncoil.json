@@ -1,0 +1,77 @@
+{
+  "name": "Thorncoil",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 87,
+        "attack": 96,
+        "defense": 78,
+        "speed": 80,
+        "magic": 55,
+        "luck": 71,
+        "charisma": 76
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:dark_forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:windswept_forest",
+          "minecraft:mangrove_swamp"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:vine",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:oak_sapling",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:gold_nugget",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 87,
+    "attack": 96,
+    "defense": 78,
+    "speed": 80,
+    "magic": 55,
+    "luck": 71,
+    "charisma": 76
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

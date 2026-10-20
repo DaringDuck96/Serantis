@@ -1,0 +1,41 @@
+{
+  "name": "Ladon",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 93,
+        "attack": 99,
+        "defense": 80,
+        "speed": 83,
+        "magic": 88,
+        "luck": 72,
+        "charisma": 77
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 93,
+    "attack": 99,
+    "defense": 80,
+    "speed": 83,
+    "magic": 88,
+    "luck": 72,
+    "charisma": 77
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

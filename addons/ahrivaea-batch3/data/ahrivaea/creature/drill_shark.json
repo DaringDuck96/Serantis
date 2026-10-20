@@ -1,0 +1,77 @@
+{
+  "name": "Drill Shark",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 98,
+        "attack": 100,
+        "defense": 92,
+        "speed": 62,
+        "magic": 45,
+        "luck": 75,
+        "charisma": 60
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_ocean",
+          "minecraft:deep_cold_ocean",
+          "minecraft:deep_frozen_ocean",
+          "minecraft:deep_lukewarm_ocean"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_shard",
+          "chance": 0.6,
+          "min": 2,
+          "max": 4
+        },
+        {
+          "item": "minecraft:cod",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:nautilus_shell",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:gold_nugget",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        }
+      ],
+      "size": 4.2,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 98,
+    "attack": 100,
+    "defense": 92,
+    "speed": 62,
+    "magic": 45,
+    "luck": 75,
+    "charisma": 60
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

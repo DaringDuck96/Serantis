@@ -1,0 +1,41 @@
+{
+  "name": "The First Dragon",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 90,
+        "attack": 86,
+        "defense": 89,
+        "speed": 86,
+        "magic": 86,
+        "luck": 83,
+        "charisma": 80
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 90,
+    "attack": 86,
+    "defense": 89,
+    "speed": 86,
+    "magic": 86,
+    "luck": 83,
+    "charisma": 80
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

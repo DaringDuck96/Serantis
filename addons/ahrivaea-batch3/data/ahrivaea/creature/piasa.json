@@ -1,0 +1,41 @@
+{
+  "name": "Piasa",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 90,
+        "attack": 97,
+        "defense": 81,
+        "speed": 82,
+        "magic": 90,
+        "luck": 69,
+        "charisma": 78
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 90,
+    "attack": 97,
+    "defense": 81,
+    "speed": 82,
+    "magic": 90,
+    "luck": 69,
+    "charisma": 78
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

@@ -1,0 +1,71 @@
+{
+  "name": "Caldera Wyrm",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 85,
+        "attack": 90,
+        "defense": 73,
+        "speed": 80,
+        "magic": 50,
+        "luck": 74,
+        "charisma": 71
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:basalt_deltas",
+          "minecraft:nether_wastes",
+          "minecraft:windswept_savanna",
+          "minecraft:badlands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.75,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:blaze_rod",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Smelting ores"
+        },
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        }
+      ],
+      "size": 4.2,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 85,
+    "attack": 90,
+    "defense": 73,
+    "speed": 80,
+    "magic": 50,
+    "luck": 74,
+    "charisma": 71
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

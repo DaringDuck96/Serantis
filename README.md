@@ -16,6 +16,11 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Ahrivaea Fast Minecarts** | Minecarts up to 30 blocks/second (vanilla: 8), using the newer minecart physics so they stay on the rails. |
 | **Ahrivaea Handheld Lights** | Holding a torch, lantern or other light lights up the area around you as you walk. |
 | **Ahrivaea Woodcutting** | The stonecutter cuts wood: logs into planks, stairs, slabs, fences, doors, stripped logs and more. |
+| **Ahrivaea Creatures: Batch 3** | 109 more creatures from the Monster Batch 3.0 Book: 87 that spawn across the Overworld, Nether and End, 2 summoned bosses (Harbinger of Calamity, False Hydra), and 20 End dragons. They use all the same battle, recruiting, riding and base-job rules. Models are still to come, so for now they appear as plain bodies tinted in their influence's colour. |
+
+### About the Batch 3 bosses and dragons
+
+The book says the Harbinger of Calamity, the False Hydra and the 20 End dragons are summoned. The creatures mod has no summoning system yet, so for now they don't appear in the wild. A server operator can bring one out with the mod's `/ahrivaea spawn` command.
 
 ## How to install
 

@@ -1,0 +1,76 @@
+{
+  "name": "Thorn Shadow",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 70,
+        "attack": 81,
+        "defense": 63,
+        "speed": 92,
+        "magic": 79,
+        "luck": 74,
+        "charisma": 62
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:lush_caves",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:dappled_forest",
+          "minecraft:pale_garden"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 70,
+    "attack": 81,
+    "defense": 63,
+    "speed": 92,
+    "magic": 79,
+    "luck": 74,
+    "charisma": 62
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

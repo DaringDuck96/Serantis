@@ -1,0 +1,77 @@
+{
+  "name": "Tidecore Horror",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 75,
+        "attack": 51,
+        "defense": 69,
+        "speed": 87,
+        "magic": 100,
+        "luck": 85,
+        "charisma": 93
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_ocean",
+          "minecraft:deep_cold_ocean",
+          "minecraft:deep_frozen_ocean",
+          "minecraft:deep_lukewarm_ocean"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_shard",
+          "chance": 0.6,
+          "min": 2,
+          "max": 4
+        },
+        {
+          "item": "minecraft:cod",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:nautilus_shell",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 7.5,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 75,
+    "attack": 51,
+    "defense": 69,
+    "speed": 87,
+    "magic": 100,
+    "luck": 85,
+    "charisma": 93
+  },
+  "size": 1.6,
+  "movement": "swim"
+}

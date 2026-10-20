@@ -1,0 +1,41 @@
+{
+  "name": "Hrimwyrm",
+  "forms": {
+    "frost": {
+      "stats": {
+        "hp": 88,
+        "attack": 98,
+        "defense": 83,
+        "speed": 85,
+        "magic": 84,
+        "luck": 70,
+        "charisma": 72
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "ice",
+          "text": "Snow and ice harvesting"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 88,
+    "attack": 98,
+    "defense": 83,
+    "speed": 85,
+    "magic": 84,
+    "luck": 70,
+    "charisma": 72
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

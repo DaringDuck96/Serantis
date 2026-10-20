@@ -1,0 +1,71 @@
+{
+  "name": "Snapvine",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 79,
+        "attack": 91,
+        "defense": 79,
+        "speed": 83,
+        "magic": 53,
+        "luck": 75,
+        "charisma": 72
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:sparse_jungle",
+          "minecraft:mangrove_swamp",
+          "minecraft:lush_caves"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:vine",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:oak_sapling",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        },
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        }
+      ],
+      "size": 1.6,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 79,
+    "attack": 91,
+    "defense": 79,
+    "speed": 83,
+    "magic": 53,
+    "luck": 75,
+    "charisma": 72
+  },
+  "size": 0.7,
+  "movement": "walk"
+}

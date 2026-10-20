@@ -1,0 +1,41 @@
+{
+  "name": "Rendmaw",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 89,
+        "attack": 100,
+        "defense": 86,
+        "speed": 84,
+        "magic": 88,
+        "luck": 70,
+        "charisma": 78
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 89,
+    "attack": 100,
+    "defense": 86,
+    "speed": 84,
+    "magic": 88,
+    "luck": 70,
+    "charisma": 78
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

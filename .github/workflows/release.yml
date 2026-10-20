@@ -1,13 +1,16 @@
 name: Release
 
-# Whenever the mods, README or VERSION change on main, this builds Serantis-<VERSION>.zip
-# and publishes it as a GitHub Release. To ship an update: swap the jars in mods/,
-# bump the number in VERSION, and push. It can also be run by hand from the Actions tab.
+# Whenever the mods, add-ons, README or VERSION change on main, this builds Serantis-<VERSION>.zip
+# and publishes it as a GitHub Release. Each folder in addons/ is packed into its own mod jar
+# (named from its fabric.mod.json) and added to the mods folder of the download.
+# To ship an update: change mods/ or addons/, bump the number in VERSION, and push.
+# It can also be run by hand from the Actions tab.
 on:
   push:
     branches: [main]
     paths:
       - "mods/**"
+      - "addons/**"
       - "README.md"
       - "VERSION"
       - ".github/workflows/release.yml"
@@ -21,6 +24,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Build add-on jars
+        run: |
+          for dir in addons/*/; do
+            [ -f "$dir/fabric.mod.json" ] || continue
+            name="$(basename "$dir")"
+            ver="$(jq -r .version "$dir/fabric.mod.json")"
+            (cd "$dir" && zip -qr "$GITHUB_WORKSPACE/mods/${name}-${ver}.jar" . -x '*.md')
+            echo "built mods/${name}-${ver}.jar"
+          done
 
       - name: Build zip
         run: |

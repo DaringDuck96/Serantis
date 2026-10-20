@@ -1,0 +1,41 @@
+{
+  "name": "Mokele mbembe",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 92,
+        "attack": 96,
+        "defense": 86,
+        "speed": 80,
+        "magic": 88,
+        "luck": 72,
+        "charisma": 77
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 92,
+    "attack": 96,
+    "defense": 86,
+    "speed": 80,
+    "magic": 88,
+    "luck": 72,
+    "charisma": 77
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

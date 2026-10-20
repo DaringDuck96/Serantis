@@ -1,0 +1,73 @@
+{
+  "name": "Scrap Gobblin",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 59,
+        "attack": 58,
+        "defense": 54,
+        "speed": 91,
+        "magic": 86,
+        "luck": 100,
+        "charisma": 75
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:windswept_gravelly_hills",
+          "minecraft:dark_forest",
+          "minecraft:dripstone_caves",
+          "minecraft:plains",
+          "minecraft:meadow"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.55,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:flint",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "crafting",
+          "text": "Crafting-table assistance"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ],
+      "size": 1.6,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 59,
+    "attack": 58,
+    "defense": 54,
+    "speed": 91,
+    "magic": 86,
+    "luck": 100,
+    "charisma": 75
+  },
+  "size": 0.7,
+  "movement": "walk"
+}

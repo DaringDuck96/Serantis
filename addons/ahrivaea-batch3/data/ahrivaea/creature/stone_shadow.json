@@ -1,0 +1,74 @@
+{
+  "name": "Stone Shadow",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 72,
+        "attack": 88,
+        "defense": 64,
+        "speed": 94,
+        "magic": 75,
+        "luck": 77,
+        "charisma": 63
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:stony_peaks",
+          "minecraft:dripstone_caves",
+          "minecraft:desert",
+          "minecraft:windswept_hills",
+          "minecraft:lush_caves",
+          "minecraft:deep_dark"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 72,
+    "attack": 88,
+    "defense": 64,
+    "speed": 94,
+    "magic": 75,
+    "luck": 77,
+    "charisma": 63
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

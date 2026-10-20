@@ -1,0 +1,71 @@
+{
+  "name": "Canopy Skullspider",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 64,
+        "attack": 94,
+        "defense": 59,
+        "speed": 100,
+        "magic": 58,
+        "luck": 72,
+        "charisma": 69
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:bamboo_jungle",
+          "minecraft:sparse_jungle",
+          "minecraft:old_growth_birch_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:string",
+          "chance": 0.75,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:cobweb",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 64,
+    "attack": 94,
+    "defense": 59,
+    "speed": 100,
+    "magic": 58,
+    "luck": 72,
+    "charisma": 69
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

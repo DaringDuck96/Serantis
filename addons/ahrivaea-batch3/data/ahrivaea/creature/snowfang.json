@@ -1,0 +1,77 @@
+{
+  "name": "Snowfang",
+  "forms": {
+    "frost": {
+      "stats": {
+        "hp": 84,
+        "attack": 96,
+        "defense": 74,
+        "speed": 82,
+        "magic": 52,
+        "luck": 76,
+        "charisma": 69
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:snowy_taiga",
+          "minecraft:grove",
+          "minecraft:snowy_slopes",
+          "minecraft:snowy_plains"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:packed_ice",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:snowball",
+          "chance": 0.7,
+          "min": 2,
+          "max": 6
+        },
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gold_nugget",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ice",
+          "text": "Snow and ice harvesting"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 84,
+    "attack": 96,
+    "defense": 74,
+    "speed": 82,
+    "magic": 52,
+    "luck": 76,
+    "charisma": 69
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

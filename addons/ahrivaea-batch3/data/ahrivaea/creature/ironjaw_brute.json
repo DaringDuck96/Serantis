@@ -1,0 +1,71 @@
+{
+  "name": "Ironjaw Brute",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 98,
+        "attack": 100,
+        "defense": 93,
+        "speed": 65,
+        "magic": 49,
+        "luck": 65,
+        "charisma": 60
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:savanna",
+          "minecraft:badlands",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:raw_iron",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:flint",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:cobblestone",
+          "chance": 0.7,
+          "min": 2,
+          "max": 5
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 4.2,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 98,
+    "attack": 100,
+    "defense": 93,
+    "speed": 65,
+    "magic": 49,
+    "luck": 65,
+    "charisma": 60
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

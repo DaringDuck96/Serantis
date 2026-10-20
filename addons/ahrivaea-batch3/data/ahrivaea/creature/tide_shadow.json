@@ -1,0 +1,71 @@
+{
+  "name": "Tide Shadow",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 66,
+        "attack": 86,
+        "defense": 68,
+        "speed": 93,
+        "magic": 75,
+        "luck": 74,
+        "charisma": 59
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:river",
+          "minecraft:frozen_river",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 66,
+    "attack": 86,
+    "defense": 68,
+    "speed": 93,
+    "magic": 75,
+    "luck": 74,
+    "charisma": 59
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

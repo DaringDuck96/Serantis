@@ -1,0 +1,71 @@
+{
+  "name": "Aether Beamer",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 67,
+        "attack": 48,
+        "defense": 61,
+        "speed": 83,
+        "magic": 100,
+        "luck": 85,
+        "charisma": 90
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:meadow",
+          "minecraft:windswept_hills",
+          "minecraft:stony_peaks",
+          "minecraft:end_highlands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:experience_bottle",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gold_ingot",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        },
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 67,
+    "attack": 48,
+    "defense": 61,
+    "speed": 83,
+    "magic": 100,
+    "luck": 85,
+    "charisma": 90
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

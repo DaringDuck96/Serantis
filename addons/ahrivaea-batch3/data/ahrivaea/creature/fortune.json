@@ -1,0 +1,41 @@
+{
+  "name": "Fortune",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 91,
+        "attack": 84,
+        "defense": 78,
+        "speed": 82,
+        "magic": 84,
+        "luck": 100,
+        "charisma": 76
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 91,
+    "attack": 84,
+    "defense": 78,
+    "speed": 82,
+    "magic": 84,
+    "luck": 100,
+    "charisma": 76
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Fairy Dragon",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 88,
+        "attack": 93,
+        "defense": 83,
+        "speed": 78,
+        "magic": 91,
+        "luck": 73,
+        "charisma": 78
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "lighting",
+          "text": "Dark-area exploration and lighting"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 88,
+    "attack": 93,
+    "defense": 83,
+    "speed": 78,
+    "magic": 91,
+    "luck": 73,
+    "charisma": 78
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

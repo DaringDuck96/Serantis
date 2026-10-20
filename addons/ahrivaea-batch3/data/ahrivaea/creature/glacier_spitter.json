@@ -1,0 +1,71 @@
+{
+  "name": "Glacier Spitter",
+  "forms": {
+    "frost": {
+      "stats": {
+        "hp": 62,
+        "attack": 93,
+        "defense": 58,
+        "speed": 100,
+        "magic": 61,
+        "luck": 77,
+        "charisma": 67
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:frozen_peaks",
+          "minecraft:snowy_slopes",
+          "minecraft:ice_spikes",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:packed_ice",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:snowball",
+          "chance": 0.7,
+          "min": 2,
+          "max": 6
+        },
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ice",
+          "text": "Snow and ice harvesting"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 62,
+    "attack": 93,
+    "defense": 58,
+    "speed": 100,
+    "magic": 61,
+    "luck": 77,
+    "charisma": 67
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

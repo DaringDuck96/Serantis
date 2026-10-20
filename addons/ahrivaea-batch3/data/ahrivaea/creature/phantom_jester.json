@@ -1,0 +1,74 @@
+{
+  "name": "Phantom Jester",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 62,
+        "attack": 60,
+        "defense": 62,
+        "speed": 99,
+        "magic": 84,
+        "luck": 99,
+        "charisma": 79
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:lush_caves"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ],
+      "size": 2.4,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 62,
+    "attack": 60,
+    "defense": 62,
+    "speed": 99,
+    "magic": 84,
+    "luck": 99,
+    "charisma": 79
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

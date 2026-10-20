@@ -1,0 +1,41 @@
+{
+  "name": "The Last Dragon",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 83,
+        "attack": 85,
+        "defense": 87,
+        "speed": 86,
+        "magic": 88,
+        "luck": 80,
+        "charisma": 91
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 83,
+    "attack": 85,
+    "defense": 87,
+    "speed": 86,
+    "magic": 88,
+    "luck": 80,
+    "charisma": 91
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

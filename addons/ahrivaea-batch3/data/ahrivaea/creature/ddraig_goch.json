@@ -1,0 +1,41 @@
+{
+  "name": "Ddraig Goch",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 97,
+        "attack": 93,
+        "defense": 83,
+        "speed": 81,
+        "magic": 91,
+        "luck": 73,
+        "charisma": 75
+      },
+      "rarity": "Legendary",
+      "drops": [],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Smelting ores"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 12.0,
+      "wave": 3
+    }
+  },
+  "stats": {
+    "hp": 97,
+    "attack": 93,
+    "defense": 83,
+    "speed": 81,
+    "magic": 91,
+    "luck": 73,
+    "charisma": 75
+  },
+  "size": 1.6,
+  "movement": "fly"
+}
