@@ -3,7 +3,17 @@
   "minVersion": "0.8",
   "package": "dev.serantis.battle.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["StatsMixin", "SpeciesMixin", "PartyMixin", "CreatureEntityMixin"],
-  "client": ["client.PartyScreenMixin"],
-  "injectors": {"defaultRequire": 1}
+  "mixins": [
+    "StatsMixin",
+    "SpeciesMixin",
+    "PartyMixin",
+    "CreatureEntityMixin",
+    "VariantMixin"
+  ],
+  "client": [
+    "client.PartyScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

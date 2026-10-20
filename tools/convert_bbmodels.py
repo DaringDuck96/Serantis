@@ -26,7 +26,6 @@ ALIASES = {"blooming_horror": "bloom_eye_horror", "scrap_goblin": "scrap_gobblin
            # End dragons: file names lost their accents
            "y_ddraig_goch": "ddraig_goch", "mok_l_mb_mb": "mokele_mbembe", "a_i_dah_ka": "azi_dahaka",
            "saraph": "seraphim", "f_fnir": "fafnir", "hr_mwyrm": "hrimwyrm"}
-INFLUENCE_OVERRIDE = {"lindworm": "nature"}                # creature's influence differs from its file prefix
 SIZE_CLASS = {"small": 0.7, "medium": 1.0, "large": 1.6, "extra_large": 1.6}
 FPS = 24                                                   # sampling rate for smooth curves
 
@@ -168,7 +167,7 @@ def creature_of(label, creature_dir):
     name = ALIASES.get(name, name)
     path = os.path.join(creature_dir, name + ".json")
     if not os.path.exists(path): raise SystemExit(f"No creature called '{name}' in the add-on ({label})")
-    return name, INFLUENCE_OVERRIDE.get(name, PREFIX[prefix]), sclass, path
+    return name, PREFIX[prefix], sclass, path
 
 def convert(addon, src):
     work = tempfile.mkdtemp()

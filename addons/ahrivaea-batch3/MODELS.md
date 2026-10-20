@@ -77,7 +77,7 @@ assets/ahrivaea/textures/entity/creature/ID/INF_enraged_mutated.png   enraged + 
 | Ironjaw Brute | `ironjaw_brute` | `none` |
 | Ladon | `ladon` | `arcane` |
 | Lantern Trickster | `lantern_trickster` | `fae` |
-| Lindworm | `lindworm` | `nature` |
+| Lindworm | `lindworm` | `none` |
 | Lumina Wyrm | `lumina_wyrm` | `radiant` |
 | Magma Bulwark | `magma_bulwark` | `fire` |
 | Magma Crawler | `magma_crawler` | `fire` |

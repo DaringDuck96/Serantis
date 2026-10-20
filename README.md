@@ -19,13 +19,15 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Ahrivaea Creatures: Batch 3** | 109 more creatures from the Monster Batch 3.0 Book: 87 that spawn across the Overworld, Nether and End, 2 summoned bosses (Harbinger of Calamity, False Hydra), and 20 End dragons. They use all the same battle, recruiting, riding and base-job rules, and all have their models. |
 | **Serantis Starters** | The 12 starter creatures, one for each influence: Sixpaw Marauder, Cinder Pangolith, Rime Chimaera, Stormstrider, Delver Horror, Hydrabill, Grove Behemoth, Runeback Basilisk, Voidshell, Dawn Owlbear, Gloomgazer and Feyheart. They're the only creatures offered on the starter screen, each given in its own influence, and they also live in the wild as Rare creatures like any other. |
 | **Serantis End Dragons** | Whenever the Ender Dragon is summoned in the End (on your first visit, or by placing End Crystals on the exit portal), one of the 20 End dragons appears on top of the exit portal instead, picked at random, at Level 20. They never spawn any other way. |
-| **Serantis Battle Stats** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line, and wild creatures can be any level from 1 to 20. |
+| **Serantis Battle and Spawning** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line. Spawns roll their rarity first (70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary), can be any level from 1 to 20, and have a 1% chance of being Mutated. |
 
 ### Battle stats and levels
 
 - Each creature's Level 20 stats are in `addons/ahrivaea-battle/serantis_battle/stats.tsv`, built from the stat sheet with `tools/build_battle_stats.py`. They apply to every creature, including the original creatures mod's, without changing its files.
 - Level 1 is 50% of Level 20, rising in a straight line. Creatures can't be fed past Level 20.
-- How often a creature spawns comes from its rarity; its level does not. Any wild creature can be Level 1–20. Wild levels still sit within 5 of the nearest player's own level, kept inside 1–20, so from player level 25 up wild creatures are Level 20.
+- Every creature spawn (wild spawns, replaced vanilla mobs, and battle reinforcements) first rolls a rarity: 70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary. It then picks a creature of that rarity that lives in the biome, using each creature's spawn weight. If the biome has none of the rolled rarity, the roll is repeated among the rarities it does have (the Nether and outer End have no Legendaries, so their 1% is shared among the rest). The odds are in `addons/ahrivaea-battle/src/dev/serantis/battle/SpawnOdds.java`.
+- Every spawned creature has a 1% chance of being Mutated, with its mutated skin. Enraged keeps the creatures mod's own rare chance.
+- A creature's level does not depend on its rarity. Any wild creature can be Level 1–20. Wild levels still sit within 5 of the nearest player's own level, kept inside 1–20, so from player level 25 up wild creatures are Level 20.
 - Starters begin at Level 1. End dragons appear at Level 20.
 
 ### Starters

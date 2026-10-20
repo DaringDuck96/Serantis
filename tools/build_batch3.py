@@ -150,7 +150,6 @@ DRAGON_JOBS = {"none": ("transport","defense"), "fire": ("smelting","defense"), 
     "nature": ("growth","logging"), "void": ("mining","transport"), "fae": ("growth","lighting"),
     "darkness": ("ranching","defense"), "arcane": ("enchanting","brewing"), "radiant": ("lighting","enchanting")}
 DRAGON_MOVE = {"Mokele mbembe": "walk", "Ladon": "walk"}           # land/river dragons
-DRAGON_INFLUENCE_FIX = {"Lindworm": "nature"}                      # the book says None; the team chose Nature
 DRAGON_FOCUS = {"Rendmaw": "attack", "Arcanum": "magic", "Bastion": "defense",
                 "Galewing": "speed", "Fortune": "luck", "Regalia": "charisma"}
 APEX = {"The First Dragon", "The Last Dragon"}                     # highest stats in the game
@@ -239,7 +238,6 @@ def main(book, outdir):
         if not row[1]: continue
         infl, raw = row[0].lower(), row[1].strip()
         name = re.sub(r"\s*\(.*\)$", "", raw)
-        infl = DRAGON_INFLUENCE_FIX.get(name, infl)
         focus = DRAGON_FOCUS.get(name)
         total = 600 if name in APEX else (595 if focus else None)
         made[name] = creature(name, infl, "Legendary", DRAGON_MOVE.get(name, "fly"),
