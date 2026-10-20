@@ -1,9 +1,13 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-sig:net.minecraft.world.item.Item$Properties
-sig:net.minecraft.world.level.block.state.BlockBehaviour$Properties
-net.minecraft.client.color.block.BlockTintSource
-sig:net.minecraft.client.color.block.BlockTintSources
-sig:net.minecraft.client.resources.model.ModelDebugName
-sig:net.minecraft.client.resources.model.sprite.Material
-sig:net.minecraft.world.item.DyeColor
-asset:assets/minecraft/lang/en_us.json
+net.minecraft.world.item.crafting.CraftingRecipe
+net.minecraft.world.item.crafting.ShapelessRecipe
+sig:net.minecraft.world.item.crafting.CustomRecipe
+sig:net.minecraft.world.item.crafting.RecipeSerializer
+net.minecraft.world.inventory.ResultSlot
+find:net/minecraft/world/item/crafting/
+sig:net.minecraft.world.item.Item
+net.minecraft.world.level.material.FlowingFluid
+asset:assets/minecraft/blockstates/water.json
+asset:data/minecraft/tags/fluid/water.json
+asset:data/minecraft/recipe/cake.json
+asset:data/minecraft/recipe/white_banner.json
