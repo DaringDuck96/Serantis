@@ -66,6 +66,11 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - Enemies avoid zones and red meteor areas, try not to catch their own side in them, hit charging creatures with interrupts when they can, and only charge a Charged Shot when standing still.
 - **Flying creatures** pass over ground zones, but ranged attacks (moves that reach more than 1 tile) hit them 1.25× as hard.
 
+### Movement and work speed
+
+- **Battle movement** comes from Speed and level. Level 1 creatures move 2 to 4 tiles a turn and Level 20 creatures 7 to 10, with the range rising in a straight line between. Where a creature falls in its level's range depends on its Speed: Level 20 Speed 44 is the slowest and 103 the fastest. For example, a typical creature (Speed 62) moves 3 tiles at Level 1, 5 at Level 10 and 8 at Level 20. Speed changes, Slowed, extra movement and terrain costs still apply on top. The player's own movement is unchanged.
+- **Work speed at a base** comes from Charisma at the creature's level (Level 1 = 50% of its Level 20 Charisma): Charisma ÷ 63, between 25% and 200%. A typical Level 20 creature works at 100%, the most charming at about 180%, and a Level 1 creature at roughly 40–90%. The base screen shows each worker's speed.
+
 ### Creature sizes and terrain
 
 - **Big creatures cover more of the grid:** small and medium creatures cover 1 tile, large 2×2, extra large 3×3 and XX large 4×4. A big creature can be targeted on any of its tiles, and its range is measured from its nearest edge. It needs room for its whole body to move or stop, and zones, area attacks, pushes and pulls all count every tile it covers. Each creature's size comes from the size word in its model pack's file name (`tools/model_sizes.tsv`). For creatures from the original creatures mod, which came without named models, it's judged from the model's size (under 3.6 blocks → 1×1, 3.6–7.5 → 2×2, 7.5 and up → 3×3). Every creature's size is listed in `books/Creature_Footprints.xlsx` (judged ones highlighted). Edit `tools/model_sizes.tsv` and rerun `tools/build_footprints.py` to change any.

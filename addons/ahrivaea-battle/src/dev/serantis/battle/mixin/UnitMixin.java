@@ -20,6 +20,15 @@ import java.util.List;
 @Mixin(Unit.class)
 public abstract class UnitMixin implements UnitAccess {
     @Shadow @Mutable @Final public List<BattleMove> moves;
+    @Shadow @Final public boolean isPlayer;
+    @Shadow @Final public int level;
+    @Shadow @Final public dev.ahrivaea.creature.Stats stats;
+
+    // Movement per turn from Speed and level (see Pace). The player keeps the creatures mod's own.
+    @Inject(method = "squares", at = @At("HEAD"), cancellable = true)
+    private void serantis$squares(CallbackInfoReturnable<Integer> cir) {
+        if (!isPlayer && stats != null) cir.setReturnValue(dev.serantis.battle.Pace.squares(level, stats.speed()));
+    }
     @Unique private UnitState serantis$state;
 
     @Override
