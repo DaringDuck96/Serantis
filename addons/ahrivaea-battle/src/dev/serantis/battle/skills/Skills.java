@@ -16,13 +16,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The player skill tree. Every player starts with 50 in every stat. Nodes are bought at your own
+ * The player skill tree. Every player starts with 40 in every stat. Nodes are bought at your own
  * Base Core (Level 1 or higher) with XP; each node needs the one before it in its branch, a
  * capstone also needs a node from a neighbouring branch, and node N's base level requirement
  * grows with depth. Every node bought makes the next one 18% dearer, whichever branch it's in.
  */
 public final class Skills {
-    public static final int START_STAT = 50;
+    public static final int START_STAT = 40;
     public static final double BASE_COST = 150, GROWTH = 1.18;
 
     public record Node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,

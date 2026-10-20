@@ -104,7 +104,7 @@ Every creature gets one of 25 temperaments at random when it first appears and k
 
 **One XP currency.** Battles give ordinary Minecraft XP (about 10 per creature defeated), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.
 
-**Your stats.** Every player starts with 50 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. The old player levels and stat points are gone.
+**Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. The old player levels and stat points are gone.
 
 **The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 6 branches of 6 skills, 36 in all:
 - **Order:** each skill needs the one above it, and each capstone (the last skill in a branch) also needs one skill from a neighbouring branch.
@@ -119,7 +119,7 @@ Every creature gets one of 25 temperaments at random when it first appears and k
 | **Fortune** | Luck I: +3 Luck | Scavenger: 5% chance mobs you kill drop twice | Luck II: +4 Luck | Spoils: 5% chance a creature you beat in battle drops twice | Luck III: +5 Luck | **Treasure Sense:** rare creature drops (under 25%) twice as likely *(also needs Insight III)* |
 | **Industry** | Labor I: +8% mining/chopping speed | Labor II: +8% | Prospector: XP blocks give +1 XP | Labor III: +8% | Labor IV: +8% | **Tireless:** +10% mining speed, half the hunger for breaking blocks *(also needs Stride II)* |
 
-**Cost.** The first skill costs 150 XP, and every skill you learn makes the next one cost 18% more, whatever branch it's in. The first four take about 780 XP (a couple of hours of early play). The 10th costs 665, the 20th 3,480, the 30th 18,225 and the last 49,200. The whole tree costs about 321,690 XP. A fully trained player tops out around 65–70 in their best stats: strong, but still below a Level 20 legendary creature.
+**Cost.** The first skill costs 150 XP, and every skill you learn makes the next one cost 18% more, whatever branch it's in. The first four take about 780 XP (a couple of hours of early play). The 10th costs 665, the 20th 3,480, the 30th 18,225 and the last 49,200. The whole tree costs about 321,690 XP. A fully trained player tops out around 55–60 in their best stats: strong, but still below a Level 20 legendary creature.
 
 ### Naming creatures
 
