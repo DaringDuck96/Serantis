@@ -8,10 +8,16 @@
     "SpeciesMixin",
     "PartyMixin",
     "CreatureEntityMixin",
-    "VariantMixin"
+    "VariantMixin",
+    "BattleMixin",
+    "UnitMixin",
+    "BattlesMixin",
+    "CaughtCreatureMixin",
+    "DamageCalcMixin"
   ],
   "client": [
-    "client.PartyScreenMixin"
+    "client.PartyScreenMixin",
+    "client.BattleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

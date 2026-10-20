@@ -19,7 +19,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Ahrivaea Creatures: Batch 3** | 109 more creatures from the Monster Batch 3.0 Book: 87 that spawn across the Overworld, Nether and End, 2 summoned bosses (Harbinger of Calamity, False Hydra), and 20 End dragons. They use all the same battle, recruiting, riding and base-job rules, and all have their models. |
 | **Serantis Starters** | The 12 starter creatures, one for each influence: Sixpaw Marauder, Cinder Pangolith, Rime Chimaera, Stormstrider, Delver Horror, Hydrabill, Grove Behemoth, Runeback Basilisk, Voidshell, Dawn Owlbear, Gloomgazer and Feyheart. They're the only creatures offered on the starter screen, each given in its own influence, and they also live in the wild as Rare creatures like any other. |
 | **Serantis End Dragons** | Whenever the Ender Dragon is summoned in the End (on your first visit, or by placing End Crystals on the exit portal), one of the 20 End dragons appears on top of the exit portal instead, picked at random, at Level 20. They never spawn any other way. |
-| **Serantis Battle and Spawning** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line. Spawns roll their rarity first (70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary), can be any level from 1 to 20, and have a 1% chance of being Mutated. |
+| **Serantis Battle and Spawning** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line. Spawns roll their rarity first (70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary), can be any level from 1 to 20, and have a 1% chance of being Mutated. Creatures fight with 3 moves each from the Move Dex. |
 
 ### Battle stats and levels
 
@@ -29,6 +29,19 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - Every spawned creature has a 1% chance of being Mutated, with its mutated skin. Enraged keeps the creatures mod's own rare chance.
 - A creature's level does not depend on its rarity. Any wild creature can be Level 1–20. Wild levels still sit within 5 of the nearest player's own level, kept inside 1–20, so from player level 25 up wild creatures are Level 20.
 - Starters begin at Level 1. End dragons appear at Level 20.
+
+### Moves (Stage 1)
+
+- Every creature knows 3 moves, picked at random when it first appears (or first battles) and kept for good, including after it's caught. Any creature can know universal moves; magic moves are limited to creatures of that influence (Normal magic to creatures with no influence). At least one of the three always deals damage.
+- The moves come from the Move Dex (`books/Move_Dex.xlsx`), built into `addons/ahrivaea-battle/serantis_battle/moves.json` by `tools/build_moves.py`. That script also records how each move behaves on the battle grid.
+- Damage = Power × 4 × level factor × (Attack + 10) ÷ (Defense + 10). Magic moves use Magic on both sides. Influence matchups and the same-influence bonus (×1.2) still apply.
+- Moves that reach more than 1 tile are ranged: 85% base hit chance. Moves that only reach 1 tile are melee: they deal 15% more damage. Luck shifts hit chance either way.
+- Crits: a flat 10% chance (20% with high ground: standing at least 1 block above the target), and they double damage.
+- Reach: universal ranged moves reach twice the Move Dex's maximum; magic ranged moves 1.5× (rounded up). Ranged attacks average about 6 tiles.
+- Stat changes in the Move Dex are 10% of that stat per point (Defense +2 = +20%); accuracy changes are percentage points. Healing and damage over time use the same scale as Power.
+- Statuses: Bleeding and Poison lose 5% of max HP each turn; Burning deals its stated damage each turn; Frozen, Stunned and Asleep skip turns (Asleep wakes when hit); Immobilized can't move; Slowed moves 2 fewer tiles; Confused attacks a random nearby unit half the time; Frightened deals about 30% less damage.
+- Counter Stance: Defense +2 until the user's next turn, and anyone who damages it before then takes 25% of that damage back as recoil.
+- Waiting for Stage 2 (not learnable yet): Charged Shot, Inferno Ring, Blazing Meteor, Frozen Ground, Storm Cloud, Sinkhole, Event Horizon and Eternal Night. Pushes, pulls and teleports on other moves are skipped for now.
 
 ### Starters
 
