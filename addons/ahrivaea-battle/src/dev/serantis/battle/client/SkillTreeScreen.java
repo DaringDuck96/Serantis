@@ -110,7 +110,7 @@ public class SkillTreeScreen extends Screen {
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        if (event.button() == 0)
+        if (event.button() <= 1)          // the main click (Minecraft 26.3 reports it as button 1)
             for (Tile t : tiles)
                 if (t.contains(event.x(), event.y()) && learnable(t)) {
                     pending = t.id;
