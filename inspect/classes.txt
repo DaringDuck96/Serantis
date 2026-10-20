@@ -1,7 +1,6 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-find:(?i)fluid
-find:fabric/api/.*(BlockRenderLayer|ChunkSectionLayer|ClientModInitializer|ModInitializer)
-find:net/minecraft/client/renderer/(ItemBlockRenderTypes|block/FluidRenderer|block/FluidModel)
-sig:net.minecraft.world.item.Item$Properties
-sig:net.minecraft.world.level.block.state.BlockBehaviour$Properties
-net.minecraft.client.renderer.block.FluidRenderer
+find:[Ff]luid
+find:fabric.*([Tt]int|[Cc]olor[Pp]rovider|BlockColor)
+find:net/minecraft/client/(color|renderer/block)/
+net.minecraft.client.renderer.block.FluidModel
+net.minecraft.client.renderer.block.FluidStateModelSet
