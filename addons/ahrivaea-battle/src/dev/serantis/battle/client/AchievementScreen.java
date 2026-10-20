@@ -16,7 +16,7 @@ import java.util.List;
 /** The achievement log (opened from the party screen). See Achievements on the server. */
 public class AchievementScreen extends Screen {
     private static final int GOLD = 0xFFF2C94C, W = 360, ROW = 31, HEAD = 42;
-    private static final Item[] ICONS = {Items.BRICKS, Items.IRON_SWORD, Items.LEAD, Items.SPYGLASS, Items.FURNACE, Items.LEATHER_BOOTS, Items.EXPERIENCE_BOTTLE};
+    private static final Item[] ICONS = {Items.BRICKS, Items.IRON_SWORD, Items.LEAD, Items.SPYGLASS, Items.FURNACE, Items.LEATHER_BOOTS, Items.EXPERIENCE_BOTTLE, Items.SKELETON_SKULL};
     private static final String[] ROMAN = {"I", "II", "III", "IV", "V", "VI"};
 
     private final Screen parent;
@@ -96,8 +96,11 @@ public class AchievementScreen extends Screen {
         g.fill(4, y - 2, W - 4, y + ROW - 4, i % 2 == 0 ? 0x26FFFFFF : 0x12FFFFFF);
         g.item(new ItemStack(ICONS[i % ICONS.length]), 8, y + 4);
 
-        String title = a.get("name").getAsString() + (claimed > 0 ? " " + ROMAN[Math.min(claimed, ROMAN.length) - 1] : "");
-        g.text(font, title, 30, y + 1, done ? GOLD : 0xFFFFFFFF);
+        // the title of the last tier earned (or the track's name before the first)
+        JsonArray titles = a.has("titles") ? a.getAsJsonArray("titles") : null;
+        String title = claimed > 0 && titles != null ? titles.get(Math.min(claimed, titles.size()) - 1).getAsString()
+                : a.get("name").getAsString();
+        g.text(font, font.plainSubstrByWidth(title, 186), 30, y + 1, done ? GOLD : claimed > 0 ? 0xFFFFFFFF : 0xFFB8BCC8);
 
         // progress toward the next tier
         long prev = claimed == 0 ? 0 : tiers.get(claimed - 1).getAsLong();
@@ -126,7 +129,8 @@ public class AchievementScreen extends Screen {
             for (int k = 0; k < n; k++) {
                 int cx = px + k * 22;
                 if (lx >= cx && lx < cx + 20)
-                    tip = List.of(Component.literal(a.get("name").getAsString() + " " + ROMAN[k]).withColor(GOLD),
+                    tip = List.of(Component.literal(titles != null && k < titles.size() ? titles.get(k).getAsString() : a.get("name").getAsString()).withColor(GOLD),
+                            Component.literal(a.get("name").getAsString() + " " + ROMAN[k]).withColor(0xFF9AA4B4),
                             Component.literal(String.format("%,d %s", tiers.get(k).getAsLong(), a.get("verb").getAsString())).withColor(0xFFFFFFFF),
                             Component.literal("Reward: " + apples.get(k).getAsInt() + " golden apples").withColor(0xFFE8C860),
                             Component.literal(k < claimed ? "✔ Earned" : "Not yet").withColor(k < claimed ? 0xFF7FE08A : 0xFF9AA4B4));

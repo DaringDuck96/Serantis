@@ -119,19 +119,21 @@ The gain goes on the stat's Level 20 value, like the rest of the stat, so it is 
 
 ### Achievements
 
-Milestones in seven areas pay out golden apples (see Golden apples). They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: your progress toward each next tier, every tier and what it pays (hover a tier for details), and how many golden apples you've earned so far.
+Milestones in eight areas pay out golden apples (see Golden apples), each tier with its own title. They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: the title you've earned in each, your progress toward the next tier, every tier and what it pays (hover a tier for its title and details), and how many golden apples you've earned so far.
 
-| Achievement | Tiers | Golden apples per tier |
+| Achievement | Tiers and titles | Golden apples per tier |
 |---|---|---|
-| Blocks Placed | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
-| Battles Won | 1 · 10 · 50 · 100 · 250 · 500 | 2 · 4 · 8 · 16 · 32 · 48 |
-| Creatures Recruited | 5 · 25 · 100 · 200 · 300 · 400 | 2 · 4 · 8 · 16 · 32 · 48 |
-| Creatures Seen | 5 · 25 · 50 · 150 · 300 · 434 (every creature form) | 2 · 4 · 8 · 16 · 32 · 48 |
-| Items Smelted | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
-| Blocks Walked | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
-| Experience Gained | 100 · 1,000 · 10,000 · 100,000 · 1,000,000 | 3 · 6 · 12 · 24 · 48 |
+| Blocks Placed | 100 Some Assembly Required · 1,000 Brick by Brick · 10,000 Not Just a Dirt Hut · 100,000 Zoning Violation · 1,000,000 Terraformer | 3 · 6 · 12 · 24 · 48 |
+| Battles Won | 1 Beginner's Luck · 10 Getting the Hang of It · 50 Tactical Genius (Allegedly) · 100 Undefeated-ish · 250 Grid Lord · 500 Final Boss Energy | 2 · 4 · 8 · 16 · 32 · 48 |
+| Creatures Recruited | 5 Making Friends · 25 Petting Zoo · 100 Animal Magnetism · 200 Creature Hoarder · 300 Noah Would Be Proud · 400 Zookeeper Supreme | 2 · 4 · 8 · 16 · 32 · 48 |
+| Creatures Seen | 5 Wait, What Was That? · 25 Bird Watcher · 50 Taking Field Notes · 150 I've Seen Things · 300 Walking Encyclopedia · 434 (every form) Seen It All | 2 · 4 · 8 · 16 · 32 · 48 |
+| Items Smelted | 100 Hot Stuff · 1,000 Cooking With Lava · 10,000 Total Smeltdown · 100,000 Industrial Revolution · 1,000,000 Forge of the Gods | 3 · 6 · 12 · 24 · 48 |
+| Blocks Walked | 100 Stretch Your Legs · 1,000 Out for a Stroll · 10,000 Are We There Yet? · 100,000 Who Needs Horses? · 1,000,000 Walked to the Moon | 3 · 6 · 12 · 24 · 48 |
+| Experience Gained | 100 Shiny Green Orbs · 1,000 Book Smart · 10,000 Big Brain Energy · 100,000 Seasoned Veteran · 1,000,000 Ascended | 3 · 6 · 12 · 24 · 48 |
+| Times Defeated | 1 Oops · 5 Respawn Regular · 10 Fall Damage Enthusiast · 50 Death's Frequent Flyer · 100 Immortal (Technically) | 2 · 4 · 8 · 16 · 32 |
 
-That's 702 golden apples in all. Where the counts come from: blocks placed and blocks walked (walking, sprinting and crouching) are Minecraft's own statistics, so they include everything you did before this update; battles won and creatures recruited are the creatures mod's statistics; creatures seen is your creature dex; items smelted counts items you take out of furnaces, smokers and blast furnaces; experience gained counts all XP you earn (from mining, battles and anything else), not XP you spend.
+That's 764 golden apples in all. Where the counts come from: blocks placed, blocks walked (walking, sprinting and crouching) and times defeated (deaths) are Minecraft's own statistics, so they include everything you did before these were added; battles won and creatures recruited are the creatures mod's statistics; creatures seen is your creature dex; items smelted counts items you take out of furnaces, smokers and blast furnaces; experience gained counts all XP you earn (from mining, battles and anything else), not XP you spend.
+
 ### Experience and the skill tree
 
 **One XP currency.** Battles give ordinary Minecraft XP (about 10 per creature defeated), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.

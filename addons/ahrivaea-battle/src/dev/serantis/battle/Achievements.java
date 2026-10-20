@@ -31,19 +31,28 @@ import java.util.List;
  * (items smelted, taken out of a furnace by the player; experience gained).
  */
 public final class Achievements {
-    public record Track(String id, String name, String verb, long[] tiers, int[] apples) {}
+    public record Track(String id, String name, String verb, long[] tiers, int[] apples, String[] titles) {}
 
     private static final int[] FIVE = {3, 6, 12, 24, 48};
     private static final int[] SIX = {2, 4, 8, 16, 32, 48};
 
     public static final List<Track> TRACKS = List.of(
-            new Track("placed", "Blocks Placed", "blocks placed", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE),
-            new Track("battles", "Battles Won", "battles won", new long[]{1, 10, 50, 100, 250, 500}, SIX),
-            new Track("recruited", "Creatures Recruited", "creatures recruited", new long[]{5, 25, 100, 200, 300, 400}, SIX),
-            new Track("seen", "Creatures Seen", "creatures seen", new long[]{5, 25, 50, 150, 300, 434}, SIX),
-            new Track("smelted", "Items Smelted", "items smelted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE),
-            new Track("walked", "Blocks Walked", "blocks walked", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE),
-            new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE));
+            new Track("placed", "Blocks Placed", "blocks placed", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+                    new String[]{"Some Assembly Required", "Brick by Brick", "Not Just a Dirt Hut", "Zoning Violation", "Terraformer"}),
+            new Track("battles", "Battles Won", "battles won", new long[]{1, 10, 50, 100, 250, 500}, SIX,
+                    new String[]{"Beginner's Luck", "Getting the Hang of It", "Tactical Genius (Allegedly)", "Undefeated-ish", "Grid Lord", "Final Boss Energy"}),
+            new Track("recruited", "Creatures Recruited", "creatures recruited", new long[]{5, 25, 100, 200, 300, 400}, SIX,
+                    new String[]{"Making Friends", "Petting Zoo", "Animal Magnetism", "Creature Hoarder", "Noah Would Be Proud", "Zookeeper Supreme"}),
+            new Track("seen", "Creatures Seen", "creatures seen", new long[]{5, 25, 50, 150, 300, 434}, SIX,
+                    new String[]{"Wait, What Was That?", "Bird Watcher", "Taking Field Notes", "I've Seen Things", "Walking Encyclopedia", "Seen It All"}),
+            new Track("smelted", "Items Smelted", "items smelted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+                    new String[]{"Hot Stuff", "Cooking With Lava", "Total Smeltdown", "Industrial Revolution", "Forge of the Gods"}),
+            new Track("walked", "Blocks Walked", "blocks walked", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+                    new String[]{"Stretch Your Legs", "Out for a Stroll", "Are We There Yet?", "Who Needs Horses?", "Walked to the Moon"}),
+            new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+                    new String[]{"Shiny Green Orbs", "Book Smart", "Big Brain Energy", "Seasoned Veteran", "Ascended"}),
+            new Track("deaths", "Times Defeated", "deaths", new long[]{1, 5, 10, 50, 100}, new int[]{2, 4, 8, 16, 32},
+                    new String[]{"Oops", "Respawn Regular", "Fall Damage Enthusiast", "Death's Frequent Flyer", "Immortal (Technically)"}));
 
     /** Set while XP is moved around rather than earned (spending XP gives back the rest). */
     public static final ThreadLocal<Boolean> NOT_GAINED = ThreadLocal.withInitial(() -> false);
@@ -80,6 +89,7 @@ public final class Achievements {
             case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;
             case "xp" -> h.serantis$xpGained();
+            case "deaths" -> stats.getValue(Stats.CUSTOM, Stats.DEATHS);
             default -> 0;
         };
     }
@@ -94,8 +104,8 @@ public final class Achievements {
             while (claimed < t.tiers().length && v >= t.tiers()[claimed]) {
                 int apples = t.apples()[claimed];
                 give(p, apples);
-                p.sendSystemMessage(Component.literal("Achievement: " + t.name() + " " + ROMAN[claimed] + " (" + String.format("%,d", t.tiers()[claimed])
-                        + " " + t.verb() + ")! +" + apples + " golden apples.").withStyle(ChatFormatting.GOLD));
+                p.sendSystemMessage(Component.literal("Achievement unlocked: " + t.titles()[claimed] + "! (" + t.name() + " " + ROMAN[claimed] + ": "
+                        + String.format("%,d", t.tiers()[claimed]) + " " + t.verb() + ") +" + apples + " golden apples.").withStyle(ChatFormatting.GOLD));
                 claimed++;
                 any = true;
             }
@@ -137,6 +147,9 @@ public final class Achievements {
                 if (i < claimed) earned += t.apples()[i];
             }
             o.add("tiers", tiers);
+            JsonArray titles = new JsonArray();
+            for (String s : t.titles()) titles.add(s);
+            o.add("titles", titles);
             o.add("apples", apples);
             out.add(o);
         }
