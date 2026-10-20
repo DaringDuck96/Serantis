@@ -104,22 +104,23 @@ Every creature gets one of 25 temperaments at random when it first appears and k
 
 **One XP currency.** Battles give ordinary Minecraft XP (about 10 per creature defeated), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.
 
-**Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. The old player levels and stat points are gone.
+**Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. HP raises your health in battle; hearts from Vitality raise your health everywhere. The old player levels and stat points are gone.
 
-**The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 6 branches of 6 skills, 36 in all:
+**The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 7 branches of 6 skills, 42 in all:
 - **Order:** each skill needs the one above it, and each capstone (the last skill in a branch) also needs one skill from a neighbouring branch.
 - **Base level:** the first two skills in a branch need a Level 1 base, and the next four need Levels 2, 3, 4 and 5. Upgrading your base opens up the deeper skills.
 
 | Branch | 1 | 2 | 3 | 4 | 5 | 6 (capstone) |
 |---|---|---|---|---|---|---|
-| **Might** | Strength I: +3 Attack | Strength II: +3 Attack | Strength III: +4 Attack | Heavy Hitter: your melee hits +5% | Strength IV: +5 Attack | **Overpower:** your crits deal ×2.25 instead of ×2 *(also needs Vigor II)* |
-| **Guard** | Toughness I: +3 Defense | Vigor I: +1 heart | Toughness II: +4 Defense | Vigor II: +1 heart | Steady: ranged hits on you −5% | **Bulwark:** +6 Defense, +2 hearts *(also needs Heavy Hitter)* |
+| **Might** | Strength I: +3 Attack | Strength II: +3 Attack | Strength III: +4 Attack | Heavy Hitter: your melee hits +5% | Strength IV: +5 Attack | **Overpower:** your crits deal ×2.25 instead of ×2 *(also needs Toughness IV)* |
+| **Guard** | Toughness I: +3 Defense | Toughness II: +3 Defense | Toughness III: +4 Defense | Toughness IV: +4 Defense | Steady: ranged hits on you −5% | **Bulwark:** +6 Defense *(also needs Heavy Hitter)* |
+| **Vitality** | Vigor I: +4 HP | Hearty I: +1 heart | Vigor II: +5 HP | Hearty II: +1 heart | Vigor III: +6 HP | **Juggernaut:** +5 HP, +2 hearts *(also needs Toughness IV)* |
 | **Arcana** | Insight I: +3 Magic | Insight II: +3 Magic | Spellpower: your magic attacks +5% | Insight III: +4 Magic | Insight IV: +5 Magic | **Attuned:** anvils cost 25% less XP *(also needs Spoils)* |
 | **Swiftness** | Quickness I: +3 Speed | Stride I: +5% walking speed | Footwork I: +1 battle tile | Stride II: +5% walking speed | Footwork II: +1 battle tile | **Fleet:** +10% walking speed, +4 Speed *(also needs Labor III)* |
 | **Fortune** | Luck I: +3 Luck | Scavenger: 5% chance mobs you kill drop twice | Luck II: +4 Luck | Spoils: 5% chance a creature you beat in battle drops twice | Luck III: +5 Luck | **Treasure Sense:** rare creature drops (under 25%) twice as likely *(also needs Insight III)* |
 | **Industry** | Labor I: +8% mining/chopping speed | Labor II: +8% | Prospector: XP blocks give +1 XP | Labor III: +8% | Labor IV: +8% | **Tireless:** +10% mining speed, half the hunger for breaking blocks *(also needs Stride II)* |
 
-**Cost.** The first skill costs 150 XP, and every skill you learn makes the next one cost 18% more, whatever branch it's in. The first four take about 780 XP (a couple of hours of early play). The 10th costs 665, the 20th 3,480, the 30th 18,225 and the last 49,200. The whole tree costs about 321,690 XP. A fully trained player tops out around 55–60 in their best stats: strong, but still below a Level 20 legendary creature.
+**Cost.** The first skill costs 150 XP, and every skill you learn makes the next one cost 15% more, whatever branch it's in. The first four take about 750 XP (a couple of hours of early play). The 10th costs 530, the 20th 2,135, the 30th 8,635 and the last 46,205. The whole tree costs about 353,255 XP. A fully trained player tops out around 55–60 in their best stats: strong, but still below a Level 20 legendary creature.
 
 ### Naming creatures
 

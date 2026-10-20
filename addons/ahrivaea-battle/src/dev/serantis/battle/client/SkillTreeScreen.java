@@ -14,7 +14,7 @@ import java.util.List;
 
 /** The player skill tree, opened from your Base Core. Six branches, six nodes each, bought with XP. */
 public class SkillTreeScreen extends Screen {
-    private static final List<String> BRANCHES = List.of("Might", "Guard", "Arcana", "Swiftness", "Fortune", "Industry");
+    private static final List<String> BRANCHES = List.of("Might", "Guard", "Vitality", "Arcana", "Swiftness", "Fortune", "Industry");
     private BaseScreen parent;
 
     public SkillTreeScreen(BaseScreen parent) {

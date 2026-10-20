@@ -19,17 +19,17 @@ import java.util.Set;
  * The player skill tree. Every player starts with 40 in every stat. Nodes are bought at your own
  * Base Core (Level 1 or higher) with XP; each node needs the one before it in its branch, a
  * capstone also needs a node from a neighbouring branch, and node N's base level requirement
- * grows with depth. Every node bought makes the next one 18% dearer, whichever branch it's in.
+ * grows with depth. Every node bought makes the next one 15% dearer, whichever branch it's in.
  */
 public final class Skills {
     public static final int START_STAT = 40;
-    public static final double BASE_COST = 150, GROWTH = 1.18;
+    public static final double BASE_COST = 150, GROWTH = 1.15;
 
     public record Node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
                        int attack, int defense, int magic, int speed, int luck, int hearts, int walk, int tiles, int mining) {}
 
     public static final Map<String, Node> NODES = new LinkedHashMap<>();
-    public static final List<String> BRANCHES = List.of("Might", "Guard", "Arcana", "Swiftness", "Fortune", "Industry");
+    public static final List<String> BRANCHES = List.of("Might", "Guard", "Vitality", "Arcana", "Swiftness", "Fortune", "Industry");
 
     private static void node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
                              int atk, int def, int mag, int spd, int luck, int hearts, int walk, int tiles, int mining) {
@@ -53,11 +53,18 @@ public final class Skills {
         node("might_6", "Might", 6, 5, "Overpower", "Your critical hits deal x2.25 instead of x2", after("might_5", "guard_4"), 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         node("guard_1", "Guard", 1, 1, "Toughness I", "+3 Defense", after(null), 0, 3, 0, 0, 0, 0, 0, 0, 0);
-        node("guard_2", "Guard", 2, 1, "Vigor I", "+1 heart", after("guard_1"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
-        node("guard_3", "Guard", 3, 2, "Toughness II", "+4 Defense", after("guard_2"), 0, 4, 0, 0, 0, 0, 0, 0, 0);
-        node("guard_4", "Guard", 4, 3, "Vigor II", "+1 heart", after("guard_3"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        node("guard_2", "Guard", 2, 1, "Toughness II", "+3 Defense", after("guard_1"), 0, 3, 0, 0, 0, 0, 0, 0, 0);
+        node("guard_3", "Guard", 3, 2, "Toughness III", "+4 Defense", after("guard_2"), 0, 4, 0, 0, 0, 0, 0, 0, 0);
+        node("guard_4", "Guard", 4, 3, "Toughness IV", "+4 Defense", after("guard_3"), 0, 4, 0, 0, 0, 0, 0, 0, 0);
         node("guard_5", "Guard", 5, 4, "Steady", "Ranged hits on you deal 5% less damage", after("guard_4"), 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        node("guard_6", "Guard", 6, 5, "Bulwark", "+6 Defense and +2 hearts", after("guard_5", "might_4"), 0, 6, 0, 0, 0, 2, 0, 0, 0);
+        node("guard_6", "Guard", 6, 5, "Bulwark", "+6 Defense", after("guard_5", "might_4"), 0, 6, 0, 0, 0, 0, 0, 0, 0);
+
+        node("vital_1", "Vitality", 1, 1, "Vigor I", "+4 HP", after(null), 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        node("vital_2", "Vitality", 2, 1, "Hearty I", "+1 heart", after("vital_1"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        node("vital_3", "Vitality", 3, 2, "Vigor II", "+5 HP", after("vital_2"), 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        node("vital_4", "Vitality", 4, 3, "Hearty II", "+1 heart", after("vital_3"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        node("vital_5", "Vitality", 5, 4, "Vigor III", "+6 HP", after("vital_4"), 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        node("vital_6", "Vitality", 6, 5, "Juggernaut", "+5 HP and +2 hearts", after("vital_5", "guard_4"), 0, 0, 0, 0, 0, 2, 0, 0, 0);
 
         node("arcana_1", "Arcana", 1, 1, "Insight I", "+3 Magic", after(null), 0, 0, 3, 0, 0, 0, 0, 0, 0);
         node("arcana_2", "Arcana", 2, 1, "Insight II", "+3 Magic", after("arcana_1"), 0, 0, 3, 0, 0, 0, 0, 0, 0);
@@ -105,11 +112,18 @@ public final class Skills {
     }
 
     public static Stats stats(Player p) {
-        return new Stats(START_STAT, START_STAT + sum(p, Node::attack), START_STAT + sum(p, Node::defense), START_STAT + sum(p, Node::speed),
+        return new Stats(START_STAT + hp(p), START_STAT + sum(p, Node::attack), START_STAT + sum(p, Node::defense), START_STAT + sum(p, Node::speed),
                 START_STAT + sum(p, Node::magic), START_STAT + sum(p, Node::luck), START_STAT);
     }
 
     public static int hearts(Player p) { return sum(p, Node::hearts); }
+
+    /** HP stat from the Vitality branch. */
+    public static int hp(Player p) {
+        int s = 0;
+        for (String id : owned(p)) s += switch (id) { case "vital_1" -> 4; case "vital_3" -> 5; case "vital_5" -> 6; case "vital_6" -> 5; default -> 0; };
+        return s;
+    }
     public static int walkPercent(Player p) { return sum(p, Node::walk); }
     public static int tiles(Player p) { return sum(p, Node::tiles); }
     public static int miningPercent(Player p) { return sum(p, Node::mining); }
@@ -167,7 +181,7 @@ public final class Skills {
         }
         o.add("nodes", nodes);
         Stats s = stats(p);
-        o.addProperty("summary", "Attack " + s.attack() + " · Defense " + s.defense() + " · Magic " + s.magic() + " · Speed " + s.speed()
+        o.addProperty("summary", "HP " + s.hp() + " · Attack " + s.attack() + " · Defense " + s.defense() + " · Magic " + s.magic() + " · Speed " + s.speed()
                 + " · Luck " + s.luck() + " · +" + hearts(p) + " hearts · +" + walkPercent(p) + "% walk · +" + miningPercent(p) + "% mining");
         return o;
     }
