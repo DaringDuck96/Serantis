@@ -19,7 +19,7 @@ PREFIX = {"coral": "water", "briar": "nature", "astral": "arcane", "duskborn": "
           "ashen": "fire", "snowveil": "frost", "squall": "storm", "mossback": "earth",
           "umbral": "void", "gossamer": "fae", "hallowed": "radiant", "old": "none",
           "arcane": "arcane"}
-ALIASES = {"blooming_horror": "bloom_eye_horror", "scrap_goblin": "scrap_gobblin",   # artist name -> book name
+ALIASES = {"blooming_horror": "bloom_eye_horror",                                                          # artist name -> book name
            "shardheart_colossus": "shardheart", "snowfang_wolf": "snowfang",
            "one_eyed_colossus": "one_eye_colossus", "rime_chimera": "rime_chimaera",
            "feyhart": "feyheart",

@@ -31,6 +31,7 @@ import java.util.Set;
 public final class MoveEngine {
     private static final int K = 4;                      // the same power scale the catalog uses
     private static final ThreadLocal<Object[]> IGNORE = new ThreadLocal<>();   // {Unit, stat, points}
+    private static boolean firing;                       // a Charged Shot going off (not starting to charge)
 
     private MoveEngine() {}
 
@@ -138,15 +139,39 @@ public final class MoveEngine {
             return;
         }
 
+        Field field = Field.of(b);
+        if (spec.has("charge") && !firing) {
+            field.addPending("charge", a, t, m, spec, Set.of());
+            acc.serantis$say(a.name + " starts charging " + spec.name + " at " + t.name + "! It fires next turn unless interrupted.");
+            return;
+        }
+        if (spec.has("delayed")) {
+            field.addPending("meteor", a, t, m, spec, Field.cells(b, t.x, t.z, "square", Math.max(1, spec.radius)));
+            acc.serantis$say(a.name + " calls down " + spec.name + "! It lands at the start of " + a.name + "'s next turn.");
+            return;
+        }
+        if (spec.has("dash")) { field.dash(b, a, t); if (!a.alive()) return; }
+        int cx = t.x, cz = t.z;                     // where the move was aimed, before anything moves
+
         int bonus = bonusPower(a, t, spec);
         BattleMove bm = bonus == 0 ? m : withPower(m, m.move().power() + bonus);
+        List<Unit> targets = area(b, a, t, spec);
+        for (JsonObject e : spec.effects)
+            if ("pull".equals(s(e, "type")) && e.has("first") && e.get("first").getAsBoolean())
+                forced(b, a, targets, e, cx, cz);
         List<Unit> hit = new ArrayList<>();
-        for (Unit u : area(b, a, t, spec)) {
+        for (Unit u : targets) {
             if (!a.alive()) break;
             if (!u.alive()) continue;
             if (hitUnit(b, a, u, spec, bm)) { hit.add(u); onHit(b, a, u, spec); }
         }
         if ("chain".equals(spec.shape) && a.alive()) chain(b, a, t, spec, m, hit);
+        for (JsonObject e : spec.effects)
+            if (!(e.has("first") && e.get("first").getAsBoolean())) forced(b, a, hit, e, cx, cz);
+        for (JsonObject e : spec.effects)
+            if ("zone".equals(s(e, "type")) && a.alive())
+                field.addZone(b, a, s(e, "zone"), Field.cells(b, cx, cz, s(e, "cells"), Math.max(1, spec.radius)),
+                        i(e, "amount", 0) > 0 ? scaled(i(e, "amount", 0), a) : 0, i(e, "turns", 2));
         selfEffects(b, a, spec);
 
         if (counter && "single".equals(spec.shape) && a.alive() && t.alive() && t.side != a.side) {
@@ -181,6 +206,54 @@ public final class MoveEngine {
         }
         return landed;
     }
+
+    /** Pushes, pulls, teleports and Geyser's shove, on the units the move caught. */
+    private static void forced(Battle b, Unit a, List<Unit> units, JsonObject e, int cx, int cz) {
+        Field f = Field.of(b);
+        String type = s(e, "type");
+        int n = i(e, "tiles", 1);
+        switch (type) {
+            case "push" -> {
+                boolean fromUser = !"center".equals(s(e, "origin"));
+                int ox = fromUser ? a.x : cx, oz = fromUser ? a.z : cz;
+                List<Unit> order = new ArrayList<>(units);
+                order.sort((p, q) -> Pathing.distance(ox, oz, q.x, q.z) - Pathing.distance(ox, oz, p.x, p.z));   // farthest first
+                for (Unit u : order) if (u != a) f.push(b, a, u, ox, oz, n);
+            }
+            case "pull" -> {
+                boolean toUser = "user".equals(s(e, "toward"));
+                int tx = toUser ? a.x : cx, tz = toUser ? a.z : cz;
+                List<Unit> order = new ArrayList<>(units);
+                order.sort((p, q) -> Pathing.distance(tx, tz, p.x, p.z) - Pathing.distance(tx, tz, q.x, q.z));   // nearest first
+                for (Unit u : order) if (u != a) f.pull(b, u, tx, tz, n, toUser);
+            }
+            case "teleport" -> { for (Unit u : units) f.teleport(b, u, n); }
+            case "shift" -> { for (Unit u : units) f.shift(b, u); }
+            default -> { }
+        }
+    }
+
+    /** A Charged Shot going off at the start of its user's turn. */
+    static void fire(Battle b, Unit a, Unit t, BattleMove m) {
+        firing = true;
+        try { use(b, a, t, m, false); } finally { firing = false; }
+    }
+
+    /** A Blazing Meteor landing on the tiles it marked. */
+    static void land(Battle b, Field.Pending p) {
+        Unit a = p.user;
+        for (Unit u : new ArrayList<>(b.units)) {
+            if (!a.alive()) break;
+            if (!u.alive() || u.side == a.side || !p.cells.contains(u.x + u.z * b.grid.size)) continue;
+            if (hitUnit(b, a, u, p.spec, p.move)) onHit(b, a, u, p.spec);
+        }
+        boolean any = false;
+        for (Unit u : b.units) if (u.alive() && u.side != a.side && p.cells.contains(u.x + u.z * b.grid.size)) any = true;
+        if (!any) acc(b).serantis$say("It hits nothing but ground.");
+    }
+
+    static void slow(Battle b, Unit u) { addStatus(b, u, "slowed", 1, 0); }
+    static void weaken(Battle b, Unit u, String stat, int amount) { addStat(b, u, stat, amount, 1); }
 
     private static Object[] ignoreFor(Unit u, MoveSpec spec) {
         for (JsonObject e : spec.effects)
@@ -291,6 +364,9 @@ public final class MoveEngine {
                         int p = e.has("power") ? scaled(i(e, "power", 0), a) : 0;
                         addStatus(b, u, s(e, "status"), i(e, "turns", 2), p);
                     }
+                }
+                case "interrupt" -> {
+                    if (b.random.nextDouble() < d(e, "chance", 1.0)) Field.of(b).cancel(b, u);
                 }
                 case "dispel" -> {
                     if (state(u).removeFirst(true)) acc(b).serantis$say(u.name + " loses a boost.");
@@ -411,10 +487,12 @@ public final class MoveEngine {
     }
 
     /** Movement this turn, after Speed changes, Slowed, Immobilized and one-turn movement changes. */
-    public static int squares(Unit u, int base) {
+    public static int squares(Battle b, Unit u, int base) {
         UnitState st = state(u);
         if (st.has("immobilized")) return 0;
-        int sq = (int) Math.round(base * (1 + 0.1 * st.stage("speed"))) + st.tiles();
+        int speed = st.stage("speed"), tiles = st.tiles();
+        if (b != null && Field.of(b).inSink(b, u)) { speed = Math.min(0, speed); tiles = Math.min(0, tiles); }   // no bonuses in a Sinkhole
+        int sq = (int) Math.round(base * (1 + 0.1 * speed)) + tiles;
         if (st.has("slowed")) sq -= 2;
         return Math.max(0, sq);
     }
@@ -442,7 +520,7 @@ public final class MoveEngine {
         for (BattleMove m : u.moves) {
             if (!m.reaches(distance)) continue;
             MoveSpec spec = MoveBook.of(m);
-            if (spec != null && (!spec.damaging() || blockedRepeat(b, u, spec))) continue;
+            if (spec != null && (!spec.damaging() || blockedRepeat(b, u, spec) || spec.has("charge") || spec.has("delayed"))) continue;
             if (spec == null && m.move().power() <= 0) continue;
             double score = acc(b).serantis$preview(u, t, m).expected();
             if (score > bestScore) { bestScore = score; best = m; }
@@ -468,6 +546,8 @@ public final class MoveEngine {
         if ("attack".equals(action.kind()) && action.move() >= 0 && action.move() < u.moves.size()) {
             MoveSpec spec = MoveBook.of(u.moves.get(action.move()));
             if (spec != null && blockedRepeat(b, u, spec)) return spec.name + " can't be used two turns in a row.";
+            if (spec != null && spec.has("charge") && (action.toX() != u.x || action.toZ() != u.z))
+                return spec.name + " has to be charged standing still. Use it without moving.";
         }
         return null;
     }
@@ -527,11 +607,13 @@ public final class MoveEngine {
                 return --e.turns <= 0;
             });
         }
+        Field.of(b).endTurn(b, side);
     }
 
     private static void startTurn(Battle b, Unit.Side side) {
         BattleAccess acc = acc(b);
-        for (Unit u : b.units) {
+        Field.of(b).startTurn(b, side);
+        for (Unit u : new ArrayList<>(b.units)) {
             if (u.side != side || !u.alive()) continue;
             UnitState st = state(u);
             st.recoil = false;
@@ -549,11 +631,15 @@ public final class MoveEngine {
     /** Adds statuses to unit names and move details for the battle screen. */
     public static void decorate(Battle b, JsonObject view) {
         if (view == null || !view.has("units")) return;
+        Field field = Field.of(b);
+        field.describe(view);
         for (JsonElement el : view.getAsJsonArray("units")) {
             JsonObject uj = el.getAsJsonObject();
             Unit u = b.unit(uj.get("id").getAsInt());
             if (u == null) continue;
             String tags = state(u).tags();
+            Field.Pending p = field.pendingOf(u);
+            if (p != null) tags = ("charge".equals(p.kind) ? "Charging" : "Meteor falling") + (tags.isEmpty() ? "" : ", " + tags);
             if (!tags.isEmpty()) uj.addProperty("name", uj.get("name").getAsString() + " [" + tags + "]");
             if (!uj.has("moves")) continue;
             JsonArray moves = uj.getAsJsonArray("moves");

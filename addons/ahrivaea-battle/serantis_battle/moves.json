@@ -36,8 +36,14 @@
   "hits": 1,
   "power": 32,
   "accuracy": 1.0,
-  "effects": [],
-  "later": "push target 1 tile",
+  "effects": [
+   {
+    "type": "push",
+    "tiles": 1,
+    "origin": "user"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Push target 1 tile if destination is open"
  },
@@ -267,8 +273,14 @@
   "hits": 1,
   "power": 46,
   "accuracy": 1.0,
-  "effects": [],
-  "later": "push target 1 tile",
+  "effects": [
+   {
+    "type": "push",
+    "tiles": 1,
+    "origin": "user"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Pushes target 1 tile if open"
  },
@@ -456,8 +468,13 @@
   "hits": 1,
   "power": 20,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "25% chance to interrupt a charged attack",
+  "effects": [
+   {
+    "type": "interrupt",
+    "chance": 0.25
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "25% chance to interrupt a charged attack"
  },
@@ -618,9 +635,13 @@
   "hits": 1,
   "power": 64,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "needs a preparation turn and can be interrupted",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "charge"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "Requires preparation turn without moving; can be interrupted"
  },
  {
@@ -804,8 +825,14 @@
   "hits": 1,
   "power": 28,
   "accuracy": 1.0,
-  "effects": [],
-  "later": "push 1 tile",
+  "effects": [
+   {
+    "type": "push",
+    "tiles": 1,
+    "origin": "user"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Damages nearby enemies; pushes 1 tile"
  },
@@ -884,8 +911,13 @@
   "hits": 1,
   "power": 36,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "interrupts a prepared or charged attack",
+  "effects": [
+   {
+    "type": "interrupt",
+    "chance": 1.0
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Interrupts prepared or charged attack"
  },
@@ -905,8 +937,12 @@
   "hits": 1,
   "power": 48,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "user moves toward the target",
+  "effects": [
+   {
+    "type": "dash"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Moves toward target and damages on contact"
  },
@@ -1087,8 +1123,16 @@
   "hits": 1,
   "power": 24,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "burning tiles for 2 turns (4 damage on entry or turn start)",
+  "effects": [
+   {
+    "type": "zone",
+    "zone": "burning",
+    "turns": 2,
+    "amount": 4,
+    "cells": "square"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Hazardous tiles for 2 turns; 4 damage on entry or turn start"
  },
@@ -1108,8 +1152,14 @@
   "hits": 1,
   "power": 36,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "push 1 tile",
+  "effects": [
+   {
+    "type": "push",
+    "tiles": 1,
+    "origin": "user"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Damages line; pushes 1 tile"
  },
@@ -1186,9 +1236,17 @@
   "hits": 1,
   "power": 24,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "ring of tiles that deal 6 damage when crossed, for 2 turns",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "zone",
+    "zone": "ring",
+    "turns": 2,
+    "amount": 6,
+    "cells": "ring"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "Crossing marked tiles deals 6 damage for 2 turns"
  },
  {
@@ -1207,9 +1265,13 @@
   "hits": 1,
   "power": 88,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "lands at the start of the user's next turn on telegraphed tiles",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "delayed"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "Lands at start of user's next turn; tiles telegraphed"
  },
  {
@@ -1257,8 +1319,14 @@
   "hits": 1,
   "power": 72,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "knockback 1 tile",
+  "effects": [
+   {
+    "type": "push",
+    "tiles": 1,
+    "origin": "center"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Heavy area damage; knockback 1 tile"
  },
@@ -1405,9 +1473,17 @@
   "hits": 1,
   "power": 0,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "icy terrain for 3 turns, each tile costs 2 movement",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "zone",
+    "zone": "ice",
+    "turns": 3,
+    "amount": 0,
+    "cells": "square"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "Icy terrain for 3 turns; each tile costs 2 movement"
  },
  {
@@ -1612,8 +1688,15 @@
   "hits": 1,
   "power": 24,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "pulls enemies 1 tile toward the target",
+  "effects": [
+   {
+    "type": "pull",
+    "tiles": 1,
+    "toward": "center",
+    "first": false
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Pulls enemies 1 tile toward target; deals damage"
  },
@@ -1693,9 +1776,14 @@
     "type": "movement",
     "amount": 2,
     "who": "self"
+   },
+   {
+    "type": "push",
+    "tiles": 2,
+    "origin": "user"
    }
   ],
-  "later": "pushes enemies 2 tiles",
+  "later": null,
   "enabled": true,
   "text": "Pushes enemies 2 tiles; user gets +2 movement next turn"
  },
@@ -1715,9 +1803,17 @@
   "hits": 1,
   "power": 24,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "for 2 turns a random enemy inside takes 6 damage at turn end",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "zone",
+    "zone": "storm",
+    "turns": 2,
+    "amount": 6,
+    "cells": "square"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "For 2 turns, random enemy inside takes 6 damage at turn end"
  },
  {
@@ -1742,9 +1838,15 @@
     "status": "slowed",
     "chance": 1.0,
     "turns": 1
+   },
+   {
+    "type": "pull",
+    "tiles": 1,
+    "toward": "center",
+    "first": false
    }
   ],
-  "later": "pulls enemies toward the center",
+  "later": null,
   "enabled": true,
   "text": "Pulls enemies toward center; Slowed for 1 turn"
  },
@@ -1814,8 +1916,13 @@
   "hits": 1,
   "power": 28,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "interrupts a prepared attack",
+  "effects": [
+   {
+    "type": "interrupt",
+    "chance": 1.0
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Interrupts prepared attack"
  },
@@ -1835,8 +1942,14 @@
   "hits": 1,
   "power": 56,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "knockback 1 tile",
+  "effects": [
+   {
+    "type": "push",
+    "tiles": 1,
+    "origin": "user"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Heavy damage; knockback 1 tile"
  },
@@ -1964,9 +2077,17 @@
   "hits": 1,
   "power": 16,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "difficult terrain for 2 turns, no movement bonuses inside",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "zone",
+    "zone": "sink",
+    "turns": 2,
+    "amount": 0,
+    "cells": "square"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "Difficult terrain for 2 turns; no movement bonuses inside"
  },
  {
@@ -2092,8 +2213,15 @@
   "hits": 1,
   "power": 28,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "pulls the target 1 tile toward the user",
+  "effects": [
+   {
+    "type": "pull",
+    "tiles": 1,
+    "toward": "user",
+    "first": false
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Pulls target 1 tile toward user"
  },
@@ -2113,8 +2241,14 @@
   "hits": 1,
   "power": 48,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "pushes enemies 2 tiles",
+  "effects": [
+   {
+    "type": "push",
+    "tiles": 2,
+    "origin": "user"
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Damages and pushes enemies 2 tiles"
  },
@@ -2163,8 +2297,17 @@
   "hits": 1,
   "power": 40,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "moves the target 1 tile; interrupts preparation",
+  "effects": [
+   {
+    "type": "shift",
+    "tiles": 1
+   },
+   {
+    "type": "interrupt",
+    "chance": 1.0
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Moves target 1 tile in available direction; interrupts preparation"
  },
@@ -2184,8 +2327,15 @@
   "hits": 1,
   "power": 24,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "pulls enemies 1 tile toward the center",
+  "effects": [
+   {
+    "type": "pull",
+    "tiles": 1,
+    "toward": "center",
+    "first": false
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Pulls enemies 1 tile toward center"
  },
@@ -2654,9 +2804,15 @@
     "amount": -2,
     "turns": 1,
     "who": "hit"
+   },
+   {
+    "type": "pull",
+    "tiles": 2,
+    "toward": "center",
+    "first": false
    }
   ],
-  "later": "pulls enemies 2 tiles",
+  "later": null,
   "enabled": true,
   "text": "Pulls enemies 2 tiles; Speed −2 for 1 turn"
  },
@@ -2676,8 +2832,13 @@
   "hits": 1,
   "power": 40,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "teleports the target 2 tiles",
+  "effects": [
+   {
+    "type": "teleport",
+    "tiles": 2
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Deals damage and teleports target 2 tiles to a valid tile"
  },
@@ -2726,8 +2887,15 @@
   "hits": 1,
   "power": 48,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "pulls enemies 1 tile toward the center first",
+  "effects": [
+   {
+    "type": "pull",
+    "tiles": 1,
+    "toward": "center",
+    "first": true
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Pulls enemies 1 tile toward center before damage"
  },
@@ -2801,9 +2969,17 @@
   "hits": 1,
   "power": 40,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "zone for 2 turns that slows and deals 5 damage at turn end",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "zone",
+    "zone": "horizon",
+    "turns": 2,
+    "amount": 5,
+    "cells": "square"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "Zone for 2 turns Slows enemies and deals 5 damage to units ending turn inside"
  },
  {
@@ -3377,9 +3553,17 @@
   "hits": 1,
   "power": 48,
   "accuracy": 0.85,
-  "effects": [],
-  "later": "zone for 2 turns: enemies lose 2 Defense and take 4 damage at turn end",
-  "enabled": false,
+  "effects": [
+   {
+    "type": "zone",
+    "zone": "night",
+    "turns": 2,
+    "amount": 4,
+    "cells": "square"
+   }
+  ],
+  "later": null,
+  "enabled": true,
   "text": "Zone for 2 turns; enemies lose 2 Defense and take 4 damage at turn end"
  },
  {
@@ -3540,8 +3724,13 @@
   "hits": 1,
   "power": 46,
   "accuracy": 1.0,
-  "effects": [],
-  "later": "interrupts prepared attacks",
+  "effects": [
+   {
+    "type": "interrupt",
+    "chance": 1.0
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Damages nearby enemies and interrupts prepared attacks"
  },
@@ -3729,8 +3918,13 @@
   "hits": 1,
   "power": 28,
   "accuracy": 1.0,
-  "effects": [],
-  "later": "interrupts prepared attacks",
+  "effects": [
+   {
+    "type": "interrupt",
+    "chance": 1.0
+   }
+  ],
+  "later": null,
   "enabled": true,
   "text": "Damages nearby enemies and interrupts prepared attacks"
  },

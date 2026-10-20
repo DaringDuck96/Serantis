@@ -30,7 +30,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - A creature's level does not depend on its rarity. Any wild creature can be Level 1–20. Wild levels still sit within 5 of the nearest player's own level, kept inside 1–20, so from player level 25 up wild creatures are Level 20.
 - Starters begin at Level 1. End dragons appear at Level 20.
 
-### Moves (Stage 1)
+### Moves
 
 - Every creature knows 3 moves, picked at random when it first appears (or first battles) and kept for good, including after it's caught. Any creature can know universal moves; magic moves are limited to creatures of that influence (Normal magic to creatures with no influence). At least one of the three always deals damage.
 - The moves come from the Move Dex (`books/Move_Dex.xlsx`), built into `addons/ahrivaea-battle/serantis_battle/moves.json` by `tools/build_moves.py`. That script also records how each move behaves on the battle grid.
@@ -41,7 +41,29 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - Stat changes in the Move Dex are 10% of that stat per point (Defense +2 = +20%); accuracy changes are percentage points. Healing and damage over time use the same scale as Power.
 - Statuses: Bleeding and Poison lose 5% of max HP each turn; Burning deals its stated damage each turn; Frozen, Stunned and Asleep skip turns (Asleep wakes when hit); Immobilized can't move; Slowed moves 2 fewer tiles; Confused attacks a random nearby unit half the time; Frightened deals about 30% less damage.
 - Counter Stance: Defense +2 until the user's next turn, and anyone who damages it before then takes 25% of that damage back as recoil.
-- Waiting for Stage 2 (not learnable yet): Charged Shot, Inferno Ring, Blazing Meteor, Frozen Ground, Storm Cloud, Sinkhole, Event Horizon and Eternal Night. Pushes, pulls and teleports on other moves are skipped for now.
+- All 150 moves in the Move Dex can be learned.
+
+### Pushes, zones and charged attacks
+
+- **Pushes and pulls:** Tackle, Uppercut, Boulder Toss, Shockwave, Flame Wave, Wind Burst and Tidal Wave push targets away from the user. Eruption pushes them out from where it lands. Tornado, Cyclone, Whirlpool and Gravity Well pull enemies toward the centre. Singularity pulls them in before it hits. Water Whip pulls its target toward the user. Walls, ledges that are too high, and other creatures stop a push or pull early.
+- **Other forced movement:** Void Rift throws its target 2 tiles to a random open tile. Geyser knocks its target 1 tile in a random open direction. Phantom Charge rushes the user next to its target before it hits.
+- **Zones:** each zone covers the 3×3 tiles around where it lands, except the Inferno Ring, which is the ring just outside its blast. Zones are coloured on the battle grid and only affect the caster's opponents.
+
+| Move | Zone | Lasts | Effect |
+|---|---|---|---|
+| Lava Bomb | Burning ground (orange) | 2 turns | Damage on stepping in, and at the start of each turn spent standing in it |
+| Inferno Ring | Ring of fire (red) | 2 turns | Damage for crossing it |
+| Frozen Ground | Ice (blue) | 3 turns | Each tile costs 2 movement |
+| Sinkhole | Sinkhole (brown) | 2 turns | Each tile costs 2 movement, and no movement bonuses while standing in it |
+| Storm Cloud | Storm (grey-blue) | 2 turns | One random enemy inside is struck at the end of each of their turns |
+| Event Horizon | Void (violet) | 2 turns | Damage and Slowed at the end of each turn spent inside |
+| Eternal Night | Darkness (dark purple) | 2 turns | Damage and Defense −2 at the end of each turn spent inside |
+
+  Flying creatures pass over burning ground, the Inferno Ring, Frozen Ground and Sinkholes. The blue movement preview on the battle screen counts slow tiles.
+- **Charged Shot:** the first turn, the user charges in place (it can't move that turn). At the start of its next turn it fires at the same target if it's still in range, and that uses up the turn.
+- **Blazing Meteor:** marks a 3×3 area in red where its target stood. At the start of the user's next turn it lands on anyone still in that area, and the user then acts normally.
+- **Interrupts:** Energy Pulse, Earth Spike, Geyser, Spell Nova and Light Burst cancel a charging Charged Shot or a falling Blazing Meteor when they hit its user. Stone Toss has a 25% chance to. Stunning, freezing or putting the user to sleep also cancels it, as does knocking it out.
+- Enemies avoid zones and red meteor areas, hit charging creatures with interrupts when they can, and only charge a Charged Shot when standing still.
 
 ### Enemy mentalities
 

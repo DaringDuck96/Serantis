@@ -13,7 +13,7 @@ influence is kept. The sheet's "Dragon" rows are the original Dragon's forms, on
 import json, os, re, sys, zipfile
 import openpyxl
 
-SHEET_FIXES = {"ghome": "gnome", "nameanlion": "nemeanlion", "zmeygorymych": "zmeygorynych"}
+SHEET_FIXES = {"scrapgobblin": "scrapgoblin", "ghome": "gnome", "nameanlion": "nemeanlion", "zmeygorymych": "zmeygorynych"}
 STAT_ORDER = ["HP", "Attack", "Defense", "Speed", "Magic", "Luck", "Charisma"]   # Stats(hp, attack, defense, speed, magic, luck, charisma)
 
 def norm(s):

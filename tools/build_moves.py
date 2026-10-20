@@ -19,9 +19,8 @@ Rules agreed with the team:
   * Stat changes in the sheet ("Defense +2") are 10% of that stat per point. Accuracy changes are
     percentage points. Healing and damage-over-time numbers use the same scale as Power.
 
-Moves whose main effect needs systems that aren't built yet (terrain zones, delayed or charged
-attacks) are kept in the catalog but switched off ("enabled": false) so no creature learns them.
-Push, pull and teleport parts of other moves are noted under "later" and skipped for now.
+Stage 2 (STAGE2 below) adds pushes, pulls, teleports, interrupts, terrain zones, Charged Shot and
+Blazing Meteor. Zones belong to the caster's side and only affect the other side.
 """
 import json, math, re, sys
 import openpyxl
@@ -36,6 +35,46 @@ def move_tiles(n, who="target"):               return dict(type="movement", amou
 def heal(n, who="target"):                     return dict(type="heal", amount=n, who=who)
 def ignore(s, n):                              return dict(type="ignore", stat=s, amount=n)
 def bonus(n, when):                            return dict(type="bonus", amount=n, when=when)
+
+def push(n, origin="user"):                    return dict(type="push", tiles=n, origin=origin)
+def pull(n, toward="center", first=False):     return dict(type="pull", tiles=n, toward=toward, first=first)
+def interrupt(chance=1.0):                     return dict(type="interrupt", chance=chance)
+def zone(kind, turns, amount=0, cells="square"): return dict(type="zone", zone=kind, turns=turns, amount=amount, cells=cells)
+
+# Stage 2 effects, added to the table's effects; every move listed here is switched on.
+STAGE2 = {
+ "Tackle":         [push(1)],
+ "Uppercut":       [push(1)],
+ "Stone Toss":     [interrupt(0.25)],
+ "Charged Shot":   [dict(type="charge")],
+ "Shockwave":      [push(1)],
+ "Energy Pulse":   [interrupt()],
+ "Phantom Charge": [dict(type="dash")],
+ "Lava Bomb":      [zone("burning", 2, 4)],
+ "Flame Wave":     [push(1)],
+ "Inferno Ring":   [zone("ring", 2, 6, "ring")],
+ "Blazing Meteor": [dict(type="delayed")],
+ "Eruption":       [push(1, "center")],
+ "Frozen Ground":  [zone("ice", 3)],
+ "Tornado":        [pull(1)],
+ "Wind Burst":     [push(2)],
+ "Storm Cloud":    [zone("storm", 2, 6)],
+ "Cyclone":        [pull(1)],
+ "Earth Spike":    [interrupt()],
+ "Boulder Toss":   [push(1)],
+ "Sinkhole":       [zone("sink", 2)],
+ "Water Whip":     [pull(1, "user")],
+ "Tidal Wave":     [push(2)],
+ "Geyser":         [dict(type="shift", tiles=1), interrupt()],
+ "Whirlpool":      [pull(1)],
+ "Gravity Well":   [pull(2)],
+ "Void Rift":      [dict(type="teleport", tiles=2)],
+ "Singularity":    [pull(1, first=True)],
+ "Event Horizon":  [zone("horizon", 2, 5)],
+ "Eternal Night":  [zone("night", 2, 4)],
+ "Spell Nova":     [interrupt()],
+ "Light Burst":    [interrupt()],
+}
 
 # name: (min, max, target, shape, radius, hits, effects, later, enabled)
 #   target: enemy | ally | self | self_or_ally | any
@@ -228,6 +267,8 @@ def main(book, out):
         cat, infl, _, name, rng, power, effect = r
         if name not in S: problems.append(f"{name}: not described in the table"); continue
         mn, mx, target, shape, radius, hits, effects, later, enabled = S[name]
+        if name in STAGE2:
+            effects, later, enabled = effects + STAGE2[name], None, True
         p, h = sheet_power(power)
         if h != hits: problems.append(f"{name}: sheet hits {h}, table {hits}")
         smn, smx = sheet_range(rng)
@@ -254,12 +295,12 @@ def main(book, out):
                      ("For the rest of the round, attackers that damage the user take recoil; Defense +2 until next turn"
                       if name == "Counter Stance" else str(effect))),
         })
-    extra = set(S) - {m["name"] for m in moves}
+    extra = (set(S) | set(STAGE2)) - {m["name"] for m in moves}
     problems += [f"{n}: in the table but not in the sheet" for n in extra]
     if problems: raise SystemExit("\n".join(problems))
     json.dump(moves, open(out, "w"), indent=1, ensure_ascii=False)
     on = [m for m in moves if m["enabled"]]
-    print(f"{len(moves)} moves written ({len(on)} enabled, {len(moves)-len(on)} waiting for Stage 2)")
+    print(f"{len(moves)} moves written ({len(on)} enabled)")
 
 if __name__ == "__main__":
     main(*sys.argv[1:])

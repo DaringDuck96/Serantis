@@ -111,7 +111,7 @@ assets/ahrivaea/textures/entity/creature/ID/INF_enraged_mutated.png   enraged + 
 | Rune Magus | `rune_magus` | `arcane` |
 | Runic Colossus | `runic_colossus` | `arcane` |
 | Sanctum Sentinel | `sanctum_sentinel` | `radiant` |
-| Scrap Gobblin | `scrap_gobblin` | `none` |
+| Scrap Goblin | `scrap_goblin` | `none` |
 | Seraphim | `seraphim` | `radiant` |
 | Shardheart | `shardheart` | `frost` |
 | Snapvine | `snapvine` | `nature` |

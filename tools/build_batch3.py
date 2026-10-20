@@ -114,7 +114,7 @@ D = {
  "Ironjaw Brute": ("walk","large","brute","mining","defense"),
  "One Eye Colossus": ("walk","colossal","brute","defense","mining"),
  "Pebble Spitter": ("walk","small","striker","mining","transport"),
- "Scrap Gobblin": ("walk","small","trickster","crafting","transport"),
+ "Scrap Goblin": ("walk","small","trickster","crafting","transport"),
  "Hollow Grunt": ("walk","medium","balanced","defense","logging"),
  "Crawling Mimic": ("walk","medium","trickster","transport","ranching"),
  "Ironclad Ravager": ("walk","large","brute","defense","transport"),
@@ -168,6 +168,8 @@ BIOME_FIX = {"crimson_forests": "crimson_forest", "dark_oak_forest": "dark_fores
              "old_growth_taiga": "old_growth_spruce_taiga"}
 NOT_BIOMES = {"ancient_city", "amethyst_geode"}  # structures/features, not biomes; their regions are covered by the other biomes listed
 ITEMS = {"Raw Cod": "cod", "Prismarine Crystal": "prismarine_crystals"}
+
+NAME_FIXES = {"Scrap Gobblin": "Scrap Goblin"}   # spelling corrections to the book
 
 def cid(name): return re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
 
@@ -224,6 +226,7 @@ def main(book, outdir):
         infl, raw, rar, bio, drp = row
         name = re.sub(r"\s+", " ", raw).strip()
         name = re.sub(r"\s*\(.*\)$", "", name)                  # "Drill Shark (Abyssal Maw)" -> "Drill Shark"
+        name = NAME_FIXES.get(name, name)
         rarity = {"Commmon": "Common", "Absolute Legendary": "Legendary"}.get(rar.strip(), rar.strip())
         move, size, shape, *jobs = D[name]
         log = []

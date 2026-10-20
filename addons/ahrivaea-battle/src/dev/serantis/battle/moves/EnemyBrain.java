@@ -65,13 +65,14 @@ public final class EnemyBrain {
         };
 
         boolean focusReachable = focus != null && reachableFocus(b, u, focus, reach);
+        Field field = Field.of(b);
         int ox = u.x, oz = u.z;
         Plan best = null;
         for (Map.Entry<Integer, Integer> cell : reach.entrySet()) {
             int cx = cell.getKey() % size, cz = cell.getKey() / size;
             if (!b.canStop(u, cx, cz)) continue;
             u.x = cx; u.z = cz;
-            double terrain = terrain(b, cx, cz, foes) - cell.getValue() * 0.01;
+            double terrain = terrain(b, cx, cz, foes) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
             Unit closest = nearest(u, foes);
             double nearestFoe = Pathing.distance(cx, cz, closest.x, closest.z);
 
@@ -100,10 +101,13 @@ public final class EnemyBrain {
                     MoveSpec s = MoveBook.of(m);
                     if (s != null && (!(s.damaging() || ("enemy".equals(s.target) && s.power == 0)) || MoveEngine.blockedRepeat(b, u, s))) continue;
                     if (s == null && m.move().power() <= 0) continue;
+                    if (s != null && s.has("charge") && (cx != ox || cz != oz)) continue;   // charged standing still
                     boolean ranged = m.maxRange() > 1;
                     if ("Archer".equals(mind) && !ranged && hasRangedOption(u)) continue;
                     DamageCalc.Result r = acc.serantis$preview(u, t, m);
                     double score = r.expected() * areaCount(b, u, t, s) + (r.damage() >= t.hp && r.damage() > 0 ? 1000 : 0);
+                    if (s != null && (s.has("charge") || s.has("delayed"))) score *= 0.6;     // it lands a turn later
+                    if (s != null && s.has("interrupt") && field.pendingOf(t) != null) score += 30;
                     if (t.isPlayer) score += "Smart Aggression".equals(mind) ? 40 : 15;
                     if (t == focus) score += 25;
                     if ("Hunter".equals(mind)) score += (t.maxHp - t.hp) * 0.2;
@@ -119,6 +123,8 @@ public final class EnemyBrain {
         if (best != null) {
             u.x = best.cell % size; u.z = best.cell / size;
             BattlesInvoker.serantis$placeEntity(b, u);
+            field.enter(b, u, field.walked(b, u, ox, oz, u.x, u.z));
+            if (!u.alive()) return;
             MoveSpec s = MoveBook.of(best.move);
             if (s != null && (s.support() || ("any".equals(s.target) && best.target.side == u.side))) {
                 MoveEngine.use(b, u, best.target, best.move, false);
@@ -137,7 +143,7 @@ public final class EnemyBrain {
             int cx = cell.getKey() % size, cz = cell.getKey() / size;
             if (!b.canStop(u, cx, cz)) continue;
             int d = Pathing.distance(cx, cz, goal.x, goal.z);
-            double score = -Math.abs(d - ideal) * 10 + terrain(b, cx, cz, foes) - cell.getValue() * 0.01;
+            double score = -Math.abs(d - ideal) * 10 + terrain(b, cx, cz, foes) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
             if ("Support".equals(mind) && !friends.isEmpty()) {
                 Unit ally = nearestOther(u, friends);
                 if (ally != null) score -= Pathing.distance(cx, cz, ally.x, ally.z) * 3;
@@ -147,6 +153,7 @@ public final class EnemyBrain {
         if (bestCell >= 0 && bestCell != ox + oz * size) {
             u.x = bestCell % size; u.z = bestCell / size;
             BattlesInvoker.serantis$placeEntity(b, u);
+            field.enter(b, u, field.walked(b, u, ox, oz, u.x, u.z));
             acc.serantis$say(u.name + (switch (mind) {
                 case "Archer" -> " moves into firing position.";
                 case "Support" -> " stays near its allies.";
