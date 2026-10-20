@@ -1,0 +1,6 @@
+Compiled from "ItemCombinerMenu.java"
+class net.minecraft.world.inventory.ItemCombinerMenu$2 extends net.minecraft.world.inventory.Slot {
+  final net.minecraft.world.inventory.ItemCombinerMenuSlotDefinition$SlotDefinition val$slot;
+  net.minecraft.world.inventory.ItemCombinerMenu$2(net.minecraft.world.inventory.ItemCombinerMenu, net.minecraft.world.Container, int, int, int, net.minecraft.world.inventory.ItemCombinerMenuSlotDefinition$SlotDefinition);
+  public boolean mayPlace(net.minecraft.world.item.ItemStack);
+}

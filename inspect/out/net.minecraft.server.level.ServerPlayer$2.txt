@@ -1,0 +1,7 @@
+Compiled from "ServerPlayer.java"
+class net.minecraft.server.level.ServerPlayer$2 implements net.minecraft.world.inventory.ContainerListener {
+  final net.minecraft.server.level.ServerPlayer this$0;
+  net.minecraft.server.level.ServerPlayer$2(net.minecraft.server.level.ServerPlayer);
+  public void slotChanged(net.minecraft.world.inventory.AbstractContainerMenu, int, net.minecraft.world.item.ItemStack);
+  public void dataChanged(net.minecraft.world.inventory.AbstractContainerMenu, int, int);
+}

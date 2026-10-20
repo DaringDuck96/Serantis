@@ -1,0 +1,11 @@
+Compiled from "LivingEntity.java"
+public final class net.minecraft.world.entity.LivingEntity$Fallsounds extends java.lang.Record {
+  private final net.minecraft.sounds.SoundEvent small;
+  private final net.minecraft.sounds.SoundEvent big;
+  public net.minecraft.world.entity.LivingEntity$Fallsounds(net.minecraft.sounds.SoundEvent, net.minecraft.sounds.SoundEvent);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.sounds.SoundEvent small();
+  public net.minecraft.sounds.SoundEvent big();
+}
