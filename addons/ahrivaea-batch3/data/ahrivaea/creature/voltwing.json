@@ -53,7 +53,7 @@
           "text": "Item pickup"
         }
       ],
-      "size": 1.6,
+      "size": 3.34,
       "wave": 3
     }
   },
@@ -66,6 +66,6 @@
     "luck": 79,
     "charisma": 69
   },
-  "size": 0.7,
+  "size": 1.0,
   "movement": "fly"
 }

@@ -59,7 +59,7 @@
           "text": "Redstone device operation"
         }
       ],
-      "size": 7.5,
+      "size": 2.8,
       "wave": 3
     }
   },
@@ -72,6 +72,6 @@
     "luck": 72,
     "charisma": 67
   },
-  "size": 1.6,
+  "size": 1.0,
   "movement": "swim"
 }
