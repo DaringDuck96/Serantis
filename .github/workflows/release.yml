@@ -11,6 +11,7 @@ on:
     paths:
       - "mods/**"
       - "addons/**"
+      - "tools/compile-stubs/**"
       - "README.md"
       - "VERSION"
       - ".github/workflows/release.yml"
