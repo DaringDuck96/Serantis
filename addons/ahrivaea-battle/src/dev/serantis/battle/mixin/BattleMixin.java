@@ -97,13 +97,28 @@ public abstract class BattleMixin implements BattleAccess {
                                                  Unit attacker, Unit target, BattleMove move) {
         serantis$struck = true;
         serantis$crit = crit;
-        return MoveEngine.flyerBonus(target, move, DamageCalc.calculate(a, d, m, crit, x, y, extras));
+        DamageCalc.Result r = MoveEngine.flyerBonus(target, move, DamageCalc.calculate(a, d, m, crit, x, y, extras));
+        return dev.serantis.battle.skills.SkillEffects.battle((Battle) (Object) this, attacker, target, move, crit, r);
     }
 
     @Inject(method = "strike", at = @At("RETURN"))
     private void serantis$afterStrike(Unit attacker, Unit target, BattleMove move, CallbackInfo ci) {
         Battle self = (Battle) (Object) this;
         Fx.flash(self, target, !serantis$struck ? Fx.MISS : serantis$crit ? Fx.CRIT : Fx.DAMAGE);
+    }
+
+    // The player's Swiftness nodes add battle movement.
+    @Inject(method = "addPlayer", at = @At("RETURN"))
+    private void serantis$playerTiles(net.minecraft.server.level.ServerPlayer player, int x, int z, CallbackInfoReturnable<Unit> cir) {
+        if (cir.getReturnValue() != null) MoveEngine.state(cir.getReturnValue()).bonusTiles = dev.serantis.battle.skills.Skills.tiles(player);
+    }
+
+    // Fortune: creatures beaten in battle may drop twice, and rare drops come up more often.
+    @Redirect(method = "finish", at = @At(value = "INVOKE",
+            target = "Ldev/ahrivaea/creature/Drops;roll(Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;ILnet/minecraft/util/RandomSource;Lnet/minecraft/core/RegistryAccess;)Ljava/util/List;"))
+    private List<net.minecraft.world.item.ItemStack> serantis$loot(dev.ahrivaea.creature.Species species, Influence influence, int level,
+                                                                  net.minecraft.util.RandomSource random, net.minecraft.core.RegistryAccess access) {
+        return dev.serantis.battle.skills.SkillEffects.creatureLoot(((Battle) (Object) this).player(), species, influence, level, random, access);
     }
 
     @Inject(method = "bestMove", at = @At("HEAD"), cancellable = true)
