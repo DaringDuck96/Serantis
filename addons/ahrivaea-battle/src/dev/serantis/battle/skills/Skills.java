@@ -29,7 +29,7 @@ public final class Skills {
                        int attack, int defense, int magic, int speed, int luck, int hearts, int walk, int tiles, int mining) {}
 
     public static final Map<String, Node> NODES = new LinkedHashMap<>();
-    public static final List<String> BRANCHES = List.of("Might", "Guard", "Vitality", "Arcana", "Swiftness", "Fortune", "Industry");
+    public static final List<String> BRANCHES = List.of("Vitality", "Guard", "Might", "Arcana", "Fortune", "Swiftness", "Industry");
 
     private static void node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
                              int atk, int def, int mag, int spd, int luck, int hearts, int walk, int tiles, int mining) {
