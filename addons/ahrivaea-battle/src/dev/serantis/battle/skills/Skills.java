@@ -26,14 +26,14 @@ public final class Skills {
     public static final double BASE_COST = 150, GROWTH = 1.15;
 
     public record Node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
-                       int attack, int defense, int magic, int speed, int luck, int hearts, int walk, int tiles, int mining) {}
+                       int attack, int defense, int magic, int speed, int luck, int health, int walk, int tiles, int mining) {}
 
     public static final Map<String, Node> NODES = new LinkedHashMap<>();
     public static final List<String> BRANCHES = List.of("Vitality", "Guard", "Might", "Arcana", "Fortune", "Swiftness", "Industry");
 
     private static void node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
-                             int atk, int def, int mag, int spd, int luck, int hearts, int walk, int tiles, int mining) {
-        NODES.put(id, new Node(id, branch, index, tier, name, desc, requires, atk, def, mag, spd, luck, hearts, walk, tiles, mining));
+                             int atk, int def, int mag, int spd, int luck, int health, int walk, int tiles, int mining) {
+        NODES.put(id, new Node(id, branch, index, tier, name, desc, requires, atk, def, mag, spd, luck, health, walk, tiles, mining));
     }
 
     private static List<String> after(String prev, String... more) {
@@ -59,12 +59,12 @@ public final class Skills {
         node("guard_5", "Guard", 5, 4, "Steady", "Ranged hits on you deal 5% less damage", after("guard_4"), 0, 0, 0, 0, 0, 0, 0, 0, 0);
         node("guard_6", "Guard", 6, 5, "Bulwark", "+6 Defense", after("guard_5", "might_4"), 0, 6, 0, 0, 0, 0, 0, 0, 0);
 
-        node("vital_1", "Vitality", 1, 1, "Vigor I", "+4 HP", after(null), 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        node("vital_2", "Vitality", 2, 1, "Hearty I", "+1 heart", after("vital_1"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
-        node("vital_3", "Vitality", 3, 2, "Vigor II", "+5 HP", after("vital_2"), 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        node("vital_4", "Vitality", 4, 3, "Hearty II", "+1 heart", after("vital_3"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
-        node("vital_5", "Vitality", 5, 4, "Vigor III", "+6 HP", after("vital_4"), 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        node("vital_6", "Vitality", 6, 5, "Juggernaut", "+5 HP and +2 hearts", after("vital_5", "guard_4"), 0, 0, 0, 0, 0, 2, 0, 0, 0);
+        node("vital_1", "Vitality", 1, 1, "Vigor I", "+½ heart (+5 HP in battle)", after(null), 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        node("vital_2", "Vitality", 2, 1, "Hearty I", "+½ heart (+5 HP in battle)", after("vital_1"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        node("vital_3", "Vitality", 3, 2, "Vigor II", "+½ heart (+5 HP in battle)", after("vital_2"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        node("vital_4", "Vitality", 4, 3, "Hearty II", "+1 heart (+10 HP in battle)", after("vital_3"), 0, 0, 0, 0, 0, 2, 0, 0, 0);
+        node("vital_5", "Vitality", 5, 4, "Vigor III", "+½ heart (+5 HP in battle)", after("vital_4"), 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        node("vital_6", "Vitality", 6, 5, "Juggernaut", "+1 heart (+10 HP in battle)", after("vital_5", "guard_4"), 0, 0, 0, 0, 0, 2, 0, 0, 0);
 
         node("arcana_1", "Arcana", 1, 1, "Insight I", "+3 Magic", after(null), 0, 0, 3, 0, 0, 0, 0, 0, 0);
         node("arcana_2", "Arcana", 2, 1, "Insight II", "+3 Magic", after("arcana_1"), 0, 0, 3, 0, 0, 0, 0, 0, 0);
@@ -125,14 +125,27 @@ public final class Skills {
                 START_STAT + sum(p, Node::magic), START_STAT + sum(p, Node::luck), START_STAT);
     }
 
-    public static int hearts(Player p) { return sum(p, Node::hearts); }
+    /**
+     * Health and HP are one stat. Your health in the world is 20 (10 hearts) plus what Vitality adds;
+     * in battle it is shown as HP at 5 HP per point of health (10 HP per heart), so 10 hearts = 100 HP.
+     */
+    public static final int BATTLE_HP_PER_HEALTH = 5;
 
-    /** HP stat from the Vitality branch. */
+    /** Extra health from Vitality, in half-hearts. */
+    public static int health(Player p) { return sum(p, Node::health); }
+
+    /** The HP stat that goes with it: 20 + 2 x HP = battle HP (40 at 10 hearts, +2.5 per half-heart). */
     public static int hp(Player p) {
-        int s = 0;
-        for (String id : owned(p)) s += switch (id) { case "vital_1" -> 4; case "vital_3" -> 5; case "vital_5" -> 6; case "vital_6" -> 5; default -> 0; };
-        return s;
+        return (int) Math.round((BATTLE_HP_PER_HEALTH * (20 + health(p)) - 20) / 2.0) - START_STAT;
     }
+
+    /** Battle HP for a max health (in half-hearts). */
+    public static int battleHp(double maxHealth) { return (int) Math.round(maxHealth * BATTLE_HP_PER_HEALTH); }
+
+    private static String hearts(int health) {
+        return (health / 2) + (health % 2 == 1 ? "½" : "");
+    }
+
     public static int walkPercent(Player p) { return sum(p, Node::walk); }
     public static int tiles(Player p) { return sum(p, Node::tiles); }
     public static int miningPercent(Player p) { return sum(p, Node::mining); }
@@ -192,8 +205,8 @@ public final class Skills {
         }
         o.add("nodes", nodes);
         Stats s = stats(p);
-        o.addProperty("summary", "HP " + s.hp() + " · Attack " + s.attack() + " · Defense " + s.defense() + " · Magic " + s.magic() + " · Speed " + s.speed()
-                + " · Luck " + s.luck() + " · +" + hearts(p) + " hearts · +" + walkPercent(p) + "% walk · +" + miningPercent(p) + "% mining");
+        o.addProperty("summary", "Attack " + s.attack() + " · Defense " + s.defense() + " · Magic " + s.magic() + " · Speed " + s.speed()
+                + " · Luck " + s.luck() + " · " + hearts(20 + health(p)) + " hearts (" + battleHp(20 + health(p)) + " HP in battle) · +" + walkPercent(p) + "% walk · +" + miningPercent(p) + "% mining");
         return o;
     }
 }

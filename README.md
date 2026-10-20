@@ -121,7 +121,7 @@ The gain goes on the stat's Level 20 value, like the rest of the stat, so it is 
 
 **Defeat.** XP is never lost. You keep all of it when you lose a battle or die, and dying drops no XP orbs. Instead, everything you're wearing or holding (armour, weapon, shield, tools) loses half of its full durability. It's never destroyed outright and is left with at least 1 use. On a normal death your items still drop as usual.
 
-**Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. HP raises your health in battle; hearts from Vitality raise your health everywhere. The old player levels and stat points are gone.
+**Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. Your hearts and your battle HP are the same stat: in the world it shows as hearts, and in battle as HP at 10 HP per heart (10 hearts = 100 HP). Vitality raises it, and so does anything else that adds hearts. The old player levels and stat points are gone.
 
 **The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 7 branches of 6 skills, 42 in all:
 - **Order:** each skill needs the one above it, and each capstone (the last skill in a branch) also needs one skill from a neighbouring branch.
@@ -131,7 +131,7 @@ The gain goes on the stat's Level 20 value, like the rest of the stat, so it is 
 |---|---|---|---|---|---|---|
 | **Might** | Strength I: +3 Attack | Strength II: +3 Attack | Strength III: +4 Attack | Heavy Hitter: your melee hits +5% | Strength IV: +5 Attack | **Overpower:** your crits deal ×2.25 instead of ×2 *(also needs Toughness IV)* |
 | **Guard** | Toughness I: +3 Defense | Toughness II: +3 Defense | Toughness III: +4 Defense | Toughness IV: +4 Defense | Steady: ranged hits on you −5% | **Bulwark:** +6 Defense *(also needs Heavy Hitter)* |
-| **Vitality** | Vigor I: +4 HP | Hearty I: +1 heart | Vigor II: +5 HP | Hearty II: +1 heart | Vigor III: +6 HP | **Juggernaut:** +5 HP, +2 hearts *(also needs Toughness IV)* |
+| **Vitality** | Vigor I: +½ heart (+5 HP) | Hearty I: +½ heart (+5 HP) | Vigor II: +½ heart (+5 HP) | Hearty II: +1 heart (+10 HP) | Vigor III: +½ heart (+5 HP) | **Juggernaut:** +1 heart (+10 HP) *(also needs Toughness IV)* |
 | **Arcana** | Insight I: +3 Magic | Insight II: +3 Magic | Spellpower: your magic attacks +5% | Insight III: +4 Magic | Insight IV: +5 Magic | **Attuned:** anvils cost 25% less XP *(also needs Spoils)* |
 | **Swiftness** | Quickness I: +3 Speed | Stride I: +5% walking speed | Footwork I: +1 battle tile | Stride II: +5% walking speed | Footwork II: +1 battle tile | **Fleet:** +10% walking speed, +4 Speed *(also needs Labor III)* |
 | **Fortune** | Luck I: +3 Luck | Scavenger: 5% chance mobs you kill drop twice | Luck II: +4 Luck | Spoils: 5% chance a creature you beat in battle drops twice | Luck III: +5 Luck | **Treasure Sense:** rare creature drops (under 25%) twice as likely *(also needs Insight III)* |

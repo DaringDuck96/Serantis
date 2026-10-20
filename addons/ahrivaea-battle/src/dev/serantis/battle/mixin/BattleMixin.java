@@ -255,4 +255,11 @@ public abstract class BattleMixin implements BattleAccess {
             if (temperament != null) serantis$defeatedTemperaments().put(defeated.get(defeated.size() - 1), temperament);
         }
     }
+
+    // Your health and your battle HP are one stat: battle HP is your max health x 5 (10 hearts = 100 HP),
+    // so anything that raises your hearts raises your HP in battle too.
+    @Redirect(method = "addPlayer", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/character/PlayerCharacter;maxHealth()I"))
+    private int serantis$playerHp(dev.ahrivaea.character.PlayerCharacter character, net.minecraft.server.level.ServerPlayer player, int x, int z) {
+        return dev.serantis.battle.skills.Skills.battleHp(player.getMaxHealth());
+    }
 }

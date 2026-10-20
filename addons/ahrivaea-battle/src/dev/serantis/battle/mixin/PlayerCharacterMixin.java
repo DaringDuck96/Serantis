@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * The creatures mod's player character now comes from the skill tree: 50 in every stat plus what
  * the player's nodes add. Its old levels and stat points are no longer used. In the character it
  * hands out, "level" is the number of nodes owned, "xp" carries the walking-speed bonus (in %) and
- * "points" the extra hearts, which the walking speed and health below read back.
+ * "points" the extra health (in half-hearts), which the walking speed and health below read back.
  */
 @Mixin(PlayerCharacter.class)
 public abstract class PlayerCharacterMixin {
@@ -34,14 +34,18 @@ public abstract class PlayerCharacterMixin {
     @Inject(method = "get", at = @At("RETURN"), cancellable = true)
     private static void serantis$fromSkills(Player player, CallbackInfoReturnable<PlayerCharacter> cir) {
         if (player == null) return;
-        cir.setReturnValue(new PlayerCharacter(Skills.owned(player).size(), Skills.walkPercent(player), Skills.hearts(player), Skills.stats(player)));
+        cir.setReturnValue(new PlayerCharacter(Skills.owned(player).size(), Skills.walkPercent(player), Skills.health(player), Skills.stats(player)));
     }
 
     @Inject(method = "speedBonus", at = @At("HEAD"), cancellable = true)
     private void serantis$walk(CallbackInfoReturnable<Double> cir) { cir.setReturnValue(xp() / 100.0); }
 
     @Inject(method = "extraHealth", at = @At("HEAD"), cancellable = true)
-    private void serantis$hearts(CallbackInfoReturnable<Integer> cir) { cir.setReturnValue(points() * 2); }
+    private void serantis$hearts(CallbackInfoReturnable<Integer> cir) { cir.setReturnValue(points()); }
+
+    // Health and battle HP are one stat: battle HP is health x 5 (10 hearts = 100 HP).
+    @Inject(method = "maxHealth", at = @At("HEAD"), cancellable = true)
+    private void serantis$battleHp(CallbackInfoReturnable<Integer> cir) { cir.setReturnValue(Skills.battleHp(20 + points())); }
 
     @Inject(method = "levelUp", at = @At("HEAD"), cancellable = true)
     private static void serantis$noLevelUp(ServerPlayer player, CallbackInfoReturnable<String> cir) {
