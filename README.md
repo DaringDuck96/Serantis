@@ -44,6 +44,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 - Statuses: Bleeding and Poison lose 5% of max HP each turn; Burning deals its stated damage each turn; Frozen, Stunned and Asleep skip turns (Asleep wakes when hit); Immobilized can't move; Slowed moves 2 fewer tiles; Confused attacks a random nearby unit half the time; Frightened deals about 30% less damage.
 - Counter Stance: Defense +2 until the user's next turn, and anyone who damages it before then takes 25% of that damage back as recoil.
 - All 150 moves in the Move Dex can be learned.
+- In battle, hover over a creature (or its card) to see its card: level, HP, movement, size, and every move with a details line (physical or magic, influence, reach, base hit chance, Power) and a plain-English explanation of exactly what it does, with real numbers. Click a creature to pin its card; click the card to close it.
 
 ### Pushes, zones and charged attacks
 

@@ -713,6 +713,9 @@ public final class MoveEngine {
                 mj.addProperty("power", spec.sheetPower);
                 if (spec.hits > 1) mj.addProperty("name", spec.name + " x" + spec.hits);
                 if (spec.text != null) mj.addProperty("info", spec.text);
+                mj.addProperty("serantis_line", MoveExplain.line(spec));
+                mj.addProperty("serantis_influence", spec.influence == null ? "none" : spec.influence);
+                mj.addProperty("serantis_explain", MoveExplain.explain(spec));
             }
         }
     }

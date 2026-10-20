@@ -8,6 +8,9 @@ import dev.ahrivaea.client.battle.BattleClient;
 import dev.ahrivaea.client.battle.BattleScreen;
 import dev.serantis.battle.fx.Fx;
 import dev.serantis.battle.moves.Body;
+import dev.serantis.battle.client.MovePanel;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,6 +42,7 @@ public abstract class BattleScreenMixin {
     @Shadow private Pathing.Occupancy occupancy(JsonObject unit, String side) { return null; }
     @Shadow private void fillCell(GuiGraphicsExtractor g, int x, int z, int color) { }
     @Shadow public abstract double[] cellRect(int x, int z);
+    @Shadow private static JsonObject unitAt(int x, int z) { return null; }
 
     // Tile effects playing now: {cell, kind, start millis}. One battle screen at a time, so static is fine.
     private static final List<long[]> serantis$playing = new ArrayList<>();
@@ -94,6 +98,7 @@ public abstract class BattleScreenMixin {
             serantis$battle = st.get("serantis_fx_battle").getAsInt();
             serantis$seen = 0;
             serantis$playing.clear();
+            serantis$pinned = -1;
         }
         if (st.has("serantis_fx")) {
             long newest = serantis$seen;
@@ -235,5 +240,70 @@ public abstract class BattleScreenMixin {
         pending = move;
         sendAction("attack", actor.get("id").getAsInt());
         ci.cancel();
+    }
+
+    // ---- the creature card: every move with what it actually does. Hover to see it; click a creature to pin it.
+    private static int serantis$pinned = -1;
+    private static boolean serantis$hoverDrawn, serantis$pinShown;
+    private static int serantis$mouseX, serantis$mouseY;
+
+    private static boolean serantis$overCard(double x, double y) {
+        int[] r = MovePanel.RECT;
+        return r[2] > 0 && x >= r[0] && x < r[0] + r[2] && y >= r[1] && y < r[1] + r[3];
+    }
+
+    private void serantis$card(GuiGraphicsExtractor g, JsonObject unit, boolean pinned) {
+        Screen s = (Screen) (Object) this;
+        MovePanel.draw(g, unit, 4, s.height - 4, s.width / 2 - 10, s.height - 40,
+                pinned ? "Pinned · click this card to close it" : "Click the creature to pin this card");
+    }
+
+    @Inject(method = "extractRenderState", at = @At("HEAD"))
+    private void serantis$frameStart(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial, CallbackInfo ci) {
+        serantis$mouseX = mouseX;
+        serantis$mouseY = mouseY;
+        serantis$hoverDrawn = false;
+    }
+
+    @Inject(method = "drawDetails", at = @At("HEAD"), cancellable = true)
+    private void serantis$details(GuiGraphicsExtractor g, JsonObject unit, int x, int bottom, CallbackInfo ci) {
+        ci.cancel();
+        // Reading the pinned card: don't swap it for whatever creature is under the mouse.
+        if (serantis$pinShown && serantis$pinned >= 0 && serantis$overCard(serantis$mouseX, serantis$mouseY)) return;
+        boolean pinned = unit.has("id") && unit.get("id").getAsInt() == serantis$pinned;
+        serantis$card(g, unit, pinned);
+        serantis$hoverDrawn = true;
+        serantis$pinShown = pinned;
+    }
+
+    @Inject(method = "extractRenderState", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/screens/Screen;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V"))
+    private void serantis$pinnedCard(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial, CallbackInfo ci) {
+        if (serantis$hoverDrawn) return;
+        serantis$pinShown = false;
+        JsonObject st = state();
+        if (serantis$pinned < 0 || st == null || (st.has("result") && st.get("result").isJsonObject())) { MovePanel.RECT[2] = 0; return; }
+        JsonObject u = unit(serantis$pinned);
+        if (u == null || u.get("hp").getAsInt() <= 0) { serantis$pinned = -1; MovePanel.RECT[2] = 0; return; }
+        serantis$card(g, u, true);
+        serantis$pinShown = true;
+    }
+
+    @Inject(method = "clickCell", at = @At("HEAD"))
+    private void serantis$pin(int x, int z, CallbackInfo ci) {
+        JsonObject u = unitAt(x, z);
+        if (u != null && u.has("id")) serantis$pinned = u.get("id").getAsInt();
+    }
+
+    @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
+    private void serantis$closeCard(MouseButtonEvent event, boolean doubled, CallbackInfoReturnable<Boolean> cir) {
+        if (serantis$pinShown && serantis$pinned >= 0 && serantis$overCard(event.x(), event.y())) {
+            for (var child : ((Screen) (Object) this).children())
+                if (child.isMouseOver(event.x(), event.y())) return;   // buttons stay clickable
+            serantis$pinned = -1;
+            serantis$pinShown = false;
+            MovePanel.RECT[2] = 0;
+            cir.setReturnValue(true);
+        }
     }
 }
