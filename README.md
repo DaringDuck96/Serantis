@@ -104,6 +104,8 @@ Every creature gets one of 25 temperaments at random when it first appears and k
 
 **One XP currency.** Battles give ordinary Minecraft XP (about 10 per creature defeated), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.
 
+**Defeat.** XP is never lost. You keep all of it when you lose a battle or die, and dying drops no XP orbs. Instead, everything you're wearing or holding (armour, weapon, shield, tools) loses half of its full durability. It's never destroyed outright and is left with at least 1 use. On a normal death your items still drop as usual.
+
 **Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. HP raises your health in battle; hearts from Vitality raise your health everywhere. The old player levels and stat points are gone.
 
 **The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 7 branches of 6 skills, 42 in all:

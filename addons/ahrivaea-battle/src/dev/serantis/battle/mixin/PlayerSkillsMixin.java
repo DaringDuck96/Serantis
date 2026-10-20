@@ -20,6 +20,12 @@ public abstract class PlayerSkillsMixin implements SkillHolder {
 
     @Override public Set<String> serantis$skills() { return serantis$skills; }
 
+    // XP is kept through death, so dying drops no XP orbs.
+    @Inject(method = "getBaseExperienceReward", at = @At("HEAD"), cancellable = true)
+    private void serantis$keepXp(net.minecraft.server.level.ServerLevel level, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Integer> cir) {
+        cir.setReturnValue(0);
+    }
+
     @Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
     private void serantis$saveSkills(ValueOutput out, CallbackInfo ci) {
         out.putString("SerantisSkills", String.join(",", serantis$skills));

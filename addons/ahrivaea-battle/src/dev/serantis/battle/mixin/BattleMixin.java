@@ -107,6 +107,13 @@ public abstract class BattleMixin implements BattleAccess {
         Fx.flash(self, target, !serantis$struck ? Fx.MISS : serantis$crit ? Fx.CRIT : Fx.DAMAGE);
     }
 
+    // Losing a battle wears down the player's armour and held items (XP is never lost).
+    @Inject(method = "finish", at = @At("HEAD"))
+    private void serantis$defeat(Battle.Outcome outcome, CallbackInfo ci) {
+        Battle self = (Battle) (Object) this;
+        if (outcome == Battle.Outcome.LOST && self.player() != null) dev.serantis.battle.Wear.defeat(self.player(), "You were defeated.");
+    }
+
     // The player's Swiftness nodes add battle movement.
     @Inject(method = "addPlayer", at = @At("RETURN"))
     private void serantis$playerTiles(net.minecraft.server.level.ServerPlayer player, int x, int z, CallbackInfoReturnable<Unit> cir) {

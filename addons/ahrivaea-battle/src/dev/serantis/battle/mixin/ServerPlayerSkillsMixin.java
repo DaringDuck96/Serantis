@@ -15,5 +15,16 @@ public abstract class ServerPlayerSkillsMixin {
         var mine = ((SkillHolder) (Object) this).serantis$skills();
         mine.clear();
         mine.addAll(((SkillHolder) (Object) old).serantis$skills());
+        // XP is the main currency: it's kept through death.
+        ServerPlayer self = (ServerPlayer) (Object) this;
+        self.experienceLevel = old.experienceLevel;
+        self.experienceProgress = old.experienceProgress;
+        self.totalExperience = old.totalExperience;
+    }
+
+    // Dying wears down armour and held items instead (before anything is dropped).
+    @Inject(method = "die", at = @At("HEAD"))
+    private void serantis$died(net.minecraft.world.damagesource.DamageSource source, CallbackInfo ci) {
+        dev.serantis.battle.Wear.defeat((ServerPlayer) (Object) this, "You died.");
     }
 }
