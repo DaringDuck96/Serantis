@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "dyed_water",
+  "ingredients": [
+    "minecraft:water_bucket",
+    "minecraft:lime_dye"
+  ],
+  "result": {
+    "id": "serantis_dyed_water:lime_water_bucket"
+  }
+}

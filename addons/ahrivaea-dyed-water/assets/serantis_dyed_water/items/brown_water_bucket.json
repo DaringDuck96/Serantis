@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "serantis_dyed_water:item/brown_water_bucket",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -8170446
+      }
+    ]
+  }
+}
