@@ -13,6 +13,30 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 /** The base screen shows each worker's Charisma-based work speed. */
 @Mixin(Bases.class)
 public abstract class BasesMixin {
+    // ---- Skill tree: bought at your own Base Core, shown on its screen.
+    @org.spongepowered.asm.mixin.injection.Inject(method = "handle", at = @At("HEAD"), cancellable = true)
+    private static void serantis$skill(net.minecraft.server.level.ServerPlayer player, String json,
+                                       org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        com.google.gson.JsonObject o;
+        try { o = com.google.gson.JsonParser.parseString(json).getAsJsonObject(); } catch (RuntimeException e) { return; }
+        if (!o.has("kind") || !"serantis_skill".equals(o.get("kind").getAsString())) return;
+        ci.cancel();
+        if (!o.has("pos") || !o.has("job")) return;
+        var p = o.getAsJsonArray("pos");
+        net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(p.get(0).getAsInt(), p.get(1).getAsInt(), p.get(2).getAsInt());
+        dev.ahrivaea.base.BaseCoreBlockEntity core = Bases.coreAt(player.level(), pos);
+        if (core == null || player.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) > 4096) return;
+        String msg = dev.serantis.battle.skills.Skills.buy(player, core, o.get("job").getAsString());
+        player.sendOverlayMessage(net.minecraft.network.chat.Component.literal(msg));
+        Bases.send(player, core);
+    }
+
+    @org.spongepowered.asm.mixin.injection.Inject(method = "view", at = @At("RETURN"))
+    private static void serantis$skillsView(net.minecraft.server.level.ServerPlayer player, dev.ahrivaea.base.BaseCoreBlockEntity core,
+                                            org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<com.google.gson.JsonObject> cir) {
+        if (cir.getReturnValue() != null) cir.getReturnValue().add("serantis_skills", dev.serantis.battle.skills.Skills.view(player, core));
+    }
+
     @Unique private static CaughtCreature serantis$shown;
 
     // The worker whose speed is about to be shown (its level is read just before).

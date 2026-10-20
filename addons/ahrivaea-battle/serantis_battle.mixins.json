@@ -18,13 +18,22 @@
     "WorkerBrainMixin",
     "BasesMixin",
     "PartySyncMixin",
-    "StartersNamingMixin"
+    "StartersNamingMixin",
+    "PlayerSkillsMixin",
+    "ServerPlayerSkillsMixin",
+    "PlayerCharacterMixin",
+    "DropsMixin",
+    "LivingEntityDropsMixin",
+    "BlockSkillsMixin",
+    "ItemCombinerMenuAccessor",
+    "AnvilMenuSkillsMixin"
   ],
   "client": [
     "client.PartyScreenMixin",
     "client.BattleScreenMixin",
     "client.StarterScreenMixin",
-    "client.BattleClientMixin"
+    "client.BattleClientMixin",
+    "client.BaseScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
