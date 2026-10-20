@@ -1,0 +1,23 @@
+{
+    "schemaVersion": 1,
+    "id": "serantis_starters",
+    "version": "0.1.0",
+    "name": "Serantis Starters",
+    "description": "Twelve starter creatures, one for every influence. They are the only creatures offered on the starter screen, each given in its own influence, and they also live in the wild like every other creature.",
+    "authors": [
+        "jeffreystu10",
+        "DaringDuck96"
+    ],
+    "license": "All-Rights-Reserved",
+    "icon": "assets/serantis_starters/icon.png",
+    "environment": "*",
+    "mixins": [
+        "serantis_starters.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "~26.3",
+        "java": ">=25",
+        "ahrivaea": "*"
+    }
+}

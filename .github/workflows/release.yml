@@ -25,14 +25,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Add-ons with a src/ folder contain Java code; it is compiled against the real creatures mod.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+
       - name: Build add-on jars
         run: |
+          set -e
+          CREATURES="$(ls mods/ahrivaea-creatures-*.jar)"
           for dir in addons/*/; do
             [ -f "$dir/fabric.mod.json" ] || continue
             name="$(basename "$dir")"
             ver="$(jq -r .version "$dir/fabric.mod.json")"
-            (cd "$dir" && zip -qr "$GITHUB_WORKSPACE/mods/${name}-${ver}.jar" . -x '*.md')
+            jar="$GITHUB_WORKSPACE/mods/${name}-${ver}.jar"
+            (cd "$dir" && zip -qr "$jar" . -x '*.md' -x 'src/*')
+            if [ -d "$dir/src" ]; then
+              classes="$(mktemp -d)"
+              javac --release 25 -implicit:none -proc:none -Xlint:-options -d "$classes" \
+                -cp "$CREATURES" -sourcepath tools/compile-stubs $(find "$dir/src" -name '*.java')
+              (cd "$classes" && zip -qr "$jar" .)
+            fi
             echo "built mods/${name}-${ver}.jar"
+            unzip -l "$jar" | tail -1
           done
 
       - name: Build zip

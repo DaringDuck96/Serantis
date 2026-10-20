@@ -1,0 +1,13 @@
+# Creatures offered on the starter screen, in this order. One creature id per line.
+sixpaw_marauder
+cinder_pangolith
+rime_chimaera
+stormstrider
+delver_horror
+hydrabill
+grove_behemoth
+runeback_basilisk
+voidshell
+dawn_owlbear
+gloomgazer
+feyheart

@@ -1,0 +1,61 @@
+{
+  "name": "Dawn Owlbear",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 83,
+        "attack": 99,
+        "defense": 81,
+        "speed": 83,
+        "magic": 56,
+        "luck": 72,
+        "charisma": 75
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gunpowder",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "lighting",
+          "text": "Dark-area exploration and lighting"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.61
+    }
+  },
+  "stats": {
+    "hp": 83,
+    "attack": 99,
+    "defense": 81,
+    "speed": 83,
+    "magic": 56,
+    "luck": 72,
+    "charisma": 75
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

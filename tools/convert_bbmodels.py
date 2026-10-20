@@ -21,7 +21,8 @@ PREFIX = {"coral": "water", "briar": "nature", "astral": "arcane", "duskborn": "
           "arcane": "arcane"}
 ALIASES = {"blooming_horror": "bloom_eye_horror", "scrap_goblin": "scrap_gobblin",   # artist name -> book name
            "shardheart_colossus": "shardheart", "snowfang_wolf": "snowfang",
-           "one_eyed_colossus": "one_eye_colossus"}
+           "one_eyed_colossus": "one_eye_colossus", "rime_chimera": "rime_chimaera",
+           "feyhart": "feyheart"}
 SIZE_CLASS = {"small": 0.7, "medium": 1.0, "large": 1.6, "extra_large": 1.6}
 FPS = 24                                                   # sampling rate for smooth curves
 
@@ -172,6 +173,7 @@ def convert(addon, src):
     else:
         work = src; label = os.path.basename(src.rstrip("/"))
     label = re.sub(r"^[0-9a-f]{8}-", "", label)                 # strip chat-upload prefix
+    label = re.sub(r"_\d+$", "", label)                          # "..._models_1" (re-downloaded copy)
     cdir = os.path.join(addon, "data/ahrivaea/creature")
     cid, infl, sclass, cpath = creature_of(label, cdir)
     files = sorted(glob.glob(os.path.join(work, "**/*.bbmodel"), recursive=True))

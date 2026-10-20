@@ -1,0 +1,67 @@
+{
+  "name": "Hydrabill",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 88,
+        "attack": 97,
+        "defense": 76,
+        "speed": 93,
+        "magic": 56,
+        "luck": 76,
+        "charisma": 74
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_ocean"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 2.8
+    }
+  },
+  "stats": {
+    "hp": 88,
+    "attack": 97,
+    "defense": 76,
+    "speed": 93,
+    "magic": 56,
+    "luck": 76,
+    "charisma": 74
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

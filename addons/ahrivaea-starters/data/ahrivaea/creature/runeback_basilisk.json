@@ -1,0 +1,61 @@
+{
+  "name": "Runeback Basilisk",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 72,
+        "attack": 51,
+        "defense": 65,
+        "speed": 79,
+        "magic": 100,
+        "luck": 93,
+        "charisma": 90
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:clay_ball",
+          "chance": 0.65,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        },
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ],
+      "size": 1.22
+    }
+  },
+  "stats": {
+    "hp": 72,
+    "attack": 51,
+    "defense": 65,
+    "speed": 79,
+    "magic": 100,
+    "luck": 93,
+    "charisma": 90
+  },
+  "size": 0.7,
+  "movement": "walk"
+}
