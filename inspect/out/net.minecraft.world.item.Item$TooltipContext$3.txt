@@ -1,0 +1,9 @@
+Compiled from "Item.java"
+class net.minecraft.world.item.Item$TooltipContext$3 implements net.minecraft.world.item.Item$TooltipContext {
+  final net.minecraft.core.HolderLookup$Provider val$registries;
+  net.minecraft.world.item.Item$TooltipContext$3();
+  public net.minecraft.core.HolderLookup$Provider registries();
+  public float tickRate();
+  public net.minecraft.world.level.saveddata.maps.MapItemSavedData mapData(net.minecraft.world.level.saveddata.maps.MapId);
+  public boolean isPeaceful();
+}

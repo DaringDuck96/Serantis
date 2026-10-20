@@ -1,0 +1,141 @@
+Compiled from "FlowingFluid.java"
+public class net.minecraft.world.level.material.FlowingFluid$SpreadContext {
+  private final net.minecraft.world.level.BlockGetter level;
+
+  private final net.minecraft.core.BlockPos origin;
+
+  private final it.unimi.dsi.fastutil.shorts.Short2ObjectMap<net.minecraft.world.level.block.state.BlockState> stateCache;
+
+  private final it.unimi.dsi.fastutil.shorts.Short2BooleanMap holeCache;
+
+  final net.minecraft.world.level.material.FlowingFluid this$0;
+
+  private net.minecraft.world.level.material.FlowingFluid$SpreadContext(net.minecraft.world.level.material.FlowingFluid, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: dup
+         3: invokestatic  #1                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+         6: pop
+         7: putfield      #7                  // Field this$0:Lnet/minecraft/world/level/material/FlowingFluid;
+        10: aload_0
+        11: invokespecial #13                 // Method java/lang/Object."<init>":()V
+        14: aload_0
+        15: new           #19                 // class it/unimi/dsi/fastutil/shorts/Short2ObjectOpenHashMap
+        18: dup
+        19: invokespecial #21                 // Method it/unimi/dsi/fastutil/shorts/Short2ObjectOpenHashMap."<init>":()V
+        22: putfield      #22                 // Field stateCache:Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;
+        25: aload_0
+        26: new           #26                 // class it/unimi/dsi/fastutil/shorts/Short2BooleanOpenHashMap
+        29: dup
+        30: invokespecial #28                 // Method it/unimi/dsi/fastutil/shorts/Short2BooleanOpenHashMap."<init>":()V
+        33: putfield      #29                 // Field holeCache:Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;
+        36: aload_0
+        37: aload_2
+        38: putfield      #33                 // Field level:Lnet/minecraft/world/level/BlockGetter;
+        41: aload_0
+        42: aload_3
+        43: putfield      #37                 // Field origin:Lnet/minecraft/core/BlockPos;
+        46: return
+
+  public net.minecraft.world.level.block.state.BlockState getBlockState(net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_0
+         3: aload_1
+         4: invokevirtual #41                 // Method getCacheKey:(Lnet/minecraft/core/BlockPos;)S
+         7: invokevirtual #45                 // Method getBlockState:(Lnet/minecraft/core/BlockPos;S)Lnet/minecraft/world/level/block/state/BlockState;
+        10: areturn
+
+  private net.minecraft.world.level.block.state.BlockState getBlockState(net.minecraft.core.BlockPos, short);
+    Code:
+         0: aload_0
+         1: getfield      #22                 // Field stateCache:Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;
+         4: iload_2
+         5: aload_0
+         6: aload_1
+         7: invokedynamic #49,  0             // InvokeDynamic #0:get:(Lnet/minecraft/world/level/material/FlowingFluid$SpreadContext;Lnet/minecraft/core/BlockPos;)Lit/unimi/dsi/fastutil/shorts/Short2ObjectFunction;
+        12: invokeinterface #53,  3           // InterfaceMethod it/unimi/dsi/fastutil/shorts/Short2ObjectMap.computeIfAbsent:(SLit/unimi/dsi/fastutil/shorts/Short2ObjectFunction;)Ljava/lang/Object;
+        17: checkcast     #59                 // class net/minecraft/world/level/block/state/BlockState
+        20: areturn
+
+  public boolean isHole(net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: getfield      #29                 // Field holeCache:Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;
+         4: aload_0
+         5: aload_1
+         6: invokevirtual #41                 // Method getCacheKey:(Lnet/minecraft/core/BlockPos;)S
+         9: aload_0
+        10: aload_1
+        11: invokedynamic #61,  0             // InvokeDynamic #1:get:(Lnet/minecraft/world/level/material/FlowingFluid$SpreadContext;Lnet/minecraft/core/BlockPos;)Lit/unimi/dsi/fastutil/shorts/Short2BooleanFunction;
+        16: invokeinterface #64,  3           // InterfaceMethod it/unimi/dsi/fastutil/shorts/Short2BooleanMap.computeIfAbsent:(SLit/unimi/dsi/fastutil/shorts/Short2BooleanFunction;)Z
+        21: ireturn
+
+  private short getCacheKey(net.minecraft.core.BlockPos);
+    Code:
+         0: aload_1
+         1: invokevirtual #69                 // Method net/minecraft/core/BlockPos.getX:()I
+         4: aload_0
+         5: getfield      #37                 // Field origin:Lnet/minecraft/core/BlockPos;
+         8: invokevirtual #69                 // Method net/minecraft/core/BlockPos.getX:()I
+        11: isub
+        12: istore_2
+        13: aload_1
+        14: invokevirtual #75                 // Method net/minecraft/core/BlockPos.getZ:()I
+        17: aload_0
+        18: getfield      #37                 // Field origin:Lnet/minecraft/core/BlockPos;
+        21: invokevirtual #75                 // Method net/minecraft/core/BlockPos.getZ:()I
+        24: isub
+        25: istore_3
+        26: iload_2
+        27: sipush        128
+        30: iadd
+        31: sipush        255
+        34: iand
+        35: bipush        8
+        37: ishl
+        38: iload_3
+        39: sipush        128
+        42: iadd
+        43: sipush        255
+        46: iand
+        47: ior
+        48: i2s
+        49: ireturn
+
+  private boolean lambda$isHole$0(net.minecraft.core.BlockPos, short);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: iload_2
+         3: invokevirtual #45                 // Method getBlockState:(Lnet/minecraft/core/BlockPos;S)Lnet/minecraft/world/level/block/state/BlockState;
+         6: astore_3
+         7: aload_1
+         8: invokevirtual #78                 // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+        11: astore        4
+        13: aload_0
+        14: getfield      #33                 // Field level:Lnet/minecraft/world/level/BlockGetter;
+        17: aload         4
+        19: invokeinterface #82,  2           // InterfaceMethod net/minecraft/world/level/BlockGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        24: astore        5
+        26: aload_0
+        27: getfield      #7                  // Field this$0:Lnet/minecraft/world/level/material/FlowingFluid;
+        30: aload_0
+        31: getfield      #33                 // Field level:Lnet/minecraft/world/level/BlockGetter;
+        34: aload_1
+        35: aload_3
+        36: aload         4
+        38: aload         5
+        40: invokevirtual #87                 // Method net/minecraft/world/level/material/FlowingFluid.isWaterHole:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z
+        43: ireturn
+
+  private net.minecraft.world.level.block.state.BlockState lambda$getBlockState$0(net.minecraft.core.BlockPos, short);
+    Code:
+         0: aload_0
+         1: getfield      #33                 // Field level:Lnet/minecraft/world/level/BlockGetter;
+         4: aload_1
+         5: invokeinterface #82,  2           // InterfaceMethod net/minecraft/world/level/BlockGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        10: areturn
+}

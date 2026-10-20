@@ -1,4 +1,0 @@
-Compiled from "ModelDebugName.java"
-public interface net.minecraft.client.resources.model.ModelDebugName {
-  public abstract java.lang.String debugName();
-}

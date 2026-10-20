@@ -1,8 +1,0 @@
-Compiled from "BlockTintSources.java"
-class net.minecraft.client.color.block.BlockTintSources$1 implements net.minecraft.client.color.block.BlockTintSource {
-  final int val$colorInHand;
-  final int val$colorInWorld;
-  net.minecraft.client.color.block.BlockTintSources$1();
-  public int color(net.minecraft.world.level.block.state.BlockState);
-  public int colorInWorld(net.minecraft.world.level.block.state.BlockState, net.minecraft.client.renderer.block.BlockAndTintGetter, net.minecraft.core.BlockPos);
-}

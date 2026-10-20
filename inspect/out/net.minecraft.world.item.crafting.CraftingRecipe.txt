@@ -1,0 +1,82 @@
+Compiled from "CraftingRecipe.java"
+public interface net.minecraft.world.item.crafting.CraftingRecipe extends net.minecraft.world.item.crafting.Recipe<net.minecraft.world.item.crafting.CraftingInput> {
+  public default net.minecraft.world.item.crafting.RecipeType<net.minecraft.world.item.crafting.CraftingRecipe> getType();
+    Code:
+         0: getstatic     #1                  // Field net/minecraft/world/item/crafting/RecipeType.CRAFTING:Lnet/minecraft/world/item/crafting/RecipeType;
+         3: areturn
+
+  public abstract net.minecraft.world.item.crafting.RecipeSerializer<? extends net.minecraft.world.item.crafting.CraftingRecipe> getSerializer();
+
+  public abstract net.minecraft.world.item.crafting.CraftingBookCategory category();
+
+  public default net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack> getRemainingItems(net.minecraft.world.item.crafting.CraftingInput);
+    Code:
+         0: aload_1
+         1: invokestatic  #7                  // InterfaceMethod defaultCraftingReminder:(Lnet/minecraft/world/item/crafting/CraftingInput;)Lnet/minecraft/core/NonNullList;
+         4: areturn
+
+  public static net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack> defaultCraftingReminder(net.minecraft.world.item.crafting.CraftingInput);
+    Code:
+         0: aload_0
+         1: invokevirtual #13                 // Method net/minecraft/world/item/crafting/CraftingInput.size:()I
+         4: getstatic     #19                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+         7: invokestatic  #25                 // Method net/minecraft/core/NonNullList.withSize:(ILjava/lang/Object;)Lnet/minecraft/core/NonNullList;
+        10: astore_1
+        11: iconst_0
+        12: istore_2
+        13: iload_2
+        14: aload_1
+        15: invokevirtual #31                 // Method net/minecraft/core/NonNullList.size:()I
+        18: if_icmpge     64
+        21: aload_0
+        22: iload_2
+        23: invokevirtual #32                 // Method net/minecraft/world/item/crafting/CraftingInput.getItem:(I)Lnet/minecraft/world/item/ItemStack;
+        26: invokevirtual #36                 // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+        29: astore_3
+        30: aload_3
+        31: invokevirtual #39                 // Method net/minecraft/world/item/Item.getCraftingRemainder:()Lnet/minecraft/world/item/ItemStackTemplate;
+        34: astore        4
+        36: aload_1
+        37: iload_2
+        38: aload         4
+        40: ifnull        51
+        43: aload         4
+        45: invokevirtual #45                 // Method net/minecraft/world/item/ItemStackTemplate.create:()Lnet/minecraft/world/item/ItemStack;
+        48: goto          54
+        51: getstatic     #19                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        54: invokevirtual #51                 // Method net/minecraft/core/NonNullList.set:(ILjava/lang/Object;)Ljava/lang/Object;
+        57: pop
+        58: iinc          2, 1
+        61: goto          13
+        64: aload_1
+        65: areturn
+
+  public default net.minecraft.world.item.crafting.RecipeBookCategory recipeBookCategory();
+    Code:
+         0: getstatic     #55                 // Field net/minecraft/world/item/crafting/CraftingRecipe$1.$SwitchMap$net$minecraft$world$item$crafting$CraftingBookCategory:[I
+         3: aload_0
+         4: invokeinterface #61,  1           // InterfaceMethod category:()Lnet/minecraft/world/item/crafting/CraftingBookCategory;
+         9: invokevirtual #65                 // Method net/minecraft/world/item/crafting/CraftingBookCategory.ordinal:()I
+        12: iaload
+        13: tableswitch   { // 1 to 4
+                       1: 54
+                       2: 60
+                       3: 66
+                       4: 72
+                 default: 44
+            }
+        44: new           #70                 // class java/lang/MatchException
+        47: dup
+        48: aconst_null
+        49: aconst_null
+        50: invokespecial #72                 // Method java/lang/MatchException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+        53: athrow
+        54: getstatic     #76                 // Field net/minecraft/world/item/crafting/RecipeBookCategories.CRAFTING_BUILDING_BLOCKS:Lnet/minecraft/world/item/crafting/RecipeBookCategory;
+        57: goto          75
+        60: getstatic     #82                 // Field net/minecraft/world/item/crafting/RecipeBookCategories.CRAFTING_EQUIPMENT:Lnet/minecraft/world/item/crafting/RecipeBookCategory;
+        63: goto          75
+        66: getstatic     #85                 // Field net/minecraft/world/item/crafting/RecipeBookCategories.CRAFTING_REDSTONE:Lnet/minecraft/world/item/crafting/RecipeBookCategory;
+        69: goto          75
+        72: getstatic     #88                 // Field net/minecraft/world/item/crafting/RecipeBookCategories.CRAFTING_MISC:Lnet/minecraft/world/item/crafting/RecipeBookCategory;
+        75: areturn
+}

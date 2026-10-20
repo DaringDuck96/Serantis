@@ -1,0 +1,100 @@
+Compiled from "FlowingFluid.java"
+final class net.minecraft.world.level.material.FlowingFluid$BlockStatePairKey extends java.lang.Record {
+  private final net.minecraft.world.level.block.state.BlockState first;
+
+  private final net.minecraft.world.level.block.state.BlockState second;
+
+  private final net.minecraft.core.Direction direction;
+
+  private net.minecraft.world.level.material.FlowingFluid$BlockStatePairKey(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.Direction);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field first:Lnet/minecraft/world/level/block/state/BlockState;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field second:Lnet/minecraft/world/level/block/state/BlockState;
+        14: aload_0
+        15: aload_3
+        16: putfield      #16                 // Field direction:Lnet/minecraft/core/Direction;
+        19: return
+
+  public boolean equals(java.lang.Object);
+    Code:
+         0: aload_1
+         1: instanceof    #8                  // class net/minecraft/world/level/material/FlowingFluid$BlockStatePairKey
+         4: ifeq          49
+         7: aload_1
+         8: checkcast     #8                  // class net/minecraft/world/level/material/FlowingFluid$BlockStatePairKey
+        11: astore_2
+        12: aload_0
+        13: getfield      #7                  // Field first:Lnet/minecraft/world/level/block/state/BlockState;
+        16: aload_2
+        17: getfield      #7                  // Field first:Lnet/minecraft/world/level/block/state/BlockState;
+        20: if_acmpne     49
+        23: aload_0
+        24: getfield      #13                 // Field second:Lnet/minecraft/world/level/block/state/BlockState;
+        27: aload_2
+        28: getfield      #13                 // Field second:Lnet/minecraft/world/level/block/state/BlockState;
+        31: if_acmpne     49
+        34: aload_0
+        35: getfield      #16                 // Field direction:Lnet/minecraft/core/Direction;
+        38: aload_2
+        39: getfield      #16                 // Field direction:Lnet/minecraft/core/Direction;
+        42: if_acmpne     49
+        45: iconst_1
+        46: goto          50
+        49: iconst_0
+        50: ireturn
+
+  public int hashCode();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field first:Lnet/minecraft/world/level/block/state/BlockState;
+         4: invokestatic  #20                 // Method java/lang/System.identityHashCode:(Ljava/lang/Object;)I
+         7: istore_1
+         8: bipush        31
+        10: iload_1
+        11: imul
+        12: aload_0
+        13: getfield      #13                 // Field second:Lnet/minecraft/world/level/block/state/BlockState;
+        16: invokestatic  #20                 // Method java/lang/System.identityHashCode:(Ljava/lang/Object;)I
+        19: iadd
+        20: istore_1
+        21: bipush        31
+        23: iload_1
+        24: imul
+        25: aload_0
+        26: getfield      #16                 // Field direction:Lnet/minecraft/core/Direction;
+        29: invokevirtual #26                 // Method net/minecraft/core/Direction.hashCode:()I
+        32: iadd
+        33: istore_1
+        34: iload_1
+        35: ireturn
+
+  public final java.lang.String toString();
+    Code:
+         0: aload_0
+         1: invokedynamic #32,  0             // InvokeDynamic #0:toString:(Lnet/minecraft/world/level/material/FlowingFluid$BlockStatePairKey;)Ljava/lang/String;
+         6: areturn
+
+  public net.minecraft.world.level.block.state.BlockState first();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field first:Lnet/minecraft/world/level/block/state/BlockState;
+         4: areturn
+
+  public net.minecraft.world.level.block.state.BlockState second();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field second:Lnet/minecraft/world/level/block/state/BlockState;
+         4: areturn
+
+  public net.minecraft.core.Direction direction();
+    Code:
+         0: aload_0
+         1: getfield      #16                 // Field direction:Lnet/minecraft/core/Direction;
+         4: areturn
+}

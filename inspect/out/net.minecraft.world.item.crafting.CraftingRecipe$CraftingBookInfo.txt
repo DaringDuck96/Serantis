@@ -1,0 +1,72 @@
+Compiled from "CraftingRecipe.java"
+public final class net.minecraft.world.item.crafting.CraftingRecipe$CraftingBookInfo extends java.lang.Record implements net.minecraft.world.item.crafting.Recipe$BookInfo<net.minecraft.world.item.crafting.CraftingBookCategory> {
+  private final net.minecraft.world.item.crafting.CraftingBookCategory category;
+
+  private final java.lang.String group;
+
+  public static final com.mojang.serialization.MapCodec<net.minecraft.world.item.crafting.CraftingRecipe$CraftingBookInfo> MAP_CODEC;
+
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.world.item.crafting.CraftingRecipe$CraftingBookInfo> STREAM_CODEC;
+
+  public net.minecraft.world.item.crafting.CraftingRecipe$CraftingBookInfo(net.minecraft.world.item.crafting.CraftingBookCategory, java.lang.String);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field category:Lnet/minecraft/world/item/crafting/CraftingBookCategory;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field group:Ljava/lang/String;
+        14: return
+
+  public final java.lang.String toString();
+    Code:
+         0: aload_0
+         1: invokedynamic #20,  0             // InvokeDynamic #0:toString:(Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;)Ljava/lang/String;
+         6: areturn
+
+  public final int hashCode();
+    Code:
+         0: aload_0
+         1: invokedynamic #24,  0             // InvokeDynamic #0:hashCode:(Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;)I
+         6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #28,  0             // InvokeDynamic #0:equals:(Lnet/minecraft/world/item/crafting/CraftingRecipe$CraftingBookInfo;Ljava/lang/Object;)Z
+         7: ireturn
+
+  public net.minecraft.world.item.crafting.CraftingBookCategory category();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field category:Lnet/minecraft/world/item/crafting/CraftingBookCategory;
+         4: areturn
+
+  public java.lang.String group();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field group:Ljava/lang/String;
+         4: areturn
+
+  public java.lang.Object category();
+    Code:
+         0: aload_0
+         1: invokevirtual #17                 // Method category:()Lnet/minecraft/world/item/crafting/CraftingBookCategory;
+         4: areturn
+
+  static {};
+    Code:
+         0: getstatic     #32                 // Field net/minecraft/world/item/crafting/CraftingBookCategory.CODEC:Lcom/mojang/serialization/Codec;
+         3: getstatic     #38                 // Field net/minecraft/world/item/crafting/CraftingBookCategory.MISC:Lnet/minecraft/world/item/crafting/CraftingBookCategory;
+         6: invokedynamic #41,  0             // InvokeDynamic #1:apply:()Lnet/minecraft/world/item/crafting/Recipe$BookInfo$Constructor;
+        11: invokestatic  #45                 // InterfaceMethod net/minecraft/world/item/crafting/Recipe$BookInfo.mapCodec:(Lcom/mojang/serialization/Codec;Ljava/lang/Object;Lnet/minecraft/world/item/crafting/Recipe$BookInfo$Constructor;)Lcom/mojang/serialization/MapCodec;
+        14: putstatic     #51                 // Field MAP_CODEC:Lcom/mojang/serialization/MapCodec;
+        17: getstatic     #55                 // Field net/minecraft/world/item/crafting/CraftingBookCategory.STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;
+        20: invokedynamic #41,  0             // InvokeDynamic #1:apply:()Lnet/minecraft/world/item/crafting/Recipe$BookInfo$Constructor;
+        25: invokestatic  #59                 // InterfaceMethod net/minecraft/world/item/crafting/Recipe$BookInfo.streamCodec:(Lnet/minecraft/network/codec/StreamCodec;Lnet/minecraft/world/item/crafting/Recipe$BookInfo$Constructor;)Lnet/minecraft/network/codec/StreamCodec;
+        28: putstatic     #63                 // Field STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;
+        31: return
+}
