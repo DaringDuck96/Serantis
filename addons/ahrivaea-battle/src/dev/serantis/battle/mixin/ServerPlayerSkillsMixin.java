@@ -75,6 +75,7 @@ public abstract class ServerPlayerSkillsMixin {
         dev.serantis.battle.FigureVisit.tick(self);
         dev.serantis.battle.BaseCredit.ride(self);
         if (self.tickCount % 20 == 7) dev.serantis.battle.GoblinRaids.tick(self);
+        if (self.tickCount % 20 == 9) dev.serantis.battle.Harbinger.check(self);
         if (self.tickCount % 100 == 83) dev.serantis.battle.GoblinRaids.sweep(self);
     }
 }

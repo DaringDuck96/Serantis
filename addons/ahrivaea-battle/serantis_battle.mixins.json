@@ -29,6 +29,7 @@
     "DexMixin",
     "FigureVisibilityMixin",
     "FurnaceSmeltedMixin",
+    "HarbingerMixin",
     "BattleRaidAccess",
     "BlockSkillsMixin",
     "ItemCombinerMenuAccessor",

@@ -131,6 +131,10 @@ public abstract class BattlesMixin {
 
     @Inject(method = "start", at = @At("RETURN"))
     private static void serantis$guardsArrive(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (cir.getReturnValue() != null && dev.serantis.battle.Harbinger.is(entity)) {   // the Harbinger taunts you
+            ((BattleAccess) (Object) cir.getReturnValue()).serantis$say("Harbinger of Calamity: \"" + dev.serantis.battle.Harbinger.TAUNT + "\"");
+            dev.serantis.battle.Harbinger.taunt(player);
+        }
         if (SERANTIS_GUARDED.get() && cir.getReturnValue() != null)
             ((BattleAccess) (Object) cir.getReturnValue()).serantis$say("Town Guards rush in to defend the village!");
         SERANTIS_GUARDED.set(false);
@@ -213,6 +217,11 @@ public abstract class BattlesMixin {
                     case "serantis_riddle_fight" -> dev.serantis.battle.Riddles.done(player, true);
                     default -> dev.serantis.battle.Riddles.done(player, false);
                 }
+                cir.setReturnValue(null);
+                return;
+            }
+            if ("serantis_harbinger_watched".equals(kind)) {   // the Harbinger's entrance is over
+                dev.serantis.battle.Harbinger.watched(player);
                 cir.setReturnValue(null);
                 return;
             }

@@ -18,7 +18,7 @@ public final class DialogueCamera {
     private static Vec3 pos;
     private static float yaw, pitch;
     private static long last, returnStart;
-    private static boolean wide;
+    private static boolean wide, watch;
     private static Vec3 anchor;
 
     private DialogueCamera() {}
@@ -46,10 +46,13 @@ public final class DialogueCamera {
     }
 
     /** Who the shot is on: the speaker (false) or you (true). */
-    public static void focusPlayer(boolean player) { onPlayer = player; wide = false; }
+    public static void focusPlayer(boolean player) { onPlayer = player; wide = false; watch = false; }
+
+    /** A shot of them from a few blocks back, looking at their whole body (something big rising, say). */
+    public static void watchShot() { watch = true; wide = false; onPlayer = false; }
 
     /** A shot of both of you, side by side (and it holds, even if they vanish). */
-    public static void wideShot() { wide = true; }
+    public static void wideShot() { wide = true; watch = false; }
 
     /** Ends the conversation: a quick glide back (or straight back, e.g. when a battle takes over the camera). */
     public static void end(boolean glide) {
@@ -79,6 +82,11 @@ public final class DialogueCamera {
         if (returning) {
             targetPos = me;
             lookAt = me.add(mc.player.getViewVector(partial));
+        } else if (watch) {                                              // from in front of them, a few blocks back, low
+            Vec3 body = new Vec3(speaker.getX(), speaker.getY() + faceHeight * 0.45, speaker.getZ());
+            double back = Math.max(6, faceHeight * 1.6);
+            targetPos = new Vec3(speaker.getX(), speaker.getY(), speaker.getZ()).add(dir.scale(back)).add(side.scale(-1.5)).add(0, 1.2, 0);
+            lookAt = body;
         } else if (wide) {                                               // both of you, from the side
             Vec3 mid = me.add(them).scale(0.5);
             double apart = Math.sqrt(flat.lengthSqr());
