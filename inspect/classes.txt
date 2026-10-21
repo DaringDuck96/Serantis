@@ -1,2 +1,2 @@
-# 1792622022
-compile wip/linx-model
+# 1792622102
+smoke
