@@ -1,0 +1,5 @@
+minecraft.jar: net/minecraft/client/resources/model/cuboid/CuboidRotation$EulerXYZRotation.class
+minecraft.jar: net/minecraft/client/resources/model/cuboid/CuboidRotation$RotationValue.class
+minecraft.jar: net/minecraft/client/resources/model/cuboid/CuboidRotation$SingleAxisRotation.class
+minecraft.jar: net/minecraft/client/resources/model/cuboid/CuboidRotation.class
+fabric-renderer-api-v1-17.0.16+79385d0b5d.jar: net/fabricmc/fabric/impl/client/renderer/VanillaBlockModelPartEncoder.class
