@@ -1,2 +1,2 @@
 # classes
-sig:net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
+compile wip/collect
