@@ -10,6 +10,7 @@ public class LinxShapeScreen extends Screen {
     private static final String[] NAMES = {"Sphere", "Cube", "Diamond", "Pillar", "Disc"};
     private static int size = 5;
     private static int shape;
+    static boolean any;                 // placed blocks too, not just natural ones
 
     public LinxShapeScreen() { super(Component.literal("Shape Lift")); }
 
@@ -29,16 +30,20 @@ public class LinxShapeScreen extends Screen {
             b.active = size != z;
             addRenderableWidget(b);
         }
+        addRenderableWidget(Button.builder(Component.literal(any ? "Placed blocks: ON" : "Placed blocks: OFF"), x -> { any = !any; rebuildWidgets(); })
+                .tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal(
+                        "OFF: only natural blocks move (stone, dirt, sand, logs, ores...). ON: anything you've built moves too. Never water, lava, bedrock, or blocks that hold items (chests, furnaces...).")))
+                .bounds(cx - 70, top + 80, 140, 16).build());
         addRenderableWidget(Button.builder(Component.literal("Lift with this"), x -> {
             SerantisKeys.send(2, false, dev.serantis.battle.Linx.SHAPES[shape], size);
             SerantisKeys.shapePicked = true;
             onClose();
-        }).bounds(cx - 102, top + 100, 100, 20).build());
+        }).bounds(cx - 102, top + 104, 100, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Put away"), x -> {
             SerantisKeys.send(2, false, "stop", 0);
             SerantisKeys.shapePicked = false;
             onClose();
-        }).bounds(cx + 2, top + 100, 100, 20).build());
+        }).bounds(cx + 2, top + 104, 100, 20).build());
     }
 
     @Override
@@ -46,7 +51,7 @@ public class LinxShapeScreen extends Screen {
         super.extractRenderState(g, mouseX, mouseY, partial);
         int top = height / 2 - 60;
         g.centeredText(font, "Shape Lift", width / 2, top, 0xFF6FE3FF);
-        g.centeredText(font, "Natural blocks only: no water, lava, bedrock or anything with a block entity.", width / 2, top + 132, 0xFF9AA4B4);
+        g.centeredText(font, any ? "Natural and placed blocks: never water, lava, bedrock or blocks that hold items." : "Natural blocks only: no water, lava, bedrock or anything you've built.", width / 2, top + 132, 0xFF9AA4B4);
         g.centeredText(font, "Press the key to lift, again to set down. Sneak + the key: this menu.", width / 2, top + 144, 0xFF9AA4B4);
     }
 

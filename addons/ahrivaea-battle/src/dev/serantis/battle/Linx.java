@@ -52,7 +52,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *   safely on top. Never through bedrock, never somewhere that would hurt. Sneak + the key within a minute: go back.</li>
  *   <li><b>Shape Lift</b>: pick a shape and size (sphere, cube, diamond, pillar, disc; 3, 5 or 7 across) and lift that
  *   shape of natural blocks (stone, dirt, sand, logs, ores... never water, lava, bedrock or anything with a block
- *   entity). Carry it, and set it down; any carried block that lands where a block already is breaks.</li>
+ *   entity; a menu toggle lets placed blocks move too, still never water, lava, bedrock or block entities).
+ *   Carry it, and set it down; any carried block that lands where a block already is breaks.</li>
  *   <li><b>Waymark</b>: sneak + the key marks where you stand; the key takes you back there (any dimension, once a minute).</li>
  *   <li><b>High Jump</b>: toggles jumping 2 blocks high (and the longer fall that comes with it doesn't hurt).</li>
  * </ol>
@@ -75,6 +76,7 @@ public final class Linx {
         final List<BlockPos> offsets = new ArrayList<>();
         final List<BlockState> states = new ArrayList<>();
         double hold;                                   // how far ahead it's carried
+        boolean any;                                   // placed blocks too, not just natural ones
     }
 
     private static final Map<UUID, Lift> LIFTS = new ConcurrentHashMap<>();
@@ -110,13 +112,13 @@ public final class Linx {
     }
 
     /** A key was pressed (from the client). */
-    public static void use(ServerPlayer p, int ability, boolean sneak, String shape, int size) {
+    public static void use(ServerPlayer p, int ability, boolean sneak, String shape, int size, boolean any) {
         ItemStack helm = helm(p);
         if (helm == null) return;
         if (dev.ahrivaea.battle.Battles.of(p) != null) { say(p, "The Helm is quiet during battle.", ChatFormatting.GRAY); return; }
         switch (ability) {
             case 1 -> { if (sneak) undo(p); else phase(p); }
-            case 2 -> lift(p, shape, size);
+            case 2 -> lift(p, shape, size, any);
             case 3 -> { if (sneak) mark(p, helm); else recall(p, helm); }
             case 4 -> toggleJump(p, helm);
             default -> {}
@@ -186,14 +188,14 @@ public final class Linx {
         return out;
     }
 
-    private static boolean movable(ServerLevel level, BlockPos pos, BlockState s) {
-        if (s.isAir() || s.is(Blocks.BEDROCK) || s.hasBlockEntity() || !s.is(MOVABLE)) return false;
+    private static boolean movable(ServerLevel level, BlockPos pos, BlockState s, boolean any) {
+        if (s.isAir() || s.is(Blocks.BEDROCK) || s.hasBlockEntity() || (!any && !s.is(MOVABLE))) return false;
         if (!s.getFluidState().isEmpty() && !s.hasProperty(BlockStateProperties.WATERLOGGED)) return false;
         return s.getDestroySpeed(level, pos) >= 0;
     }
 
     /** X: start aiming a shape (from the menu), lift the aimed one, or set the carried one down. shape "stop": put it back. */
-    private static void lift(ServerPlayer p, String shape, int size) {
+    private static void lift(ServerPlayer p, String shape, int size, boolean any) {
         Lift l = LIFTS.get(p.getUUID());
         if (shape != null && !shape.isEmpty()) {
             if (l != null && l.origin != null) putBack(p, l);
@@ -201,8 +203,9 @@ public final class Linx {
             Lift n = new Lift();
             n.shape = java.util.Arrays.asList(SHAPES).contains(shape) ? shape : "sphere";
             n.size = size <= 3 ? 3 : size <= 5 ? 5 : 7;
+            n.any = any;
             LIFTS.put(p.getUUID(), n);
-            say(p, "Shape Lift: look at the ground and press the key to lift.", ChatFormatting.AQUA);
+            say(p, "Shape Lift (" + (n.any ? "placed blocks too" : "natural blocks only") + "): look at the blocks and press the key to lift.", ChatFormatting.AQUA);
             return;
         }
         if (l == null) return;
@@ -213,12 +216,12 @@ public final class Linx {
             for (BlockPos off : cells(l.shape, l.size)) {
                 BlockPos at = centre.offset(off);
                 BlockState s = level.getBlockState(at);
-                if (!movable(level, at, s) || !level.mayInteract(p, at)) continue;
+                if (!movable(level, at, s, l.any) || !level.mayInteract(p, at)) continue;
                 if (s.hasProperty(BlockStateProperties.WATERLOGGED)) s = s.setValue(BlockStateProperties.WATERLOGGED, false);
                 l.offsets.add(off);
                 l.states.add(s);
             }
-            if (l.offsets.isEmpty()) { say(p, "Nothing natural there to lift.", ChatFormatting.YELLOW); return; }
+            if (l.offsets.isEmpty()) { say(p, l.any ? "Nothing there that can be lifted." : "Nothing natural there to lift.", ChatFormatting.YELLOW); return; }
             for (int i = l.offsets.size() - 1; i >= 0; i--)       // top down, so nothing drops out of the shape
                 level.setBlock(centre.offset(l.offsets.get(i)), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
             l.level = level;
@@ -363,7 +366,7 @@ public final class Linx {
             DustParticleOptions dust = new DustParticleOptions(0x6FE3FF, 0.9f);
             for (BlockPos off : cells(l.shape, l.size)) {
                 BlockPos at = c.offset(off);
-                if (movable(level, at, level.getBlockState(at)))
+                if (movable(level, at, level.getBlockState(at), l.any))
                     level.sendParticles(p, dust, true, false, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 1, 0, 0, 0, 0);
             }
         } else {                                                    // carrying: the blocks, where they'd land

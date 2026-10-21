@@ -49,7 +49,7 @@ public final class SerantisKeys {
         o.addProperty("kind", "serantis_linx");
         o.addProperty("ability", ability);
         o.addProperty("sneak", sneak);
-        if (shape != null) { o.addProperty("shape", shape); o.addProperty("size", size); }
+        if (shape != null) { o.addProperty("shape", shape); o.addProperty("size", size); o.addProperty("any", LinxShapeScreen.any); }
         dev.ahrivaea.client.battle.BattleClient.send(o);
     }
 }

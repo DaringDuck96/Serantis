@@ -224,7 +224,8 @@ public abstract class BattlesMixin {
             if ("serantis_linx".equals(kind)) {           // a Helm of Linx key
                 dev.serantis.battle.Linx.use(player, o.has("ability") ? o.get("ability").getAsInt() : 0,
                         o.has("sneak") && o.get("sneak").getAsBoolean(),
-                        o.has("shape") ? o.get("shape").getAsString() : null, o.has("size") ? o.get("size").getAsInt() : 5);
+                        o.has("shape") ? o.get("shape").getAsString() : null, o.has("size") ? o.get("size").getAsInt() : 5,
+                        o.has("any") && o.get("any").getAsBoolean());
                 cir.setReturnValue(null);
                 return;
             }
