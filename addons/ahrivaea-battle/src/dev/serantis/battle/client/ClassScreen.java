@@ -56,7 +56,7 @@ public class ClassScreen extends Screen {
             b.active = picked != k;
             addRenderableWidget(b);
         }
-        int oy = y + 68;
+        int oy = y + 80;
         if (picked != null && "wizard".equals(picked.id())) {               // the staff's influence
             int cw = (w - 16 - 5 * 3) / 6;
             String[] staffs = java.util.Arrays.stream(Masters.INFLUENCES).filter(dev.serantis.battle.Staffs::hasStaff).toArray(String[]::new);
@@ -112,9 +112,22 @@ public class ClassScreen extends Screen {
         if (picked == null) { g.text(font, "Hover a class to see what it brings.", l, 72, TEXT); return; }
         g.text(font, picked.name() + ": +" + PlayerClass.START_BOOST + " " + Temperament.label(picked.stat())
                 + ", for good.", l, 70, TEXT);
-        g.text(font, picked.perk(), l, 82, TEXT);
-        if ("wizard".equals(picked.id())) g.text(font, "Your staff's influence:", l, 100, GOLD);
-        if ("performer".equals(picked.id())) g.text(font, "Your starter's temperament (hover for what it changes):", l, 100, GOLD);
+        int py = 82;
+        for (String line : wrap(picked.perk(), panelW() - 16)) { g.text(font, line, l, py, TEXT); py += 10; }
+        if ("wizard".equals(picked.id())) g.text(font, "Your staff's influence:", l, 112, GOLD);
+        if ("performer".equals(picked.id())) g.text(font, "Your starter's temperament (hover for what it changes):", l, 112, GOLD);
+    }
+
+    private java.util.List<String> wrap(String text, int w) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        StringBuilder line = new StringBuilder();
+        for (String word : text.split(" ")) {
+            String next = line.isEmpty() ? word : line + " " + word;
+            if (font.width(next) > w && !line.isEmpty()) { out.add(line.toString()); line = new StringBuilder(word); }
+            else line = new StringBuilder(next);
+        }
+        if (!line.isEmpty()) out.add(line.toString());
+        return out;
     }
 
     @Override

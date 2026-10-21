@@ -47,9 +47,12 @@ public final class LoreDrops {
     }
 
     /** A lore book, 1 time in 100 (null otherwise, or if there are no books yet). */
-    public static ItemStack roll(RandomSource random) {
+    public static ItemStack roll(RandomSource random) { return roll(random, 1f); }
+
+    /** As roll, with the chance multiplied (Journeymen: x2). */
+    public static ItemStack roll(RandomSource random, float mult) {
         List<Book> all = books();
-        if (all.isEmpty() || random.nextFloat() >= CHANCE) return null;
+        if (all.isEmpty() || random.nextFloat() >= CHANCE * mult) return null;
         Book b = all.get(random.nextInt(all.size()));
         return LoreBook.book(b.title(), b.heading(), b.subtitle(), b.author(), b.paragraphs());
     }

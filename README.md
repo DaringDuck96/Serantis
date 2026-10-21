@@ -45,8 +45,8 @@ After the welcome guide, every player chooses a class, once (players already in 
 | Knight | Attack | An Iron Chestplate and an Iron Sword |
 | Bulwark | Defense | A Shield and an Iron Mace (a mace) |
 | Wizard | Magic | A Magic Staff linked to a random spell of the influence they choose (any but Normal) |
-| Journeyman | Luck | 2 Golden Apples |
-| Performer | Charisma | Chooses their starter's temperament (if they already have a starter, the creature first in their party gets it) |
+| Journeyman | Luck | 2 Golden Apples. **Lucky Finds** (for good): beaten creatures drop their loot twice 10% more often (on top of Fortune), and lore books drop twice as often (5%) |
+| Performer | Charisma | Chooses their starter's temperament (if they already have a starter, the creature first in their party gets it). **Showstopper** (for good): rallies are twice as strong, and workers at bases you own work 15% faster while you're online |
 
 The boost is a flat +5 to the class's stat, for good (players start at 33 in every stat).
 

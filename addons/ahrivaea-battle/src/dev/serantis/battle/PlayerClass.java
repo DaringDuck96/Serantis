@@ -32,8 +32,18 @@ public final class PlayerClass {
             new Kind("knight", "Knight", "attack", "Starts with an Iron Chestplate and an Iron Sword."),
             new Kind("bulwark", "Bulwark", "defense", "Starts with a Shield and an Iron Mace."),
             new Kind("wizard", "Wizard", "magic", "Starts with a Magic Staff linked to a random spell of the influence you choose."),
-            new Kind("journeyman", "Journeyman", "luck", "Starts with 2 Golden Apples."),
-            new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter."));
+            new Kind("journeyman", "Journeyman", "luck", "Starts with 2 Golden Apples. Lucky Finds: beaten creatures drop their loot twice 10% more often, and lore books drop twice as often."),
+            new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter. Showstopper: rallies are twice as strong, and workers at your bases work 15% faster."));
+
+    /** Journeyman: extra chance a beaten creature drops its loot twice, and the lore book chance multiplier. */
+    public static final float JOURNEYMAN_DOUBLE_LOOT = 0.10f, JOURNEYMAN_LORE = 2f;
+    /** Performer: rally strength multiplier, and base work speed multiplier. */
+    public static final double PERFORMER_RALLY = 2.0, PERFORMER_WORK = 1.15;
+
+    public static boolean is(Player p, String id) {
+        Kind k = p == null ? null : of(p);
+        return k != null && k.id().equals(id);
+    }
 
     public static final int START_BOOST = 5, PER_SKILL = 0, MIN_BOOST = 5;
 

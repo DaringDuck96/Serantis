@@ -47,8 +47,10 @@ public final class SkillEffects {
         LOOTER.set(p);
         try {
             List<ItemStack> out = new ArrayList<>(Drops.roll(species, influence, level, random, access));
-            if (p != null && Skills.has(p, "fortune_4") && random.nextFloat() < 0.05f) out.addAll(Drops.roll(species, influence, level, random, access));
-            ItemStack lore = dev.serantis.battle.LoreDrops.roll(random);          // 2.5%: a lore book
+            boolean journeyman = dev.serantis.battle.PlayerClass.is(p, "journeyman");
+            float twice = (p != null && Skills.has(p, "fortune_4") ? 0.05f : 0f) + (journeyman ? dev.serantis.battle.PlayerClass.JOURNEYMAN_DOUBLE_LOOT : 0f);
+            if (twice > 0 && random.nextFloat() < twice) out.addAll(Drops.roll(species, influence, level, random, access));
+            ItemStack lore = dev.serantis.battle.LoreDrops.roll(random, journeyman ? dev.serantis.battle.PlayerClass.JOURNEYMAN_LORE : 1f);          // 2.5%: a lore book
             if (lore != null) {
                 out.add(lore);
                 if (p != null) ((dev.serantis.battle.Achievements.Holder) p).serantis$addLoreBooks(1);

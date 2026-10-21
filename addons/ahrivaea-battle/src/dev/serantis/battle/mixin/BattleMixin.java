@@ -93,6 +93,13 @@ public abstract class BattleMixin implements BattleAccess {
     @Override public String serantis$master() { return serantis$master; }
     @Override public void serantis$setMaster(String influence) { serantis$master = influence; }
 
+    // Performers rally twice as hard.
+    @Redirect(method = "act", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Unit;charisma()D"))
+    private double serantis$performerRally(Unit u) {
+        double c = u.charisma();
+        return u.isPlayer && dev.serantis.battle.PlayerClass.is(((Battle) (Object) this).player(), "performer") ? c * dev.serantis.battle.PlayerClass.PERFORMER_RALLY : c;
+    }
+
     @Redirect(method = "finish", at = @At(value = "FIELD", target = "Ldev/ahrivaea/battle/Battle;poolXp:I", opcode = 181))
     private void serantis$masterXp(Battle self, int xp) {
         self.poolXp = serantis$master != null ? xp * 2 : xp;

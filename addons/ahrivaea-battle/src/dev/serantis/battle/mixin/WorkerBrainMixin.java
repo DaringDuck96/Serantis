@@ -20,7 +20,16 @@ public abstract class WorkerBrainMixin {
     private void serantis$speed(CallbackInfoReturnable<Double> cir) {
         if (self == null || self.getInfluence() == null) return;
         if (self.getSpecies().isPresent())         // getStats includes its temperament
-            cir.setReturnValue(Pace.workSpeed(self.getCreatureLevel(), self.getStats().charisma()) * serantis$bard());
+            cir.setReturnValue(Pace.workSpeed(self.getCreatureLevel(), self.getStats().charisma()) * serantis$bard() * serantis$performer());
+    }
+
+    // The base belongs to a Performer (online): everyone there works 15% faster.
+    private double serantis$performer() {
+        if (core == null || !(self.level() instanceof net.minecraft.server.level.ServerLevel level)) return 1.0;
+        var base = dev.ahrivaea.base.Bases.coreAt(level, core);
+        if (base == null || base.owner() == null) return 1.0;
+        var owner = level.getServer().getPlayerList().getPlayer(base.owner());
+        return dev.serantis.battle.PlayerClass.is(owner, "performer") ? dev.serantis.battle.PlayerClass.PERFORMER_WORK : 1.0;
     }
 
     // A Bard working at the same base: everyone there works 25% faster.
