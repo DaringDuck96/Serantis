@@ -1,3 +1,5 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-sig:net.minecraft.server.level.ServerLevel
-sig:net.minecraft.world.entity.player.Player
+sig:net.minecraft.world.entity.LivingEntity
+sig:net.minecraft.world.entity.Entity
+sig:net.minecraft.client.renderer.GameRenderer
+find:client/.*Pick
