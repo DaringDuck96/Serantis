@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "serantis_battle",
-    "version": "0.92.0",
+    "version": "0.93.0",
     "name": "Serantis Battle, Moves and Spawning",
     "description": "Creature battle stats from the Serantis stat sheet, a Level 20 cap, and Serantis spawn odds: 70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary, with a 1% chance of any spawn being Mutated. Every creature fights with 3 moves from the Serantis Move Dex.",
     "authors": [

@@ -34,7 +34,7 @@ public final class InfluenceArmor {
     /** Influence -> the name its armour (and staff) goes by. */
     public static final Map<String, String> NAMES = new java.util.LinkedHashMap<>();
     static {
-        NAMES.put("none", "Unbound"); NAMES.put("fire", "Emberwrath"); NAMES.put("frost", "Rimespire"); NAMES.put("storm", "Thundercall");
+        NAMES.put("fire", "Emberwrath"); NAMES.put("frost", "Rimespire"); NAMES.put("storm", "Thundercall");
         NAMES.put("earth", "Stoneheart"); NAMES.put("water", "Tidecaller"); NAMES.put("nature", "Thornbloom"); NAMES.put("void", "Riftwalker");
         NAMES.put("fae", "Moonpetal"); NAMES.put("darkness", "Gloomreaver"); NAMES.put("arcane", "Runeweaver"); NAMES.put("radiant", "Dawnbringer");
     }
@@ -47,7 +47,7 @@ public final class InfluenceArmor {
         for (String inf : NAMES.keySet())
             for (int i = 0; i < PIECES.length; i++) {
                 ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:" + inf + "_" + PIECES[i]));
-                String what = "none".equals(inf) ? "Normal" : Masters.influenceName(inf);
+                String what = Masters.influenceName(inf);
                 Item item = Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties()
                         .humanoidArmor(ArmorMaterials.DIAMOND, TYPES[i]).setId(key)
                         .component(DataComponents.LORE, new ItemLore(List.of(Component.literal("Resists " + what + " attacks in battle")
@@ -56,7 +56,7 @@ public final class InfluenceArmor {
             }
     }
 
-    /** How much less damage this player takes from an attack of this influence (0-0.25). Normal armour also covers plain attacks. */
+    /** How much less damage this player takes from an attack of this influence (0-0.25). */
     public static double resistance(Player p, String influence) {
         if (p == null) return 0;
         String want = influence == null ? "none" : influence;
