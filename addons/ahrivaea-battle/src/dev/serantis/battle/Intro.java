@@ -51,8 +51,8 @@ public final class Intro {
      * sounds), so on a shared server nobody sees anyone else's cutscene and everyone gets their own.
      */
     public static boolean visibleTo(Entity figure, ServerPlayer viewer) {
-        UUID owner = null;
-        for (var en : ACTIVE.entrySet()) if (figure.getUUID().equals(en.getValue())) owner = en.getKey();
+        UUID owner = SPAWNING_FOR.get();
+        if (owner == null) for (var en : ACTIVE.entrySet()) if (figure.getUUID().equals(en.getValue())) owner = en.getKey();
         if (owner == null) owner = FigureVisit.ownerOf(figure);
         return owner == null || owner.equals(viewer.getUUID());
     }
@@ -98,7 +98,7 @@ public final class Intro {
         if (len < 1.0E-3) { dx = 0; dz = 1; len = 1; }
         dx /= len; dz /= len;
         double x = p.getX() + dx * 2.5, z = p.getZ() + dz * 2.5;
-        CreatureEntity f = figureAt(level, x, p.getY(), z);
+        CreatureEntity f = figureAt(level, x, p.getY(), z, ROLE, p);
         if (f == null) return null;
         float yaw = (float) Math.toDegrees(Math.atan2(p.getZ() - z, p.getX() - x)) - 90f;
         f.setYRot(yaw);
@@ -108,7 +108,13 @@ public final class Intro {
     }
 
     /** A Mysterious Figure standing here (no AI, can't be hurt or battled). */
-    static CreatureEntity figureAt(ServerLevel level, double x, double y, double z) { return figureAt(level, x, y, z, ROLE); }
+    /** While an Acolyte is being spawned: whose scene it's for (so nobody else is ever sent it, even for a tick). */
+    public static final ThreadLocal<UUID> SPAWNING_FOR = new ThreadLocal<>();
+
+    static CreatureEntity figureAt(ServerLevel level, double x, double y, double z, String role, ServerPlayer owner) {
+        SPAWNING_FOR.set(owner.getUUID());
+        try { return figureAt(level, x, y, z, role); } finally { SPAWNING_FOR.remove(); }
+    }
 
     /** An Acolyte (role: the First's or the Last's) standing here (no AI, can't be hurt or battled). */
     static CreatureEntity figureAt(ServerLevel level, double x, double y, double z, String role) {

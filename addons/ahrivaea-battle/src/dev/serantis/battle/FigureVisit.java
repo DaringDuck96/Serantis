@@ -236,7 +236,7 @@ public final class FigureVisit {
             p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DARKNESS, 20 * 150, 0, false, false));
             return;
         }
-        CreatureEntity f = Intro.figureAt(level, from.x, from.y, from.z, "last".equals(npc) ? LAST_ROLE : Intro.ROLE);
+        CreatureEntity f = Intro.figureAt(level, from.x, from.y, from.z, "last".equals(npc) ? LAST_ROLE : Intro.ROLE, p);
         if (f == null) return;
         Visit v = new Visit();
         v.scene = scene;
@@ -258,7 +258,7 @@ public final class FigureVisit {
         }
         if (v.ticks % 18 == 1) Intro.sound(p, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.WARDEN_HEARTBEAT), s.x, s.y, s.z, 1.4f, 0.8f);
         if (v.ticks < 40) return;
-        CreatureEntity f = Intro.figureAt(level, s.x, s.y, s.z, LAST_ROLE);
+        CreatureEntity f = Intro.figureAt(level, s.x, s.y, s.z, LAST_ROLE, p);
         if (f == null) { ACTIVE.remove(p.getUUID()); p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS); return; }
         Intro.particles(p, ParticleTypes.SQUID_INK, s.x, s.y + 1, s.z, 60, 0.4, 0.9, 0.4, 0.05);
         Intro.particles(p, ParticleTypes.SOUL, s.x, s.y + 1, s.z, 20, 0.5, 0.8, 0.5, 0.04);

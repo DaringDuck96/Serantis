@@ -13,6 +13,7 @@ public abstract class FigureVisibilityMixin {
     @Inject(method = "broadcastToPlayer", at = @At("HEAD"), cancellable = true)
     private void serantis$ownCutscene(ServerPlayer player, CallbackInfoReturnable<Boolean> cir) {
         Entity self = (Entity) (Object) this;
-        if (dev.serantis.battle.Intro.isFigure(self) && !dev.serantis.battle.Intro.visibleTo(self, player)) cir.setReturnValue(false);
+        boolean spawning = dev.serantis.battle.Intro.SPAWNING_FOR.get() != null && self instanceof dev.ahrivaea.creature.CreatureEntity;
+        if ((spawning || dev.serantis.battle.Intro.isFigure(self)) && !dev.serantis.battle.Intro.visibleTo(self, player)) cir.setReturnValue(false);
     }
 }
