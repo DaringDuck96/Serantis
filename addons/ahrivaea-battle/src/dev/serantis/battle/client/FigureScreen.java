@@ -96,6 +96,7 @@ public class FigureScreen extends Screen {
             lines.add(new String[]{"figure", "You're getting stronger."});
             show(0);
         }
+        if (!leaving && visit() == null && index >= 0) { leaving = true; leftAt = System.currentTimeMillis(); }   // it left on its own
         if (leaving && System.currentTimeMillis() - leftAt > 1400) {
             DialogueCamera.end(true);
             Minecraft.getInstance().gui.setScreen(null);
