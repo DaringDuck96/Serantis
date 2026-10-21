@@ -11,5 +11,6 @@ public final class SerantisBattle implements ModInitializer {
         Backpacks.register();
         WingedBoots.register();
         InfluenceArmor.register();
+        TeleportBoots.register();
     }
 }
