@@ -1,0 +1,16 @@
+Compiled from "BlockSource.java"
+public final class net.minecraft.core.dispenser.BlockSource extends java.lang.Record {
+  private final net.minecraft.server.level.ServerLevel level;
+  private final net.minecraft.core.BlockPos pos;
+  private final net.minecraft.world.level.block.state.BlockState state;
+  private final net.minecraft.world.level.block.entity.DispenserBlockEntity blockEntity;
+  public net.minecraft.core.dispenser.BlockSource(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.DispenserBlockEntity);
+  public net.minecraft.world.phys.Vec3 center();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.server.level.ServerLevel level();
+  public net.minecraft.core.BlockPos pos();
+  public net.minecraft.world.level.block.state.BlockState state();
+  public net.minecraft.world.level.block.entity.DispenserBlockEntity blockEntity();
+}
