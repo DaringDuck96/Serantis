@@ -1,3 +1,2 @@
-# classes 1792614941
-sig:net.minecraft.world.item.ItemStack
-sig:net.minecraft.world.item.Item
+# classes 1792615111
+compile wip/review-fixes
