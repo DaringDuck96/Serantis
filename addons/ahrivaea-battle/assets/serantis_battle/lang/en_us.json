@@ -48,5 +48,17 @@
   "item.serantis_battle.arcane_mastery_trophy": "Arcane Type Mastery Trophy",
   "block.serantis_battle.arcane_mastery_trophy": "Arcane Type Mastery Trophy",
   "item.serantis_battle.radiant_mastery_trophy": "Radiant Type Mastery Trophy",
-  "block.serantis_battle.radiant_mastery_trophy": "Radiant Type Mastery Trophy"
+  "block.serantis_battle.radiant_mastery_trophy": "Radiant Type Mastery Trophy",
+  "item.serantis_battle.none_staff": "Normal Magic Staff",
+  "item.serantis_battle.fire_staff": "Fire Magic Staff",
+  "item.serantis_battle.frost_staff": "Frost Magic Staff",
+  "item.serantis_battle.storm_staff": "Storm Magic Staff",
+  "item.serantis_battle.earth_staff": "Earth Magic Staff",
+  "item.serantis_battle.water_staff": "Water Magic Staff",
+  "item.serantis_battle.nature_staff": "Nature Magic Staff",
+  "item.serantis_battle.void_staff": "Void Magic Staff",
+  "item.serantis_battle.fae_staff": "Fae Magic Staff",
+  "item.serantis_battle.darkness_staff": "Darkness Magic Staff",
+  "item.serantis_battle.arcane_staff": "Arcane Magic Staff",
+  "item.serantis_battle.radiant_staff": "Radiant Magic Staff"
 }

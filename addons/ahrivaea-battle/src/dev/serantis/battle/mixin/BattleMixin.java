@@ -321,6 +321,13 @@ public abstract class BattleMixin implements BattleAccess {
         }
     }
 
+    // A Magic Staff in hand casts a bolt of its influence (see Staffs).
+    @Redirect(method = "addPlayer", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/BattleMove;forWeapon(Ljava/lang/String;DZ)Ldev/ahrivaea/battle/BattleMove;"))
+    private BattleMove serantis$staff(String name, double damage, boolean ranged, net.minecraft.server.level.ServerPlayer player, int x, int z) {
+        String inf = dev.serantis.battle.Staffs.influenceOf(player.getMainHandItem());
+        return inf != null ? dev.serantis.battle.Staffs.move(inf, name) : BattleMove.forWeapon(name, damage, ranged);
+    }
+
     // Your health and your battle HP are one stat: battle HP is your max health x 5 (10 hearts = 100 HP),
     // so anything that raises your hearts raises your HP in battle too.
     @Redirect(method = "addPlayer", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/character/PlayerCharacter;maxHealth()I"))

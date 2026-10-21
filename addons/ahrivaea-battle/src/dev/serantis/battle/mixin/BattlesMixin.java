@@ -174,6 +174,12 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if ("serantis_class_pick".equals(kind)) {
+                dev.serantis.battle.PlayerClass.pick(player, o.has("class") ? o.get("class").getAsString() : "",
+                        o.has("extra") ? o.get("extra").getAsString() : null);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_core_break".equals(kind)) {
                 dev.serantis.battle.CoreRemoval.remove(player, net.minecraft.core.BlockPos.containing(
                         o.get("x").getAsInt(), o.get("y").getAsInt(), o.get("z").getAsInt()));

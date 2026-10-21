@@ -7,5 +7,6 @@ public final class SerantisBattle implements ModInitializer {
     @Override
     public void onInitialize() {
         Masters.registerItems();
+        Staffs.register();
     }
 }

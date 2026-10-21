@@ -20,7 +20,8 @@ public final class Welcome {
     /** A few seconds after joining, a player who hasn't read the guide is sent it. */
     public static void tick(ServerPlayer p) {
         Holder h = (Holder) p;
-        if (h.serantis$welcomed() || h.serantis$welcomeSent() || p.tickCount < 40) return;
+        if (h.serantis$welcomeSent() || p.tickCount < 40) return;
+        if (h.serantis$welcomed() && PlayerClass.of(p) != null) return;          // nothing to show (guide read, class picked)
         h.serantis$setWelcomeSent(true);
         PartySync.sync(p);
     }

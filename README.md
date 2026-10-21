@@ -28,6 +28,22 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 
 The creatures mod's Arcane Dragon is retired: the Clockwork Dragon is the arcane dragon in Serantia. It never spawns, and Wandering Traders, Black Market Merchants and Creature Masters never hand it out, so the dex counts 433 creature forms to find.
 
+### Classes
+
+After the welcome guide, every player chooses a class, once (players already in the world choose the next time they join):
+
+| Class | Boost | Head start |
+|---|---|---|
+| Knight | Attack | An Iron Chestplate and an Iron Sword |
+| Bulwark | Defense | A Shield and an Iron Mace (a mace) |
+| Wizard | Magic | A Magic Staff of the influence they choose |
+| Journeyman | Luck | 2 Golden Apples |
+| Performer | Charisma | Chooses their starter's temperament (if they already have a starter, the creature first in their party gets it) |
+
+The boost is +15 to the class's stat at first (players start at 50), 3 less for every skill learned on the skill tree, and never less than +3: a real edge for the first few fights that hardly shows after four or five skills.
+
+**Magic Staffs** come in all twelve influences. Hold one in battle and instead of swinging you cast a bolt of the staff's influence: magic damage (power 40, 90% accuracy) that uses your Magic stat, at 1 to 3 tiles. Hitting a creature with a staff starts a battle like any weapon. Give one by command with `/give @s serantis_battle:fire_staff`. (Placeholder art for now.)
+
 ### Welcome guide
 
 The first time a player joins, a welcome guide pops up (over the starter screen, which comes back after). It welcomes them to Serantia (the world's name; the pack and repository are called Serantis) and runs through what it's about: picking a starter, battling and recruiting creatures, collecting them, XP as the main currency, rebuilding towers, Creature Masters and their stones, achievements, winning the game with the Eternita Stone, and that it's still Minecraft, where building and creativity are as valid a way to play as any battle. Read it again any time from the **Guide** button on the party screen. The guide has a second tab, **Your Base**, also opened by the **Guide** button on a Base Core's screen: how bases work (area, levels, putting creatures to work), how a worker decides what to do and how fast it works, what every job does and needs, chests and item-frame labels, raids, knock-outs, and what villagers add to a base.

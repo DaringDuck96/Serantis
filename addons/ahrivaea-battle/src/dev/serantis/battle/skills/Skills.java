@@ -136,8 +136,12 @@ public final class Skills {
     }
 
     public static Stats stats(Player p) {
-        return new Stats(START_STAT + hp(p), START_STAT + sum(p, Node::attack), START_STAT + sum(p, Node::defense), START_STAT + sum(p, Node::speed),
-                START_STAT + sum(p, Node::magic), START_STAT + sum(p, Node::luck), START_STAT + sum(p, Node::charisma));
+        int n = owned(p).size();                                    // plus the player's class boost (see PlayerClass)
+        return new Stats(START_STAT + hp(p), START_STAT + sum(p, Node::attack) + dev.serantis.battle.PlayerClass.boost(p, "attack", n),
+                START_STAT + sum(p, Node::defense) + dev.serantis.battle.PlayerClass.boost(p, "defense", n), START_STAT + sum(p, Node::speed),
+                START_STAT + sum(p, Node::magic) + dev.serantis.battle.PlayerClass.boost(p, "magic", n),
+                START_STAT + sum(p, Node::luck) + dev.serantis.battle.PlayerClass.boost(p, "luck", n),
+                START_STAT + sum(p, Node::charisma) + dev.serantis.battle.PlayerClass.boost(p, "charisma", n));
     }
 
     /**

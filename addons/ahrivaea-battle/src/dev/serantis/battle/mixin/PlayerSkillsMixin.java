@@ -15,7 +15,7 @@ import java.util.Set;
 
 /** Players remember the skill tree nodes they've bought. */
 @Mixin(Player.class)
-public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder, dev.serantis.battle.Masters.Holder, dev.serantis.battle.Welcome.Holder, dev.serantis.battle.Companions.Holder, dev.serantis.battle.TypeMastery.Holder {
+public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder, dev.serantis.battle.Masters.Holder, dev.serantis.battle.Welcome.Holder, dev.serantis.battle.Companions.Holder, dev.serantis.battle.TypeMastery.Holder, dev.serantis.battle.PlayerClass.Holder {
     @Unique private final Set<String> serantis$skills = new LinkedHashSet<>();
 
     @Override public Set<String> serantis$skills() { return serantis$skills; }
@@ -41,6 +41,11 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Unique private final java.util.Map<String, Integer> serantis$stones = new java.util.HashMap<>();
     @Unique private boolean serantis$eternita;
     @Unique private boolean serantis$welcomed, serantis$welcomeSent;
+    @Unique private String serantis$playerClass, serantis$pendingTemperament;
+    @Override public String serantis$playerClass() { return serantis$playerClass; }
+    @Override public void serantis$setPlayerClass(String id) { serantis$playerClass = id; }
+    @Override public String serantis$pendingTemperament() { return serantis$pendingTemperament; }
+    @Override public void serantis$setPendingTemperament(String t) { serantis$pendingTemperament = t; }
     @Unique private final java.util.Map<String, Integer> serantis$typeGained = new java.util.HashMap<>(), serantis$typeTrophies = new java.util.HashMap<>();
     @Override public java.util.Map<String, Integer> serantis$typeGained() { return serantis$typeGained; }
     @Override public java.util.Map<String, Integer> serantis$typeTrophies() { return serantis$typeTrophies; }
@@ -85,6 +90,8 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$stones.forEach((k, v) -> st.append(',').append(k).append(':').append(v));
         out.putString("SerantisMastery", st.toString());
         out.putInt("SerantisWelcomed", serantis$welcomed ? 1 : 0);
+        if (serantis$playerClass != null) out.putString("SerantisClass", serantis$playerClass);
+        if (serantis$pendingTemperament != null) out.putString("SerantisStarterTemperament", serantis$pendingTemperament);
         out.putString("SerantisTypeGained", dev.serantis.battle.TypeMastery.encode(serantis$typeGained));
         out.putString("SerantisTypeTrophies", dev.serantis.battle.TypeMastery.encode(serantis$typeTrophies));
         java.util.List<String> outIds = new java.util.ArrayList<>(), goneIds = new java.util.ArrayList<>();
@@ -115,6 +122,9 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
         serantis$stones.clear();
         serantis$welcomed = in.getIntOr("SerantisWelcomed", 0) == 1;
+        String cls = in.getStringOr("SerantisClass", ""), pend = in.getStringOr("SerantisStarterTemperament", "");
+        serantis$playerClass = cls.isEmpty() ? null : cls;
+        serantis$pendingTemperament = pend.isEmpty() ? null : pend;
         dev.serantis.battle.TypeMastery.decode(serantis$typeGained, in.getStringOr("SerantisTypeGained", ""));
         dev.serantis.battle.TypeMastery.decode(serantis$typeTrophies, in.getStringOr("SerantisTypeTrophies", ""));
         serantis$out.clear();

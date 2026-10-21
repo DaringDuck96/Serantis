@@ -1,0 +1,137 @@
+package dev.serantis.battle;
+
+import com.google.gson.JsonObject;
+import dev.ahrivaea.party.CaughtCreature;
+import dev.ahrivaea.party.Party;
+import dev.ahrivaea.party.PartySync;
+import dev.ahrivaea.party.Starters;
+import dev.serantis.battle.moves.MovesHolder;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
+import java.util.List;
+
+/**
+ * Player classes, picked once when a player first joins (before their starter):
+ *  - Knight: Attack boost; starts with an Iron Chestplate and an Iron Sword.
+ *  - Bulwark: Defense boost; starts with a Shield and an Iron Mace.
+ *  - Wizard: Magic boost; starts with a Magic Staff of the influence they choose.
+ *  - Journeyman: Luck boost; starts with 2 Golden Apples.
+ *  - Performer: Charisma boost; picks the temperament (nature) of their starter.
+ * The boost is +15 to that stat to begin with, 3 less for every skill learned, never below +3: a real edge
+ * early on that hardly shows once a few skills are learned.
+ */
+public final class PlayerClass {
+    public record Kind(String id, String name, String stat, String perk) {}
+
+    public static final List<Kind> ALL = List.of(
+            new Kind("knight", "Knight", "attack", "Starts with an Iron Chestplate and an Iron Sword."),
+            new Kind("bulwark", "Bulwark", "defense", "Starts with a Shield and an Iron Mace."),
+            new Kind("wizard", "Wizard", "magic", "Starts with a Magic Staff of the influence you choose."),
+            new Kind("journeyman", "Journeyman", "luck", "Starts with 2 Golden Apples."),
+            new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter."));
+
+    public static final int START_BOOST = 15, PER_SKILL = 3, MIN_BOOST = 3;
+
+    /** Added to players: their class, and the temperament a Performer chose for a starter not picked yet. */
+    public interface Holder {
+        String serantis$playerClass();
+        void serantis$setPlayerClass(String id);
+        String serantis$pendingTemperament();
+        void serantis$setPendingTemperament(String t);
+    }
+
+    private PlayerClass() {}
+
+    public static Kind of(Player p) {
+        String id = p instanceof Holder h ? h.serantis$playerClass() : null;
+        for (Kind k : ALL) if (k.id().equals(id)) return k;
+        return null;
+    }
+
+    /** The class's boost to this stat right now ("attack", "defense", ...), given how many skills are learned. */
+    public static int boost(Player p, String stat, int skills) {
+        Kind k = of(p);
+        if (k == null || !k.stat().equals(stat)) return 0;
+        return Math.max(MIN_BOOST, START_BOOST - PER_SKILL * skills);
+    }
+
+    /** The player picked a class (once). extra: the staff's influence (Wizard) or the starter's temperament (Performer). */
+    public static void pick(ServerPlayer p, String id, String extra) {
+        Holder h = (Holder) p;
+        if (h.serantis$playerClass() != null) return;
+        Kind k = null;
+        for (Kind c : ALL) if (c.id().equals(id)) k = c;
+        if (k == null) return;
+        switch (k.id()) {
+            case "wizard" -> {
+                if (extra == null || !Staffs.STAFFS.containsKey(extra)) { tell(p, "Choose your staff's influence."); return; }
+                give(p, new ItemStack(Staffs.STAFFS.get(extra)));
+            }
+            case "performer" -> {
+                if (Temperament.of(extra) == null) { tell(p, "Choose your starter's temperament."); return; }
+                applyTemperament(p, extra);
+            }
+            case "knight" -> { give(p, new ItemStack(Items.IRON_CHESTPLATE)); give(p, new ItemStack(Items.IRON_SWORD)); }
+            case "bulwark" -> {
+                give(p, new ItemStack(Items.SHIELD));
+                ItemStack mace = new ItemStack(Items.MACE);
+                mace.set(DataComponents.CUSTOM_NAME, Component.literal("Iron Mace"));
+                give(p, mace);
+            }
+            case "journeyman" -> give(p, new ItemStack(Items.GOLDEN_APPLE, 2));
+            default -> { }
+        }
+        h.serantis$setPlayerClass(k.id());
+        p.sendSystemMessage(Component.literal("You are a " + k.name() + "! +" + START_BOOST + " " + Temperament.label(k.stat())
+                + " to start with, easing to +" + MIN_BOOST + " as you learn skills. " + k.perk()).withStyle(ChatFormatting.GOLD));
+        PartySync.sync(p);
+    }
+
+    /** A Performer's chosen temperament goes on their starter (now, if they already have it; otherwise when they pick it). */
+    private static void applyTemperament(ServerPlayer p, String t) {
+        List<CaughtCreature> party = Party.get(p);
+        if (Starters.chosen(p) && !party.isEmpty()) {
+            ((MovesHolder) (Object) party.get(0)).serantis$setTemperament(t);
+            tell(p, "Your " + label(party.get(0)) + " is now " + t + ".");
+        } else ((Holder) p).serantis$setPendingTemperament(t);
+    }
+
+    /** A starter was just picked: a Performer's temperament goes on it. */
+    public static void starterPicked(ServerPlayer p, CaughtCreature starter) {
+        Holder h = (Holder) p;
+        String t = h.serantis$pendingTemperament();
+        if (t == null || starter == null) return;
+        ((MovesHolder) (Object) starter).serantis$setTemperament(t);
+        h.serantis$setPendingTemperament(null);
+    }
+
+    private static String label(CaughtCreature c) {
+        return dev.ahrivaea.creature.Species.get(c.species()).map(sp -> sp.nameFor(c.influence())).orElse("starter");
+    }
+
+    private static void give(ServerPlayer p, ItemStack stack) {
+        if (!p.getInventory().add(stack) && !stack.isEmpty())
+            p.level().addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(p.level(), p.getX(), p.getY(), p.getZ(), stack));
+    }
+
+    private static void tell(ServerPlayer p, String msg) { p.sendSystemMessage(Component.literal(msg)); }
+
+    /** "serantis_class" in the party state: the class, or that one still needs picking. */
+    public static void describe(ServerPlayer p, JsonObject state) {
+        Kind k = of(p);
+        JsonObject o = new JsonObject();
+        o.addProperty("chosen", k != null);
+        if (k != null) {
+            o.addProperty("name", k.name());
+            o.addProperty("stat", Temperament.label(k.stat()));
+            o.addProperty("boost", boost(p, k.stat(), dev.serantis.battle.skills.Skills.owned(p).size()));
+        }
+        state.add("serantis_class", o);
+    }
+}

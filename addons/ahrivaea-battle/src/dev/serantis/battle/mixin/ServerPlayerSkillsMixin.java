@@ -33,6 +33,10 @@ public abstract class ServerPlayerSkillsMixin {
         var co = (dev.serantis.battle.Companions.Holder) (Object) this;
         var cb = (dev.serantis.battle.Companions.Holder) (Object) old;
         co.serantis$out().putAll(cb.serantis$out());
+        var pc = (dev.serantis.battle.PlayerClass.Holder) (Object) this;
+        var pb = (dev.serantis.battle.PlayerClass.Holder) (Object) old;
+        pc.serantis$setPlayerClass(pb.serantis$playerClass());
+        pc.serantis$setPendingTemperament(pb.serantis$pendingTemperament());
         ((dev.serantis.battle.TypeMastery.Holder) (Object) this).serantis$typeGained().putAll(((dev.serantis.battle.TypeMastery.Holder) (Object) old).serantis$typeGained());
         ((dev.serantis.battle.TypeMastery.Holder) (Object) this).serantis$typeTrophies().putAll(((dev.serantis.battle.TypeMastery.Holder) (Object) old).serantis$typeTrophies());
         co.serantis$gone().addAll(cb.serantis$gone());

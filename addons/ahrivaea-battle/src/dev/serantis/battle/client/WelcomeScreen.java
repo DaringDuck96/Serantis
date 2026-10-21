@@ -21,6 +21,10 @@ public class WelcomeScreen extends Screen {
     private static final String[][] GUIDE = {
             {null, "Pull up a block. This is Minecraft: the same blocky world you know, with trees to punch, caves to explore and plenty of mobs to fight. "
                     + "But Serantia is alive with creatures, and they're waiting to meet you."},
+            {"Choose your class", "Knight (Attack), Bulwark (Defense), Wizard (Magic), Journeyman (Luck) or Performer (Charisma). "
+                    + "Your class gives its stat a boost that matters most early on, plus a head start: Knights get an iron chestplate and "
+                    + "sword, Bulwarks a shield and an iron mace, Wizards a Magic Staff of their chosen influence, Journeymen two golden "
+                    + "apples, and Performers choose their starter's temperament. You choose once."},
             {"Pick your starter", "Your first friend is waiting. Choose a starter creature: it fights beside you, grows with you, "
                     + "and might just carry you through your first rough night."},
             {"Battle and recruit", "Wild creatures roam every biome. Hit one with any weapon (sword, axe, bow, trident, whatever's handy) "

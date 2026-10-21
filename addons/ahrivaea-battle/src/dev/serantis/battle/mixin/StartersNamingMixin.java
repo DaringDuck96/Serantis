@@ -16,6 +16,7 @@ public abstract class StartersNamingMixin {
     @Redirect(method = "pick", at = @At(value = "INVOKE",
             target = "Ldev/ahrivaea/party/Party;addAnywhere(Lnet/minecraft/world/entity/player/Player;Ldev/ahrivaea/party/CaughtCreature;)Z"))
     private static boolean serantis$offerName(Player player, CaughtCreature caught, ServerPlayer sp, String species) {
+        dev.serantis.battle.PlayerClass.starterPicked(sp, caught);        // a Performer's chosen temperament
         boolean added = Party.addAnywhere(player, caught);
         if (added) Naming.offer(sp, caught);
         return added;

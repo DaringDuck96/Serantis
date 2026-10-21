@@ -14,5 +14,6 @@ public abstract class MinecraftTradeMixin {
     private void serantis$trades(CallbackInfo ci) {
         TradeClient.tick();
         dev.serantis.battle.client.WelcomeScreen.autoOpen();
+        dev.serantis.battle.client.ClassScreen.autoOpen();
     }
 }
