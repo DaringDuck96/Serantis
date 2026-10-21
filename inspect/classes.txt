@@ -1,2 +1,2 @@
 # classes
-compile wip/honing
+compile wip/goblin-raids
