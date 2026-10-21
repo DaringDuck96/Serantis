@@ -135,6 +135,7 @@ Milestones in twelve areas, plus a line for each influence, pay out golden apple
 | Blocks Walked | 10,000 Stretch Your Legs · 50,000 Out for a Stroll · 250,000 Are We There Yet? · 1,000,000 Who Needs Horses? · 5,000,000 Walked to the Moon | 3 · 6 · 12 · 24 · 48 |
 | Experience Gained | 100 Shiny Green Orbs · 1,000 Book Smart · 10,000 Big Brain Energy · 100,000 Seasoned Veteran · 1,000,000 Ascended | 3 · 6 · 12 · 24 · 48 |
 | Times Defeated | 1 Oops · 5 Respawn Regular · 10 Fall Damage Enthusiast · 50 Death's Frequent Flyer · 100 Immortal (Technically) | 2 · 4 · 8 · 16 · 32 |
+| The Eternita Stone | 1 **I Won! I Won the Game!** (earn the Eternita Stone) | 10,000 XP instead of apples. You've technically beaten the game: nothing else happens, and you keep playing as normal. |
 
 **Recruits by influence.** Twelve more lines, one per influence, count creatures of that influence you recruit: 1 · 10 · 15 · 25 · 30 recruits, paying 1 · 2 · 3 · 4 · 6 golden apples.
 
@@ -224,6 +225,16 @@ Professions are the creatures mod's (Farmer, Fisherman, Gardener, Weaver, Hunter
 The **Alchemist** still sells potions and brewing ingredients for XP, and its trade screen also turns a golden apple from your inventory into 20 XP.
 
 How often each profession turns up in a village: Farmer and Mason are the most common; Explorer, Engineer, Leatherworker and Alchemist a little less; Bard and Innkeeper uncommon; Netherwright and Jeweler rarer; Noble and Voidwalker the rarest.
+
+### Creature Masters
+
+Creature Masters are the gym leaders. They turn up as rarely as Black Market Merchants: any wild creature that spawns has a 0.05% chance to be a Creature Master instead (nearby players get a chat message). Each one has an influence that fits the biome it appears in, shown in its name ("Fire Creature Master"), is Level 12 to 20, and stays for a day. It can't be hurt outside battle, and you don't have to fight it.
+
+Hit it with a weapon to challenge it. It fights alongside 3 to 5 creatures of its influence, each 3 to 5 levels above or below its own and more often Rare or rarer than wild creatures. Its team is 25% stronger than wild creatures (the Master 40%), and each of them fights with the strongest of several move sets. None of them can be recruited. Beat the Master and it leaves; the battle pays **double XP** and gives you a **Gym Master Stone** of its influence. Lose or run, and it stays until its day is up.
+
+Each Gym Master Stone raises your **mastery** of that influence, up to 5 stones per influence (after 5, beating that influence's Masters still pays double XP but no more stones). Every stone gives creatures of that influence +3% spawn weight around you, up to +15%: they turn up a little more often in the biomes they already live in, and the rarity odds don't change.
+
+Collect all 5 stones of all 12 influences (60 in all) and you get the rainbow **Eternita Stone**: wild creatures that spawn around you are Mutated 5 times in 100 instead of 1 in 100. It also earns the achievement "I Won! I Won the Game!".
 
 ### Trading creatures
 

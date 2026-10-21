@@ -18,6 +18,16 @@ public abstract class WildSpawnerNobleMixin {
     private static void serantis$blackMarket(ServerLevel level, net.minecraft.server.level.ServerPlayer player, net.minecraft.util.RandomSource random,
                                              org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<dev.ahrivaea.creature.CreatureEntity> cir) {
         if (cir.getReturnValue() != null) cir.setReturnValue(dev.serantis.battle.Market.maybeBlackMarket(level, cir.getReturnValue(), random));
+        if (cir.getReturnValue() != null && !dev.serantis.battle.Market.isBlackMarket(cir.getReturnValue()))
+            cir.setReturnValue(dev.serantis.battle.Masters.maybeMaster(level, cir.getReturnValue(), random));
+        dev.serantis.battle.Masters.SPAWN_PLAYER.remove();
+    }
+
+    // The player the creature is spawning near (their Gym Master Stones and Eternita Stone change the odds).
+    @org.spongepowered.asm.mixin.injection.Inject(method = "trySpawnNear", at = @At("HEAD"))
+    private static void serantis$near(ServerLevel level, net.minecraft.server.level.ServerPlayer player, net.minecraft.util.RandomSource random,
+                                      org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<dev.ahrivaea.creature.CreatureEntity> cir) {
+        dev.serantis.battle.Masters.SPAWN_PLAYER.set(player);
     }
 
     @Redirect(method = "trySpawnNear", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getBiome(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;"))

@@ -15,7 +15,7 @@ import java.util.Set;
 
 /** Players remember the skill tree nodes they've bought. */
 @Mixin(Player.class)
-public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder {
+public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder, dev.serantis.battle.Masters.Holder {
     @Unique private final Set<String> serantis$skills = new LinkedHashSet<>();
 
     @Override public Set<String> serantis$skills() { return serantis$skills; }
@@ -38,6 +38,12 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Override public void serantis$addPlanted(long n) { serantis$planted += n; }
     @Override public long serantis$xpGained() { return serantis$xpGained; }
     @Override public void serantis$addXpGained(long n) { serantis$xpGained += n; }
+    @Unique private final java.util.Map<String, Integer> serantis$stones = new java.util.HashMap<>();
+    @Unique private boolean serantis$eternita;
+    @Override public int serantis$stones(String influence) { return serantis$stones.getOrDefault(influence, 0); }
+    @Override public void serantis$setStones(String influence, int count) { serantis$stones.put(influence, count); }
+    @Override public boolean serantis$eternita() { return serantis$eternita; }
+    @Override public void serantis$setEternita(boolean has) { serantis$eternita = has; }
     @Override public int serantis$claimed(String track) { return serantis$claimed.getOrDefault(track, 0); }
     @Override public void serantis$setClaimed(String track, int tiers) { serantis$claimed.put(track, tiers); }
 
@@ -63,6 +69,9 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$recruits.forEach((k, v) -> rec.append(',').append(k).append(':').append(v));
         out.putString("SerantisRecruits", rec.toString());
         out.putString("SerantisAchievements", dev.serantis.battle.Achievements.encode(this));
+        StringBuilder st = new StringBuilder(serantis$eternita ? "eternita" : "");
+        serantis$stones.forEach((k, v) -> st.append(',').append(k).append(':').append(v));
+        out.putString("SerantisMastery", st.toString());
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
@@ -83,5 +92,12 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         for (String s : in.getStringOr("SerantisBiomes", "").split(",")) if (!s.isBlank()) serantis$biomes.add(s.trim());
         serantis$claimed.clear();
         dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
+        serantis$stones.clear();
+        String st = in.getStringOr("SerantisMastery", "");
+        serantis$eternita = st.startsWith("eternita");
+        for (String part : st.split(",")) {
+            String[] kv = part.split(":");
+            if (kv.length == 2) try { serantis$stones.put(kv[0].trim(), Integer.parseInt(kv[1].trim())); } catch (NumberFormatException ignored) { }
+        }
     }
 }

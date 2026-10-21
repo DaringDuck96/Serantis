@@ -62,7 +62,12 @@ public final class Achievements {
             new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
                     new String[]{"Shiny Green Orbs", "Book Smart", "Big Brain Energy", "Seasoned Veteran", "Ascended"}),
             new Track("deaths", "Times Defeated", "deaths", new long[]{1, 5, 10, 50, 100}, new int[]{2, 4, 8, 16, 32},
-                    new String[]{"Oops", "Respawn Regular", "Fall Damage Enthusiast", "Death's Frequent Flyer", "Immortal (Technically)"}));
+                    new String[]{"Oops", "Respawn Regular", "Fall Damage Enthusiast", "Death's Frequent Flyer", "Immortal (Technically)"}),
+            new Track("eternita", "The Eternita Stone", "Eternita Stone earned", new long[]{1}, new int[]{0},
+                    new String[]{"I Won! I Won the Game!"}));
+
+    /** Tracks that pay XP instead of golden apples (per tier). */
+    private static final java.util.Map<String, int[]> XP_REWARD = java.util.Map.of("eternita", new int[]{10_000});
 
     /** Icons for the achievement log (item ids). */
     private static final java.util.Map<String, String> ICONS = new java.util.HashMap<>(java.util.Map.ofEntries(
@@ -71,7 +76,8 @@ public final class Achievements {
             java.util.Map.entry("smelted", "minecraft:furnace"), java.util.Map.entry("armor", "minecraft:iron_chestplate"),
             java.util.Map.entry("planted", "minecraft:wheat_seeds"), java.util.Map.entry("biomes", "minecraft:map"),
             java.util.Map.entry("towers", "minecraft:chiseled_stone_bricks"), java.util.Map.entry("walked", "minecraft:leather_boots"),
-            java.util.Map.entry("xp", "minecraft:experience_bottle"), java.util.Map.entry("deaths", "minecraft:skeleton_skull")));
+            java.util.Map.entry("xp", "minecraft:experience_bottle"), java.util.Map.entry("deaths", "minecraft:skeleton_skull"),
+            java.util.Map.entry("eternita", "serantis_battle:eternita_stone")));
 
     /** One "recruit creatures of this influence" line per influence: {influence, name, icon, five titles}. */
     private static final String[][] INFLUENCES = {
@@ -189,6 +195,7 @@ public final class Achievements {
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;
             case "xp" -> h.serantis$xpGained();
             case "deaths" -> stats.getValue(Stats.CUSTOM, Stats.DEATHS);
+            case "eternita" -> p instanceof Masters.Holder m && m.serantis$eternita() ? 1 : 0;
             default -> 0;
         };
     }
@@ -207,10 +214,19 @@ public final class Achievements {
             long v = value(p, t.id());
             int claimed = h.serantis$claimed(t.id());
             while (claimed < t.tiers().length && v >= t.tiers()[claimed]) {
-                int apples = t.apples()[claimed];
-                give(p, apples);
-                p.sendSystemMessage(Component.literal("Achievement unlocked: " + t.titles()[claimed] + "! (" + t.name() + " " + ROMAN[claimed] + ": "
-                        + String.format("%,d", t.tiers()[claimed]) + " " + t.verb() + ") +" + apples + " golden apples.").withStyle(ChatFormatting.GOLD));
+                int[] xp = XP_REWARD.get(t.id());
+                if (xp != null) {
+                    p.giveExperiencePoints(xp[claimed]);
+                    p.sendSystemMessage(Component.literal("Achievement unlocked: " + t.titles()[claimed] + "! (" + t.verb() + ") +"
+                            + String.format("%,d", xp[claimed]) + " XP.").withStyle(ChatFormatting.GOLD));
+                    if ("eternita".equals(t.id()))
+                        p.sendSystemMessage(Component.literal("You beat the game! (Nothing happens. Keep playing.)").withStyle(ChatFormatting.LIGHT_PURPLE));
+                } else {
+                    int apples = t.apples()[claimed];
+                    give(p, apples);
+                    p.sendSystemMessage(Component.literal("Achievement unlocked: " + t.titles()[claimed] + "! (" + t.name() + " " + ROMAN[claimed] + ": "
+                            + String.format("%,d", t.tiers()[claimed]) + " " + t.verb() + ") +" + apples + " golden apples.").withStyle(ChatFormatting.GOLD));
+                }
                 claimed++;
                 any = true;
             }
@@ -263,6 +279,11 @@ public final class Achievements {
             for (String s : t.titles()) titles.add(s);
             o.add("titles", titles);
             o.add("apples", apples);
+            int[] xp = XP_REWARD.get(t.id());
+            if (xp != null) {
+                o.addProperty("badge", "XP");
+                o.addProperty("reward", String.format("%,d XP", xp[0]));
+            }
             out.add(o);
         }
         state.add("serantis_achievements", out);

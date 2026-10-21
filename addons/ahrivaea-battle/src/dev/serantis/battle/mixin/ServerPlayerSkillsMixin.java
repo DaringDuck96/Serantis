@@ -24,6 +24,10 @@ public abstract class ServerPlayerSkillsMixin {
         if (b.serantis$recruitsSeeded()) a.serantis$setRecruitsSeeded();
         for (String inf : new String[]{"none", "fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "arcane", "radiant"})
             a.serantis$addRecruited(inf, b.serantis$recruitedOf(inf) - a.serantis$recruitedOf(inf));
+        var ma = (dev.serantis.battle.Masters.Holder) (Object) this;
+        var mb = (dev.serantis.battle.Masters.Holder) (Object) old;
+        for (String inf : dev.serantis.battle.Masters.INFLUENCES) ma.serantis$setStones(inf, mb.serantis$stones(inf));
+        ma.serantis$setEternita(mb.serantis$eternita());
         for (var t : dev.serantis.battle.Achievements.TRACKS) a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
         // XP is the main currency: it's kept through death.
         ServerPlayer self = (ServerPlayer) (Object) this;

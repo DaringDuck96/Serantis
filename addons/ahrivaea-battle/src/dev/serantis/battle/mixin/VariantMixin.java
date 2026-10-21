@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class VariantMixin {
     @Inject(method = "roll", at = @At("HEAD"), cancellable = true)
     private static void serantis$mutatedOnePercent(ServerLevel level, RandomSource random, CallbackInfoReturnable<Variant> cir) {
-        if (random.nextInt(100) == 0) cir.setReturnValue(Variant.MUTATED);
+        if (random.nextInt(100) < dev.serantis.battle.Masters.mutatedPercent()) cir.setReturnValue(Variant.MUTATED);
     }
 
     @Inject(method = "roll", at = @At("RETURN"), cancellable = true)

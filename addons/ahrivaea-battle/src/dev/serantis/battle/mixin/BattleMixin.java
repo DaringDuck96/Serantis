@@ -81,10 +81,32 @@ public abstract class BattleMixin implements BattleAccess {
         return serantis$defeatedGuards;
     }
 
-    // Town Guards can't be recruited.
+    // Town Guards can't be recruited, nor can a Creature Master or its team.
     @Inject(method = "whyNotRecruit", at = @At("HEAD"), cancellable = true)
     private void serantis$noGuards(Battle.Defeated d, CallbackInfoReturnable<String> cir) {
-        if (serantis$defeatedGuards != null && serantis$defeatedGuards.contains(d)) cir.setReturnValue("Town Guards can't be recruited.");
+        if (serantis$master != null) cir.setReturnValue("A Creature Master's team can't be recruited.");
+        else if (serantis$defeatedGuards != null && serantis$defeatedGuards.contains(d)) cir.setReturnValue("Town Guards can't be recruited.");
+    }
+
+    // ---- Creature Masters: double XP and a Gym Master Stone for beating one
+    @Unique private String serantis$master;
+    @Override public String serantis$master() { return serantis$master; }
+    @Override public void serantis$setMaster(String influence) { serantis$master = influence; }
+
+    @Redirect(method = "finish", at = @At(value = "FIELD", target = "Ldev/ahrivaea/battle/Battle;poolXp:I", opcode = 181))
+    private void serantis$masterXp(Battle self, int xp) {
+        self.poolXp = serantis$master != null ? xp * 2 : xp;
+    }
+
+    @Inject(method = "finish", at = @At("HEAD"))
+    private void serantis$masterBeaten(Battle.Outcome outcome, CallbackInfo ci) {
+        Battle self = (Battle) (Object) this;
+        if (serantis$master != null && outcome == Battle.Outcome.WON && self.player() != null)
+            dev.serantis.battle.Masters.reward(self.player(), serantis$master);
+        if (serantis$master != null && outcome == Battle.Outcome.WON)          // a beaten Master moves on
+            for (Unit u : self.units)
+                if (u.entity != null && self.level.getEntity(u.entity) instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Masters.isMaster(c))
+                    ((dev.serantis.battle.Market.Holder) c).serantis$setLeaveAt(self.level.getGameTime());
     }
 
     @Override public Map<Object, String> serantis$defeatedMoves() {

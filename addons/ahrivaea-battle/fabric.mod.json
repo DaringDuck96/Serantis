@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "serantis_battle",
-    "version": "0.34.2",
+    "version": "0.35.0",
     "name": "Serantis Battle, Moves and Spawning",
     "description": "Creature battle stats from the Serantis stat sheet, a Level 20 cap, and Serantis spawn odds: 70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary, with a 1% chance of any spawn being Mutated. Every creature fights with 3 moves from the Serantis Move Dex.",
     "authors": [
@@ -11,6 +11,11 @@
     "license": "All-Rights-Reserved",
     "icon": "assets/serantis_battle/icon.png",
     "environment": "*",
+    "entrypoints": {
+        "main": [
+            "dev.serantis.battle.SerantisBattle"
+        ]
+    },
     "mixins": [
         "serantis_battle.mixins.json"
     ],
@@ -18,6 +23,7 @@
         "fabricloader": ">=0.19.5",
         "minecraft": "~26.3",
         "java": ">=25",
-        "ahrivaea": "*"
+        "ahrivaea": "*",
+        "fabric-api": "*"
     }
 }

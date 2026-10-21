@@ -29,4 +29,7 @@ public interface BattleAccess {
     java.util.Set<Object> serantis$defeatedGuards();
     /** Zones, pending attacks and forced movement (Stage 2). */
     Field serantis$field();
+    /** The influence of the Creature Master this battle is against, or null. */
+    String serantis$master();
+    void serantis$setMaster(String influence);
 }

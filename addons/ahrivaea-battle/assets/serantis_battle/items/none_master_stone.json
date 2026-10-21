@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "serantis_battle:item/none_master_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5725538
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
+  }
+}

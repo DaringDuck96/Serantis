@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "serantis_battle:item/storm_master_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10781263
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
+  }
+}

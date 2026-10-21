@@ -259,7 +259,7 @@ public final class Market {
     public static void tick(CreatureEntity e) {
         if (e.level().isClientSide()) return;
         long leave = ((Holder) e).serantis$leaveAt();
-        if (leave > 0 && e.level().getGameTime() > leave) e.discard();
+        if (leave > 0 && e.level().getGameTime() > leave && !e.isNoAi()) e.discard();     // not mid-battle
     }
 
     private static void tell(ServerPlayer p, String msg) {

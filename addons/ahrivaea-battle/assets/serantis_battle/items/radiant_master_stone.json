@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "serantis_battle:item/radiant_master_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -732322
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
+  }
+}

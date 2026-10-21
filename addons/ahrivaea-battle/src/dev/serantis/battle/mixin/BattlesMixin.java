@@ -29,6 +29,7 @@ public abstract class BattlesMixin {
 
     @Inject(method = "start", at = @At("HEAD"))
     private static void serantis$measure(ServerPlayer player, CreatureEntity wild, CallbackInfoReturnable<Battle> cir) {
+        dev.serantis.battle.Masters.SPAWN_PLAYER.set(player);           // reinforcements count as spawning near this player
         int biggest = 1;
         try {
             if (wild != null && wild.getInfluence() != null)
@@ -51,6 +52,7 @@ public abstract class BattlesMixin {
     @Inject(method = "start", at = @At("RETURN"))
     private static void serantis$start(ServerPlayer player, CreatureEntity wild, CallbackInfoReturnable<Battle> cir) {
         SERANTIS_BIGGEST.remove();
+        dev.serantis.battle.Masters.SPAWN_PLAYER.remove();
         MoveEngine.assignFromWorld(cir.getReturnValue());
     }
 
@@ -87,9 +89,17 @@ public abstract class BattlesMixin {
 
     // Attack a villager and 3-5 Town Guards come to defend it.
     @Unique private static final ThreadLocal<Boolean> SERANTIS_GUARDED = ThreadLocal.withInitial(() -> false);
+    @Unique private static final ThreadLocal<String> SERANTIS_MASTER = new ThreadLocal<>();
+    @Unique private static final ThreadLocal<Integer> SERANTIS_MASTER_LEVEL = ThreadLocal.withInitial(() -> 15);
 
     @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battles;reinforcements(ILnet/minecraft/util/RandomSource;)I"))
     private static int serantis$guardCount(int level, net.minecraft.util.RandomSource random, ServerPlayer player, dev.ahrivaea.creature.CreatureEntity target) {
+        String master = dev.serantis.battle.Masters.influenceOf(target);
+        if (master != null) {                                           // a Creature Master brings 3-5 of its own
+            SERANTIS_MASTER.set(master);
+            SERANTIS_MASTER_LEVEL.set(target.getCreatureLevel());
+            return 3 + random.nextInt(3);
+        }
         boolean village = dev.serantis.battle.Villages.defendedByGuards(target);
         SERANTIS_GUARDED.set(village);
         return village ? 3 + random.nextInt(3) : dev.ahrivaea.battle.Battles.reinforcements(level, random);
@@ -99,6 +109,10 @@ public abstract class BattlesMixin {
             "Ldev/ahrivaea/party/RecruitRules;reinforcement(Lnet/minecraft/core/Holder;Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;I)Ljava/util/Optional;"))
     private static java.util.Optional<dev.ahrivaea.creature.Species.LevelledPick> serantis$guard(net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> biome,
             net.minecraft.world.level.Level level, net.minecraft.util.RandomSource random, dev.ahrivaea.creature.Species species, dev.ahrivaea.creature.Influence influence, int lvl) {
+        if (SERANTIS_MASTER.get() != null) {
+            var pick = dev.serantis.battle.Masters.teamPick(SERANTIS_MASTER.get(), SERANTIS_MASTER_LEVEL.get(), random);
+            if (pick != null) return java.util.Optional.of(pick);
+        }
         if (SERANTIS_GUARDED.get()) {
             var guard = dev.serantis.battle.Villages.guardPick(lvl, random);
             if (guard != null) { dev.serantis.battle.Villages.NEXT_GUARD.set(true); return java.util.Optional.of(guard); }
@@ -112,6 +126,9 @@ public abstract class BattlesMixin {
             ((BattleAccess) (Object) cir.getReturnValue()).serantis$say("Town Guards rush in to defend the village!");
         SERANTIS_GUARDED.set(false);
         dev.serantis.battle.Villages.NEXT_GUARD.set(false);
+        String master = SERANTIS_MASTER.get();
+        SERANTIS_MASTER.remove();
+        if (master != null && cir.getReturnValue() != null) MoveEngine.masterBattle(cir.getReturnValue(), entity, master);
     }
 
     // Presence: recruiting costs less XP.

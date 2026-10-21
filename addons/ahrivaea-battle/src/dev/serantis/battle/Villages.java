@@ -131,7 +131,7 @@ public final class Villages {
     public static boolean defendedByGuards(CreatureEntity e) {
         if (e == null || !dev.ahrivaea.villager.Villagers.SPECIES.equals(e.getSpeciesId())) return false;
         VillagerJob j = jobOf(e);
-        return j == null || !(GUARD.equals(j.profession()) || Market.BLACK_MARKET.equals(j.profession()) || Wanderer.ROLE.equals(j.profession()));
+        return j == null || !(j.profession().startsWith(Masters.ROLE + ":") || GUARD.equals(j.profession()) || Market.BLACK_MARKET.equals(j.profession()) || Wanderer.ROLE.equals(j.profession()));
     }
 
     /** A Town Guard joining a battle: a villager a few levels above the one it defends. */
@@ -187,6 +187,7 @@ public final class Villages {
         boolean noble = false;
         try { noble = level != null && pos != null && nobleNear(level, pos); } catch (RuntimeException ignored) { }
         NOBLE_SPAWN.set(noble);
+        try { Masters.markSpawn(level, pos); } catch (RuntimeException ignored) { }
     }
 
     // ------------------------------------------------------------------ the Alchemist

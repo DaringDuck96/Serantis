@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "serantis_battle:item/void_master_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12373910
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
+  }
+}

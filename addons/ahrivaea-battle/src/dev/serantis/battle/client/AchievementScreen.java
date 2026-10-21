@@ -144,7 +144,7 @@ public class AchievementScreen extends Screen {
             boolean got = k < claimed;
             g.fill(cx, y + 1, cx + 20, y + 21, got ? 0xFF6B5420 : 0xFF22242C);
             g.outline(cx, y + 1, 20, 21, got ? GOLD : (k == claimed ? 0xFF8FD16A : 0xFF3A3D48));
-            String num = "+" + apples.get(k).getAsInt();
+            String num = a.has("badge") ? a.get("badge").getAsString() : "+" + apples.get(k).getAsInt();
             g.text(font, num, cx + 10 - font.width(num) / 2, y + 7, got ? GOLD : 0xFFB0B4C0);
         }
         // hover a tier to see what it takes
@@ -156,7 +156,7 @@ public class AchievementScreen extends Screen {
                     tip = List.of(Component.literal(titles != null && k < titles.size() ? titles.get(k).getAsString() : a.get("name").getAsString()).withColor(GOLD),
                             Component.literal(a.get("name").getAsString() + " " + ROMAN[k]).withColor(0xFF9AA4B4),
                             Component.literal(String.format("%,d %s", tiers.get(k).getAsLong(), a.get("verb").getAsString())).withColor(0xFFFFFFFF),
-                            Component.literal("Reward: " + apples.get(k).getAsInt() + " golden apples").withColor(0xFFE8C860),
+                            Component.literal("Reward: " + (a.has("reward") ? a.get("reward").getAsString() : apples.get(k).getAsInt() + " golden apples")).withColor(0xFFE8C860),
                             Component.literal(k < claimed ? "✔ Earned" : "Not yet").withColor(k < claimed ? 0xFF7FE08A : 0xFF9AA4B4));
             }
     }

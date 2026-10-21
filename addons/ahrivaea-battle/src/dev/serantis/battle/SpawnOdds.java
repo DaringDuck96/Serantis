@@ -48,9 +48,9 @@ public final class SpawnOdds {
                     roll -= percent[i];
                 }
                 String rarity = RARITY[tier];
-                Optional<Species.Pick> got = Species.pickFor(biome, level, random,
-                        filter.and((s, inf) -> rarity.equals(RecruitRules.rarity(s, inf))));
-                if (got.isPresent()) return got;
+                BiPredicate<Species, Influence> f = filter.and((s, inf) -> rarity.equals(RecruitRules.rarity(s, inf)));
+                Optional<Species.Pick> got = Species.pickFor(biome, level, random, f);
+                if (got.isPresent()) return Masters.mastery(got, biome, level, random, f);
                 left.remove(Integer.valueOf(tier));
             }
             return Optional.empty();

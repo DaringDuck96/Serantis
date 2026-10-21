@@ -149,6 +149,37 @@ public final class MoveEngine {
         }
     }
 
+    /**
+     * A battle against a Creature Master: the Master (its world entity) is 40% stronger, its team 25%,
+     * and every one of them fights with the strongest of several rolled move sets.
+     */
+    public static void masterBattle(Battle b, Entity master, String influence) {
+        acc(b).serantis$setMaster(influence);
+        String name = dev.serantis.battle.Masters.influenceName(influence) + " Creature Master";
+        for (Unit u : b.units) {
+            if (u.isPlayer || u.side != Unit.Side.ENEMY || u.stats == null) continue;
+            boolean lead = master != null && master.getUUID().equals(u.entity);
+            if (lead) ((UnitAccess) (Object) u).serantis$setName(name);
+            double f = lead ? dev.serantis.battle.Masters.STAT_BOOST_MASTER : dev.serantis.battle.Masters.STAT_BOOST_TEAM;
+            var s = u.stats;
+            ((UnitAccess) (Object) u).serantis$setStats(new dev.ahrivaea.creature.Stats((int) Math.round(s.hp() * f), (int) Math.round(s.attack() * f),
+                    (int) Math.round(s.defense() * f), (int) Math.round(s.speed() * f), (int) Math.round(s.magic() * f),
+                    (int) Math.round(s.luck() * f), (int) Math.round(s.charisma() * f)));
+            if (!lead && MoveBook.available() && u.influence != null) {
+                List<MoveSpec> best = null;
+                int bestPower = -1;
+                for (int i = 0; i < 6; i++) {
+                    List<MoveSpec> roll = MoveBook.roll(u.influence, b.random);
+                    int power = 0;
+                    for (MoveSpec m : roll) power += Math.max(0, m.sheetPower);
+                    if (power > bestPower) { bestPower = power; best = roll; }
+                }
+                if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best));
+            }
+        }
+        acc(b).serantis$say("The " + name + " sends out its team! Its creatures can't be recruited, but winning pays double XP and a Gym Master Stone.");
+    }
+
     public static String encodeUnit(Unit u) {
         List<MoveSpec> specs = new ArrayList<>();
         for (BattleMove m : u.moves) { MoveSpec s = MoveBook.of(m); if (s != null) specs.add(s); }
