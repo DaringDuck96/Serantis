@@ -24,6 +24,23 @@ public final class SpawnOdds {
     /** Near a base with a Noble at work: Rare or rarer 35% of the time instead of 15%. */
     public static final int[] NOBLE    = {50, 15, 22, 10, 3};
 
+    /** Common creatures of these influences spawn 5% more often (spawn weight x1.05) than other Common creatures. */
+    public static final java.util.Set<Influence> COMMON_BOOST = java.util.EnumSet.of(Influence.NONE, Influence.FIRE, Influence.FROST,
+            Influence.EARTH, Influence.STORM, Influence.NATURE, Influence.WATER);
+    public static final double COMMON_BOOST_WEIGHT = 1.05;
+
+    /** Weighs the Common pick: a creature of another influence is kept with chance 1/1.05, otherwise picked again. */
+    private static Optional<Species.Pick> commonBoost(Optional<Species.Pick> got, Holder<Biome> biome, Level level, RandomSource random,
+                                                      BiPredicate<Species, Influence> filter) {
+        for (int i = 0; i < 8 && got.isPresent(); i++) {
+            if (COMMON_BOOST.contains(got.get().influence()) || random.nextDouble() < 1 / COMMON_BOOST_WEIGHT) return got;
+            Optional<Species.Pick> again = Species.pickFor(biome, level, random, filter);
+            if (again.isEmpty()) return got;
+            got = again;
+        }
+        return got;
+    }
+
     /** While true, Species.pickFor runs unchanged (it is being called from here with a rarity filter). */
     public static final ThreadLocal<Boolean> INSIDE = ThreadLocal.withInitial(() -> false);
 
@@ -50,6 +67,7 @@ public final class SpawnOdds {
                 String rarity = RARITY[tier];
                 BiPredicate<Species, Influence> f = filter.and((s, inf) -> rarity.equals(RecruitRules.rarity(s, inf)));
                 Optional<Species.Pick> got = Species.pickFor(biome, level, random, f);
+                if (tier == 0) got = commonBoost(got, biome, level, random, f);
                 if (got.isPresent()) return Masters.mastery(got, biome, level, random, f);
                 left.remove(Integer.valueOf(tier));
             }
