@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class NameTagCutsceneMixin {
     @Inject(method = "extractNameTags(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/entity/state/EntityRenderState;F)V", at = @At("TAIL"))
     private void serantis$cutscene(Entity entity, EntityRenderState state, float partial, CallbackInfo ci) {
-        if (dev.serantis.battle.client.DialogueCamera.cutscene()) state.nameTag = null;
+        if (dev.serantis.battle.client.DialogueCamera.cutscene()) { state.nameTag = null; state.scoreText = null; }
     }
 }
