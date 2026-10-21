@@ -20,7 +20,7 @@ public class WelcomeScreen extends Screen {
     /** {heading, paragraph}; a null heading is a plain paragraph. */
     private static final String[][] GUIDE = {
             {null, "Pull up a block. This is Minecraft: the same blocky world you know, with trees to punch, caves to explore and plenty of mobs to fight. "
-                    + "But Serantis is alive with creatures, and they're waiting to meet you."},
+                    + "But Serantia is alive with creatures, and they're waiting to meet you."},
             {"Pick your starter", "Your first friend is waiting. Choose a starter creature: it fights beside you, grows with you, "
                     + "and might just carry you through your first rough night."},
             {"Battle and recruit", "Wild creatures roam every biome. Hit one with any weapon (sword, axe, bow, trident, whatever's handy) "
@@ -46,7 +46,7 @@ public class WelcomeScreen extends Screen {
                     + "Nothing ends. You just get to say you won."},
             {"It's still Minecraft", "None of this is required. Build a castle, a farming village, a city in the clouds, or a perfectly "
                     + "ordinary dirt hut. Your creatures can work at your base and villagers can join you. Building and creativity are as "
-                    + "much a part of Serantis as any battle, and spending your whole world making something beautiful is a completely "
+                    + "much a part of Serantia as any battle, and spending your whole world making something beautiful is a completely "
                     + "valid way to play."},
             {null, "Ready? Go meet someone new."}};
 
@@ -60,7 +60,7 @@ public class WelcomeScreen extends Screen {
     public WelcomeScreen(Screen parent) { this(parent, false); }
 
     private WelcomeScreen(Screen parent, boolean first) {
-        super(Component.literal("Welcome to Serantis"));
+        super(Component.literal("Welcome to Serantia"));
         this.parent = parent;
         this.first = first;
     }
@@ -134,7 +134,7 @@ public class WelcomeScreen extends Screen {
         g.pose().pushMatrix();
         g.pose().translate(width / 2f, 10);
         g.pose().scale(1.5f, 1.5f);
-        g.centeredText(font, "Welcome to Serantis!", 0, 0, GOLD);
+        g.centeredText(font, "Welcome to Serantia!", 0, 0, GOLD);
         g.pose().popMatrix();
         g.centeredText(font, "A world of creatures, towers and masters (and it's still Minecraft)", width / 2, 26, DIM);
 

@@ -50,7 +50,7 @@ public abstract class PartyScreenMixin extends Screen {
                 .bounds(width - 96, 6, 90, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Guide"),
                         b -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.WelcomeScreen(self)))
-                .tooltip(Tooltip.create(Component.literal("What Serantis is about, and what to do.")))
+                .tooltip(Tooltip.create(Component.literal("What Serantia is about, and what to do.")))
                 .bounds(width - 150, 6, 50, 20).build());
         if (sendOut == null || chosen() == null) return;
         int slot = selected;
