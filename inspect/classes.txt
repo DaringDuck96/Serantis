@@ -1,2 +1,2 @@
-# classes 1792612741
-compile wip/coop
+# classes 1792612962
+compile wip/coop-arena
