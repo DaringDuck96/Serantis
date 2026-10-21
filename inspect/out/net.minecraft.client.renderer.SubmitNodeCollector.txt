@@ -1,4 +1,0 @@
-Compiled from "SubmitNodeCollector.java"
-public interface net.minecraft.client.renderer.SubmitNodeCollector extends net.minecraft.client.renderer.OrderedSubmitNodeCollector {
-  public abstract net.minecraft.client.renderer.OrderedSubmitNodeCollector order(int);
-}

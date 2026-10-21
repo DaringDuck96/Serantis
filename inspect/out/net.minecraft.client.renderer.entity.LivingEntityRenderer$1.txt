@@ -1,6 +1,0 @@
-Compiled from "LivingEntityRenderer.java"
-class net.minecraft.client.renderer.entity.LivingEntityRenderer$1 {
-  static final int[] $SwitchMap$net$minecraft$core$Direction;
-  static final int[] $SwitchMap$net$minecraft$world$scores$Team$Visibility;
-  static {};
-}

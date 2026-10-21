@@ -1,5 +1,0 @@
-Compiled from "HumanoidModel.java"
-final class net.minecraft.client.model.HumanoidModel$ArmPose$1 extends net.minecraft.client.model.HumanoidModel$ArmPose {
-  private net.minecraft.client.model.HumanoidModel$ArmPose$1(java.lang.String, int, boolean, boolean);
-  public <S extends net.minecraft.client.renderer.entity.state.ArmedEntityRenderState> void animateUseItem(S, com.mojang.blaze3d.vertex.PoseStack, float, net.minecraft.world.entity.HumanoidArm, net.minecraft.world.item.ItemStack);
-}

@@ -1,5 +1,0 @@
-Compiled from "HumanoidModel.java"
-class net.minecraft.client.model.HumanoidModel$1 {
-  static final int[] $SwitchMap$net$minecraft$world$item$SwingAnimationType;
-  static {};
-}

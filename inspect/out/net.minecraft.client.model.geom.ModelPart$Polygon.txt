@@ -1,0 +1,13 @@
+Compiled from "ModelPart.java"
+public final class net.minecraft.client.model.geom.ModelPart$Polygon extends java.lang.Record {
+  private final net.minecraft.client.model.geom.ModelPart$Vertex[] vertices;
+  private final org.joml.Vector3fc normal;
+  public net.minecraft.client.model.geom.ModelPart$Polygon(net.minecraft.client.model.geom.ModelPart$Vertex[], float, float, float, float, float, float, boolean, net.minecraft.core.Direction);
+  public net.minecraft.client.model.geom.ModelPart$Polygon(net.minecraft.client.model.geom.ModelPart$Vertex[], org.joml.Vector3fc);
+  private static net.minecraft.core.Direction mirrorFacing(net.minecraft.core.Direction);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.model.geom.ModelPart$Vertex[] vertices();
+  public org.joml.Vector3fc normal();
+}

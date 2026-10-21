@@ -1,0 +1,22 @@
+Compiled from "ModelPart.java"
+public final class net.minecraft.client.model.geom.ModelPart$Vertex extends java.lang.Record {
+  private final float x;
+  private final float y;
+  private final float z;
+  private final float u;
+  private final float v;
+  public static final float SCALE_FACTOR = 16.0f;
+  public net.minecraft.client.model.geom.ModelPart$Vertex(float, float, float, float, float);
+  public net.minecraft.client.model.geom.ModelPart$Vertex remap(float, float);
+  public float worldX();
+  public float worldY();
+  public float worldZ();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public float x();
+  public float y();
+  public float z();
+  public float u();
+  public float v();
+}
