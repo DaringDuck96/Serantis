@@ -59,10 +59,39 @@ public final class InfluenceArmor {
                 String what = Masters.influenceName(inf);
                 Item item = Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties()
                         .humanoidArmor(ArmorMaterials.DIAMOND, TYPES[i]).setId(key)
+                        .component(DataComponents.EQUIPPABLE, look(SLOTS[i], inf, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_DIAMOND))
                         .component(DataComponents.LORE, new ItemLore(List.of(Component.literal("Resists " + what + " attacks in battle")
                                 .withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GRAY)))))));
                 INFLUENCE_OF.put(item, inf);
             }
+    }
+
+    /**
+     * Worn with an equipment asset that has no vanilla layers (assets/serantis_battle/equipment/NAME.json), so instead of
+     * diamond armour the 3D model is drawn on the player (client/ArmorModelLayer, model "serantis_armor/NAME_PIECE").
+     */
+    public static net.minecraft.world.item.equipment.Equippable look(EquipmentSlot slot, String name,
+                                                                     net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> sound) {
+        return net.minecraft.world.item.equipment.Equippable.builder(slot).setEquipSound(sound)
+                .setAsset(ResourceKey.create(net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID, Identifier.parse("serantis_battle:" + name)))
+                .build();
+    }
+
+    /** The 3D model a worn item is drawn with ("fire_helmet", "winged_boots"...), or null for anything else. */
+    public static String modelOf(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return null;
+        Item item = stack.getItem();
+        if (item == WingedBoots.BOOTS) return "winged_boots";
+        if (item == TeleportBoots.BOOTS) return "teleporting_boots";
+        String inf = INFLUENCE_OF.get(item);
+        if (inf == null) return null;
+        String id = BuiltInRegistries.ITEM.getKey(item).getPath();
+        return id;                                                      // "fire_helmet" is both the item and the model
+    }
+
+    /** The texture for a model from modelOf. */
+    public static String textureOf(String model) {
+        return model.substring(0, model.lastIndexOf('_'));
     }
 
     /** How much less damage this player takes from an attack of this influence (0-0.25). */

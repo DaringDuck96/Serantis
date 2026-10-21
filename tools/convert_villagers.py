@@ -18,6 +18,9 @@ MASTERS = {"unbound_grandmaster", "ember_warlord", "rime_harpoon_master", "thund
            "abyssal_anchor_champion", "thornbloom_kama_master", "fey_blademaster", "hollow_riftwalker",
            "umbral_shinobi_master", "thousand_blade_archon", "sunthrone_pharaoh"}
 
+# Story characters: saved under the look the add-on gives them.
+RENAME = {"acolyte_of_the_first_dragon": "mysterious_figure", "acolyte_of_the_last_dragon": "acolyte_of_the_last"}
+
 def convert(addon, src):
     work = tempfile.mkdtemp()
     if src.endswith(".zip"):
@@ -30,6 +33,7 @@ def convert(addon, src):
     if not m: raise SystemExit(f"Can't read the villager from '{label}'")
     look = m.group(2)
     if look in MASTERS: look = "master_" + PREFIX[m.group(1)]
+    look = RENAME.get(look, look)
     files = sorted(glob.glob(os.path.join(work, "**/*.bbmodel"), recursive=True))
     variant = lambda p: next((v for v in ("_enraged_mutated", "_enraged", "_mutated") if p.endswith(v + ".bbmodel")), "")
     by = {variant(p): p for p in files}

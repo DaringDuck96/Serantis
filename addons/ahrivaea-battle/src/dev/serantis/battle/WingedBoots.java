@@ -42,7 +42,8 @@ public final class WingedBoots {
     public static void register() {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:winged_boots"));
         BOOTS = Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties()
-                .humanoidArmor(ArmorMaterials.LEATHER, ArmorType.BOOTS).rarity(Rarity.UNCOMMON).setId(key)));
+                .humanoidArmor(ArmorMaterials.LEATHER, ArmorType.BOOTS).rarity(Rarity.UNCOMMON).setId(key)
+                .component(net.minecraft.core.component.DataComponents.EQUIPPABLE, InfluenceArmor.look(EquipmentSlot.FEET, "winged", net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_LEATHER))));
     }
 
     private static void abilities(ServerPlayer p, boolean mayfly) {

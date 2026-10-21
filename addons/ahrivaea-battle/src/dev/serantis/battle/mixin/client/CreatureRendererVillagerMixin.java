@@ -22,7 +22,7 @@ public abstract class CreatureRendererVillagerMixin {
         String look = VillagerLooks.look(job == null ? null : job.profession());
         if (look == null) return;
         var geo = GeoModels.model("villager", look);
-        if (geo == null && "mysterious_figure".equals(look)) geo = GeoModels.model("villager", look = "black_market_merchant");   // until its own model comes
+        if (geo == null && "mysterious_figure".equals(look)) geo = GeoModels.model("villager", look = "black_market_merchant");   // only if its model is missing
         if (geo == null && "acolyte_of_the_last".equals(look)) geo = GeoModels.model("villager", look = "master_darkness");
         if (geo == null) return;
         state.geo = geo;

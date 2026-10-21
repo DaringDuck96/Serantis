@@ -49,6 +49,7 @@ public final class TeleportBoots {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:teleporting_boots"));
         BOOTS = Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties()
                 .humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.BOOTS).rarity(Rarity.RARE).setId(key)
+                .component(net.minecraft.core.component.DataComponents.EQUIPPABLE, InfluenceArmor.look(EquipmentSlot.FEET, "teleporting", net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_DIAMOND))
                 .component(DataComponents.LORE, new ItemLore(List.of(Component.literal("Double-tap sneak: teleport up to 10 blocks ahead")
                         .withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GRAY)))))));
     }
