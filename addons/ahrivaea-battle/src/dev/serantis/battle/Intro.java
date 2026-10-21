@@ -46,6 +46,27 @@ public final class Intro {
 
     public static boolean active(ServerPlayer p) { return ACTIVE.containsKey(p.getUUID()); }
 
+    /**
+     * Each player's Acolyte is theirs alone: only the player whose scene it is can see it (and its smoke and
+     * sounds), so on a shared server nobody sees anyone else's cutscene and everyone gets their own.
+     */
+    public static boolean visibleTo(Entity figure, ServerPlayer viewer) {
+        UUID owner = null;
+        for (var en : ACTIVE.entrySet()) if (figure.getUUID().equals(en.getValue())) owner = en.getKey();
+        if (owner == null) owner = FigureVisit.ownerOf(figure);
+        return owner == null || owner.equals(viewer.getUUID());
+    }
+
+    static void particles(ServerPlayer p, net.minecraft.core.particles.ParticleOptions type, double x, double y, double z, int n,
+                          double dx, double dy, double dz, double speed) {
+        ((ServerLevel) p.level()).sendParticles(p, type, true, false, x, y, z, n, dx, dy, dz, speed);
+    }
+
+    static void sound(ServerPlayer p, net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> sound, double x, double y, double z, float volume, float pitch) {
+        p.connection.send(new net.minecraft.network.protocol.game.ClientboundSoundPacket(sound, net.minecraft.sounds.SoundSource.HOSTILE,
+                x, y, z, volume, pitch, p.getRandom().nextLong()));
+    }
+
     /** The scene is on, or about to start: the welcome guide waits. */
     public static boolean pending(ServerPlayer p) { return active(p) || needsIntro(p); }
 

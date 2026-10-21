@@ -139,9 +139,12 @@ public final class FigureVisit {
 
     private FigureVisit() {}
 
-    public static boolean owns(Entity e) {
-        for (Visit v : ACTIVE.values()) if (e.getUUID().equals(v.figure)) return true;
-        return false;
+    public static boolean owns(Entity e) { return ownerOf(e) != null; }
+
+    /** The player whose visit this Acolyte is (null: none). */
+    public static UUID ownerOf(Entity e) {
+        for (var en : ACTIVE.entrySet()) if (e.getUUID().equals(en.getValue().figure)) return en.getKey();
+        return null;
     }
 
     /** A battle ended (won or lost): count it. */
@@ -249,17 +252,17 @@ public final class FigureVisit {
         v.ticks++;
         Vec3 s = v.spot;
         if (v.ticks % 2 == 0) {
-            level.sendParticles(ParticleTypes.SQUID_INK, s.x, s.y + 1, s.z, 12, 0.25, 0.7, 0.25, 0.01);
-            level.sendParticles(ParticleTypes.LARGE_SMOKE, s.x, s.y + 0.8, s.z, 6, 0.3, 0.6, 0.3, 0.005);
-            level.sendParticles(ParticleTypes.SOUL, s.x, s.y + 0.4, s.z, 2, 0.4, 0.3, 0.4, 0.02);
+            Intro.particles(p, ParticleTypes.SQUID_INK, s.x, s.y + 1, s.z, 12, 0.25, 0.7, 0.25, 0.01);
+            Intro.particles(p, ParticleTypes.LARGE_SMOKE, s.x, s.y + 0.8, s.z, 6, 0.3, 0.6, 0.3, 0.005);
+            Intro.particles(p, ParticleTypes.SOUL, s.x, s.y + 0.4, s.z, 2, 0.4, 0.3, 0.4, 0.02);
         }
-        if (v.ticks % 18 == 1) level.playSound(null, BlockPos.containing(s), SoundEvents.WARDEN_HEARTBEAT, SoundSource.HOSTILE, 1.4f, 0.8f);
+        if (v.ticks % 18 == 1) Intro.sound(p, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.WARDEN_HEARTBEAT), s.x, s.y, s.z, 1.4f, 0.8f);
         if (v.ticks < 40) return;
         CreatureEntity f = Intro.figureAt(level, s.x, s.y, s.z, LAST_ROLE);
         if (f == null) { ACTIVE.remove(p.getUUID()); p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS); return; }
-        level.sendParticles(ParticleTypes.SQUID_INK, s.x, s.y + 1, s.z, 60, 0.4, 0.9, 0.4, 0.05);
-        level.sendParticles(ParticleTypes.SOUL, s.x, s.y + 1, s.z, 20, 0.5, 0.8, 0.5, 0.04);
-        level.playSound(null, BlockPos.containing(s), SoundEvents.SOUL_ESCAPE.value(), SoundSource.HOSTILE, 1.5f, 0.6f);
+        Intro.particles(p, ParticleTypes.SQUID_INK, s.x, s.y + 1, s.z, 60, 0.4, 0.9, 0.4, 0.05);
+        Intro.particles(p, ParticleTypes.SOUL, s.x, s.y + 1, s.z, 20, 0.5, 0.8, 0.5, 0.04);
+        Intro.sound(p, SoundEvents.SOUL_ESCAPE, s.x, s.y, s.z, 1.5f, 0.6f);
         v.figure = f.getUUID();
         v.ticks = 0;
         PartySync.sync(p);
@@ -440,15 +443,15 @@ public final class FigureVisit {
         ServerLevel level = (ServerLevel) p.level();
         Entity e = level.getEntity(v.figure);
         if (e != null && "last".equals(v.npc)) {           // he sinks back into the shadows, and the dark lifts
-            level.sendParticles(ParticleTypes.SQUID_INK, e.getX(), e.getY() + 1, e.getZ(), 60, 0.4, 0.9, 0.4, 0.05);
-            level.sendParticles(ParticleTypes.SOUL, e.getX(), e.getY() + 0.6, e.getZ(), 25, 0.5, 0.6, 0.5, 0.03);
-            level.playSound(null, e.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.HOSTILE, 1.5f, 0.5f);
+            Intro.particles(p, ParticleTypes.SQUID_INK, e.getX(), e.getY() + 1, e.getZ(), 60, 0.4, 0.9, 0.4, 0.05);
+            Intro.particles(p, ParticleTypes.SOUL, e.getX(), e.getY() + 0.6, e.getZ(), 25, 0.5, 0.6, 0.5, 0.03);
+            Intro.sound(p, SoundEvents.SOUL_ESCAPE, e.getX(), e.getY(), e.getZ(), 1.5f, 0.5f);
             e.discard();
             p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS);
         } else if (e != null) {
-            level.sendParticles(ParticleTypes.LARGE_SMOKE, e.getX(), e.getY() + 1, e.getZ(), 30, 0.3, 0.6, 0.3, 0.02);
-            level.sendParticles(ParticleTypes.PORTAL, e.getX(), e.getY() + 1, e.getZ(), 40, 0.4, 0.8, 0.4, 0.3);
-            level.playSound(null, e.blockPosition(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 0.8f);
+            Intro.particles(p, ParticleTypes.LARGE_SMOKE, e.getX(), e.getY() + 1, e.getZ(), 30, 0.3, 0.6, 0.3, 0.02);
+            Intro.particles(p, ParticleTypes.PORTAL, e.getX(), e.getY() + 1, e.getZ(), 40, 0.4, 0.8, 0.4, 0.3);
+            Intro.sound(p, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.ILLUSIONER_MIRROR_MOVE), e.getX(), e.getY(), e.getZ(), 1f, 0.8f);
             e.discard();
         }
         PartySync.sync(p);

@@ -27,6 +27,7 @@
     "TunnelerMixin",
     "RaidsMixin",
     "DexMixin",
+    "FigureVisibilityMixin",
     "BattleRaidAccess",
     "BlockSkillsMixin",
     "ItemCombinerMenuAccessor",

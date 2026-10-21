@@ -404,6 +404,8 @@ The raid is **Easy** (3-4 raiders), **Medium** (5-6), **Hard** (7-8) or **Very H
 
 **The Eternita trial.** The last visit ends in a fight: your whole party (every creature in it, not just four) and you against the Mysterious Figure alone, with the stats of an average Legendary creature as if it were Level 25 (the level curve carried on past 20, about 13% above a Level 20 Legendary), and **six moves** (instead of three) drawn from every influence, the strongest of a dozen rolled sets. Win and it kneels and offers to follow you: recruit it from the battle results like any creature, and it joins as a standard Level 10 Legendary (the average Legendary's stats, golden apples have no effect on it) with six fresh moves from any influence, named "Mysterious Figure". Lose (or flee) and you keep the stone, but the Figure leaves and can't be recruited. It's a one-time fight.
 
+**Every player gets every scene.** The opening scene, every Acolyte visit and both trials are tracked per player: each player sees each one when *they* reach its milestone, no matter who else on the server has already seen it, and several players can be in their own scenes at once. An Acolyte in someone's scene (and its smoke and sounds) is only visible to that player.
+
 **The Acolyte of the Last.** The Acolyte of the First's counterpart, who serves the Last Dragon and Enrages creatures to spread chaos. He walks up to you three times, like the Acolyte of the First, and goes by the **Spooky Mysterious Figure** until his second visit is over:
 
 | Visit | When | What happens |
