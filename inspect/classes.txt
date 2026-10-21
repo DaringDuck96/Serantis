@@ -1,6 +1,2 @@
-# classes 1792610789
-sig:net.minecraft.server.level.ServerLevel
-sig:net.minecraft.core.particles.DustParticleOptions
-sig:net.minecraft.core.particles.BlockParticleOption
-sig:net.minecraft.world.entity.Entity
-sig:net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase
+# classes 1792610989
+compile wip/linx
