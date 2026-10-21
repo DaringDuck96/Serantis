@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Before you battle a villager to recruit it, it talks to you (client/DialogueScreen): one of five conversations
  * for its profession (serantis_battle/villager_dialogue.json, "none" for a villager without one), ending with
- * your choice to fight it or not. Merchants, Town Guards and others that can't be recruited don't have any.
+ * your choice to fight it or not. Right-clicking a villager starts the same conversation. Merchants, Town Guards and others that can't be recruited don't have any.
  */
 public final class VillagerTalk {
     private static JsonObject all;
@@ -57,6 +57,14 @@ public final class VillagerTalk {
         TALKING.put(p.getUUID(), e.getId());
         PartySync.sync(p);
         return true;
+    }
+
+    /** Right-clicked a villager: it talks, and you can choose to fight it. */
+    public static void talk(ServerPlayer p, int id) {
+        Entity e = p.level().getEntity(id);
+        if (!(e instanceof CreatureEntity c) || !c.isAlive() || p.distanceToSqr(c) > 8 * 8 || Battles.of(p) != null || Battles.inBattle(c)
+                || BattleHold.isHeld(c)) return;
+        ask(p, e);
     }
 
     /** The talk ended: fight, or leave it be. */

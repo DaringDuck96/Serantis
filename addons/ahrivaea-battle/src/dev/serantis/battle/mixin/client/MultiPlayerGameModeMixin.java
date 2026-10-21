@@ -59,6 +59,17 @@ public abstract class MultiPlayerGameModeMixin {
             cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }
+        if (!player.isShiftKeyDown() && target instanceof dev.ahrivaea.creature.CreatureEntity c && !c.isTame()
+                && dev.ahrivaea.villager.Villagers.SPECIES.equals(c.getSpeciesId())) {   // a villager: talk (and maybe fight), see VillagerTalk
+            if (hand == InteractionHand.MAIN_HAND && net.minecraft.client.Minecraft.getInstance().gui.screen() == null) {
+                JsonObject o = new JsonObject();
+                o.addProperty("kind", "serantis_villager_talk");
+                o.addProperty("entity", target.getId());
+                dev.ahrivaea.client.battle.BattleClient.send(o);
+            }
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
         if (hand != InteractionHand.MAIN_HAND || !(target instanceof Player other) || other == player || player.isSpectator()) return;
         if (TradeClient.askToTrade(other)) cir.setReturnValue(InteractionResult.SUCCESS);
     }

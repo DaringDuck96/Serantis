@@ -322,6 +322,11 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_villager_talk".equals(kind)) {     // right-clicked a villager: it talks (and offers a fight)
+                if (o.has("entity")) dev.serantis.battle.VillagerTalk.talk(player, o.get("entity").getAsInt());
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_villager_answer".equals(kind)) {   // a villager's conversation ended: fight it, or not
                 dev.serantis.battle.VillagerTalk.answer(player, o.has("fight") && o.get("fight").getAsBoolean());
                 cir.setReturnValue(null);
