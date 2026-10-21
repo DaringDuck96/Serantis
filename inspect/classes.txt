@@ -1,2 +1,3 @@
-# 1792622665
-sig:net.minecraft.client.gui.Gui
+# 1792622703
+sig:net.minecraft.client.gui.Hud
+net.minecraft.client.gui.Gui
