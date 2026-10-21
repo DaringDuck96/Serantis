@@ -1,0 +1,5 @@
+Compiled from "ServerLevel.java"
+class net.minecraft.server.level.ServerLevel$1 {
+  static final int[] $SwitchMap$net$minecraft$world$level$Level$ExplosionInteraction;
+  static {};
+}
