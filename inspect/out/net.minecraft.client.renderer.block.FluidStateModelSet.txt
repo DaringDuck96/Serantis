@@ -1,0 +1,13 @@
+Compiled from "FluidStateModelSet.java"
+public class net.minecraft.client.renderer.block.FluidStateModelSet {
+  private static final net.minecraft.client.renderer.block.FluidModel$Unbaked WATER_MODEL;
+  private static final net.minecraft.client.renderer.block.FluidModel$Unbaked LAVA_MODEL;
+  private final java.util.Map<net.minecraft.world.level.material.Fluid, net.minecraft.client.renderer.block.FluidModel> modelByFluid;
+  private final net.minecraft.client.renderer.block.FluidModel missingModel;
+  public net.minecraft.client.renderer.block.FluidStateModelSet(java.util.Map<net.minecraft.world.level.material.Fluid, net.minecraft.client.renderer.block.FluidModel>, net.minecraft.client.renderer.block.FluidModel);
+  public static java.util.Map<net.minecraft.world.level.material.Fluid, net.minecraft.client.renderer.block.FluidModel> bake(net.minecraft.client.resources.model.sprite.MaterialBaker);
+  public net.minecraft.client.renderer.block.FluidModel get(net.minecraft.world.level.material.FluidState);
+  private static java.lang.String lambda$bake$1();
+  private static java.lang.String lambda$bake$0();
+  static {};
+}

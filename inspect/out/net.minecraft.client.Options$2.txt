@@ -1,0 +1,13 @@
+Compiled from "Options.java"
+class net.minecraft.client.Options$2 implements net.minecraft.client.Options$FieldAccess {
+  final net.minecraft.nbt.CompoundTag val$options;
+  net.minecraft.client.Options$2();
+  private java.lang.String getValue(java.lang.String);
+  public <T> void process(java.lang.String, net.minecraft.client.OptionInstance<T>);
+  public int process(java.lang.String, int);
+  public boolean process(java.lang.String, boolean);
+  public java.lang.String process(java.lang.String, java.lang.String);
+  public float process(java.lang.String, float);
+  public <T> T process(java.lang.String, T, java.util.function.Function<java.lang.String, T>, java.util.function.Function<T, java.lang.String>);
+  private static void lambda$process$0(java.lang.String, net.minecraft.client.OptionInstance, com.mojang.serialization.DataResult$Error);
+}

@@ -1,0 +1,5 @@
+Compiled from "ItemStack.java"
+class net.minecraft.world.item.ItemStack$4 {
+  static final int[] $SwitchMap$net$minecraft$world$item$Rarity;
+  static {};
+}
