@@ -1,0 +1,15 @@
+Compiled from "AbstractArrow.java"
+public final class net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup extends java.lang.Enum<net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup> {
+  public static final net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup DISALLOWED;
+  public static final net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup ALLOWED;
+  public static final net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup CREATIVE_ONLY;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup> LEGACY_CODEC;
+  private static final net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup[] $VALUES;
+  public static net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup[] values();
+  public static net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup valueOf(java.lang.String);
+  private net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup();
+  public static net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup byOrdinal(int);
+  private static net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup[] $values();
+  private static java.lang.Byte lambda$static$0(net.minecraft.world.entity.projectile.arrow.AbstractArrow$Pickup);
+  static {};
+}

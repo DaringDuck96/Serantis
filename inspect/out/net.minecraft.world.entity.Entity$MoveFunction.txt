@@ -1,4 +1,0 @@
-Compiled from "Entity.java"
-public interface net.minecraft.world.entity.Entity$MoveFunction {
-  public abstract void accept(net.minecraft.world.entity.Entity, double, double, double);
-}

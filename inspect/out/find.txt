@@ -1,5 +1,5 @@
-minecraft.jar: net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen$ItemPickerMenu.class
-minecraft.jar: net/minecraft/client/particle/ItemPickupParticle.class
-minecraft.jar: net/minecraft/client/particle/ItemPickupParticleGroup$ParticleInstance.class
-minecraft.jar: net/minecraft/client/particle/ItemPickupParticleGroup$State.class
-minecraft.jar: net/minecraft/client/particle/ItemPickupParticleGroup.class
+minecraft.jar: net/minecraft/client/model/object/projectile/ArrowModel.class
+minecraft.jar: net/minecraft/world/entity/projectile/arrow/AbstractArrow$Pickup.class
+minecraft.jar: net/minecraft/world/entity/projectile/arrow/AbstractArrow.class
+minecraft.jar: net/minecraft/world/entity/projectile/arrow/Arrow.class
+minecraft.jar: net/minecraft/world/entity/projectile/arrow/SpectralArrow.class
