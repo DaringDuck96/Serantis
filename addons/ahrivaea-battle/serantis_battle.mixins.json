@@ -35,7 +35,8 @@
     "VillagersRolesMixin",
     "FloatGoalMixin",
     "ProjectileBattleMixin",
-    "EntityRemovedMixin"
+    "EntityRemovedMixin",
+    "BasesInvoker"
   ],
   "client": [
     "client.PartyScreenMixin",
@@ -47,7 +48,8 @@
     "client.MultiPlayerGameModeMixin",
     "client.MinecraftTradeMixin",
     "client.VillagerScreenMixin",
-    "client.CreatureRendererVillagerMixin"
+    "client.CreatureRendererVillagerMixin",
+    "client.CoreBreakMixin"
   ],
   "injectors": {
     "defaultRequire": 1

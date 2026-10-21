@@ -226,6 +226,7 @@ public final class Market {
         CaughtCreature c = stock.remove(index);
         XpBank.take(p, cost);
         boolean added = Party.addAnywhere(p, c);
+        if (added) TypeMastery.gained(p, c.influence());
         if (!added) { XpBank.give(p, cost); tell(p, "You have no room for another creature."); return; }
         ((Holder) m).serantis$setStock(stock);
         String name = Species.get(c.species()).map(sp -> sp.nameFor(c.influence())).orElse(c.species());

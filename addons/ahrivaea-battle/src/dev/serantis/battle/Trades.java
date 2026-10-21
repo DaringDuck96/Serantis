@@ -181,6 +181,8 @@ public final class Trades {
         CaughtCreature ca = s.fromPick, cb = s.toPick;
         Party.set(a, s.fromSlot, cb);
         Party.set(b, s.toSlot, ca);
+        TypeMastery.gained(a, cb.influence());
+        TypeMastery.gained(b, ca.influence());
         BY_PLAYER.remove(s.from, s);
         BY_PLAYER.remove(s.to, s);
         tell(a, "Trade complete! You traded " + label(ca) + " for " + label(cb) + ".", ChatFormatting.GREEN);

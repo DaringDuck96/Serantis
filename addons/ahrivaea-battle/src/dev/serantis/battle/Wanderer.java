@@ -106,6 +106,7 @@ public final class Wanderer {
         CaughtCreature got = randomCreature(p.getRandom(), given.level());
         if (got == null) return;
         Party.set(p, slot, got);
+        TypeMastery.gained(p, got.influence());
         h.serantis$setSwaps(h.serantis$swaps() - 1);
         p.sendSystemMessage(Component.literal("You gave the Wandering Trader your " + label(given) + " and got a " + label(got) + " ("
                 + RecruitRules.rarity(Species.get(got.species()).orElseThrow(), got.influence()) + ")!").withStyle(ChatFormatting.AQUA));

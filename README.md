@@ -252,6 +252,10 @@ Gym Master Stones and the Eternita Stone are **trophies**: place one and it stan
 
 Collect all 5 stones of all 12 influences (60 in all) and you get the rainbow **Eternita Stone**: wild creatures that spawn around you are Mutated 5 times in 100 instead of 1 in 100. It also earns the achievement "I Won! I Won the Game!".
 
+### Taking down a base
+
+Hitting a Base Core asks first: creatures can't be recovered from a destroyed core, so if you say yes, every creature working at that base is sent back to your party (or box) before the core breaks and drops. Only the core's owner can take a base down. "No, keep it" leaves everything as it was.
+
 ### Creatures are never lost
 
 A creature only leaves you if you release it. A creature you've sent out that gets left behind (you teleport, go through a portal, die and respawn far away, log out, or just get more than 96 blocks away) comes back to your party, or your box if the party is full: straight away if it's still nearby in the world, or within a second or so if its chunk has unloaded (the game remembers a copy of every creature you have out, and the one left in the world vanishes when its chunk next loads, so it's never duplicated). A creature that belongs to you can't die in the world either: a blow that would finish it leaves it on 1 HP, and if it was out it goes back to your party to recover (creatures working at a base stay put).

@@ -84,6 +84,7 @@ public abstract class BattlesMixin {
         boolean added = Party.addAnywhere(player, caught);
         if (added) dev.serantis.battle.Naming.offer(sp, caught);
         if (added) dev.serantis.battle.Achievements.recruited(sp, caught.influence());
+        if (added) dev.serantis.battle.TypeMastery.gained(sp, caught.influence());
         return added;
     }
 
@@ -173,6 +174,12 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if ("serantis_core_break".equals(kind)) {
+                dev.serantis.battle.CoreRemoval.remove(player, net.minecraft.core.BlockPos.containing(
+                        o.get("x").getAsInt(), o.get("y").getAsInt(), o.get("z").getAsInt()));
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_welcome_seen".equals(kind)) {
                 dev.serantis.battle.Welcome.seen(player);
                 cir.setReturnValue(null);

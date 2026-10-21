@@ -33,6 +33,8 @@ public abstract class ServerPlayerSkillsMixin {
         var co = (dev.serantis.battle.Companions.Holder) (Object) this;
         var cb = (dev.serantis.battle.Companions.Holder) (Object) old;
         co.serantis$out().putAll(cb.serantis$out());
+        ((dev.serantis.battle.TypeMastery.Holder) (Object) this).serantis$typeGained().putAll(((dev.serantis.battle.TypeMastery.Holder) (Object) old).serantis$typeGained());
+        ((dev.serantis.battle.TypeMastery.Holder) (Object) this).serantis$typeTrophies().putAll(((dev.serantis.battle.TypeMastery.Holder) (Object) old).serantis$typeTrophies());
         co.serantis$gone().addAll(cb.serantis$gone());
         for (var t : dev.serantis.battle.Achievements.TRACKS) a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
         // XP is the main currency: it's kept through death.
