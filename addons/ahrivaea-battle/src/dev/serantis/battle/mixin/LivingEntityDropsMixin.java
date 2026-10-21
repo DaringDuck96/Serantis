@@ -40,7 +40,8 @@ public abstract class LivingEntityDropsMixin {
     private void serantis$untouchable(net.minecraft.server.level.ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float amount,
                                       org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
         if ((dev.serantis.battle.Market.isBlackMarket((LivingEntity) (Object) this) || dev.serantis.battle.Villages.isGuard((LivingEntity) (Object) this)
-                || dev.serantis.battle.Wanderer.isWanderer((LivingEntity) (Object) this) || dev.serantis.battle.Masters.isMaster((LivingEntity) (Object) this))
+                || dev.serantis.battle.Wanderer.isWanderer((LivingEntity) (Object) this) || dev.serantis.battle.Masters.isMaster((LivingEntity) (Object) this)
+                || dev.serantis.battle.GoblinRaids.isRaider((LivingEntity) (Object) this))
                 && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) cir.setReturnValue(false);
     }
 

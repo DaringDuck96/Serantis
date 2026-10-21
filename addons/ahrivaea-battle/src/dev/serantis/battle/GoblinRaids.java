@@ -125,7 +125,6 @@ public final class GoblinRaids {
             e.setVariant(Variant.NONE);
             e.addTag(TAG);
             e.setNoAi(true);
-            e.setInvulnerable(true);
             e.setGlowingTag(true);
             e.capSize(1.25f);
             float yaw = (float) Math.toDegrees(Math.atan2(r.core.getZ() + 0.5 - z, r.core.getX() + 0.5 - x)) - 90f;
@@ -135,7 +134,7 @@ public final class GoblinRaids {
         }
         if (r.entities.isEmpty()) return 0;
         r.ends = level.getGameTime() + WINDOW;
-        r.bar = new ServerBossEvent(Component.literal("Goblin Raid"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+        r.bar = new ServerBossEvent(UUID.randomUUID(), Component.literal("Goblin Raid"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         r.bar.addPlayer(p);
         BY_OWNER.put(owner, r);
         level.playSound(null, r.core, SoundEvents.RAID_HORN.value(), SoundSource.HOSTILE, 2f, 1f);
