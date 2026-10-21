@@ -22,5 +22,8 @@ public abstract class VariantMixin {
     @Inject(method = "roll", at = @At("RETURN"), cancellable = true)
     private static void serantis$noOtherMutated(ServerLevel level, RandomSource random, CallbackInfoReturnable<Variant> cir) {
         if (cir.getReturnValue() == Variant.MUTATED) cir.setReturnValue(Variant.NONE);
+        // Chaos Seeker (the Acolyte of the Last's trial): Enraged creatures find you more often.
+        if (cir.getReturnValue() == Variant.NONE && random.nextInt(100) < dev.serantis.battle.FigureVisit.enragedBonus(dev.serantis.battle.Masters.SPAWN_PLAYER.get()))
+            cir.setReturnValue(Variant.ENRAGED);
     }
 }

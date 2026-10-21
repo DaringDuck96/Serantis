@@ -45,6 +45,13 @@ public final class DexExtras {
         }
         if (a.has("biomes")) a.add("biomes", new JsonArray());
         out.add(a);
+        int lastStatus = (met & FigureVisit.LAST_RECRUITED) != 0 ? Dex.CAUGHT : (met & 1024) != 0 ? Dex.SEEN : 0;
+        JsonObject l = a.deepCopy();
+        l.addProperty("n", max + 2);
+        l.addProperty("name", (met & FigureVisit.LAST_KNOWN) != 0 ? FigureVisit.LAST_NAME : FigureVisit.LAST_TITLE);
+        l.addProperty("status", lastStatus);
+        l.addProperty("hint", "Only one exists. Recruit 400 different creatures, then defeat him.");
+        out.add(l);
         int seen = 0, caught = 0;
         for (JsonElement el : out) {
             int s = el.getAsJsonObject().has("status") ? el.getAsJsonObject().get("status").getAsInt() : 0;

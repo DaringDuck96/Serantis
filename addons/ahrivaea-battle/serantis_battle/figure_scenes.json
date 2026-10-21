@@ -1,5 +1,5 @@
 {
-  "_doc": "The Mysterious Figure's visits after the opening scene. Each plays once, when its trigger is met (see FigureVisit). bit: its flag in the player's saved figure scenes. lines: what it says as it arrives. choices: what you can answer, and its reply. end: its parting words before it vanishes. Speakers: figure, action. battle: true ends the talk in a battle against the figure instead of it vanishing (the Eternita Stone trial). A choice with reveal: true tells you its name: from then on it is the Acolyte of the First (its name in every scene, battle and as a recruit). \"Mysterious Figure\" in any line is replaced by its current name.",
+  "_doc": "The Mysterious Figure's visits after the opening scene. Each plays once, when its trigger is met (see FigureVisit). bit: its flag in the player's saved figure scenes. lines: what it says as it arrives. choices: what you can answer, and its reply. end: its parting words before it vanishes. Speakers: figure, action. battle: true ends the talk in a battle against the figure instead of it vanishing (the Eternita Stone trial). A choice with reveal: true tells you its name: from then on it is the Acolyte of the First (its name in every scene, battle and as a recruit). \"Mysterious Figure\" in any line is replaced by its current name. npc: \"last\" is the Acolyte of the Last (the Spooky Mysterious Figure until his second visit is over); after: a scene that has to have played first. {name} in a line is replaced by its current name.",
   "scenes": [
     {
       "id": "battles",
@@ -340,6 +340,188 @@
         [
           "figure",
           "All of you, against me. Hold nothing back. I won't."
+        ]
+      ]
+    },
+    {
+      "id": "last1",
+      "bit": 1024,
+      "npc": "last",
+      "trigger": "your third meeting with the Acolyte of the First (the opening scene counts)",
+      "lines": [
+        [
+          "action",
+          "*A figure in a dark hood steps out of the shadows*"
+        ],
+        [
+          "figure",
+          "So you're the one the Acolyte of the First keeps whispering to."
+        ],
+        [
+          "figure",
+          "Has he told you what he is? What he really wants? No. He never does."
+        ]
+      ],
+      "choices": [
+        {
+          "text": "Who are you?",
+          "reply": [
+            [
+              "figure",
+              "Someone who's seen what happens to his little helpers. Who I am can wait. What he is can't."
+            ]
+          ]
+        },
+        {
+          "text": "He's helping me.",
+          "reply": [
+            [
+              "action",
+              "*The {name} laughs*"
+            ],
+            [
+              "figure",
+              "Helping you? He's using you. A tool to stitch the old world back together, every flaw and all."
+            ]
+          ]
+        }
+      ],
+      "end": [
+        [
+          "figure",
+          "The Acolyte of the First is a liar, and a fraud. He'll walk you to your grave smiling the whole way."
+        ],
+        [
+          "figure",
+          "Have you noticed the creatures growing wilder? Angrier? That isn't an accident. It's a promise."
+        ],
+        [
+          "figure",
+          "Sleep well."
+        ]
+      ]
+    },
+    {
+      "id": "last2",
+      "bit": 2048,
+      "npc": "last",
+      "after": "last1",
+      "trigger": "a base of yours reaches Level 3 (after his first visit)",
+      "lines": [
+        [
+          "action",
+          "*The air turns cold. The {name} is waiting for you*"
+        ],
+        [
+          "figure",
+          "You didn't listen. Of course you didn't."
+        ],
+        [
+          "figure",
+          "Every tower you raise, every wall you build, drags Serantia back toward the mistakes that broke it."
+        ],
+        [
+          "figure",
+          "This world must stay in ruin. Only from the ashes can it be reborn correctly. The Last Dragon understands that. Soon everyone will."
+        ]
+      ],
+      "choices": [
+        {
+          "text": "Who are you?",
+          "reply": [
+            [
+              "figure",
+              "I am the Acolyte of the Last. I serve the one the First cast off: the Last Dragon, the King of Chaos."
+            ]
+          ]
+        },
+        {
+          "text": "I won't stop.",
+          "reply": [
+            [
+              "figure",
+              "I am the Acolyte of the Last, and I didn't come to ask. I'll tear down everything you've built, and you along with it."
+            ]
+          ]
+        },
+        {
+          "text": "What does the Last Dragon want?",
+          "reply": [
+            [
+              "figure",
+              "To shed this world like an old skin. Every Enraged beast you meet is one more crack in its shell. My master and I have been busy."
+            ],
+            [
+              "figure",
+              "I am his Acolyte. The Acolyte of the Last. Remember it."
+            ]
+          ]
+        }
+      ],
+      "end": [
+        [
+          "figure",
+          "Keep going, and I will destroy you. Consider this your only warning."
+        ]
+      ]
+    },
+    {
+      "id": "last3",
+      "bit": 4096,
+      "npc": "last",
+      "after": "last2",
+      "battle": true,
+      "trigger": "400 different creatures recruited (after his second visit)",
+      "lines": [
+        [
+          "figure",
+          "Four hundred creatures. Four hundred souls bound to you."
+        ],
+        [
+          "figure",
+          "Do you know how many I've driven mad for my master? How many I've Enraged to feed his chaos? More than you'll ever recruit."
+        ],
+        [
+          "figure",
+          "You've become exactly what the First wanted. A shepherd for his broken world."
+        ],
+        [
+          "figure",
+          "So let's end this. Here. Now."
+        ]
+      ],
+      "choices": [
+        {
+          "text": "Bring it on.",
+          "reply": [
+            [
+              "figure",
+              "Gladly."
+            ]
+          ]
+        },
+        {
+          "text": "You don't have to do this.",
+          "reply": [
+            [
+              "action",
+              "*The {name}'s eyes burn red*"
+            ],
+            [
+              "figure",
+              "Mercy? From you? The Last Dragon taught me what mercy is worth."
+            ]
+          ]
+        }
+      ],
+      "end": [
+        [
+          "action",
+          "*Dark energy crackles around the {name}. Somewhere far away, a dragon roars.*"
+        ],
+        [
+          "figure",
+          "All of you, against me. When you fall, the chaos will have one more champion."
         ]
       ]
     }

@@ -23,6 +23,7 @@ public abstract class CreatureRendererVillagerMixin {
         if (look == null) return;
         var geo = GeoModels.model("villager", look);
         if (geo == null && "mysterious_figure".equals(look)) geo = GeoModels.model("villager", look = "black_market_merchant");   // until its own model comes
+        if (geo == null && "acolyte_of_the_last".equals(look)) geo = GeoModels.model("villager", look = "master_darkness");
         if (geo == null) return;
         state.geo = geo;
         state.texture = Identifier.parse("ahrivaea:textures/entity/creature/villager/" + look + ".png");   // never Enraged or Mutated

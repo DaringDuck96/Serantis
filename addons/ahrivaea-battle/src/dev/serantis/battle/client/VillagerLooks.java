@@ -19,7 +19,7 @@ public final class VillagerLooks {
             // Serantis's own
             Map.entry("alchemist", "alchemist"), Map.entry("bard", "bard"), Map.entry("innkeeper", "innkeeper"),
             Map.entry("noble", "noble"), Map.entry("merchant", "merchant"), Map.entry("move_tutor", "move_tutor"),
-            Map.entry("town_guard", "town_guard"), Map.entry("mysterious_figure", "mysterious_figure"), Map.entry("black_market", "black_market_merchant"),
+            Map.entry("town_guard", "town_guard"), Map.entry("mysterious_figure", "mysterious_figure"), Map.entry("acolyte_of_the_last", "acolyte_of_the_last"), Map.entry("black_market", "black_market_merchant"),
             Map.entry("wandering_trader", "wandering_trader"));
 
     private VillagerLooks() {}

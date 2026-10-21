@@ -87,15 +87,19 @@ public final class Intro {
     }
 
     /** A Mysterious Figure standing here (no AI, can't be hurt or battled). */
-    static CreatureEntity figureAt(ServerLevel level, double x, double y, double z) {
+    static CreatureEntity figureAt(ServerLevel level, double x, double y, double z) { return figureAt(level, x, y, z, ROLE); }
+
+    /** An Acolyte (role: the First's or the Last's) standing here (no AI, can't be hurt or battled). */
+    static CreatureEntity figureAt(ServerLevel level, double x, double y, double z, String role) {
         Species villager = Species.get(dev.ahrivaea.villager.Villagers.SPECIES).orElse(null);
         if (villager == null) return null;
         CreatureEntity f = Ahrivaea.spawn(level, villager, Influence.NONE, 20, -1f, x, y, z);
         if (f == null) return null;
-        Villages.setJob(f, new VillagerJob(ROLE, 1, 0));
+        Villages.setJob(f, new VillagerJob(role, 1, 0));
         f.addTag(TAG);
         f.setNoAi(true);
-        f.setCustomName(Component.literal("Mysterious Figure").withStyle(ChatFormatting.DARK_PURPLE));
+        f.setCustomName(ROLE.equals(role) ? Component.literal("Mysterious Figure").withStyle(ChatFormatting.DARK_PURPLE)
+                : Component.literal(FigureVisit.LAST_TITLE).withStyle(ChatFormatting.DARK_RED));
         f.setCustomNameVisible(false);
         return f;
     }

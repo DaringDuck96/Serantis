@@ -20,6 +20,7 @@ public class FigureScreen extends Screen {
     private static final int GOLD = 0xFFB89BE8, TEXT = 0xFFF0ECE4, YOU = 0xFF8FD1E8, DIM = 0xFF9AA4B4;
     private String name = "Mysterious Figure";
     private boolean named;
+    private String npc = "first";
     private static com.google.gson.JsonArray all;
 
     private final Entity figure;
@@ -50,7 +51,13 @@ public class FigureScreen extends Screen {
 
     private void add(com.google.gson.JsonArray rows) {
         if (rows != null) for (var r : rows)
-            lines.add(new String[]{r.getAsJsonArray().get(0).getAsString(), r.getAsJsonArray().get(1).getAsString().replace("Mysterious Figure", name)});
+            lines.add(new String[]{r.getAsJsonArray().get(0).getAsString(), line(r.getAsJsonArray().get(1).getAsString())});
+    }
+
+    /** {name} is whoever this is, as you know them; the First's old lines say "Mysterious Figure" for the same. */
+    private String line(String text) {
+        text = text.replace("{name}", name);
+        return "last".equals(npc) ? text : text.replace("Mysterious Figure", name);
     }
 
     private com.google.gson.JsonArray choices() { return scene.getAsJsonArray("choices"); }
@@ -78,6 +85,7 @@ public class FigureScreen extends Screen {
         DialogueCamera.wideShot();
         FigureScreen s = new FigureScreen(e, sc);
         if (v.has("name")) s.name = v.get("name").getAsString();
+        if (v.has("npc")) s.npc = v.get("npc").getAsString();
         mc.gui.setScreen(s);
     }
 

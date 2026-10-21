@@ -66,7 +66,9 @@ public final class Achievements {
             new Track("lore", "Lore Books Collected", "lore books collected", new long[]{1, 5, 10, 20, 30}, new int[]{2, 4, 8, 16, 32},
                     new String[]{"Light Reading", "Bookworm", "Well Read", "Lorekeeper", "Krea's Apprentice"}),
             new Track("eternita", "The Eternita Stone", "Eternita Stone earned", new long[]{1}, new int[]{0},
-                    new String[]{"I Won! I Won the Game!"}));
+                    new String[]{"I Won! I Won the Game!"}),
+            new Track("chaos", "Chaos Seeker", "Acolyte of the Last faced", new long[]{1}, new int[]{0},
+                    new String[]{"Chaos Seeker"}));
 
     /** Tracks that pay XP instead of golden apples (per tier). */
     private static final java.util.Map<String, int[]> XP_REWARD = java.util.Map.of("eternita", new int[]{10_000});
@@ -80,7 +82,7 @@ public final class Achievements {
             java.util.Map.entry("towers", "minecraft:chiseled_stone_bricks"), java.util.Map.entry("walked", "minecraft:leather_boots"),
             java.util.Map.entry("xp", "minecraft:experience_bottle"), java.util.Map.entry("deaths", "minecraft:skeleton_skull"),
             java.util.Map.entry("lore", "minecraft:written_book"),
-            java.util.Map.entry("eternita", "serantis_battle:eternita_stone")));
+            java.util.Map.entry("eternita", "serantis_battle:eternita_stone"), java.util.Map.entry("chaos", "minecraft:wither_rose")));
 
     /** One "recruit creatures of this influence" line per influence: {influence, name, icon, five titles}. */
     private static final String[][] INFLUENCES = {
@@ -203,6 +205,7 @@ public final class Achievements {
             case "lore" -> h.serantis$loreBooks();
             case "deaths" -> stats.getValue(Stats.CUSTOM, Stats.DEATHS);
             case "eternita" -> p instanceof Masters.Holder m && m.serantis$eternita() ? 1 : 0;
+            case "chaos" -> (((Welcome.Holder) p).serantis$figureMet() & FigureVisit.CHAOS_FOUGHT) != 0 ? 1 : 0;
             default -> 0;
         };
     }
@@ -222,7 +225,10 @@ public final class Achievements {
             int claimed = h.serantis$claimed(t.id());
             while (claimed < t.tiers().length && v >= t.tiers()[claimed]) {
                 int[] xp = XP_REWARD.get(t.id());
-                if (xp != null) {
+                if ("chaos".equals(t.id())) {
+                    p.sendSystemMessage(Component.literal("Achievement unlocked: Chaos Seeker! Enraged creatures now find you more often (+"
+                            + FigureVisit.enragedBonus(p) + "% of wild creatures near you).").withStyle(ChatFormatting.GOLD));
+                } else if (xp != null) {
                     p.giveExperiencePoints(xp[claimed]);
                     p.sendSystemMessage(Component.literal("Achievement unlocked: " + t.titles()[claimed] + "! (" + t.verb() + ") +"
                             + String.format("%,d", xp[claimed]) + " XP.").withStyle(ChatFormatting.GOLD));
@@ -288,7 +294,10 @@ public final class Achievements {
             o.add("titles", titles);
             o.add("apples", apples);
             int[] xp = XP_REWARD.get(t.id());
-            if (xp != null) {
+            if ("chaos".equals(t.id())) {
+                o.addProperty("badge", "!");
+                o.addProperty("reward", "More Enraged creatures (2% if you beat him, 1% if not)");
+            } else if (xp != null) {
                 o.addProperty("badge", "XP");
                 o.addProperty("reward", String.format("%,d XP", xp[0]));
             }

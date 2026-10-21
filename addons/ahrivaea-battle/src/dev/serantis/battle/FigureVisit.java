@@ -32,6 +32,9 @@ public final class FigureVisit {
     private static final java.util.Map<UUID, Long> LAST_SCENE = new ConcurrentHashMap<>();
     private static final long GAP = 20 * 60 * 5;
 
+    /** Who each scene is with ("first" or "last"), and the scene that has to come before it. */
+    private static final java.util.Map<String, String> NPC = new java.util.HashMap<>(), AFTER = new java.util.HashMap<>();
+
     private static synchronized java.util.Map<String, Integer> scenes() {
         if (scenes == null) {
             java.util.Map<String, Integer> out = new java.util.LinkedHashMap<>();
@@ -40,6 +43,8 @@ public final class FigureVisit {
                         .getAsJsonObject().getAsJsonArray("scenes")) {
                     var o = e.getAsJsonObject();
                     out.put(o.get("id").getAsString(), o.get("bit").getAsInt());
+                    NPC.put(o.get("id").getAsString(), o.has("npc") ? o.get("npc").getAsString() : "first");
+                    if (o.has("after")) AFTER.put(o.get("id").getAsString(), o.get("after").getAsString());
                 }
             } catch (Exception ignored) { }
             scenes = out;
@@ -49,7 +54,12 @@ public final class FigureVisit {
 
     /** A milestone met for this scene? */
     private static boolean reached(ServerPlayer p, String id) {
+        String after = AFTER.get(id);
+        if (after != null && (((Welcome.Holder) p).serantis$figureMet() & scenes().getOrDefault(after, 0)) == 0) return false;
         return switch (id) {
+            case "last1" -> firstMeetings(p) >= 3;
+            case "last2" -> ownsBase(p, 3);
+            case "last3" -> dev.ahrivaea.party.Dex.count(p, dev.ahrivaea.party.Dex.CAUGHT) >= 400;
             case "battles" -> ((Welcome.Holder) p).serantis$battlesFought() >= BATTLES;
             case "base" -> ownsBase(p, 2);
             case "stone" -> stones(p) >= 1;
@@ -59,6 +69,13 @@ public final class FigureVisit {
             case "nether" -> p.level().dimension() == net.minecraft.world.level.Level.NETHER;
             default -> false;
         };
+    }
+
+    /** How many times you've met the Acolyte of the First (the opening scene counts). */
+    private static int firstMeetings(ServerPlayer p) {
+        int met = ((Welcome.Holder) p).serantis$figureMet(), n = PlayerClass.of(p) != null ? 1 : 0;
+        for (var e : scenes().entrySet()) if ("first".equals(NPC.get(e.getKey())) && (met & e.getValue()) != 0) n++;
+        return n;
     }
 
     private static int stones(ServerPlayer p) {
@@ -88,8 +105,28 @@ public final class FigureVisit {
         return p != null && (((Welcome.Holder) p).serantis$figureMet() & NAMED) != 0 ? REVEALED : TITLE;
     }
 
+    /** The Acolyte of the Last: recruited, beaten in his trial, fought in his trial. */
+    public static final int LAST_RECRUITED = 16384, CHAOS_WON = 8192, CHAOS_FOUGHT = 32768;
+    public static final String LAST_NAME = "Acolyte of the Last", LAST_ROLE = "acolyte_of_the_last";
+
+    public static final String LAST_TITLE = "Spooky Mysterious Figure";
+    /** The Acolyte of the Last's second visit (after it, you know his name). */
+    public static final int LAST_KNOWN = 2048;
+
+    public static String nameOf(ServerPlayer p, String npc) {
+        if (!"last".equals(npc)) return name(p);
+        return p != null && (((Welcome.Holder) p).serantis$figureMet() & LAST_KNOWN) != 0 ? LAST_NAME : LAST_TITLE;
+    }
+
+    /** Extra chance (in %) that a creature spawning near this player is Enraged: the Chaos Seeker achievement. */
+    public static int enragedBonus(net.minecraft.world.entity.player.Player p) {
+        if (!(p instanceof Welcome.Holder h)) return 0;
+        int met = h.serantis$figureMet();
+        return (met & CHAOS_WON) != 0 ? 2 : (met & CHAOS_FOUGHT) != 0 ? 1 : 0;
+    }
+
     private static final class Visit {
-        String scene;
+        String scene, npc;
         UUID figure;
         boolean arrived;
         int ticks;
@@ -172,10 +209,12 @@ public final class FigureVisit {
             }
         }
         if (from == null) from = p.position().add(p.getLookAngle().x * 3, 0, p.getLookAngle().z * 3);
-        CreatureEntity f = Intro.figureAt(level, from.x, from.y, from.z);
+        String npc = NPC.getOrDefault(scene, "first");
+        CreatureEntity f = Intro.figureAt(level, from.x, from.y, from.z, "last".equals(npc) ? LAST_ROLE : Intro.ROLE);
         if (f == null) return;
         Visit v = new Visit();
         v.scene = scene;
+        v.npc = npc;
         v.figure = f.getUUID();
         LAST_SCENE.put(p.getUUID(), p.level().getGameTime());
         ACTIVE.put(p.getUUID(), v);
@@ -199,9 +238,9 @@ public final class FigureVisit {
 
     /** Set while the Mysterious Figure's battle is being started (the battle code reads it). */
     public static final ThreadLocal<Boolean> FIGHTING = ThreadLocal.withInitial(() -> false);
-    private static final java.util.Set<dev.ahrivaea.battle.Battle> TRIALS = java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
+    private static final Map<dev.ahrivaea.battle.Battle, String> TRIALS = java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
 
-    public static boolean isTrial(dev.ahrivaea.battle.Battle b) { return b != null && TRIALS.contains(b); }
+    public static boolean isTrial(dev.ahrivaea.battle.Battle b) { return b != null && TRIALS.containsKey(b); }
 
     /** The talk ended with "prove it": the whole party against the figure. */
     public static void fight(ServerPlayer p) {
@@ -217,9 +256,9 @@ public final class FigureVisit {
             try { b = Battles.start(p, c); } finally { FIGHTING.set(false); }
         }
         if (b == null) { if (e != null) e.discard(); PartySync.sync(p); return; }
-        TRIALS.add(b);
+        TRIALS.put(b, v.npc);
         fillParty(p, b);
-        dev.serantis.battle.moves.MoveEngine.figureBoss(b, name(p));
+        dev.serantis.battle.moves.MoveEngine.figureBoss(b, nameOf(p, v.npc));
         Battles.send(b);
         PartySync.sync(p);
     }
@@ -254,12 +293,21 @@ public final class FigureVisit {
 
     /** The trial ended. Win: the figure can be recruited. Lose: you keep the stone, but not the figure. */
     public static void finished(dev.ahrivaea.battle.Battle b, dev.ahrivaea.battle.Battle.Outcome outcome) {
-        if (!TRIALS.remove(b)) return;
+        String npc = TRIALS.remove(b);
+        if (npc == null) return;
         clearWild(b);
-        if (outcome == dev.ahrivaea.battle.Battle.Outcome.WON) WON.add(b);
+        boolean won = outcome == dev.ahrivaea.battle.Battle.Outcome.WON;
+        if (won) WON.put(b, npc);
         ServerPlayer p = b.player();
         if (p == null) return;
-        if (outcome == dev.ahrivaea.battle.Battle.Outcome.WON)
+        if ("last".equals(npc)) {
+            Welcome.Holder h = (Welcome.Holder) p;
+            h.serantis$setFigureMet(h.serantis$figureMet() | CHAOS_FOUGHT | (won ? CHAOS_WON : 0));
+            if (won) say(p, "\"Impossible...\" The Acolyte of the Last drops to one knee. \"Fine. The chaos chose you, not me. Take me, if you dare.\"");
+            else say(p, "\"Pathetic.\" The Acolyte of the Last fades into the shadows, laughing. \"Keep your little creatures. The chaos is coming for them anyway.\"");
+            return;
+        }
+        if (won)
             say(p, "\"You are worthy. More than I dared hope.\" The " + name(p) + " kneels. \"If you'll have me... I'll follow you.\"");
         else say(p, "\"Not yet.\" The " + name(p) + " turns away. \"Keep the stone. You'll need it. But you aren't ready for me.\" And it's gone.");
     }
@@ -303,29 +351,29 @@ public final class FigureVisit {
         return legend;
     }
 
-    /** A recruited Mysterious Figure (a villager with the figure's role). */
+    /** A recruited Acolyte, of the First or of the Last (a villager with that role). */
     public static boolean isFigure(dev.ahrivaea.party.CaughtCreature c) {
-        return c != null && c.job() != null && Intro.ROLE.equals(c.job().profession());
+        return c != null && c.job() != null && (Intro.ROLE.equals(c.job().profession()) || LAST_ROLE.equals(c.job().profession()));
     }
 
     /** A recruited Mysterious Figure: Level 10, with a standard Legendary's stats and fresh moves. */
     public static dev.ahrivaea.party.CaughtCreature recruited(dev.ahrivaea.battle.Battle b, dev.ahrivaea.party.CaughtCreature c) {
-        if (!wasTrial(b) || c == null) return c;
+        String npc = b == null ? null : WON.get(b);
+        if (npc == null || c == null) return c;
         if (b.player() != null) {
             Welcome.Holder h = (Welcome.Holder) b.player();
-            h.serantis$setFigureMet(h.serantis$figureMet() | RECRUITED);
+            h.serantis$setFigureMet(h.serantis$figureMet() | ("last".equals(npc) ? LAST_RECRUITED : RECRUITED));
         }
         var sp = dev.ahrivaea.creature.Species.get(c.species()).orElse(null);
         float hp = legendStats().maxHealth(10);
         c = c.withProgress(10, 0).withHealth(hp);
         var moves = dev.serantis.battle.moves.MoveBook.rollAny(net.minecraft.util.RandomSource.create(), 6);   // six fresh moves, any influence
         ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setMoves(moves.isEmpty() ? null : dev.serantis.battle.moves.MoveBook.encode(moves));
-        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setNickname(name(b.player()));
+        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setNickname(nameOf(b.player(), npc));
         return c;
     }
 
-    private static final java.util.Set<dev.ahrivaea.battle.Battle> WON = java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new java.util.WeakHashMap<>()));
-    private static boolean wasTrial(dev.ahrivaea.battle.Battle b) { return WON.contains(b); }
+    private static final Map<dev.ahrivaea.battle.Battle, String> WON = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
 
     /** The talk is over: it vanishes in a puff of smoke. */
     public static void done(ServerPlayer p, boolean named) {
@@ -361,7 +409,8 @@ public final class FigureVisit {
         o.addProperty("entity", e == null ? -1 : e.getId());
         o.addProperty("arrived", v.arrived);
         o.addProperty("scene", v.scene);
-        o.addProperty("name", name(p));
+        o.addProperty("name", nameOf(p, v.npc));
+        o.addProperty("npc", v.npc);
         state.add("serantis_visit", o);
     }
 }
