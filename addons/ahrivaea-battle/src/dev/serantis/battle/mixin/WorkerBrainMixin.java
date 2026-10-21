@@ -44,4 +44,73 @@ public abstract class WorkerBrainMixin {
         var base = dev.ahrivaea.base.Bases.coreAt(level, core);
         return dev.serantis.battle.Villages.has(base, "bard") ? dev.serantis.battle.Villages.BARD_SPEED : 1.0;
     }
+
+    // ---- never stuck (see the class notes in the README's base section)
+    // The creatures mod gives up on a target it can't walk to after 15 seconds, but then picks the same target
+    // again, forever. Instead: the first time, the worker hops next to the target (as miners already do); if
+    // that doesn't work either, the target is set aside for a minute so the worker gets on with other jobs.
+    @Shadow private int travelTicks;
+    @Shadow private void finish(dev.ahrivaea.base.BaseCoreBlockEntity be, int wait) { }
+    @Shadow private net.minecraft.core.BlockPos standNear(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos target) { return null; }
+
+    @org.spongepowered.asm.mixin.Unique private boolean serantis$hopped;
+    @org.spongepowered.asm.mixin.Unique private final java.util.Map<net.minecraft.core.BlockPos, Long> serantis$unreachable = new java.util.HashMap<>();
+    @org.spongepowered.asm.mixin.Unique private final java.util.List<net.minecraft.core.BlockPos> serantis$setAside = new java.util.ArrayList<>();
+    @org.spongepowered.asm.mixin.Unique private static final java.util.UUID SERANTIS_SET_ASIDE = new java.util.UUID(0x5e7a, 0x51de);
+    @org.spongepowered.asm.mixin.Unique private static java.lang.reflect.Field serantis$taskField;
+    @org.spongepowered.asm.mixin.Unique private static java.lang.reflect.Method serantis$targetOf;
+
+    @org.spongepowered.asm.mixin.Unique
+    private net.minecraft.core.BlockPos serantis$target() {
+        try {
+            if (serantis$taskField == null) {
+                serantis$taskField = WorkerBrain.class.getDeclaredField("task");
+                serantis$taskField.setAccessible(true);
+            }
+            Object t = serantis$taskField.get(this);
+            if (t == null) return null;
+            if (serantis$targetOf == null) {
+                serantis$targetOf = t.getClass().getDeclaredMethod("target");
+                serantis$targetOf.setAccessible(true);
+            }
+            return (net.minecraft.core.BlockPos) serantis$targetOf.invoke(t);
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            return null;
+        }
+    }
+
+    @org.spongepowered.asm.mixin.injection.Redirect(method = "tick", at = @At(value = "INVOKE",
+            target = "Ldev/ahrivaea/base/WorkerBrain;finish(Ldev/ahrivaea/base/BaseCoreBlockEntity;I)V"))
+    private void serantis$notStuck(WorkerBrain me, dev.ahrivaea.base.BaseCoreBlockEntity be, int wait, net.minecraft.server.level.ServerLevel level) {
+        if (wait != 100) { finish(be, wait); return; }                 // 100: gave up walking to it
+        net.minecraft.core.BlockPos target = serantis$target();
+        if (target != null && !serantis$hopped) {
+            net.minecraft.core.BlockPos stand = standNear(level, target);
+            if (stand != null) {                                        // hop next to it and carry on
+                serantis$hopped = true;
+                self.getNavigation().stop();
+                self.teleportTo(stand.getX() + 0.5, stand.getY(), stand.getZ() + 0.5);
+                travelTicks = 1;
+                return;
+            }
+        }
+        if (target != null) serantis$unreachable.put(target.immutable(), level.getGameTime() + 1200);   // set aside for a minute
+        finish(be, wait);
+    }
+
+    @Inject(method = "plan", at = @At("HEAD"))
+    private void serantis$skipUnreachable(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, CallbackInfoReturnable<?> cir) {
+        serantis$hopped = false;                                        // a new task gets its own hop
+        long now = level.getGameTime();
+        serantis$unreachable.values().removeIf(until -> until < now);
+        serantis$setAside.clear();
+        for (net.minecraft.core.BlockPos p : serantis$unreachable.keySet())
+            if (!((BaseCoreAccess) (Object) be).serantis$claimed().containsKey(p)) { ((BaseCoreAccess) (Object) be).serantis$claimed().put(p, SERANTIS_SET_ASIDE); serantis$setAside.add(p); }
+    }
+
+    @Inject(method = "plan", at = @At("RETURN"))
+    private void serantis$restoreClaims(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, CallbackInfoReturnable<?> cir) {
+        for (net.minecraft.core.BlockPos p : serantis$setAside) ((BaseCoreAccess) (Object) be).serantis$claimed().remove(p, SERANTIS_SET_ASIDE);
+        serantis$setAside.clear();
+    }
 }

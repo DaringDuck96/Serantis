@@ -48,7 +48,8 @@
     "BattlesAccess",
     "BaseShareMixin",
     "BaseCoreShareMixin",
-    "PlayerListLeaveMixin"
+    "PlayerListLeaveMixin",
+    "BaseCoreAccess"
   ],
   "client": [
     "client.PartyScreenMixin",
