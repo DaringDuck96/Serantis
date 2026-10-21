@@ -467,4 +467,19 @@ public abstract class BattlesMixin {
             // not ours
         }
     }
+
+    // New players' fights stay in their level window (see LevelBand): a wild creature above it (spawned near a
+    // stronger friend, an old one, a villager) is brought down to the top of the window when the battle starts, and its
+    // reinforcements follow it. Masters, the Harbinger, the Acolytes, raids and spars keep their levels.
+    @Inject(method = "start", at = @At("HEAD"))
+    private static void serantis$levelWindow(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (entity == null || entity.isTame() || dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null || dev.serantis.battle.FigureVisit.FIGHTING.get()
+                || dev.serantis.battle.GoblinRaids.raidSize() > 0 || dev.serantis.battle.Masters.isMaster(entity) || dev.serantis.battle.Harbinger.is(entity)
+                || dev.serantis.battle.Intro.isFigure(entity)) return;
+        int me = dev.ahrivaea.character.PlayerCharacter.get(player).level();
+        if (dev.serantis.battle.LevelBand.above(me) >= 5) return;      // the window is fully open from level 8
+        int cap = Math.max(1, dev.serantis.battle.LevelBand.hi(me));
+        var sp = entity.getSpecies().orElse(null);
+        if (sp != null && entity.getCreatureLevel() > cap) entity.setup(sp, entity.getInfluence(), cap, -1f);
+    }
 }

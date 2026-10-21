@@ -244,7 +244,9 @@ public final class WildChests {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         CHESTS.remove(w);
         save(level.getServer());
-        int lvl = w.rare ? 10 + level.getRandom().nextInt(9) : 4 + level.getRandom().nextInt(10);
+        int me = dev.ahrivaea.character.PlayerCharacter.get(p).level();    // the player's level window (see LevelBand); rare chests a bit tougher
+        int lo = Math.max(1, LevelBand.lo(me)), hi = Math.max(lo, LevelBand.hi(me));
+        int lvl = Math.min(20, lo + level.getRandom().nextInt(hi - lo + 1) + (w.rare ? 2 : 0));
         CreatureEntity e = Ahrivaea.spawn(level, mimic, mimic.formOrDefault(Influence.NONE), lvl, -1f, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
         if (e == null) return true;
         level.playSound(null, pos, SoundEvents.CHEST_OPEN, SoundSource.HOSTILE, 1f, 0.5f);
