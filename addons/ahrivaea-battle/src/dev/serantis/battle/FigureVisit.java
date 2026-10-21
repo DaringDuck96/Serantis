@@ -127,6 +127,7 @@ public final class FigureVisit {
 
     private static final class Visit {
         String scene, npc;
+        Vec3 spot;                  // the Acolyte of the Last: where the shadows gather before he steps out
         UUID figure;
         boolean arrived;
         int ticks;
@@ -175,8 +176,14 @@ public final class FigureVisit {
             return;
         }
         ServerLevel level = (ServerLevel) p.level();
+        if (v.figure == null) { gather(p, level, v); return; }
         Entity e = level.getEntity(v.figure);
-        if (e == null || !e.isAlive()) { ACTIVE.remove(p.getUUID()); PartySync.sync(p); return; }
+        if (e == null || !e.isAlive()) {
+            ACTIVE.remove(p.getUUID());
+            if ("last".equals(v.npc)) p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS);
+            PartySync.sync(p);
+            return;
+        }
         v.ticks++;
         Vec3 to = p.position().subtract(e.position());
         double flat = Math.sqrt(to.x * to.x + to.z * to.z);
@@ -194,7 +201,7 @@ public final class FigureVisit {
                 e.snapTo(e.getX() + to.x / flat * step, ny, e.getZ() + to.z / flat * step);
             }
         }
-        if (v.ticks > 20 * 120) done(p);                  // never left hanging
+        if (v.ticks > 20 * 120) done(p);                  // never left hanging (and the dark lifts)
     }
 
     private static void start(ServerPlayer p, String scene) {
@@ -210,6 +217,22 @@ public final class FigureVisit {
         }
         if (from == null) from = p.position().add(p.getLookAngle().x * 3, 0, p.getLookAngle().z * 3);
         String npc = NPC.getOrDefault(scene, "first");
+        if ("last".equals(npc)) {                       // he doesn't walk up: the world darkens and he steps out of the shadows
+            Vec3 near = null;
+            for (int i = 0; i < 8 && near == null; i++) {
+                double a = (p.getYRot() + 90 + i * 45) * Math.PI / 180.0;
+                Vec3 c = p.position().add(Math.cos(a) * 3.5, 0, Math.sin(a) * 3.5);
+                if (clearPath(level, p.position(), c)) near = c;
+            }
+            Visit v = new Visit();
+            v.scene = scene;
+            v.npc = npc;
+            v.spot = near != null ? near : from;
+            LAST_SCENE.put(p.getUUID(), p.level().getGameTime());
+            ACTIVE.put(p.getUUID(), v);
+            p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DARKNESS, 20 * 150, 0, false, false));
+            return;
+        }
         CreatureEntity f = Intro.figureAt(level, from.x, from.y, from.z, "last".equals(npc) ? LAST_ROLE : Intro.ROLE);
         if (f == null) return;
         Visit v = new Visit();
@@ -218,6 +241,27 @@ public final class FigureVisit {
         v.figure = f.getUUID();
         LAST_SCENE.put(p.getUUID(), p.level().getGameTime());
         ACTIVE.put(p.getUUID(), v);
+        PartySync.sync(p);
+    }
+
+    /** The shadows gather for about two seconds (black smoke and souls, a heartbeat), then he steps out of them. */
+    private static void gather(ServerPlayer p, ServerLevel level, Visit v) {
+        v.ticks++;
+        Vec3 s = v.spot;
+        if (v.ticks % 2 == 0) {
+            level.sendParticles(ParticleTypes.SQUID_INK, s.x, s.y + 1, s.z, 12, 0.25, 0.7, 0.25, 0.01);
+            level.sendParticles(ParticleTypes.LARGE_SMOKE, s.x, s.y + 0.8, s.z, 6, 0.3, 0.6, 0.3, 0.005);
+            level.sendParticles(ParticleTypes.SOUL, s.x, s.y + 0.4, s.z, 2, 0.4, 0.3, 0.4, 0.02);
+        }
+        if (v.ticks % 18 == 1) level.playSound(null, BlockPos.containing(s), SoundEvents.WARDEN_HEARTBEAT, SoundSource.HOSTILE, 1.4f, 0.8f);
+        if (v.ticks < 40) return;
+        CreatureEntity f = Intro.figureAt(level, s.x, s.y, s.z, LAST_ROLE);
+        if (f == null) { ACTIVE.remove(p.getUUID()); p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS); return; }
+        level.sendParticles(ParticleTypes.SQUID_INK, s.x, s.y + 1, s.z, 60, 0.4, 0.9, 0.4, 0.05);
+        level.sendParticles(ParticleTypes.SOUL, s.x, s.y + 1, s.z, 20, 0.5, 0.8, 0.5, 0.04);
+        level.playSound(null, BlockPos.containing(s), SoundEvents.SOUL_ESCAPE.value(), SoundSource.HOSTILE, 1.5f, 0.6f);
+        v.figure = f.getUUID();
+        v.ticks = 0;
         PartySync.sync(p);
     }
 
@@ -257,6 +301,10 @@ public final class FigureVisit {
         }
         if (b == null) { if (e != null) e.discard(); PartySync.sync(p); return; }
         TRIALS.put(b, v.npc);
+        if ("last".equals(v.npc)) {
+            p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS);
+            p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DARKNESS, 20 * 6, 0, false, false));
+        }
         fillParty(p, b);
         dev.serantis.battle.moves.MoveEngine.figureBoss(b, nameOf(p, v.npc));
         Battles.send(b);
@@ -391,7 +439,13 @@ public final class FigureVisit {
         h.serantis$setFigureMet(h.serantis$figureMet() | scenes().getOrDefault(v.scene, 0));
         ServerLevel level = (ServerLevel) p.level();
         Entity e = level.getEntity(v.figure);
-        if (e != null) {
+        if (e != null && "last".equals(v.npc)) {           // he sinks back into the shadows, and the dark lifts
+            level.sendParticles(ParticleTypes.SQUID_INK, e.getX(), e.getY() + 1, e.getZ(), 60, 0.4, 0.9, 0.4, 0.05);
+            level.sendParticles(ParticleTypes.SOUL, e.getX(), e.getY() + 0.6, e.getZ(), 25, 0.5, 0.6, 0.5, 0.03);
+            level.playSound(null, e.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.HOSTILE, 1.5f, 0.5f);
+            e.discard();
+            p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS);
+        } else if (e != null) {
             level.sendParticles(ParticleTypes.LARGE_SMOKE, e.getX(), e.getY() + 1, e.getZ(), 30, 0.3, 0.6, 0.3, 0.02);
             level.sendParticles(ParticleTypes.PORTAL, e.getX(), e.getY() + 1, e.getZ(), 40, 0.4, 0.8, 0.4, 0.3);
             level.playSound(null, e.blockPosition(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 0.8f);
