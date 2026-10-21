@@ -1,0 +1,4 @@
+Compiled from "EnchantmentHelper.java"
+interface net.minecraft.world.item.enchantment.EnchantmentHelper$EnchantmentInSlotVisitor {
+  public abstract void accept(net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>, int, net.minecraft.world.item.enchantment.EnchantedItemInUse);
+}
