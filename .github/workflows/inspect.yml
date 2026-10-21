@@ -61,11 +61,12 @@ jobs:
           ls inspect/out
       - name: Compile the add-ons from main (when classes.txt has a "compile" line)
         run: |
-          grep -qx compile inspect/classes.txt || exit 0
+          L=$(grep -E '^compile( |$)' inspect/classes.txt | head -1) || exit 0
+          REF=$(echo "$L" | awk '{print $2}'); REF=${REF:-main}
           mkdir -p inspect/out
-          git fetch -q origin main
+          git fetch -q origin "$REF"
           M="$RUNNER_TEMP/main"; mkdir -p "$M"
-          git archive origin/main | tar -x -C "$M"
+          git archive FETCH_HEAD | tar -x -C "$M"
           jq -r '.libraries[] | .downloads.artifact.url // empty' "$RUNNER_TEMP/version.json" | sort -u | while read -r u; do
             curl -sSfL "$u" -o "$RUNNER_TEMP/mc/$(basename "$u")"
           done
