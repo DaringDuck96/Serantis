@@ -50,7 +50,7 @@ public class SkillTreeScreen extends Screen {
     private String lastMessage;
 
     // Layout. Tiles are placed in "content" coordinates (y from the top of the scrolling area).
-    private static final int COL_MIN = 104, COL_MAX = 132, TILE_H = 20, ROW_GAP = 30, BAND_HEAD = 30, BAND_GAP = 22;
+    private static final int COL_MIN = 104, COL_MAX = 132, TILE_H = 19, ROW_GAP = 28, BAND_HEAD = 30, BAND_GAP = 20;
     private int colW, perRow, bands, viewTop, viewBottom, contentH, scroll;
     private int[] bandLeft;
 
@@ -91,8 +91,8 @@ public class SkillTreeScreen extends Screen {
             int cols = Math.min(perRow, n - b * perRow);
             bandLeft[b] = (width - cols * colW) / 2;
         }
-        viewTop = 80;
-        viewBottom = height - 46;
+        viewTop = 66;
+        viewBottom = height - 38;
         contentH = bandY(bands) - BAND_GAP;
         scroll = Math.max(0, Math.min(scroll, Math.max(0, contentH - (viewBottom - viewTop))));
 
@@ -118,7 +118,7 @@ public class SkillTreeScreen extends Screen {
             }
         }
         addRenderableWidget(Button.builder(Component.literal("Back"), b -> Minecraft.getInstance().gui.setScreen(parent))
-                .bounds(width / 2 - 40, height - 24, 80, 20).build());
+                .bounds(width / 2 - 40, height - 23, 80, 20).build());
     }
 
     private Tile tile(String id) {
@@ -193,7 +193,7 @@ public class SkillTreeScreen extends Screen {
 
         // XP bar toward the next skill
         int xp = d.get("xp").getAsInt(), next = d.get("next").getAsInt();
-        int barW = Math.min(260, width - 40), bx = width / 2 - barW / 2, by = 22;
+        int barW = Math.min(260, width - 40), bx = width / 2 - barW / 2, by = 20;
         g.fill(bx - 1, by - 1, bx + barW + 1, by + 7, 0xFF000000);
         g.fill(bx, by, bx + barW, by + 6, 0xFF2A2A35);
         int filled = (int) (barW * Math.min(1.0, xp / (double) Math.max(1, next)));
@@ -201,12 +201,12 @@ public class SkillTreeScreen extends Screen {
         g.fillGradient(bx, by, bx + filled, by + 6, ready ? 0xFFB8F060 : 0xFF6FBF3A, ready ? 0xFF6FBF3A : 0xFF3F7F22);
         String xpLine = String.format("%,d XP  ·  next skill %,d XP  ·  learned %d / %d  ·  Base Level %d",
                 xp, next, d.get("count").getAsInt(), d.get("total").getAsInt(), d.get("baseLevel").getAsInt());
-        g.centeredText(font, fit(xpLine, width - 16), width / 2, by + 10, ready ? 0xFFD8F0A0 : 0xFFB8B8C8);
+        g.centeredText(font, fit(xpLine, width - 16), width / 2, by + 9, ready ? 0xFFD8F0A0 : 0xFFB8B8C8);
         // your stats, wrapped onto two lines
         List<String> sum = wrap(d.get("summary").getAsString(), width - 24);
         for (int i = 0; i < Math.min(2, sum.size()); i++)
-            g.centeredText(font, i == 1 && sum.size() > 2 ? fit(sum.get(1) + " " + sum.get(2), width - 24) : sum.get(i), width / 2, by + 23 + i * 10, 0xFF9FB4E0);
-        g.fill(8, viewTop - 4, width - 8, viewTop - 3, 0x30FFFFFF);
+            g.centeredText(font, i == 1 && sum.size() > 2 ? fit(sum.get(1) + " " + sum.get(2), width - 24) : sum.get(i), width / 2, by + 21 + i * 10, 0xFF9FB4E0);
+        g.fill(8, viewTop - 3, width - 8, viewTop - 2, 0x30FFFFFF);
 
         // Branch lanes with an icon and name on top
         for (int i = 0; i < BRANCHES.size(); i++) {
@@ -274,7 +274,7 @@ public class SkillTreeScreen extends Screen {
         else if (pendingAt > 0) status = "Learning…";
         else if (lastMessage != null) { status = lastMessage; statusColor = lastMessage.startsWith("Learned") ? 0xFF7FE08A : 0xFFFF8A7A; }
         else status = "Hover a skill for details · click a glowing skill to learn it";
-        g.centeredText(font, fit(status, width - 16), width / 2, height - 38, statusColor);
+        g.centeredText(font, fit(status, width - 16), width / 2, height - 34, statusColor);
 
         if (hovered != null) tooltip(g, hovered, d, mouseX, mouseY);
     }
