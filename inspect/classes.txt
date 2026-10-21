@@ -1,2 +1,2 @@
 # classes
-compile wip/scenes
+compile wip/trial
