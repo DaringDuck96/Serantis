@@ -236,6 +236,15 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if (kind.startsWith("serantis_smith_")) {     // a Smith improving a weapon
+                switch (kind) {
+                    case "serantis_smith_open" -> dev.serantis.battle.Honing.open(player, o.has("entity") ? o.get("entity").getAsInt() : -1);
+                    case "serantis_smith_improve" -> dev.serantis.battle.Honing.improve(player);
+                    default -> dev.serantis.battle.Honing.close(player);
+                }
+                cir.setReturnValue(null);
+                return;
+            }
             if (kind.startsWith("serantis_tutor_")) {     // the Move Tutor
                 int n = o.has("slot") ? o.get("slot").getAsInt() : -1;
                 switch (kind) {

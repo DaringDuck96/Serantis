@@ -23,6 +23,12 @@ public abstract class MultiPlayerGameModeMixin {
             cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }
+        if (hand == InteractionHand.MAIN_HAND && !player.isShiftKeyDown() && dev.serantis.battle.Honing.isSmith(target)
+                && dev.serantis.battle.Honing.improvable(player.getMainHandItem())) {      // a Smith, holding a weapon: improve it
+            dev.serantis.battle.client.SmithScreen.open(target.getId());
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
         if (hand == InteractionHand.MAIN_HAND && dev.serantis.battle.Riddles.isRiddleDragon(target)) {   // an End dragon: its riddle
             JsonObject o = new JsonObject();
             o.addProperty("kind", "serantis_riddle_ask");

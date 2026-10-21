@@ -27,6 +27,7 @@ public abstract class PartySyncMixin {
         if (o != null) dev.serantis.battle.Market.describe(player, o);
         if (o != null) dev.serantis.battle.Wanderer.describe(player, o);
         if (o != null) dev.serantis.battle.Tutor.describe(player, o);
+        if (o != null) dev.serantis.battle.Honing.describe(player, o);
         if (o != null) dev.serantis.battle.Welcome.describe(player, o);
         if (o != null) dev.serantis.battle.PlayerClass.describe(player, o);
         if (o != null) dev.serantis.battle.Staffs.describe(player, o);
