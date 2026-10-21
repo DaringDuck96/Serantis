@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The player skill tree, opened from your Base Core: seven coloured branches of six skills, joined
+ * The player skill tree, opened from your Base Core: eight coloured branches of six skills, joined
  * top to bottom, with each capstone also linked to the skill it needs in the branch next door.
+ * Branches are laid out side by side at a readable width; when they don't all fit they wrap into a
+ * second row and the tree scrolls (mouse wheel).
  * Learned skills are filled in, skills you can learn now glow, the rest are dimmed. Hover a skill
  * for its details; click a glowing one to learn it.
  */
@@ -46,7 +48,11 @@ public class SkillTreeScreen extends Screen {
     private String pending;
     private long pendingAt;
     private String lastMessage;
-    private int colW, left, top, gap, tileW, tileH;
+
+    // Layout. Tiles are placed in "content" coordinates (y from the top of the scrolling area).
+    private static final int COL_MIN = 104, COL_MAX = 132, TILE_H = 20, ROW_GAP = 30, BAND_HEAD = 30, BAND_GAP = 22;
+    private int colW, perRow, bands, viewTop, viewBottom, contentH, scroll;
+    private int[] bandLeft;
 
     public SkillTreeScreen(BaseScreen parent) {
         super(Component.literal("Skill Tree"));
@@ -67,14 +73,29 @@ public class SkillTreeScreen extends Screen {
 
     // ------------------------------------------------------------------ layout
 
+    /** Which band (row of branches) and column a branch sits in. */
+    private int bandOf(int branch) { return branch / perRow; }
+    private int colOf(int branch) { return branch % perRow; }
+    private int bandY(int band) { return band * (BAND_HEAD + 6 * ROW_GAP + BAND_GAP); }
+
     @Override
     protected void init() {
-        colW = Math.max(46, Math.min(96, (width - 12) / BRANCHES.size()));
-        left = (width - colW * BRANCHES.size()) / 2;
-        top = 92;
-        gap = Math.max(20, Math.min(34, (height - top - 40) / 6));
-        tileH = Math.max(16, gap - 10);
-        tileW = colW - 12;
+        int n = BRANCHES.size();
+        // As many branches side by side as fit at a readable width; the rest go in further rows (scroll down).
+        perRow = Math.max(1, Math.min(n, (width - 16) / COL_MIN));
+        if (perRow < n && perRow > n / 2) perRow = (n + 1) / 2;        // two even rows rather than 7 + 1
+        bands = (n + perRow - 1) / perRow;
+        colW = Math.min(COL_MAX, (width - 16) / perRow);
+        bandLeft = new int[bands];
+        for (int b = 0; b < bands; b++) {
+            int cols = Math.min(perRow, n - b * perRow);
+            bandLeft[b] = (width - cols * colW) / 2;
+        }
+        viewTop = 80;
+        viewBottom = height - 46;
+        contentH = bandY(bands) - BAND_GAP;
+        scroll = Math.max(0, Math.min(scroll, Math.max(0, contentH - (viewBottom - viewTop))));
+
         tiles.clear();
         JsonObject d = data();
         if (d != null && d.has("message")) {
@@ -83,19 +104,21 @@ public class SkillTreeScreen extends Screen {
         }
         if (d != null) {
             for (JsonElement el : d.getAsJsonArray("nodes")) {
-                JsonObject n = el.getAsJsonObject();
-                int col = BRANCHES.indexOf(n.get("branch").getAsString());
-                if (col < 0) continue;
-                int row = n.get("index").getAsInt() - 1;
-                String id = n.get("id").getAsString();
-                tiles.add(new Tile(n, id, col, row, left + col * colW + 6, top + row * gap, tileW, tileH));
-                boolean owned = n.get("owned").getAsBoolean();
+                JsonObject node = el.getAsJsonObject();
+                int br = BRANCHES.indexOf(node.get("branch").getAsString());
+                if (br < 0) continue;
+                int row = node.get("index").getAsInt() - 1;
+                String id = node.get("id").getAsString();
+                int x = bandLeft[bandOf(br)] + colOf(br) * colW + 8;
+                int y = bandY(bandOf(br)) + BAND_HEAD + row * ROW_GAP;
+                tiles.add(new Tile(node, id, br, row, x, y, colW - 16, TILE_H));
+                boolean owned = node.get("owned").getAsBoolean();
                 if (owned && !knownOwned.contains(id) && id.equals(pending)) learnedAt.put(id, System.currentTimeMillis());
                 if (owned) knownOwned.add(id);
             }
         }
         addRenderableWidget(Button.builder(Component.literal("Back"), b -> Minecraft.getInstance().gui.setScreen(parent))
-                .bounds(width / 2 - 40, height - 26, 80, 20).build());
+                .bounds(width / 2 - 40, height - 24, 80, 20).build());
     }
 
     private Tile tile(String id) {
@@ -106,20 +129,39 @@ public class SkillTreeScreen extends Screen {
     private static boolean owned(Tile t) { return t.node.get("owned").getAsBoolean(); }
     private static boolean learnable(Tile t) { return !owned(t) && !t.node.has("why"); }
 
+    /** Screen y of a content y. */
+    private int sy(int contentY) { return viewTop + contentY - scroll; }
+    private boolean visible(int contentY, int h) { return sy(contentY) >= viewTop - 1 && sy(contentY) + h <= viewBottom + 1; }
+
+    private Tile tileUnder(double mx, double my) {
+        if (my < viewTop || my > viewBottom) return null;
+        for (Tile t : tiles)
+            if (mx >= t.x && mx < t.x + t.w && my >= sy(t.y) && my < sy(t.y) + t.h && visible(t.y, t.h)) return t;
+        return null;
+    }
+
     // ------------------------------------------------------------------ input
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        if (event.button() <= 1)          // the main click (Minecraft 26.3 reports it as button 1)
-            for (Tile t : tiles)
-                if (t.contains(event.x(), event.y()) && learnable(t)) {
-                    pending = t.id;
-                    pendingAt = System.currentTimeMillis();
-                    lastMessage = null;
-                    if (parent != null) parent.send("serantis_skill", 0, t.id);
-                    return true;
-                }
+        if (event.button() <= 1) {        // the main click (Minecraft 26.3 reports it as button 1)
+            Tile t = tileUnder(event.x(), event.y());
+            if (t != null && learnable(t)) {
+                pending = t.id;
+                pendingAt = System.currentTimeMillis();
+                lastMessage = null;
+                if (parent != null) parent.send("serantis_skill", 0, t.id);
+                return true;
+            }
+        }
         return super.mouseClicked(event, doubleClick);
+    }
+
+    @Override
+    public boolean mouseScrolled(double x, double y, double dx, double dy) {
+        int max = Math.max(0, contentH - (viewBottom - viewTop));
+        scroll = Math.max(0, Math.min(max, scroll - (int) Math.round(dy * 24)));
+        return true;
     }
 
     @Override
@@ -143,35 +185,42 @@ public class SkillTreeScreen extends Screen {
 
         // Title
         g.pose().pushMatrix();
-        g.pose().translate(width / 2f, 8);
-        g.pose().scale(1.6f, 1.6f);
+        g.pose().translate(width / 2f, 6);
+        g.pose().scale(1.5f, 1.5f);
         g.centeredText(font, "Skill Tree", 0, 0, GOLD);
         g.pose().popMatrix();
-        if (d == null) return;
+        if (d == null) { g.centeredText(font, "Loading…", width / 2, 40, 0xFF9FB4E0); return; }
 
         // XP bar toward the next skill
         int xp = d.get("xp").getAsInt(), next = d.get("next").getAsInt();
-        int barW = Math.min(240, width - 40), bx = width / 2 - barW / 2, by = 30;
-        g.fill(bx - 1, by - 1, bx + barW + 1, by + 9, 0xFF000000);
-        g.fill(bx, by, bx + barW, by + 8, 0xFF2A2A35);
+        int barW = Math.min(260, width - 40), bx = width / 2 - barW / 2, by = 22;
+        g.fill(bx - 1, by - 1, bx + barW + 1, by + 7, 0xFF000000);
+        g.fill(bx, by, bx + barW, by + 6, 0xFF2A2A35);
         int filled = (int) (barW * Math.min(1.0, xp / (double) Math.max(1, next)));
         boolean ready = xp >= next;
-        g.fillGradient(bx, by, bx + filled, by + 8, ready ? 0xFFB8F060 : 0xFF6FBF3A, ready ? 0xFF6FBF3A : 0xFF3F7F22);
+        g.fillGradient(bx, by, bx + filled, by + 6, ready ? 0xFFB8F060 : 0xFF6FBF3A, ready ? 0xFF6FBF3A : 0xFF3F7F22);
         String xpLine = String.format("%,d XP  ·  next skill %,d XP  ·  learned %d / %d  ·  Base Level %d",
                 xp, next, d.get("count").getAsInt(), d.get("total").getAsInt(), d.get("baseLevel").getAsInt());
-        g.centeredText(font, xpLine, width / 2, by + 12, ready ? 0xFFD8F0A0 : 0xFFB8B8C8);
-        String sum = d.get("summary").getAsString();
-        if (font.width(sum) > width - 20) sum = font.plainSubstrByWidth(sum, width - 26) + "…";
-        g.centeredText(font, sum, width / 2, by + 24, 0xFF9FB4E0);
+        g.centeredText(font, fit(xpLine, width - 16), width / 2, by + 10, ready ? 0xFFD8F0A0 : 0xFFB8B8C8);
+        // your stats, wrapped onto two lines
+        List<String> sum = wrap(d.get("summary").getAsString(), width - 24);
+        for (int i = 0; i < Math.min(2, sum.size()); i++)
+            g.centeredText(font, i == 1 && sum.size() > 2 ? fit(sum.get(1) + " " + sum.get(2), width - 24) : sum.get(i), width / 2, by + 23 + i * 10, 0xFF9FB4E0);
+        g.fill(8, viewTop - 4, width - 8, viewTop - 3, 0x30FFFFFF);
 
-        // Branch columns: a faint lane, an icon and the name
+        // Branch lanes with an icon and name on top
         for (int i = 0; i < BRANCHES.size(); i++) {
             String b = BRANCHES.get(i);
-            int c = COLOR.get(b), x0 = left + i * colW + 2, x1 = left + (i + 1) * colW - 2;
-            g.fillGradient(x0, top - 26, x1, top + 6 * gap - 4, withAlpha(c, 0x30), withAlpha(c, 0x08));
-            g.fill(x0, top - 26, x1, top - 25, withAlpha(c, 0xA0));
-            g.item(new ItemStack(ICON.get(b)), x0 + (x1 - x0) / 2 - 8, top - 24);
-            g.centeredText(font, b, x0 + (x1 - x0) / 2, top - 10, c);
+            int c = COLOR.get(b), x0 = bandLeft[bandOf(i)] + colOf(i) * colW + 3, x1 = x0 + colW - 6;
+            int laneTop = bandY(bandOf(i)), laneBottom = laneTop + BAND_HEAD + 6 * ROW_GAP - 6;
+            int top = Math.max(viewTop, sy(laneTop)), bottom = Math.min(viewBottom, sy(laneBottom));
+            if (bottom > top) g.fillGradient(x0, top, x1, bottom, withAlpha(c, 0x2A), withAlpha(c, 0x08));
+            if (visible(laneTop, 24)) {
+                g.fill(x0, sy(laneTop), x1, sy(laneTop) + 1, withAlpha(c, 0xB0));
+                int mid = x0 + (x1 - x0) / 2, w = 16 + 4 + font.width(b);
+                g.item(new ItemStack(ICON.get(b)), mid - w / 2, sy(laneTop) + 5);
+                g.text(font, b, mid - w / 2 + 20, sy(laneTop) + 9, c);
+            }
         }
 
         // Links: down each branch, and from each capstone to the skill it needs next door
@@ -181,21 +230,42 @@ public class SkillTreeScreen extends Screen {
                 if (above != null) {
                     int cx = t.x + t.w / 2;
                     int col = owned(t) ? COLOR.get(branch(t)) : learnable(t) ? withAlpha(COLOR.get(branch(t)), 0xB0) : 0xFF3A3A48;
-                    g.fill(cx - 1, above.y + above.h, cx + 1, t.y, col);
+                    vLine(g, cx, above.y + above.h, t.y, col, 2);
                 }
             }
             for (JsonElement r : t.node.getAsJsonArray("requires")) {
                 Tile req = byName(r.getAsString());
                 if (req == null || req.col == t.col) continue;
-                int lineCol = owned(t) ? GOLD : owned(req) ? withAlpha(GOLD, 0x90) : 0xFF4A4A5A;
-                boolean right = req.col > t.col;
-                int gapX = right ? t.x + t.w + 6 + (t.col % 2 == 0 ? 1 : -1) : t.x - 6 + (t.col % 2 == 0 ? 1 : -1);
+                int lineCol = owned(t) ? GOLD : owned(req) ? withAlpha(GOLD, 0x90) : 0xFF5A5A6A;
+                if (bandOf(req.col) != bandOf(t.col) || Math.abs(colOf(req.col) - colOf(t.col)) != 1) {
+                    // in another row of branches: say so under the capstone instead of drawing a long line
+                    String note = "+ needs " + r.getAsString();
+                    if (visible(t.y + t.h + 1, 9)) {
+                        g.pose().pushMatrix();
+                        g.pose().translate(t.x + t.w / 2f, sy(t.y + t.h) + 2);
+                        g.pose().scale(0.75f, 0.75f);
+                        g.centeredText(font, note, 0, 0, lineCol);
+                        g.pose().popMatrix();
+                    }
+                    continue;
+                }
+                boolean right = colOf(req.col) > colOf(t.col);
+                int gapX = right ? t.x + t.w + 8 : t.x - 8;
                 int ty = t.y + t.h / 2, ry = req.y + req.h / 2;
                 hLine(g, right ? t.x + t.w : gapX, right ? gapX : t.x, ty, lineCol);
-                g.fill(gapX - 1, Math.min(ry, ty), gapX, Math.max(ry, ty) + 1, lineCol);
+                vLine(g, gapX, Math.min(ry, ty), Math.max(ry, ty) + 1, lineCol, 1);
                 hLine(g, right ? gapX : req.x + req.w, right ? req.x : gapX, ry, lineCol);
             }
         }
+
+        // Skill tiles
+        Tile hovered = tileUnder(mouseX, mouseY);
+        for (Tile t : tiles) if (visible(t.y, t.h)) drawTile(g, t, now, t == hovered);
+
+        // Scroll hints
+        int max = Math.max(0, contentH - (viewBottom - viewTop));
+        if (scroll > 0) g.centeredText(font, "▲ scroll up", width / 2, viewTop + 1, 0xFF8890A0);
+        if (scroll < max) g.centeredText(font, "▼ scroll for more", width / 2, viewBottom - 9, 0xFF8890A0);
 
         // What happened with the last skill you tried to learn
         String status = null;
@@ -203,22 +273,15 @@ public class SkillTreeScreen extends Screen {
         if (pendingAt > 0 && now - pendingAt > 3000) { status = "No answer from the server yet. Try again, or reopen your Base Core."; statusColor = 0xFFFF8A7A; }
         else if (pendingAt > 0) status = "Learning…";
         else if (lastMessage != null) { status = lastMessage; statusColor = lastMessage.startsWith("Learned") ? 0xFF7FE08A : 0xFFFF8A7A; }
-        if (status != null) {
-            if (font.width(status) > width - 20) status = font.plainSubstrByWidth(status, width - 26) + "…";
-            g.centeredText(font, status, width / 2, top + 6 * gap + 2, statusColor);
-        }
+        else status = "Hover a skill for details · click a glowing skill to learn it";
+        g.centeredText(font, fit(status, width - 16), width / 2, height - 38, statusColor);
 
-        // Skill tiles
-        Tile hovered = null;
-        for (Tile t : tiles) {
-            if (t.contains(mouseX, mouseY)) hovered = t;
-            drawTile(g, t, now, t == hovered || (hovered == null && t.contains(mouseX, mouseY)));
-        }
         if (hovered != null) tooltip(g, hovered, d, mouseX, mouseY);
     }
 
     private void drawTile(GuiGraphicsExtractor g, Tile t, long now, boolean hover) {
         int c = COLOR.get(branch(t));
+        int x = t.x, y = sy(t.y);
         boolean own = owned(t), can = learnable(t), cap = t.row == 5;
         int border, fillTop, fillBottom, text;
         if (own) {
@@ -229,39 +292,38 @@ public class SkillTreeScreen extends Screen {
             border = blend(c, 0xFFFFFFFF, pulse * 0.45f);
             fillTop = 0xFF22222E; fillBottom = 0xFF181822; text = lighten(c);
         } else {
-            border = 0xFF3C3C4A; fillTop = 0xFF1A1A22; fillBottom = 0xFF141419; text = 0xFF6E6E80;
+            border = 0xFF3C3C4A; fillTop = 0xFF1A1A22; fillBottom = 0xFF141419; text = 0xFF8A8A9C;
         }
-        if (hover) { fillTop = blend(fillTop, 0xFFFFFFFF, 0.10f); fillBottom = blend(fillBottom, 0xFFFFFFFF, 0.06f); }
-        // soft glow under learnable tiles
-        if (can) g.fill(t.x - 2, t.y - 2, t.x + t.w + 2, t.y + t.h + 2, withAlpha(c, 0x40));
-        g.fillGradient(t.x, t.y, t.x + t.w, t.y + t.h, fillTop, fillBottom);
-        g.outline(t.x, t.y, t.w, t.h, border);
-        if (cap) g.outline(t.x + 1, t.y + 1, t.w - 2, t.h - 2, withAlpha(border, 0x80));
-        // flash when a skill has just been learned
-        Long at = learnedAt.get(t.id);
+        if (hover) { fillTop = blend(fillTop, 0xFFFFFFFF, 0.12f); fillBottom = blend(fillBottom, 0xFFFFFFFF, 0.08f); }
+        if (can) g.fill(x - 2, y - 2, x + t.w + 2, y + t.h + 2, withAlpha(c, 0x40));     // soft glow under learnable tiles
+        g.fillGradient(x, y, x + t.w, y + t.h, fillTop, fillBottom);
+        g.outline(x, y, t.w, t.h, border);
+        if (cap) g.outline(x + 1, y + 1, t.w - 2, t.h - 2, withAlpha(border, 0x80));
+        Long at = learnedAt.get(t.id);                                                  // flash when just learned
         if (at != null) {
             float k = (now - at) / 700f;
             if (k < 1) {
                 int grow = (int) (k * 6);
-                g.outline(t.x - grow, t.y - grow, t.w + 2 * grow, t.h + 2 * grow, withAlpha(GOLD, (int) (255 * (1 - k))));
+                g.outline(x - grow, y - grow, t.w + 2 * grow, t.h + 2 * grow, withAlpha(GOLD, (int) (255 * (1 - k))));
             } else learnedAt.remove(t.id);
         }
         String label = (own ? "✔ " : cap ? "★ " : "") + t.node.get("name").getAsString();
-        float scale = Math.min(1f, (t.w - 6) / (float) Math.max(1, font.width(label)));
+        float scale = Math.max(0.75f, Math.min(1f, (t.w - 6) / (float) Math.max(1, font.width(label))));
+        if (font.width(label) * scale > t.w - 4) label = font.plainSubstrByWidth(label, (int) ((t.w - 8) / scale)) + "…";
         g.pose().pushMatrix();
-        g.pose().translate(t.x + t.w / 2f, t.y + (t.h - 8 * scale) / 2f + 0.5f);
+        g.pose().translate(x + t.w / 2f, y + (t.h - 8 * scale) / 2f + 0.5f);
         g.pose().scale(scale, scale);
         g.centeredText(font, label, 0, 0, text);
         g.pose().popMatrix();
-        // base level badge on skills your base isn't high enough for yet
-        JsonObject n = t.node;
+        JsonObject n = t.node;                                                          // base level badge
         if (!own && n.has("why") && n.get("why").getAsString().startsWith("Needs your base")) {
-            String badge = "L" + n.get("tier").getAsInt();
-            g.fill(t.x + t.w - font.width(badge) - 3, t.y - 4, t.x + t.w + 1, t.y + 5, 0xFF5A2A2A);
+            String badge = "Base " + n.get("tier").getAsInt();
+            int bw = (int) (font.width(badge) * 0.75f) + 4;
+            g.fill(x + t.w - bw, y - 5, x + t.w + 1, y + 3, 0xFF5A2A2A);
             g.pose().pushMatrix();
-            g.pose().translate(t.x + t.w - font.width(badge) * 0.75f - 1, t.y - 3);
+            g.pose().translate(x + t.w - bw + 2, y - 4);
             g.pose().scale(0.75f, 0.75f);
-            g.text(font, badge, 0, 0, 0xFFFFB0A0);
+            g.text(font, badge, 0, 0, 0xFFFFC0B0);
             g.pose().popMatrix();
         }
     }
@@ -283,6 +345,34 @@ public class SkillTreeScreen extends Screen {
         g.setComponentTooltipForNextFrame(font, lines, mx, my);
     }
 
+    private String fit(String s, int w) {
+        return font.width(s) <= w ? s : font.plainSubstrByWidth(s, w - 6) + "…";
+    }
+
+    private List<String> wrap(String text, int w) {
+        List<String> out = new ArrayList<>();
+        StringBuilder line = new StringBuilder();
+        for (String part : text.split(" · ")) {
+            String next = line.length() == 0 ? part : line + " · " + part;
+            if (font.width(next) > w && line.length() > 0) { out.add(line.toString()); line = new StringBuilder(part); }
+            else line = new StringBuilder(next);
+        }
+        if (line.length() > 0) out.add(line.toString());
+        return out;
+    }
+
+    /** A vertical line in content coordinates, cut to the visible area. */
+    private void vLine(GuiGraphicsExtractor g, int x, int y0, int y1, int color, int w) {
+        int a = Math.max(viewTop, sy(y0)), b = Math.min(viewBottom, sy(y1));
+        if (b > a) g.fill(x - w / 2, a, x - w / 2 + w, b, color);
+    }
+
+    /** A horizontal line in content coordinates (skipped when off screen). */
+    private void hLine(GuiGraphicsExtractor g, int x0, int x1, int y, int color) {
+        int s = sy(y);
+        if (s >= viewTop && s <= viewBottom) g.fill(Math.min(x0, x1), s, Math.max(x0, x1), s + 1, color);
+    }
+
     // ------------------------------------------------------------------ helpers
 
     private Tile tileAt(int col, int row) {
@@ -296,10 +386,6 @@ public class SkillTreeScreen extends Screen {
     }
 
     private static String branch(Tile t) { return t.node.get("branch").getAsString(); }
-
-    private static void hLine(GuiGraphicsExtractor g, int x0, int x1, int y, int color) {
-        g.fill(Math.min(x0, x1), y, Math.max(x0, x1), y + 1, color);
-    }
 
     private static int withAlpha(int argb, int alpha) { return (Math.max(0, Math.min(255, alpha)) << 24) | (argb & 0xFFFFFF); }
 

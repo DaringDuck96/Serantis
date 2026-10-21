@@ -165,7 +165,7 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 
 **Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. Your hearts and your battle HP are the same stat: in the world it shows as hearts, and in battle as HP at 10 HP per heart (10 hearts = 100 HP). Vitality raises it, and so does anything else that adds hearts. The old player levels and stat points are gone.
 
-**The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 8 branches of 6 skills, 48 in all:
+**The skill tree.** Open your own Base Core and press **Skills**. Branches sit side by side at a readable size; on smaller screens (or bigger GUI scales) they wrap into more rows and you scroll with the mouse wheel. Hover a skill for its details and click a glowing one to learn it. Your base must be Level 1 or higher. There are 8 branches of 6 skills, 48 in all:
 - **Order:** each skill needs the one above it, and each capstone (the last skill in a branch) also needs one skill from a neighbouring branch.
 - **Base level:** the first two skills in a branch need a Level 1 base, and the next four need Levels 2, 3, 4 and 5. Upgrading your base opens up the deeper skills.
 
