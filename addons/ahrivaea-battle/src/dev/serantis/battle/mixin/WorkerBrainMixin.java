@@ -23,7 +23,7 @@ public abstract class WorkerBrainMixin {
             cir.setReturnValue(Pace.workSpeed(self.getCreatureLevel(), self.getStats().charisma()) * serantis$bard() * serantis$performer());
     }
 
-    // The base belongs to a Performer (online): everyone there works 7.5% faster.
+    // The base belongs to a Performer (online): everyone there works 5% faster.
     private double serantis$performer() {
         if (core == null || !(self.level() instanceof net.minecraft.server.level.ServerLevel level)) return 1.0;
         var base = dev.ahrivaea.base.Bases.coreAt(level, core);
