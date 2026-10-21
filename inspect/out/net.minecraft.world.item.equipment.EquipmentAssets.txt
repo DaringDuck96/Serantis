@@ -1,0 +1,23 @@
+Compiled from "EquipmentAssets.java"
+public interface net.minecraft.world.item.equipment.EquipmentAssets {
+  public static final net.minecraft.resources.ResourceKey<? extends net.minecraft.core.Registry<net.minecraft.world.item.equipment.EquipmentAsset>> ROOT_ID;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> LEATHER;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> COPPER;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> CHAINMAIL;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> IRON;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> GOLD;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> DIAMOND;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> TURTLE_SCUTE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> NETHERITE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ARMADILLO_SCUTE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ELYTRA;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> SADDLE;
+  public static final java.util.Map<net.minecraft.world.item.DyeColor, net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset>> CARPETS;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> TRADER_LLAMA;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> TRADER_LLAMA_BABY;
+  public static final java.util.Map<net.minecraft.world.item.DyeColor, net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset>> HARNESSES;
+  public static net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> createId(java.lang.String);
+  private static net.minecraft.resources.ResourceKey lambda$static$1(net.minecraft.world.item.DyeColor);
+  private static net.minecraft.resources.ResourceKey lambda$static$0(net.minecraft.world.item.DyeColor);
+  static {};
+}

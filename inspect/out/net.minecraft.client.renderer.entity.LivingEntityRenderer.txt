@@ -1,0 +1,37 @@
+Compiled from "LivingEntityRenderer.java"
+public abstract class net.minecraft.client.renderer.entity.LivingEntityRenderer<T extends net.minecraft.world.entity.LivingEntity, S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> extends net.minecraft.client.renderer.entity.EntityRenderer<T, S> implements net.minecraft.client.renderer.entity.RenderLayerParent<S, M> {
+  private static final float EYE_BED_OFFSET = 0.1f;
+  protected M model;
+  protected final net.minecraft.client.renderer.item.ItemModelResolver itemModelResolver;
+  protected final java.util.List<net.minecraft.client.renderer.entity.layers.RenderLayer<S, M>> layers;
+  public net.minecraft.client.renderer.entity.LivingEntityRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context, M, float);
+  protected final boolean addLayer(net.minecraft.client.renderer.entity.layers.RenderLayer<S, M>);
+  public M getModel();
+  protected net.minecraft.world.phys.AABB getBoundingBoxForCulling(T, float);
+  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected boolean shouldRenderLayers(S);
+  protected int getModelTint(S);
+  public abstract net.minecraft.resources.Identifier getTextureLocation(S);
+  protected net.minecraft.client.renderer.rendertype.RenderType getRenderType(S, boolean, boolean, boolean);
+  public static int getOverlayCoords(net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
+  protected boolean isBodyVisible(S);
+  private static float sleepDirectionToRotation(net.minecraft.core.Direction);
+  protected boolean isShaking(S);
+  protected void setupRotations(S, com.mojang.blaze3d.vertex.PoseStack, float, float);
+  protected float getFlipDegrees();
+  protected float getWhiteOverlayProgress(S);
+  protected void scale(S, com.mojang.blaze3d.vertex.PoseStack);
+  protected boolean shouldShowName(T, double);
+  public boolean isEntityUpsideDown(T);
+  protected static boolean isUpsideDownName(java.lang.String);
+  protected float getShadowRadius(S);
+  public void extractRenderState(T, S, float);
+  protected void extractNameTags(T, S, float);
+  private static float solveBodyRot(net.minecraft.world.entity.LivingEntity, float, float);
+  protected void extractNameTags(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+  protected float getShadowRadius(net.minecraft.client.renderer.entity.state.EntityRenderState);
+  protected boolean shouldShowName(net.minecraft.world.entity.Entity, double);
+  public void submit(net.minecraft.client.renderer.entity.state.EntityRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected net.minecraft.world.phys.AABB getBoundingBoxForCulling(net.minecraft.world.entity.Entity, float);
+}

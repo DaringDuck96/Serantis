@@ -1,0 +1,40 @@
+Compiled from "Equippable.java"
+public final class net.minecraft.world.item.equipment.Equippable extends java.lang.Record {
+  private final net.minecraft.world.entity.EquipmentSlot slot;
+  private final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> equipSound;
+  private final java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset>> assetId;
+  private final java.util.Optional<net.minecraft.resources.Identifier> cameraOverlay;
+  private final java.util.Optional<net.minecraft.core.HolderSet<net.minecraft.world.entity.EntityType<?>>> allowedEntities;
+  private final boolean dispensable;
+  private final boolean swappable;
+  private final boolean damageOnHurt;
+  private final boolean equipOnInteract;
+  private final boolean canBeSheared;
+  private final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> shearingSound;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.equipment.Equippable> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.world.item.equipment.Equippable> STREAM_CODEC;
+  public net.minecraft.world.item.equipment.Equippable(net.minecraft.world.entity.EquipmentSlot, net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>, java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset>>, java.util.Optional<net.minecraft.resources.Identifier>, java.util.Optional<net.minecraft.core.HolderSet<net.minecraft.world.entity.EntityType<?>>>, boolean, boolean, boolean, boolean, boolean, net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>);
+  public static net.minecraft.world.item.equipment.Equippable llamaSwag(net.minecraft.world.item.DyeColor);
+  public static net.minecraft.world.item.equipment.Equippable saddle();
+  public static net.minecraft.world.item.equipment.Equippable harness(net.minecraft.world.item.DyeColor);
+  public static net.minecraft.world.item.equipment.Equippable$Builder builder(net.minecraft.world.entity.EquipmentSlot);
+  public net.minecraft.world.InteractionResult swapWithEquipmentSlot(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.InteractionResult equipOnTarget(net.minecraft.world.entity.player.Player, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack);
+  public boolean canBeEquippedBy(net.minecraft.core.Holder<net.minecraft.world.entity.EntityType<?>>);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.entity.EquipmentSlot slot();
+  public net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> equipSound();
+  public java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset>> assetId();
+  public java.util.Optional<net.minecraft.resources.Identifier> cameraOverlay();
+  public java.util.Optional<net.minecraft.core.HolderSet<net.minecraft.world.entity.EntityType<?>>> allowedEntities();
+  public boolean dispensable();
+  public boolean swappable();
+  public boolean damageOnHurt();
+  public boolean equipOnInteract();
+  public boolean canBeSheared();
+  public net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> shearingSound();
+  private static com.mojang.datafixers.kinds.App lambda$static$0(com.mojang.serialization.codecs.RecordCodecBuilder$Instance);
+  static {};
+}

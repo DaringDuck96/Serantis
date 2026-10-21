@@ -1,0 +1,9 @@
+Compiled from "RenderLayer.java"
+public abstract class net.minecraft.client.renderer.entity.layers.RenderLayer<S extends net.minecraft.client.renderer.entity.state.EntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> {
+  private final net.minecraft.client.renderer.entity.RenderLayerParent<S, M> renderer;
+  public net.minecraft.client.renderer.entity.layers.RenderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>);
+  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void coloredCutoutModelCopyLayerRender(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
+  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void renderColoredCutoutModel(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
+  public M getParentModel();
+  public abstract void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, float, float);
+}

@@ -1,0 +1,15 @@
+Compiled from "HumanoidArmorLayer.java"
+public class net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer<S extends net.minecraft.client.renderer.entity.state.HumanoidRenderState, M extends net.minecraft.client.model.HumanoidModel<S>, A extends net.minecraft.client.model.HumanoidModel<S>> extends net.minecraft.client.renderer.entity.layers.RenderLayer<S, M> {
+  private final net.minecraft.client.renderer.entity.ArmorModelSet<A> modelSet;
+  private final net.minecraft.client.renderer.entity.ArmorModelSet<A> babyModelSet;
+  private final net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer equipmentRenderer;
+  public net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>, net.minecraft.client.renderer.entity.ArmorModelSet<A>, net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer);
+  public net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>, net.minecraft.client.renderer.entity.ArmorModelSet<A>, net.minecraft.client.renderer.entity.ArmorModelSet<A>, net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer);
+  public static boolean shouldRender(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.EquipmentSlot);
+  private static boolean shouldRender(net.minecraft.world.item.equipment.Equippable, net.minecraft.world.entity.EquipmentSlot);
+  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, float, float);
+  private void renderArmorPiece(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.world.item.ItemStack, net.minecraft.world.entity.EquipmentSlot, int, S);
+  private A getArmorModel(S, net.minecraft.world.entity.EquipmentSlot);
+  private boolean usesInnerModel(net.minecraft.world.entity.EquipmentSlot);
+  public void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.renderer.entity.state.EntityRenderState, float, float);
+}
