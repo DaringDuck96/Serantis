@@ -1,2 +1,7 @@
-# classes 1792610467
-compile wip/journal
+# classes 1792610690
+sig:net.minecraft.client.KeyMapping
+sig:net.minecraft.client.KeyMapping$Category
+sig:net.minecraft.client.Options
+sig:net.minecraft.server.level.ServerPlayer
+sig:net.minecraft.world.entity.ai.attributes.Attributes
+sig:net.minecraft.world.level.block.Block
