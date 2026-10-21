@@ -16,7 +16,7 @@ public final class CoreRemoval {
     private CoreRemoval() {}
 
     public static void remove(ServerPlayer p, BlockPos pos) {
-        if (!(p.level() instanceof ServerLevel level) || pos == null || p.distanceToSqr(pos.getCenter()) > 8 * 8) return;
+        if (!(p.level() instanceof ServerLevel level) || pos == null || p.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) > 8 * 8) return;
         BaseCoreBlockEntity core = Bases.coreAt(level, pos);
         if (core == null) return;
         if (!p.getUUID().equals(core.owner()) && !p.getAbilities().instabuild) {
