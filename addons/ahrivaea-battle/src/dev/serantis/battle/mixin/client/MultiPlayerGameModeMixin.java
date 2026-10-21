@@ -1,5 +1,6 @@
 package dev.serantis.battle.mixin.client;
 
+import com.google.gson.JsonObject;
 import dev.serantis.battle.client.TradeClient;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.world.InteractionHand;
@@ -19,6 +20,14 @@ public abstract class MultiPlayerGameModeMixin {
     private void serantis$trade(Player player, Entity target, EntityHitResult hit, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (hand == InteractionHand.MAIN_HAND && !player.isShiftKeyDown() && dev.serantis.battle.Tutor.isTutor(target)) {
             dev.serantis.battle.client.TutorScreen.open(target.getId());
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
+        if (hand == InteractionHand.MAIN_HAND && dev.serantis.battle.Riddles.isRiddleDragon(target)) {   // an End dragon: its riddle
+            JsonObject o = new JsonObject();
+            o.addProperty("kind", "serantis_riddle_ask");
+            o.addProperty("entity", target.getId());
+            dev.ahrivaea.client.battle.BattleClient.send(o);
             cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }

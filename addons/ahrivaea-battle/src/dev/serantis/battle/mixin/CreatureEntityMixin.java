@@ -50,6 +50,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (!self.level().isClientSide()) {
             dev.serantis.battle.Locomotion.tick(self);
             dev.serantis.battle.Companions.tick(self);                  // never left behind
+            dev.serantis.battle.Riddles.tick(self);                     // a risen End dragon asks its riddle
             if (self.getVariant() != dev.ahrivaea.creature.Variant.NONE && dev.ahrivaea.villager.Villagers.SPECIES.equals(self.getSpeciesId()))
                 self.setVariant(dev.ahrivaea.creature.Variant.NONE);     // villagers and Creature Masters are never Enraged or Mutated
         }

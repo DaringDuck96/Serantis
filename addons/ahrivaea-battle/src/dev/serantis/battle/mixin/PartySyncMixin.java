@@ -30,6 +30,7 @@ public abstract class PartySyncMixin {
         if (o != null) dev.serantis.battle.Welcome.describe(player, o);
         if (o != null) dev.serantis.battle.PlayerClass.describe(player, o);
         if (o != null) dev.serantis.battle.Staffs.describe(player, o);
+        if (o != null) dev.serantis.battle.Riddles.describe(player, o);
         if (o == null || !o.has("character") || !o.get("character").isJsonObject()) return;
         JsonObject c = o.getAsJsonObject("character");
         int owned = dev.serantis.battle.skills.Skills.owned(player).size();

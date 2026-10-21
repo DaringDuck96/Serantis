@@ -1,0 +1,100 @@
+{
+  "greeting": [
+    "Mortal. None may challenge me who cannot answer my riddle.",
+    "So, a challenger stands before me. First, prove your mind is as sharp as your blade.",
+    "Halt. Answer my riddle, and you may face me. Fail, and you may try again... if you dare."
+  ],
+  "try_again": [
+    "Wrong. Think harder, mortal. Try again.",
+    "No. That is not it. Choose again.",
+    "Hah! Foolish. Try again, little one.",
+    "Incorrect. My patience is long, but not endless. Again."
+  ],
+  "correct": [
+    "Correct. Then let us see if your strength matches your wit!",
+    "You are wiser than you look. Now, face me!",
+    "Well answered. The riddle is done. The battle begins!"
+  ],
+  "dragons": {
+    "ddraig_goch": {
+      "answer": "Fire",
+      "riddle": "I eat and eat, yet I am never full. I dance without feet, and I leave only ash behind me. Give me water, and I die. What am I?"
+    },
+    "hrimwyrm": {
+      "answer": "Frost",
+      "riddle": "I paint every window without a brush, and I bite your fingers without teeth. I arrive in the night and flee from the morning sun. What am I?"
+    },
+    "piasa": {
+      "answer": "Storm",
+      "riddle": "I gather in the heavens and roar before I strike. I bring the wind, the rain and the lightning all at once. Sailors fear me, and farmers pray for me. What am I?"
+    },
+    "fafnir": {
+      "answer": "Earth",
+      "riddle": "Every root drinks from me, and every mountain stands on me. You walk on me each day, and one day you will rest in me. What am I?"
+    },
+    "gargouille": {
+      "answer": "Water",
+      "riddle": "I have no shape, yet I take the shape of all that holds me. I carve canyons, yet I slip through your fingers. Without me, nothing lives. What am I?"
+    },
+    "mokele_mbembe": {
+      "answer": "Nature",
+      "riddle": "I am every leaf and every root, every beast and every bloom. No one built me, yet I built everything that grows. What am I?"
+    },
+    "ouroboros": {
+      "answer": "Void",
+      "riddle": "I am the space between the stars and the hollow at the heart of nothing. Fill me, and I am no longer myself. What am I?"
+    },
+    "fairy_dragon": {
+      "answer": "Fae",
+      "riddle": "I dwell in toadstool rings and moonlit glades. I deal in glamour, bargains and tricks. I never tell a lie, yet I seldom tell the truth. What am I?"
+    },
+    "azi_dahaka": {
+      "answer": "Darkness",
+      "riddle": "The more of me there is, the less you see. Light a single candle, and I flee. What am I?"
+    },
+    "ladon": {
+      "answer": "Arcane",
+      "riddle": "My name once meant 'hidden' in an ancient tongue. I am written in runes and whispered from forbidden tomes. Scholars chase me for a lifetime and never fully hold me. What am I?"
+    },
+    "seraphim": {
+      "answer": "Radiant",
+      "riddle": "Brighter than a torch and warmer than a hearth, I pour from the sun and shine from the holy. Shadows flee wherever I fall. What am I?"
+    },
+    "rendmaw": {
+      "answer": "Attack",
+      "riddle": "I am the first blow and the reckless charge, the strike that begins every fight. Defense must wait for me, but I wait for no one. What am I?"
+    },
+    "bastion": {
+      "answer": "Defense",
+      "riddle": "I am the shield raised high and the wall that holds. I never strike first, yet I am the reason you survive the second blow. What am I?"
+    },
+    "galewing": {
+      "answer": "Speed",
+      "riddle": "I win every race, yet I never run one. The cheetah has plenty of me, and the snail has none. Lightning is famous for me. What am I?"
+    },
+    "arcanum": {
+      "answer": "Magic",
+      "riddle": "Wands channel me, staffs store me, and wizards spend their lives learning me. I turn words into fire and wishes into storms. What am I?"
+    },
+    "fortune": {
+      "answer": "Luck",
+      "riddle": "A four-leaf clover is said to hold me, and gamblers pray for me. I can't be earned, only found, and I run out when you need me most. What am I?"
+    },
+    "regalia": {
+      "answer": "Charisma",
+      "riddle": "Kings rule with me, bards charm with me, and crowds follow wherever I lead. I am neither beauty nor strength, yet I can win any room. What am I?"
+    },
+    "the_first_dragon": {
+      "answer": "Forever",
+      "riddle": "I was here before the first sunrise, and I will remain after the last. Mountains crumble and stars burn out, yet I do not end. How long is my reign?"
+    },
+    "the_last_dragon": {
+      "answer": "Never",
+      "riddle": "I am the day that will not come and the promise that will not be kept. Ask a coward when he will fight, or ask the sun when it will rise in the west. I am always the answer. When will the Last Dragon fall?"
+    },
+    "lindworm": {
+      "answer": "None",
+      "riddle": "No flame, no frost, no storm, no shadow. I bear no mark and claim no element, yet I am still a dragon. How many influences do I hold?"
+    }
+  }
+}

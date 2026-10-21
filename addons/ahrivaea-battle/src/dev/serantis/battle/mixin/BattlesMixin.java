@@ -152,6 +152,11 @@ public abstract class BattlesMixin {
     // Black Market Merchants don't fight.
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (dev.serantis.battle.Riddles.isRiddleDragon(entity) && !dev.serantis.battle.Riddles.solved(player, entity)) {
+            dev.serantis.battle.Riddles.ask(player, entity);          // an End dragon asks its riddle first
+            cir.setReturnValue(null);
+            return;
+        }
         if (dev.serantis.battle.Villages.isGuard(entity)) {
             player.sendSystemMessage(net.minecraft.network.chat.Component.literal("I wouldn't try that, punk..."));
             cir.setReturnValue(null);
@@ -174,6 +179,22 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if (kind.startsWith("serantis_riddle_")) {    // an End dragon's riddle
+                switch (kind) {
+                    case "serantis_riddle_ask" -> {
+                        var e = player.level().getEntity(o.has("entity") ? o.get("entity").getAsInt() : -1);
+                        if (e instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Riddles.isRiddleDragon(c) && player.distanceToSqr(c) < 16 * 16) {
+                            if (dev.serantis.battle.Riddles.solved(player, c)) { if (dev.ahrivaea.battle.Battles.of(player) == null) dev.ahrivaea.battle.Battles.start(player, c); }
+                            else dev.serantis.battle.Riddles.ask(player, c);
+                        }
+                    }
+                    case "serantis_riddle_answer" -> dev.serantis.battle.Riddles.answer(player, o.has("index") ? o.get("index").getAsInt() : -1);
+                    case "serantis_riddle_fight" -> dev.serantis.battle.Riddles.done(player, true);
+                    default -> dev.serantis.battle.Riddles.done(player, false);
+                }
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_master_challenge".equals(kind)) {   // challenged a Creature Master from the conversation
                 var e = player.level().getEntity(o.has("entity") ? o.get("entity").getAsInt() : -1);
                 if (e instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Masters.isMaster(c) && c.isAlive()
