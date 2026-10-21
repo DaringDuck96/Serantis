@@ -1,2 +1,10 @@
 # Minecraft classes
-net.minecraft.client.resources.model.cuboid.CuboidModelElement$Deserializer
+sig:net.minecraft.world.level.block.HorizontalDirectionalBlock
+sig:net.minecraft.world.level.block.state.BlockBehaviour$Properties
+sig:net.minecraft.world.item.BlockItem
+sig:net.minecraft.world.level.block.Block
+sig:net.minecraft.world.level.block.state.BlockBehaviour
+asset:assets/minecraft/blockstates/carved_pumpkin.json
+asset:assets/minecraft/items/carved_pumpkin.json
+asset:assets/minecraft/models/block/lantern.json
+asset:assets/minecraft/models/block/block.json
