@@ -1,0 +1,44 @@
+Compiled from "TamableAnimal.java"
+public abstract class net.minecraft.world.entity.TamableAnimal extends net.minecraft.world.entity.animal.Animal implements net.minecraft.world.entity.OwnableEntity {
+  public static final int TELEPORT_WHEN_DISTANCE_IS_SQ = 144;
+  private static final int MIN_HORIZONTAL_DISTANCE_FROM_TARGET_AFTER_TELEPORTING = 2;
+  private static final int MAX_HORIZONTAL_DISTANCE_FROM_TARGET_AFTER_TELEPORTING = 3;
+  private static final int MAX_VERTICAL_DISTANCE_FROM_TARGET_AFTER_TELEPORTING = 1;
+  private static final boolean DEFAULT_ORDERED_TO_SIT = false;
+  protected static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Byte> DATA_FLAGS_ID;
+  protected static final net.minecraft.network.syncher.EntityDataAccessor<java.util.Optional<net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>>> DATA_OWNERUUID_ID;
+  private boolean orderedToSit;
+  protected net.minecraft.world.entity.TamableAnimal(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.TamableAnimal>, net.minecraft.world.level.Level);
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+  protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+  public boolean canBeLeashed();
+  protected void spawnTamingParticles(boolean);
+  public void handleEntityEvent(byte);
+  public boolean isTame();
+  public void setTame(boolean, boolean);
+  protected void applyTamingSideEffects();
+  protected void feed(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, net.minecraft.world.item.ItemStack, float, float);
+  public boolean isInSittingPose();
+  public void setInSittingPose(boolean);
+  public net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity> getOwnerReference();
+  public void setOwner(net.minecraft.world.entity.LivingEntity);
+  public void setOwnerReference(net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>);
+  public void tame(net.minecraft.world.entity.player.Player);
+  public boolean canAttack(net.minecraft.world.entity.LivingEntity);
+  public boolean isOwnedBy(net.minecraft.world.entity.LivingEntity);
+  public boolean wantsToAttack(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  public net.minecraft.world.scores.PlayerTeam getTeam();
+  protected boolean considersEntityAsAlly(net.minecraft.world.entity.Entity);
+  public void die(net.minecraft.world.damagesource.DamageSource);
+  public boolean isOrderedToSit();
+  public void setOrderedToSit(boolean);
+  public void tryToTeleportToOwner();
+  public boolean shouldTryTeleportToOwner();
+  private void teleportToAroundBlockPos(net.minecraft.core.BlockPos);
+  private boolean maybeTeleportTo(int, int, int);
+  private boolean canTeleportTo(net.minecraft.core.BlockPos);
+  public final boolean unableToMoveToOwner();
+  protected boolean canFlyToOwner();
+  static {};
+}

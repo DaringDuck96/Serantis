@@ -1,0 +1,7 @@
+Compiled from "TamableAnimal.java"
+public class net.minecraft.world.entity.TamableAnimal$TamableAnimalPanicGoal extends net.minecraft.world.entity.ai.goal.PanicGoal {
+  final net.minecraft.world.entity.TamableAnimal this$0;
+  public net.minecraft.world.entity.TamableAnimal$TamableAnimalPanicGoal(double, net.minecraft.tags.TagKey<net.minecraft.world.damagesource.DamageType>);
+  public net.minecraft.world.entity.TamableAnimal$TamableAnimalPanicGoal(net.minecraft.world.entity.TamableAnimal, double);
+  public void tick();
+}

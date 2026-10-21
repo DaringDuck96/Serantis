@@ -1,0 +1,13 @@
+Compiled from "LivingEntity.java"
+public final class net.minecraft.world.entity.LivingEntity$SwingDescription extends java.lang.Record {
+  private final net.minecraft.world.InteractionHand hand;
+  private final net.minecraft.world.item.component.SwingAnimation animation;
+  private final int durationTicks;
+  public net.minecraft.world.entity.LivingEntity$SwingDescription(net.minecraft.world.InteractionHand, net.minecraft.world.item.component.SwingAnimation, int);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.InteractionHand hand();
+  public net.minecraft.world.item.component.SwingAnimation animation();
+  public int durationTicks();
+}
