@@ -8,7 +8,7 @@ import dev.ahrivaea.creature.Variant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-/** Package-private Battle methods, for adding a raid's base defenders. */
+/** Package-private Battle methods, for adding a raid's base defenders and co-op players. */
 @Mixin(Battle.class)
 public interface BattleRaidAccess {
     @Invoker("addCreature")
@@ -16,4 +16,16 @@ public interface BattleRaidAccess {
 
     @Invoker("freeCellNear")
     int[] serantis$freeCellNear(int x, int z, Unit.Side side);
+
+    @Invoker("addPlayer")
+    Unit serantis$addPlayer(net.minecraft.server.level.ServerPlayer player, int x, int z);
+
+    @Invoker("newId")
+    int serantis$newId();
+
+    @Invoker("finish")
+    void serantis$finish(Battle.Outcome outcome);
+
+    @Invoker("startEnemyPhase")
+    void serantis$startEnemyPhase();
 }

@@ -28,18 +28,19 @@ public final class SkillEffects {
     /** Heavy Hitter, Overpower, Spellpower (the player's attacks) and Steady (hits on the player). */
     public static DamageCalc.Result battle(Battle b, Unit attacker, Unit target, BattleMove move, boolean crit, DamageCalc.Result r) {
         if (r == null || r.damage() <= 0) return r;
-        ServerPlayer p = b.player();
-        if (p == null) return r;
         double mult = 1;
-        if (attacker.isPlayer) {
+        ServerPlayer p = dev.serantis.battle.coop.CoopBattles.playerOf(b, attacker);    // co-op: each player's own gear and skills
+        if (attacker.isPlayer && p != null) {
             if (dev.serantis.battle.moves.MoveBook.of(move) == null)        // the weapon attack (not a spell): its enchantments count
                 mult *= dev.serantis.battle.WeaponEnchants.multiplier(p, p.getMainHandItem(), target.influence);
             if (move.maxRange() <= 1 && Skills.has(p, "might_4")) mult *= 1.05;
             if (move.move().category() == DamageCalc.Category.MAGIC && Skills.has(p, "arcana_3")) mult *= 1.05;
             if (crit && Skills.has(p, "might_6")) mult *= 2.25 / 2.0;
         }
-        if (target.isPlayer && move.maxRange() > 1 && Skills.has(p, "guard_5")) mult *= 0.95;
-        if (target.isPlayer) {                                           // influence armour resists attacks of its influence
+        p = dev.serantis.battle.coop.CoopBattles.playerOf(b, target);
+        if (p == null) p = b.player();
+        if (target.isPlayer && p != null && move.maxRange() > 1 && Skills.has(p, "guard_5")) mult *= 0.95;
+        if (target.isPlayer && p != null) {                              // influence armour resists attacks of its influence
             var inf = move.move().influence();
             mult *= 1 - dev.serantis.battle.InfluenceArmor.resistance(p, inf == null ? null : inf.getSerializedName());
         }

@@ -184,7 +184,7 @@ public final class Skills {
 
     /** Why a node can't be bought right now, or null if it can. */
     public static String blocker(ServerPlayer p, BaseCoreBlockEntity core, Node n) {
-        if (core == null || core.owner() == null || !core.owner().equals(p.getUUID())) return "Only the base's owner can train here.";
+        if (!dev.serantis.battle.coop.Groups.canUseBase(p, core)) return "Only the base's owner (or their group) can train here.";
         if (core.baseLevel() < 1) return "Your base must be Level 1 first.";
         if (owned(p).contains(n.id())) return "You already have " + n.name() + ".";
         for (String r : n.requires()) if (!owned(p).contains(r)) return "Needs " + NODES.get(r).name() + " first.";
@@ -209,7 +209,7 @@ public final class Skills {
     /** What the skill tree screen shows, sent with the base's screen. */
     public static JsonObject view(ServerPlayer p, BaseCoreBlockEntity core) {
         JsonObject o = new JsonObject();
-        boolean owner = core != null && core.owner() != null && core.owner().equals(p.getUUID());
+        boolean owner = dev.serantis.battle.coop.Groups.canUseBase(p, core);
         o.addProperty("owner", owner);
         o.addProperty("baseLevel", core == null ? 0 : core.baseLevel());
         o.addProperty("xp", XpBank.points(p));

@@ -44,7 +44,10 @@
     "ProjectileBattleMixin",
     "EntityRemovedMixin",
     "BasesInvoker",
-    "BaseCoreUpgradeMixin"
+    "BaseCoreUpgradeMixin",
+    "BattlesAccess",
+    "BaseShareMixin",
+    "BaseCoreShareMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

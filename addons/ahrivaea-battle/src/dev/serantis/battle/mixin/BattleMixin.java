@@ -97,7 +97,30 @@ public abstract class BattleMixin implements BattleAccess {
     @Redirect(method = "act", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Unit;charisma()D"))
     private double serantis$performerRally(Unit u) {
         double c = u.charisma();
-        return u.isPlayer && dev.serantis.battle.PlayerClass.is(((Battle) (Object) this).player(), "performer") ? c * dev.serantis.battle.PlayerClass.PERFORMER_RALLY : c;
+        return u.isPlayer && dev.serantis.battle.PlayerClass.is(dev.serantis.battle.coop.CoopBattles.playerOf((Battle) (Object) this, u), "performer") ? c * dev.serantis.battle.PlayerClass.PERFORMER_RALLY : c;
+    }
+
+    // ---- co-op (see CoopBattles): only your own units; the battle goes on while any player stands; spars are friendly
+    @Inject(method = "checkEnd", at = @At("HEAD"), cancellable = true)
+    private void serantis$coopEnd(CallbackInfoReturnable<Boolean> cir) {
+        Boolean end = dev.serantis.battle.coop.CoopBattles.checkEnd((Battle) (Object) this);
+        if (end != null) cir.setReturnValue(end);
+    }
+
+    @Inject(method = "finish", at = @At("HEAD"))
+    private void serantis$sparFinish(Battle.Outcome outcome, CallbackInfo ci) {
+        if (dev.serantis.battle.coop.CoopBattles.isSpar((Battle) (Object) this)) defeated.clear();   // no loot or recruits from a spar
+    }
+
+    @Inject(method = "saveParty", at = @At("HEAD"), cancellable = true)
+    private void serantis$sparParty(net.minecraft.server.level.ServerPlayer p, CallbackInfo ci) {
+        if (dev.serantis.battle.coop.CoopBattles.skipSaveParty((Battle) (Object) this)) ci.cancel();
+    }
+
+    // Potions come from whoever is acting (an ally uses their own).
+    @Redirect(method = {"itemCheck", "useItem"}, at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battle;player()Lnet/minecraft/server/level/ServerPlayer;"))
+    private net.minecraft.server.level.ServerPlayer serantis$itemUser(Battle self) {
+        return dev.serantis.battle.coop.CoopBattles.itemUser(self);
     }
 
     @Redirect(method = "finish", at = @At(value = "FIELD", target = "Ldev/ahrivaea/battle/Battle;poolXp:I", opcode = 181))
@@ -111,6 +134,7 @@ public abstract class BattleMixin implements BattleAccess {
         }
         if (!self.defeated.isEmpty()) { xp = sum; self.characterXp = sum; }
         self.poolXp = serantis$master != null ? xp * 2 : xp;
+        if (dev.serantis.battle.coop.CoopBattles.isSpar(self)) { self.poolXp = 0; self.characterXp = 0; }
     }
 
     @Inject(method = "finish", at = @At("HEAD"))
@@ -165,6 +189,7 @@ public abstract class BattleMixin implements BattleAccess {
     @Inject(method = "finish", at = @At("HEAD"))
     private void serantis$defeat(Battle.Outcome outcome, CallbackInfo ci) {
         Battle self = (Battle) (Object) this;
+        if (dev.serantis.battle.coop.CoopBattles.isSpar(self)) return;   // a friendly spar counts for nothing
         if (outcome == Battle.Outcome.LOST && self.player() != null) dev.serantis.battle.Wear.defeat(self.player(), "You were defeated.");
         dev.serantis.battle.GoblinRaids.finished(self, outcome);
         dev.serantis.battle.FigureVisit.finished(self, outcome);
@@ -240,13 +265,21 @@ public abstract class BattleMixin implements BattleAccess {
     }
 
     // ---- player actions
+    // Co-op: you command only your own units, and ending the turn waits for everyone (see CoopBattles).
+    @Inject(method = "act", at = @At("HEAD"), cancellable = true)
+    private void serantis$coopAct(Battle.Action action, CallbackInfoReturnable<String> cir) {
+        String why = dev.serantis.battle.coop.CoopBattles.checkAct((Battle) (Object) this, action);
+        if (why == dev.serantis.battle.coop.CoopBattles.HANDLED) cir.setReturnValue(null);
+        else if (why != null) cir.setReturnValue(why);
+    }
+
     // Changing gear takes the place of an attack: the player moves (if they chose to), then equips. See Equipment.
     @Inject(method = "act", at = @At("HEAD"), cancellable = true)
     private void serantis$equip(Battle.Action action, CallbackInfoReturnable<String> cir) {
         if (!"equip".equals(action.kind())) return;
         Battle self = (Battle) (Object) this;
-        net.minecraft.server.level.ServerPlayer p = self.player();
         Unit u = self.unit(action.unit());
+        net.minecraft.server.level.ServerPlayer p = dev.serantis.battle.coop.CoopBattles.playerOf(self, u);
         if (p == null || u == null || !u.isPlayer) { cir.setReturnValue("Only you can change your gear."); return; }
         if (u.acted) { cir.setReturnValue("You've already acted this turn."); return; }
         int slot = action.move(), hand = action.target() == 1 ? 1 : 0;
@@ -300,13 +333,17 @@ public abstract class BattleMixin implements BattleAccess {
 
     // ---- turn changes
     @Inject(method = "startEnemyPhase", at = @At("RETURN"))
-    private void serantis$enemyPhase(CallbackInfo ci) { MoveEngine.sync((Battle) (Object) this); }
+    private void serantis$enemyPhase(CallbackInfo ci) {
+        MoveEngine.sync((Battle) (Object) this);
+        dev.serantis.battle.coop.CoopBattles.enemyPhaseStarted((Battle) (Object) this);
+    }
 
     // Each enemy acts according to its mentality (EnemyBrain). When the queue is empty the creatures mod
     // ends the enemy phase as usual.
     @Inject(method = "enemyStep", at = @At("HEAD"), cancellable = true)
     private void serantis$enemyStep(CallbackInfoReturnable<Boolean> cir) {
         Battle self = (Battle) (Object) this;
+        if (dev.serantis.battle.coop.CoopBattles.holdEnemyStep(self)) { cir.setReturnValue(true); return; }   // a spar: the rival plays this phase
         while (!enemyQueue.isEmpty() && !enemyQueue.getFirst().alive()) enemyQueue.removeFirst();
         if (enemyQueue.isEmpty() || self.phase != Battle.Phase.ENEMY) return;
         Unit unit = enemyQueue.removeFirst();
@@ -322,7 +359,10 @@ public abstract class BattleMixin implements BattleAccess {
     private void serantis$beforeView(UUID viewer, CallbackInfoReturnable<JsonObject> cir) { MoveEngine.sync((Battle) (Object) this); }
 
     @Inject(method = "view", at = @At("RETURN"))
-    private void serantis$afterView(UUID viewer, CallbackInfoReturnable<JsonObject> cir) { MoveEngine.decorate((Battle) (Object) this, cir.getReturnValue()); }
+    private void serantis$afterView(UUID viewer, CallbackInfoReturnable<JsonObject> cir) {
+        MoveEngine.decorate((Battle) (Object) this, cir.getReturnValue());
+        dev.serantis.battle.coop.CoopBattles.view((Battle) (Object) this, viewer, cir.getReturnValue());
+    }
 
     // Villagers (Creature Masters and Town Guards included) are never Enraged or Mutated.
     @Redirect(method = "addCreature(Ldev/ahrivaea/battle/Unit$Side;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;Ldev/ahrivaea/creature/Variant;IFIII)Ldev/ahrivaea/battle/Unit;",

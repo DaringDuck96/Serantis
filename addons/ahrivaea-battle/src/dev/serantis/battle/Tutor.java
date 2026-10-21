@@ -52,7 +52,7 @@ public final class Tutor {
         if (c.brain() == null) return null;                                     // not working at a base
         if (c.isOwnedBy(p)) return c;
         var core = dev.ahrivaea.base.Bases.coreAt((net.minecraft.server.level.ServerLevel) c.level(), c.brain().core());
-        return core != null && p.getUUID().equals(core.owner()) ? c : null;
+        return core != null && p instanceof net.minecraft.server.level.ServerPlayer sp && dev.serantis.battle.coop.Groups.canUseBase(sp, core) ? c : null;
     }
 
     /** Who's talking to which Tutor, and about which party slot (-1: none picked yet). */

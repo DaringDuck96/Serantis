@@ -114,6 +114,7 @@ public final class Bounties {
             if (list.get(i).done()) p.sendSystemMessage(Component.literal("Bounty complete: " + describe(list.get(i)) + ". Claim it at a village bell!").withStyle(ChatFormatting.GOLD));
         }
         if (changed) save(p, list);
+        groupProgress(p, kind, param, n);
     }
 
     /** A battle was won: the creatures beaten, and whether it was a Master's. */
@@ -138,7 +139,7 @@ public final class Bounties {
         return switch (c.kind()) {
             case "defeat" -> "Beat " + c.goal() + " " + Masters.influenceName(c.param()) + " creatures";
             case "win" -> "Win " + c.goal() + " battles";
-            case "recruit" -> "Recruit a Rare (or rarer) creature";
+            case "recruit" -> c.goal() > 1 ? "Recruit " + c.goal() + " Rare (or rarer) creatures" : "Recruit a Rare (or rarer) creature";
             case "deliver" -> "Bring " + c.goal() + " " + new net.minecraft.world.item.ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.parse(c.param()))).getHoverName().getString();
             case "master" -> "Beat a Creature Master";
             default -> "Repel a goblin raid on your base";
@@ -165,6 +166,7 @@ public final class Bounties {
     public static void act(ServerPlayer p, int index) {
         List<Contract> list = today(p);
         if (index < 0) { PartySync.sync(p); return; }                   // opened the board: fresh contracts
+        if (index == list.size()) { groupAct(p); return; }              // the row after yours: the group contract
         if (index >= list.size()) return;
         Contract c = list.get(index);
         if (c.claimed()) return;
@@ -193,6 +195,13 @@ public final class Bounties {
         give(p, new ItemStack(Items.GOLDEN_APPLE, apples));
         int ore = ingots(c);
         give(p, new ItemStack(InfluenceArmor.ORICHALCUM, ore));
+        String extra = extras(p);
+        p.sendSystemMessage(Component.literal("Bounty claimed: +" + xp + " XP, " + ore + " Orichalcum Ingots, " + apples + " golden apple" + (apples > 1 ? "s" : "") + extra + ".").withStyle(ChatFormatting.GREEN));
+        PartySync.sync(p);
+    }
+
+    /** A claim's chance extras: a saddle, a lore book or a Bane book. Returns what was given, for the message. */
+    private static String extras(ServerPlayer p) {
         String extra = "";
         RandomSource r = p.getRandom();
         if (r.nextFloat() < 0.2f) { give(p, new ItemStack(Items.SADDLE)); extra += ", a saddle"; }
@@ -213,7 +222,93 @@ public final class Bounties {
                 extra += ", and an enchanted book";
             }
         }
-        p.sendSystemMessage(Component.literal("Bounty claimed: +" + xp + " XP, " + ore + " Orichalcum Ingots, " + apples + " golden apple" + (apples > 1 ? "s" : "") + extra + ".").withStyle(ChatFormatting.GREEN));
+        return extra;
+    }
+
+    // ------------------------------------------------------------------ the group contract (co-op)
+
+    public static final int GROUP_INGOTS = 5;
+
+    /** Today's shared contract for the player's co-op group (null: not in a group). Everyone's progress counts. */
+    static Contract groupContract(ServerPlayer p) {
+        var g = dev.serantis.battle.coop.Groups.of(p);
+        if (g == null) return null;
+        long day = day(p);
+        if (g.bountyDay() == day && !g.bounty().isEmpty()) {
+            try { return Contract.decode(g.bounty()); } catch (RuntimeException ignored) { }
+        }
+        RandomSource r = RandomSource.create(day * 977L + g.id() * 7919L);
+        Contract c = switch (r.nextInt(4)) {
+            case 0 -> new Contract("defeat", INFLUENCES[r.nextInt(INFLUENCES.length)], 12 + r.nextInt(9), 0, false);
+            case 1 -> new Contract("win", "-", 8 + r.nextInt(5), 0, false);
+            case 2 -> new Contract("recruit", "Rare", 3, 0, false);
+            default -> { int i = r.nextInt(DELIVER.length); yield new Contract("deliver", BuiltInRegistries.ITEM.getKey(DELIVER[i]).toString(), DELIVER_N[i] * 3, 0, false); }
+        };
+        g.setBounty(day, c.encode());
+        dev.serantis.battle.coop.Groups.save(p.level().getServer());
+        return c;
+    }
+
+    private static void setGroupContract(ServerPlayer p, Contract c) {
+        var g = dev.serantis.battle.coop.Groups.of(p);
+        if (g == null) return;
+        g.setBounty(day(p), c.encode());
+        dev.serantis.battle.coop.Groups.save(p.level().getServer());
+    }
+
+    private static void groupProgress(ServerPlayer p, String kind, String param, int n) {
+        Contract c = groupContract(p);
+        if (c == null || c.done() || !c.kind().equals(kind) || !(c.param().equals(param) || "-".equals(c.param()))) return;
+        c = c.plus(n);
+        setGroupContract(p, c);
+        if (c.done()) groupNews(p, "Group contract complete: " + describe(c) + "! Each of you can claim it at a village bell.");
+    }
+
+    private static void groupNews(ServerPlayer p, String msg) {
+        var g = dev.serantis.battle.coop.Groups.of(p);
+        if (g == null) return;
+        for (var id : g.members()) {
+            ServerPlayer m = p.level().getServer().getPlayerList().getPlayer(id);
+            if (m != null) { m.sendSystemMessage(Component.literal(msg).withStyle(ChatFormatting.GOLD)); PartySync.sync(m); }
+        }
+    }
+
+    /** The group contract's row on the board: hand in goods (any amount helps), or claim your share. */
+    private static void groupAct(ServerPlayer p) {
+        var g = dev.serantis.battle.coop.Groups.of(p);
+        Contract c = groupContract(p);
+        if (g == null || c == null || g.claimed().contains(p.getUUID())) return;
+        if ("deliver".equals(c.kind()) && !c.done()) {
+            Item item = BuiltInRegistries.ITEM.getValue(Identifier.parse(c.param()));
+            int need = c.goal() - c.progress(), left = need;
+            var inv = p.getInventory();
+            for (int i = 0; i < inv.getContainerSize() && left > 0; i++) {
+                ItemStack s = inv.getItem(i);
+                if (!s.is(item)) continue;
+                int take = Math.min(left, s.getCount());
+                s.shrink(take);
+                left -= take;
+            }
+            int given = need - left;
+            String what = new ItemStack(item).getHoverName().getString();
+            if (given == 0) { p.sendSystemMessage(Component.literal("You have no " + what + " to hand in.").withStyle(ChatFormatting.YELLOW)); return; }
+            c = c.plus(given);
+            setGroupContract(p, c);
+            if (!c.done()) {
+                groupNews(p, p.getPlainTextName() + " handed in " + given + " " + what + " for the group contract (" + c.progress() + "/" + c.goal() + ").");
+                return;
+            }
+            groupNews(p, "Group contract complete: " + describe(c) + "! Each of you can claim it at a village bell.");
+        }
+        if (!c.done()) return;
+        g.claimed().add(p.getUUID());
+        dev.serantis.battle.coop.Groups.save(p.level().getServer());
+        int xp = (int) Math.round(xp(p, c) * 1.5);
+        dev.serantis.battle.skills.XpBank.give(p, xp);
+        give(p, new ItemStack(Items.GOLDEN_APPLE, 2));
+        give(p, new ItemStack(InfluenceArmor.ORICHALCUM, GROUP_INGOTS));
+        String extra = extras(p);
+        p.sendSystemMessage(Component.literal("Group contract claimed: +" + xp + " XP, " + GROUP_INGOTS + " Orichalcum Ingots, 2 golden apples" + extra + ".").withStyle(ChatFormatting.GREEN));
         PartySync.sync(p);
     }
 
@@ -238,6 +333,20 @@ public final class Bounties {
         }
         JsonObject o = new JsonObject();
         o.add("contracts", a);
+        Contract gc = groupContract(p);
+        var g = dev.serantis.battle.coop.Groups.of(p);
+        if (gc != null && g != null) {
+            JsonObject go = new JsonObject();
+            go.addProperty("text", "Group: " + describe(gc));
+            go.addProperty("progress", gc.progress());
+            go.addProperty("goal", gc.goal());
+            go.addProperty("claimed", g.claimed().contains(p.getUUID()));
+            go.addProperty("deliver", "deliver".equals(gc.kind()));
+            go.addProperty("xp", (int) Math.round(xp(p, gc) * 1.5));
+            go.addProperty("ingots", GROUP_INGOTS);
+            go.addProperty("index", a.size());
+            o.add("group", go);
+        }
         long t = p.level().getServer().overworld().getGameTime() % 24000L;
         o.addProperty("minutesLeft", (int) Math.ceil((24000L - t) / 1200.0));
         state.add("serantis_bounties", o);

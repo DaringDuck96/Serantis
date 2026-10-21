@@ -378,6 +378,8 @@ public final class GoblinRaids {
         Unit me = b.playerUnit();
         if (me == null) return;
         var acc = (dev.serantis.battle.mixin.BattleRaidAccess) (Object) b;
+        dev.serantis.battle.mixin.BattlesAccess.serantis$setSpawning(true);     // or the arena clears them away as strays
+        try {
         for (Worker w : guards) {
             CaughtCreature c = w.creature();
             Species sp = Species.get(c.species()).orElse(null);
@@ -395,6 +397,9 @@ public final class GoblinRaids {
             e.setNoAi(true);
             e.capSize(1.4f);
             u.entity = e.getUUID();
+        }
+        } finally {
+            dev.serantis.battle.mixin.BattlesAccess.serantis$setSpawning(false);
         }
     }
 

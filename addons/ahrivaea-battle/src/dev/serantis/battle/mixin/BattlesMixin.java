@@ -20,12 +20,59 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Battles.class)
 public abstract class BattlesMixin {
     // Arenas grow for big creatures: +2 tiles per footprint step of the biggest one in the fight.
     @Unique private static final ThreadLocal<Integer> SERANTIS_BIGGEST = new ThreadLocal<>();
+
+    // ---- co-op (see CoopBattles)
+    // Allies and sparring rivals aren't in the creatures mod's list of battles: their actions are routed here.
+    @Inject(method = "handle", at = @At("HEAD"), cancellable = true)
+    private static void serantis$coopRoute(ServerPlayer player, String json, CallbackInfoReturnable<String> cir) {
+        dev.serantis.battle.coop.CoopBattles.ACTOR.set(player);
+        String r = dev.serantis.battle.coop.CoopBattles.route(player, json);
+        if (r != dev.serantis.battle.coop.CoopBattles.PASS) {
+            dev.serantis.battle.coop.CoopBattles.ACTOR.remove();
+            cir.setReturnValue(r);
+        }
+    }
+
+    @Inject(method = "handle", at = @At("RETURN"))
+    private static void serantis$coopActorDone(ServerPlayer player, String json, CallbackInfoReturnable<String> cir) {
+        dev.serantis.battle.coop.CoopBattles.ACTOR.remove();
+    }
+
+    @Inject(method = "of", at = @At("RETURN"), cancellable = true)
+    private static void serantis$ofJoined(Player p, CallbackInfoReturnable<Battle> cir) {
+        if (cir.getReturnValue() == null) {
+            Battle joined = dev.serantis.battle.coop.CoopBattles.joined(p);
+            if (joined != null) cir.setReturnValue(joined);
+        }
+    }
+
+    @Inject(method = "send", at = @At("TAIL"))
+    private static void serantis$sendOthers(Battle b, CallbackInfo ci) { dev.serantis.battle.coop.CoopBattles.sendOthers(b); }
+
+    @Inject(method = "cleanUp", at = @At("TAIL"))
+    private static void serantis$coopEnded(Battle b, CallbackInfo ci) { dev.serantis.battle.coop.CoopBattles.ended(b); }
+
+    @Inject(method = "goHome", at = @At("HEAD"))
+    private static void serantis$ownerLeft(ServerPlayer p, Battle b, CallbackInfo ci) {
+        if (p != null) dev.serantis.battle.coop.CoopBattles.ownerLeft(b);
+    }
+
+    @Inject(method = "start", at = @At("HEAD"))
+    private static void serantis$coopStarting(ServerPlayer player, CreatureEntity wild, CallbackInfoReturnable<Battle> cir) {
+        dev.serantis.battle.coop.CoopBattles.starting(player);
+    }
+
+    @Inject(method = "start", at = @At("RETURN"))
+    private static void serantis$coopStarted(ServerPlayer player, CreatureEntity wild, CallbackInfoReturnable<Battle> cir) {
+        dev.serantis.battle.coop.CoopBattles.started(player, cir.getReturnValue());
+    }
 
     @Inject(method = "start", at = @At("HEAD"))
     private static void serantis$measure(ServerPlayer player, CreatureEntity wild, CallbackInfoReturnable<Battle> cir) {
@@ -48,6 +95,7 @@ public abstract class BattlesMixin {
         if (biggest != null && biggest > 1) cir.setReturnValue(Math.min(19, cir.getReturnValue() + 2 * (biggest - 1)));
         int raid = dev.serantis.battle.GoblinRaids.extraArena();         // room for a raid's base defenders
         if (raid > 0) cir.setReturnValue(Math.min(19, cir.getReturnValue() + raid));
+        if (dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null) cir.setReturnValue(Math.min(19, cir.getReturnValue() + 2));   // a spar: the rival's team
     }
 
     // Wild creatures fight with the moves saved on them.
@@ -99,6 +147,7 @@ public abstract class BattlesMixin {
 
     @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battles;reinforcements(ILnet/minecraft/util/RandomSource;)I"))
     private static int serantis$guardCount(int level, net.minecraft.util.RandomSource random, ServerPlayer player, dev.ahrivaea.creature.CreatureEntity target) {
+        if (dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null) return 0;   // a spar: the rival brings their own team
         int raid = dev.serantis.battle.GoblinRaids.raidSize();
         if (raid > 0) return raid - 1;
         if (dev.serantis.battle.FigureVisit.FIGHTING.get()) return 0;  // the Mysterious Figure fights alone                                  // a goblin raid: the rest of the raiders
@@ -171,6 +220,7 @@ public abstract class BattlesMixin {
     // Black Market Merchants don't fight.
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null) return;   // a spar's stand-in creature
         if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { cir.setReturnValue(null); return; }   // the Mysterious Figure doesn't fight
         if (dev.serantis.battle.VillagerTalk.ask(player, entity)) { cir.setReturnValue(null); return; }   // a villager talks before it fights
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
@@ -350,6 +400,11 @@ public abstract class BattlesMixin {
             if ("serantis_achievements".equals(kind)) {   // the Achievements page wants fresh numbers
                 dev.serantis.battle.Achievements.check(player);
                 dev.ahrivaea.party.PartySync.sync(player);
+                cir.setReturnValue(null);
+                return;
+            }
+            if (kind.startsWith("serantis_coop_")) {      // groups, spars, joining battles
+                dev.serantis.battle.coop.Groups.handle(player, o);
                 cir.setReturnValue(null);
                 return;
             }

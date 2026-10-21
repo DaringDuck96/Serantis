@@ -56,6 +56,10 @@ public abstract class PartyScreenMixin extends Screen {
                         b -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.JournalScreen(self)))
                 .tooltip(Tooltip.create(Component.literal("What to do next, your progress, the story so far and the lore you've found.")))
                 .bounds(width - 214, 6, 60, 20).build());
+        addRenderableWidget(Button.builder(Component.literal("Co-op"),
+                        b -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.CoopScreen(self)))
+                .tooltip(Tooltip.create(Component.literal("Your group: join each other's battles, share bases and a daily group contract.")))
+                .bounds(width - 268, 6, 50, 20).build());
         if (sendOut == null || chosen() == null) return;
         int slot = selected;
         Button apple = Button.builder(Component.literal("Apple"),

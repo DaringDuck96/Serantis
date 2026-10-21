@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 
 /** A village bounty board (any bell): today's three contracts. See Bounties on the server. */
 public class BountyScreen extends Screen {
-    private static final int W = 340, H = 168, GOLD = 0xFFF2C94C, TEXT = 0xFFE6E2D8, DIM = 0xFF9AA4B4, GREEN = 0xFF7CD67C;
+    private static final int W = 340, H = 168, GROUP_H = 40, GOLD = 0xFFF2C94C, TEXT = 0xFFE6E2D8, DIM = 0xFF9AA4B4, GREEN = 0xFF7CD67C;
     private String seen = "";
 
     public BountyScreen() { super(Component.literal("Bounty Board")); }
@@ -33,7 +33,8 @@ public class BountyScreen extends Screen {
     }
 
     private int left() { return (width - W) / 2; }
-    private int top() { return Math.max(4, (height - H) / 2); }
+    private int h() { JsonObject b = board(); return b != null && b.has("group") ? H + GROUP_H : H; }
+    private int top() { return Math.max(4, (height - h()) / 2); }
 
     @Override
     protected void init() {
@@ -51,8 +52,18 @@ public class BountyScreen extends Screen {
                 btn.active = !claimed && (done || deliver);
                 addRenderableWidget(btn);
             }
+            if (b.has("group")) {                                  // the co-op group's shared contract
+                JsonObject c = b.getAsJsonObject("group");
+                boolean claimed = c.get("claimed").getAsBoolean(), done = c.get("progress").getAsInt() >= c.get("goal").getAsInt();
+                boolean deliver = c.get("deliver").getAsBoolean();
+                int idx = c.get("index").getAsInt();
+                Button btn = Button.builder(Component.literal(claimed ? "Claimed" : done ? "Claim" : deliver ? "Hand in" : "..."), x -> send(idx))
+                        .bounds(left() + W - 78, top() + 30 + 3 * 38 + 8, 70, 20).build();
+                btn.active = !claimed && (done || deliver);
+                addRenderableWidget(btn);
+            }
         }
-        addRenderableWidget(Button.builder(Component.literal("Done"), x -> onClose()).bounds(width / 2 - 40, top() + H - 26, 80, 20).build());
+        addRenderableWidget(Button.builder(Component.literal("Done"), x -> onClose()).bounds(width / 2 - 40, top() + h() - 26, 80, 20).build());
     }
 
     @Override
@@ -66,8 +77,8 @@ public class BountyScreen extends Screen {
     public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial) {
         g.fillGradient(0, 0, width, height, 0xD0100C08, 0xD0201810);
         int l = left(), t = top();
-        g.fill(l, t, l + W, t + H, 0xF01C1610);
-        g.outline(l, t, W, H, 0xFF7A5A2A);
+        g.fill(l, t, l + W, t + h(), 0xF01C1610);
+        g.outline(l, t, W, h(), 0xFF7A5A2A);
     }
 
     @Override
@@ -88,6 +99,16 @@ public class BountyScreen extends Screen {
             g.text(font, font.plainSubstrByWidth(c.get("text").getAsString(), W - 100), l, y, claimed ? DIM : TEXT);
             String sub = (claimed ? "Done" : p + "/" + goal) + " · " + c.get("xp").getAsInt() + " XP + " + c.get("ingots").getAsInt() + " Orichalcum";
             g.text(font, sub, l, y + 12, claimed ? DIM : p >= goal ? GREEN : DIM);
+        }
+        if (b.has("group")) {
+            JsonObject c = b.getAsJsonObject("group");
+            int y = t + 26 + 3 * 38 + 8;
+            g.fill(l, y - 5, left() + W - 8, y - 4, 0xFF7A5A2A);
+            boolean claimed = c.get("claimed").getAsBoolean();
+            int p = c.get("progress").getAsInt(), goal = c.get("goal").getAsInt();
+            g.text(font, font.plainSubstrByWidth(c.get("text").getAsString(), W - 100), l, y, claimed ? DIM : 0xFF8FD3FF);
+            String sub = (claimed ? "You've claimed yours" : p + "/" + goal + " together") + " · " + c.get("xp").getAsInt() + " XP + " + c.get("ingots").getAsInt() + " Orichalcum each";
+            g.text(font, font.plainSubstrByWidth(sub, W - 100), l, y + 12, claimed ? DIM : p >= goal ? GREEN : DIM);
         }
     }
 

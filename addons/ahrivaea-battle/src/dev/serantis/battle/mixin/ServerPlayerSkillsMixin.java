@@ -76,6 +76,8 @@ public abstract class ServerPlayerSkillsMixin {
         dev.serantis.battle.WingedBoots.tick(self);
         dev.serantis.battle.TeleportBoots.tick(self);
         dev.serantis.battle.Linx.tick(self);
+        dev.serantis.battle.coop.CoopBattles.tick(self);
+        if (self.tickCount % 200 == 17) dev.serantis.battle.coop.Groups.seen(self);
         dev.serantis.battle.FigureVisit.tick(self);
         dev.serantis.battle.BaseCredit.ride(self);
         if (self.tickCount % 20 == 7) dev.serantis.battle.GoblinRaids.tick(self);
