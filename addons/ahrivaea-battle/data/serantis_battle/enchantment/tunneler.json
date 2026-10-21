@@ -1,22 +1,22 @@
 {
-  "anvil_cost": 4,
+  "anvil_cost": 1,
   "description": {
     "translate": "enchantment.serantis_battle.tunneler"
   },
   "effects": {},
   "max_cost": {
-    "base": 65,
-    "per_level_above_first": 9
+    "base": 51,
+    "per_level_above_first": 10
   },
   "max_level": 3,
   "min_cost": {
-    "base": 15,
-    "per_level_above_first": 9
+    "base": 1,
+    "per_level_above_first": 10
   },
   "primary_items": "#minecraft:pickaxes",
   "slots": [
     "mainhand"
   ],
   "supported_items": "#minecraft:pickaxes",
-  "weight": 2
+  "weight": 10
 }

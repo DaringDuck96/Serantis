@@ -375,3 +375,5 @@ Everyone playing together needs the same mods. A server gets the same jars in it
 ## License
 
 All Ahrivaea mods are © jeffreystu10 and DaringDuck96, All Rights Reserved. Please don't re-upload them elsewhere without permission.
+
+**Tunneler (pickaxe enchantment, I-III).** A new enchantment as common as Efficiency: it comes from the enchanting table, enchanted books, librarian trades and loot. Mining a block also mines the blocks around it in a 3x3 pane facing you: 1 deep at Tunneler I, 2 deep at II, and a full 3x3x3 cube at III, going away from you. Every extra block drops normally and costs durability. Blocks your pickaxe can't harvest, bedrock and the like, and blocks much harder than the one you mined (obsidian in a stone wall) are left alone. Sneak to mine just one block.
