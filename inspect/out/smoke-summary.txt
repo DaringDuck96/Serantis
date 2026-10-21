@@ -1,0 +1,8 @@
+256:[23:58:46] [main/INFO]: [STDOUT]: SMOKE: mixin audit finished
+257:[23:58:46] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
+258:[23:58:46] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
+259:[23:58:46] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
+260:[23:58:46] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
+261:[23:58:46] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
+262:[23:58:46] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
+287:[23:58:52] [Server thread/INFO]: Done (3.404s)! For help, type "help"
