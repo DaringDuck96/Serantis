@@ -32,6 +32,9 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Override public java.util.List<CaughtCreature> serantis$stock() { return serantis$stock; }
     @Override public void serantis$setStock(java.util.List<CaughtCreature> stock) { serantis$stock = java.util.List.copyOf(stock); }
     @Override public long serantis$leaveAt() { return serantis$leaveAt; }
+    @Unique private int serantis$swaps;
+    @Override public int serantis$swaps() { return serantis$swaps; }
+    @Override public void serantis$setSwaps(int swaps) { serantis$swaps = swaps; }
     @Override public void serantis$setLeaveAt(long tick) { serantis$leaveAt = tick; }
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -101,6 +104,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$apples != null) out.putString("SerantisApples", serantis$apples);
         if (serantis$leaveAt > 0) {
             out.putLong("SerantisLeaveAt", serantis$leaveAt);
+            out.putInt("SerantisSwaps", serantis$swaps);
             out.store("SerantisStock", CaughtCreature.CODEC.listOf(), serantis$stock);
         }
     }
@@ -116,6 +120,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         String apples = in.getStringOr("SerantisApples", "");
         if (!apples.isEmpty()) serantis$apples = apples;
         serantis$leaveAt = in.getLongOr("SerantisLeaveAt", 0L);
+        serantis$swaps = in.getIntOr("SerantisSwaps", 0);
         if (serantis$leaveAt > 0) serantis$stock = in.read("SerantisStock", CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
     }
 

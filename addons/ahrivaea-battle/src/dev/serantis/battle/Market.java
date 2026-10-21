@@ -56,6 +56,9 @@ public final class Market {
         void serantis$setStock(List<CaughtCreature> stock);
         long serantis$leaveAt();
         void serantis$setLeaveAt(long tick);
+        /** Swaps a Wandering Trader has left. */
+        int serantis$swaps();
+        void serantis$setSwaps(int swaps);
     }
 
     // ------------------------------------------------------------------ merchants

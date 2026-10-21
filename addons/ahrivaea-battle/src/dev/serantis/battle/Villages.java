@@ -131,7 +131,7 @@ public final class Villages {
     public static boolean defendedByGuards(CreatureEntity e) {
         if (e == null || !dev.ahrivaea.villager.Villagers.SPECIES.equals(e.getSpeciesId())) return false;
         VillagerJob j = jobOf(e);
-        return j == null || !(GUARD.equals(j.profession()) || Market.BLACK_MARKET.equals(j.profession()));
+        return j == null || !(GUARD.equals(j.profession()) || Market.BLACK_MARKET.equals(j.profession()) || Wanderer.ROLE.equals(j.profession()));
     }
 
     /** A Town Guard joining a battle: a villager a few levels above the one it defends. */

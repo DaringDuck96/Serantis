@@ -29,8 +29,8 @@ public abstract class VanillaMobsVillagerMixin {
             "Ldev/ahrivaea/Ahrivaea;spawn(Lnet/minecraft/server/level/ServerLevel;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;IFDDD)Ldev/ahrivaea/creature/CreatureEntity;"))
     private static CreatureEntity serantis$villager(ServerLevel level, Species species, Influence influence, int lvl, float health, double x, double y, double z) {
         CreatureEntity e = Ahrivaea.spawn(level, species, influence, Villages.SPAWN_LEVEL, health, x, y, z);
-        if ("wandering_trader".equals(SERANTIS_MOB.get())) {            // wandering traders become Merchants
-            if (e != null) Villages.setJob(e, new dev.ahrivaea.villager.VillagerJob(dev.serantis.battle.Market.MERCHANT, 1, 0));
+        if ("wandering_trader".equals(SERANTIS_MOB.get())) {            // wandering traders swap creatures
+            dev.serantis.battle.Wanderer.make(level, e);
         } else if (e != null && level.getRandom().nextDouble() < Villages.GUARD_SHARE) {
             Villages.makeGuard(e);                                     // some stand watch as Town Guards
         } else Villages.assign(e, level.getRandom());

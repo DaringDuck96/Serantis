@@ -122,6 +122,11 @@ public abstract class BattlesMixin {
             cir.setReturnValue(null);
             return;
         }
+        if (dev.serantis.battle.Wanderer.isWanderer(entity)) {
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The Wandering Trader doesn't fight. Right-click to swap a creature."));
+            cir.setReturnValue(null);
+            return;
+        }
         if (dev.serantis.battle.Market.isBlackMarket(entity)) {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The Black Market Merchant doesn't fight. Right-click to see what's for sale."));
             cir.setReturnValue(null);
@@ -134,6 +139,16 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if (kind.startsWith("serantis_wander_")) {    // the Wandering Trader's swaps
+                int entity = o.has("entity") ? o.get("entity").getAsInt() : -1;
+                switch (kind) {
+                    case "serantis_wander_open" -> dev.serantis.battle.Wanderer.open(player, entity);
+                    case "serantis_wander_swap" -> dev.serantis.battle.Wanderer.swap(player, entity, o.has("slot") ? o.get("slot").getAsInt() : -1);
+                    default -> dev.serantis.battle.Wanderer.close(player);
+                }
+                cir.setReturnValue(null);
+                return;
+            }
             if (kind.startsWith("serantis_market_")) {    // the Black Market Merchant's shop
                 int entity = o.has("entity") ? o.get("entity").getAsInt() : -1;
                 switch (kind) {

@@ -17,6 +17,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MultiPlayerGameModeMixin {
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void serantis$trade(Player player, Entity target, EntityHitResult hit, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        if (hand == InteractionHand.MAIN_HAND && dev.serantis.battle.Wanderer.isWanderer(target)) {
+            dev.serantis.battle.client.WandererScreen.open(target.getId());
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
         if (hand == InteractionHand.MAIN_HAND && dev.serantis.battle.Market.isBlackMarket(target)) {
             dev.serantis.battle.client.BlackMarketScreen.open(target.getId());
             cir.setReturnValue(InteractionResult.SUCCESS);
