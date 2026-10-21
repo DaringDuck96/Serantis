@@ -1,5 +1,0 @@
-Compiled from "ChestBlock.java"
-class net.minecraft.world.level.block.ChestBlock$4 {
-  static final int[] $SwitchMap$net$minecraft$world$level$block$state$properties$ChestType;
-  static {};
-}

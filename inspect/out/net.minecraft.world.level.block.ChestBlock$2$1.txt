@@ -1,9 +1,0 @@
-Compiled from "ChestBlock.java"
-class net.minecraft.world.level.block.ChestBlock$2$1 implements net.minecraft.world.MenuProvider {
-  final net.minecraft.world.level.block.entity.ChestBlockEntity val$first;
-  final net.minecraft.world.level.block.entity.ChestBlockEntity val$second;
-  final net.minecraft.world.Container val$container;
-  net.minecraft.world.level.block.ChestBlock$2$1();
-  public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int, net.minecraft.world.entity.player.Inventory, net.minecraft.world.entity.player.Player);
-  public net.minecraft.network.chat.Component getDisplayName();
-}
