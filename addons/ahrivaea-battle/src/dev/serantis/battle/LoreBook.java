@@ -18,7 +18,7 @@ public final class LoreBook {
     public static final String HEADING = "SERANTIA: A WORLD FORGED BY DRAGONS";
 
     private static final String[] TEXT = {
-            "Legend tells that Serantia was born by the will of the Twelve Great Dragon Lords—beings of unfathomable power whose names would be etched into the very foundations of existence. They are the creators, the sovereigns, and the eternal guardians of this world. Even now, they sit upon the Council of Eternia, their ancient authority unchallenged by time itself.",
+            "Legend tells that Serantia was born by the will of the Twelve Great Dragon Lords—beings of unfathomable power whose names would be etched into the very foundations of existence. They are the creators, the sovereigns, and the eternal guardians of this world. Even now, they sit upon the Council of Eternita, their ancient authority unchallenged by time itself.",
             "Before them, there was nothing. By their will, all things came to be. And should their will ever fade, all things shall return to nothing.",
             "It is by their power, their decree, and their eternal dominion that Serantia endures—a world alive with wonder, shaped by freedom, and bound by consequence.",
             "Vast beyond imagination, Serantia is a realm of boundless possibility. Kingdoms rise from the wilderness. Civilizations flourish beneath ancient skies. Untold treasures lie buried beneath forgotten ruins, waiting for those bold enough to claim them.",
