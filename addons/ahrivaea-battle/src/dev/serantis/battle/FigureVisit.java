@@ -80,6 +80,8 @@ public final class FigureVisit {
 
     /** Set once you've asked who it is (the 10-battle visit): from then on it's the Acolyte of the First. */
     public static final int NAMED = 256;
+    /** Set once you've recruited it (its dex page shows as caught). */
+    public static final int RECRUITED = 512;
     public static final String TITLE = "Mysterious Figure", REVEALED = "Acolyte of the First";
 
     public static String name(ServerPlayer p) {
@@ -309,6 +311,10 @@ public final class FigureVisit {
     /** A recruited Mysterious Figure: Level 10, with a standard Legendary's stats and fresh moves. */
     public static dev.ahrivaea.party.CaughtCreature recruited(dev.ahrivaea.battle.Battle b, dev.ahrivaea.party.CaughtCreature c) {
         if (!wasTrial(b) || c == null) return c;
+        if (b.player() != null) {
+            Welcome.Holder h = (Welcome.Holder) b.player();
+            h.serantis$setFigureMet(h.serantis$figureMet() | RECRUITED);
+        }
         var sp = dev.ahrivaea.creature.Species.get(c.species()).orElse(null);
         float hp = legendStats().maxHealth(10);
         c = c.withProgress(10, 0).withHealth(hp);

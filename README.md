@@ -404,4 +404,6 @@ The raid is **Easy** (3-4 raiders), **Medium** (5-6), **Hard** (7-8) or **Very H
 
 **The Eternita trial.** The last visit ends in a fight: your whole party (every creature in it, not just four) and you against the Mysterious Figure alone, with the stats of an average Legendary creature as if it were Level 25 (the level curve carried on past 20, about 13% above a Level 20 Legendary), and **six moves** (instead of three) drawn from every influence, the strongest of a dozen rolled sets. Win and it kneels and offers to follow you: recruit it from the battle results like any creature, and it joins as a standard Level 10 Legendary (the average Legendary's stats, golden apples have no effect on it) with six fresh moves from any influence, named "Mysterious Figure". Lose (or flee) and you keep the stone, but the Figure leaves and can't be recruited. It's a one-time fight.
 
+**The Acolyte's dex page.** The Creature Dex counts the 433 forms you can find (the retired Arcane Dragon is left out of it), and the Acolyte of the First has a bonus page after them that doesn't count towards the total: seen once you've met him, caught once you've recruited him, so a finished dex can read 434/433.
+
 The words live in `addons/ahrivaea-battle/serantis_battle/figure_scenes.json`, so they're easy to change or add to.
