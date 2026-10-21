@@ -8,5 +8,6 @@ public final class SerantisBattle implements ModInitializer {
     public void onInitialize() {
         Masters.registerItems();
         Staffs.register();
+        Backpacks.register();
     }
 }

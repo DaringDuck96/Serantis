@@ -36,7 +36,8 @@
     "FloatGoalMixin",
     "ProjectileBattleMixin",
     "EntityRemovedMixin",
-    "BasesInvoker"
+    "BasesInvoker",
+    "BaseCoreUpgradeMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

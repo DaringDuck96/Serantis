@@ -174,6 +174,12 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if ("serantis_backpack".equals(kind)) {        // B: open the worn backpack (sneaking: take it off)
+                if (o.has("off") && o.get("off").getAsBoolean()) dev.serantis.battle.Backpacks.takeOff(player);
+                else dev.serantis.battle.Backpacks.open(player);
+                cir.setReturnValue(null);
+                return;
+            }
             if (kind.startsWith("serantis_staff_")) {    // linking a spell to a Magic Staff
                 switch (kind) {
                     case "serantis_staff_open" -> dev.serantis.battle.Staffs.open(player, net.minecraft.core.BlockPos.containing(

@@ -15,7 +15,7 @@ import java.util.Set;
 
 /** Players remember the skill tree nodes they've bought. */
 @Mixin(Player.class)
-public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder, dev.serantis.battle.Masters.Holder, dev.serantis.battle.Welcome.Holder, dev.serantis.battle.Companions.Holder, dev.serantis.battle.TypeMastery.Holder, dev.serantis.battle.PlayerClass.Holder {
+public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder, dev.serantis.battle.Masters.Holder, dev.serantis.battle.Welcome.Holder, dev.serantis.battle.Companions.Holder, dev.serantis.battle.TypeMastery.Holder, dev.serantis.battle.PlayerClass.Holder, dev.serantis.battle.Backpacks.Holder {
     @Unique private final Set<String> serantis$skills = new LinkedHashSet<>();
 
     @Override public Set<String> serantis$skills() { return serantis$skills; }
@@ -42,6 +42,9 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Unique private boolean serantis$eternita;
     @Unique private boolean serantis$welcomed, serantis$welcomeSent;
     @Unique private String serantis$playerClass, serantis$pendingTemperament;
+    @Unique private net.minecraft.world.item.ItemStack serantis$backpack = net.minecraft.world.item.ItemStack.EMPTY;
+    @Override public net.minecraft.world.item.ItemStack serantis$backpack() { return serantis$backpack; }
+    @Override public void serantis$setBackpack(net.minecraft.world.item.ItemStack stack) { serantis$backpack = stack == null ? net.minecraft.world.item.ItemStack.EMPTY : stack; }
     @Override public String serantis$playerClass() { return serantis$playerClass; }
     @Override public void serantis$setPlayerClass(String id) { serantis$playerClass = id; }
     @Override public String serantis$pendingTemperament() { return serantis$pendingTemperament; }
@@ -91,6 +94,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         out.putString("SerantisMastery", st.toString());
         out.putInt("SerantisWelcomed", serantis$welcomed ? 1 : 0);
         if (serantis$playerClass != null) out.putString("SerantisClass", serantis$playerClass);
+        if (!serantis$backpack.isEmpty()) out.store("SerantisBackpack", net.minecraft.world.item.ItemStack.OPTIONAL_CODEC, serantis$backpack);
         if (serantis$pendingTemperament != null) out.putString("SerantisStarterTemperament", serantis$pendingTemperament);
         out.putString("SerantisTypeGained", dev.serantis.battle.TypeMastery.encode(serantis$typeGained));
         out.putString("SerantisTypeTrophies", dev.serantis.battle.TypeMastery.encode(serantis$typeTrophies));
@@ -122,6 +126,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
         serantis$stones.clear();
         serantis$welcomed = in.getIntOr("SerantisWelcomed", 0) == 1;
+        serantis$backpack = in.read("SerantisBackpack", net.minecraft.world.item.ItemStack.OPTIONAL_CODEC).orElse(net.minecraft.world.item.ItemStack.EMPTY);
         String cls = in.getStringOr("SerantisClass", ""), pend = in.getStringOr("SerantisStarterTemperament", "");
         serantis$playerClass = cls.isEmpty() ? null : cls;
         serantis$pendingTemperament = pend.isEmpty() ? null : pend;

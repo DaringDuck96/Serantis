@@ -275,6 +275,10 @@ Gym Master Stones and the Eternita Stone are **trophies**: place one and it stan
 
 Collect all 5 stones of all 12 influences (60 in all) and you get the rainbow **Eternita Stone**: wild creatures that spawn around you are Mutated 5 times in 100 instead of 1 in 100. It also earns the achievement "I Won! I Won the Game!".
 
+### Backpacks
+
+A **Backpack** is a reward: the base's owner gets one every time one of their bases reaches Level 2. They can't be crafted. Right-click one to strap it on: it leaves your inventory and you wear it. Press **B** to open it: 36 more slots, as many as your inventory. Sneak and press **B** to take it off; it goes back in your inventory with everything still inside (each backpack keeps its own contents, so spares can be handed to friends). You can wear one at a time. A worn backpack is never lost, not even when you die. (The B key isn't rebindable yet.)
+
 ### Taking down a base
 
 Hitting a Base Core asks first: creatures can't be recovered from a destroyed core, so if you say yes, every creature working at that base is sent back to your party (or box) before the core breaks and drops. Only the core's owner can take a base down. "No, keep it" leaves everything as it was.
