@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "X X",
+    "IXI",
+    "XXX"
+  ],
+  "key": {
+    "X": "minecraft:diamond",
+    "I": "minecraft:obsidian"
+  },
+  "result": {
+    "id": "serantis_battle:earth_chestplate"
+  }
+}

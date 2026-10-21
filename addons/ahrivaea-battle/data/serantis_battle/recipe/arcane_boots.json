@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "I I",
+    "X X"
+  ],
+  "key": {
+    "X": "minecraft:diamond",
+    "I": "minecraft:amethyst_shard"
+  },
+  "result": {
+    "id": "serantis_battle:arcane_boots"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "XXX",
+    "I I",
+    "X X"
+  ],
+  "key": {
+    "X": "minecraft:diamond",
+    "I": "minecraft:ender_pearl"
+  },
+  "result": {
+    "id": "serantis_battle:void_leggings"
+  }
+}

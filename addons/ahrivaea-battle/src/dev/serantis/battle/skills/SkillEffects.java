@@ -37,6 +37,10 @@ public final class SkillEffects {
             if (crit && Skills.has(p, "might_6")) mult *= 2.25 / 2.0;
         }
         if (target.isPlayer && move.maxRange() > 1 && Skills.has(p, "guard_5")) mult *= 0.95;
+        if (target.isPlayer) {                                           // influence armour resists attacks of its influence
+            var inf = move.move().influence();
+            mult *= 1 - dev.serantis.battle.InfluenceArmor.resistance(p, inf == null ? null : inf.getSerializedName());
+        }
         if (mult == 1) return r;
         int damage = Math.max(1, (int) Math.round(r.damage() * mult));
         return new DamageCalc.Result(damage, r.multiplier(), r.hitChance(), r.critChance(), r.expected() * mult);

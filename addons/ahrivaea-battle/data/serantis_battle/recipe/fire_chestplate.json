@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "X X",
+    "IXI",
+    "XXX"
+  ],
+  "key": {
+    "X": "minecraft:diamond",
+    "I": "minecraft:fire_charge"
+  },
+  "result": {
+    "id": "serantis_battle:fire_chestplate"
+  }
+}
