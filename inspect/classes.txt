@@ -1,2 +1,2 @@
 # classes
-compile wip/armor
+compile wip/tpboots
