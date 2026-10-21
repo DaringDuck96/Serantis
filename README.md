@@ -119,7 +119,7 @@ The gain goes on the stat's Level 20 value, like the rest of the stat, so it is 
 
 ### Achievements
 
-Milestones in twelve areas pay out golden apples (see Golden apples), each tier with its own title. They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: the title you've earned in each, your progress toward the next tier, every tier and what it pays (hover a tier for its title and details), and how many golden apples you've earned so far.
+Milestones in twelve areas, plus a line for each influence, pay out golden apples (see Golden apples), each tier with its own title. They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: the title you've earned in each, your progress toward the next tier, every tier and what it pays (hover a tier for its title and details), and how many golden apples you've earned so far.
 
 | Achievement | Tiers and titles | Golden apples per tier |
 |---|---|---|
@@ -136,7 +136,26 @@ Milestones in twelve areas pay out golden apples (see Golden apples), each tier 
 | Experience Gained | 100 Shiny Green Orbs · 1,000 Book Smart · 10,000 Big Brain Energy · 100,000 Seasoned Veteran · 1,000,000 Ascended | 3 · 6 · 12 · 24 · 48 |
 | Times Defeated | 1 Oops · 5 Respawn Regular · 10 Fall Damage Enthusiast · 50 Death's Frequent Flyer · 100 Immortal (Technically) | 2 · 4 · 8 · 16 · 32 |
 
-That's 1,031 golden apples in all. Where the counts come from: blocks placed, blocks walked (walking, sprinting and crouching) and times defeated (deaths) are Minecraft's own statistics, so they include everything you did before these were added; battles won and creatures recruited are the creatures mod's statistics; creatures seen is your creature dex; items smelted counts items you take out of furnaces, smokers and blast furnaces; armor crafted counts helmets, chestplates, leggings and boots you've crafted or upgraded at a smithing table (Minecraft's own statistic, so it includes the past; elytra don't count); towers built counts finished towers that belong to you (the ones you claimed with the first offering); biomes visited counts every different biome you've stood in, in any dimension (from when this was added); seeds planted counts crops you plant by hand (wheat, beetroot, carrots, potatoes, torchflowers, pitcher pods, melon and pumpkin seeds, nether wart, cocoa and sweet berries); experience gained counts all XP you earn (from mining, battles and anything else), not XP you spend.
+**Recruits by influence.** Twelve more lines, one per influence, count creatures of that influence you recruit: 1 · 10 · 15 · 25 · 30 recruits, paying 1 · 2 · 3 · 4 · 6 golden apples.
+
+| Line | Titles |
+|---|---|
+| Normal Recruits | Plain and Simple · Nothing Special · Vanilla Flavored · Normcore · Extraordinarily Ordinary |
+| Fire Recruits | Playing With Fire · Hot Hands · Fire Hazard · Smoke Alarm Fatigue · Too Hot to Handle |
+| Frost Recruits | Chill Vibes · Cold Shoulder · Brain Freeze · Snow Problem · Absolute Zero |
+| Storm Recruits | Feeling Charged · Under the Weather · Brainstorming · Shocking Behavior · Eye of the Storm |
+| Earth Recruits | Down to Earth · Rock Solid · Between a Rock · Stone Cold · Mountain Mover |
+| Water Recruits | Making a Splash · Testing the Waters · In Too Deep · Water You Doing? · Tidal Wave |
+| Nature Recruits | Tree Hugger · Back to Nature · Wild at Heart · Photosynthesizer · Mother Nature's Favorite |
+| Void Recruits | Null and Void · Lost in Space · Empty Inside · Staring Into the Abyss · The Abyss Stares Back |
+| Fae Recruits | Pixie Dust · Away With the Fairies · Glamour Shot · Changeling · Fae-mous |
+| Darkness Recruits | Lights Out · Afraid of the Dark · Shady Business · Embrace the Dark · Eternal Night Owl |
+| Arcane Recruits | Abracadabra · Spell Check · Mana Addict · Wizard Hat Required · Archmage |
+| Radiant Recruits | Bright Idea · Glow Up · Shine On · Sun Worshipper · Supernova |
+
+These counts start from the creatures in your party and box when the line was added, then go up with every recruit. The log scrolls with the mouse wheel.
+
+That's 1,223 golden apples in all. Where the counts come from: blocks placed, blocks walked (walking, sprinting and crouching) and times defeated (deaths) are Minecraft's own statistics, so they include everything you did before these were added; battles won and creatures recruited are the creatures mod's statistics; creatures seen is your creature dex; items smelted counts items you take out of furnaces, smokers and blast furnaces; armor crafted counts helmets, chestplates, leggings and boots you've crafted or upgraded at a smithing table (Minecraft's own statistic, so it includes the past; elytra don't count); towers built counts finished towers that belong to you (the ones you claimed with the first offering); biomes visited counts every different biome you've stood in, in any dimension (from when this was added); seeds planted counts crops you plant by hand (wheat, beetroot, carrots, potatoes, torchflowers, pitcher pods, melon and pumpkin seeds, nether wart, cocoa and sweet berries); experience gained counts all XP you earn (from mining, battles and anything else), not XP you spend.
 
 ### Experience and the skill tree
 

@@ -16,13 +16,32 @@ import java.util.List;
 /** The achievement log (opened from the party screen). See Achievements on the server. */
 public class AchievementScreen extends Screen {
     private static final int GOLD = 0xFFF2C94C, W = 360, ROW = 31, HEAD = 42;
-    private static final Item[] ICONS = {Items.BRICKS, Items.IRON_SWORD, Items.LEAD, Items.SPYGLASS, Items.FURNACE, Items.IRON_CHESTPLATE, Items.WHEAT_SEEDS, Items.MAP, Items.CHISELED_STONE_BRICKS, Items.LEATHER_BOOTS, Items.EXPERIENCE_BOTTLE, Items.SKELETON_SKULL};
+    private static final java.util.Map<String, ItemStack> ICONS = new java.util.HashMap<>();
     private static final String[] ROMAN = {"I", "II", "III", "IV", "V", "VI"};
 
     private final Screen parent;
     private int ticks;
     private int hoverX, hoverY;                       // mouse position inside the (scaled) panel
     private List<Component> tip;
+    private int scroll, visible = 1, rowCount;
+
+    private static ItemStack icon(JsonObject a) {
+        String id = a.has("icon") ? a.get("icon").getAsString() : "minecraft:golden_apple";
+        return ICONS.computeIfAbsent(id, k -> {
+            try {
+                Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.parse(k));
+                return new ItemStack(item == null || item == Items.AIR ? Items.GOLDEN_APPLE : item);
+            } catch (RuntimeException e) {
+                return new ItemStack(Items.GOLDEN_APPLE);
+            }
+        });
+    }
+
+    @Override
+    public boolean mouseScrolled(double x, double y, double dx, double dy) {
+        scroll = Math.max(0, Math.min(Math.max(0, rowCount - visible), scroll - (int) Math.signum(dy)));
+        return true;
+    }
 
     public AchievementScreen(Screen parent) {
         super(Component.literal("Achievements"));
@@ -47,10 +66,7 @@ public class AchievementScreen extends Screen {
         if (++ticks % 40 == 0) refresh();             // keep the numbers fresh while it's open
     }
 
-    private float scale(int rows) {
-        int h = HEAD + rows * ROW + 8;
-        return Math.min(1f, Math.min((height - 36) / (float) h, (width - 12) / (float) W));
-    }
+    private float scale() { return Math.min(1f, (width - 12) / (float) W); }
 
     @Override
     public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial) {
@@ -62,8 +78,11 @@ public class AchievementScreen extends Screen {
         super.extractRenderState(g, mouseX, mouseY, partial);
         JsonObject st = TradeClient.state();
         JsonArray list = st != null && st.has("serantis_achievements") ? st.getAsJsonArray("serantis_achievements") : new JsonArray();
-        float s = scale(Math.max(1, list.size()));
-        int h = HEAD + list.size() * ROW + 8;
+        float s = scale();
+        rowCount = list.size();
+        visible = Math.max(1, Math.min(rowCount, (int) (((height - 34) / s - HEAD - 18) / ROW)));
+        scroll = Math.max(0, Math.min(scroll, rowCount - visible));
+        int h = HEAD + Math.max(1, visible) * ROW + 18;
         float x0 = (width - W * s) / 2f, y0 = Math.max(4, (height - 30 - h * s) / 2f);
 
         hoverX = (int) ((mouseX - x0) / s);
@@ -83,7 +102,12 @@ public class AchievementScreen extends Screen {
                     30, 20, 0xFFB8B8C8);
         if (list.isEmpty()) g.text(font, "Loading…", 30, HEAD, 0xFF8890A0);
 
-        for (int i = 0; i < list.size(); i++) row(g, list.get(i).getAsJsonObject(), i, HEAD + i * ROW);
+        for (int i = scroll; i < Math.min(rowCount, scroll + visible); i++) row(g, list.get(i).getAsJsonObject(), i, HEAD + (i - scroll) * ROW);
+        if (rowCount > visible) {
+            String more = (scroll > 0 ? "▲ " : "") + "Scroll for more (" + (scroll + 1) + "–" + Math.min(rowCount, scroll + visible) + " of " + rowCount + ")"
+                    + (scroll + visible < rowCount ? " ▼" : "");
+            g.text(font, more, W / 2 - font.width(more) / 2, h - 13, 0xFF8890A0);
+        }
         g.pose().popMatrix();
         if (tip != null) g.setComponentTooltipForNextFrame(font, tip, mouseX, mouseY);
     }
@@ -94,7 +118,7 @@ public class AchievementScreen extends Screen {
         long value = a.get("value").getAsLong();
         boolean done = claimed >= n;
         g.fill(4, y - 2, W - 4, y + ROW - 4, i % 2 == 0 ? 0x26FFFFFF : 0x12FFFFFF);
-        g.item(new ItemStack(ICONS[i % ICONS.length]), 8, y + 4);
+        g.item(icon(a), 8, y + 4);
 
         // the title of the last tier earned (or the track's name before the first)
         JsonArray titles = a.has("titles") ? a.getAsJsonArray("titles") : null;

@@ -78,6 +78,7 @@ public abstract class BattlesMixin {
         }
         boolean added = Party.addAnywhere(player, caught);
         if (added) dev.serantis.battle.Naming.offer(sp, caught);
+        if (added) dev.serantis.battle.Achievements.recruited(sp, caught.influence());
         return added;
     }
 

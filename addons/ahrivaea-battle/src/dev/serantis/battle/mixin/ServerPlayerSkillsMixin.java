@@ -21,6 +21,9 @@ public abstract class ServerPlayerSkillsMixin {
         a.serantis$addXpGained(b.serantis$xpGained() - a.serantis$xpGained());
         a.serantis$addPlanted(b.serantis$planted() - a.serantis$planted());
         a.serantis$biomes().addAll(b.serantis$biomes());
+        if (b.serantis$recruitsSeeded()) a.serantis$setRecruitsSeeded();
+        for (String inf : new String[]{"none", "fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "arcane", "radiant"})
+            a.serantis$addRecruited(inf, b.serantis$recruitedOf(inf) - a.serantis$recruitedOf(inf));
         for (var t : dev.serantis.battle.Achievements.TRACKS) a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
         // XP is the main currency: it's kept through death.
         ServerPlayer self = (ServerPlayer) (Object) this;

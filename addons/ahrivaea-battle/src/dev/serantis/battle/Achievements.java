@@ -37,7 +37,8 @@ public final class Achievements {
     private static final int[] FIVE = {3, 6, 12, 24, 48};
     private static final int[] SIX = {2, 4, 8, 16, 32, 48};
 
-    public static final List<Track> TRACKS = List.of(
+    public static final List<Track> TRACKS;
+    private static final List<Track> MAIN = List.of(
             new Track("placed", "Blocks Placed", "blocks placed", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
                     new String[]{"Some Assembly Required", "Brick by Brick", "Not Just a Dirt Hut", "Zoning Violation", "Terraformer"}),
             new Track("battles", "Battles Won", "battles won", new long[]{1, 10, 50, 100, 250, 500}, SIX,
@@ -63,6 +64,40 @@ public final class Achievements {
             new Track("deaths", "Times Defeated", "deaths", new long[]{1, 5, 10, 50, 100}, new int[]{2, 4, 8, 16, 32},
                     new String[]{"Oops", "Respawn Regular", "Fall Damage Enthusiast", "Death's Frequent Flyer", "Immortal (Technically)"}));
 
+    /** Icons for the achievement log (item ids). */
+    private static final java.util.Map<String, String> ICONS = new java.util.HashMap<>(java.util.Map.ofEntries(
+            java.util.Map.entry("placed", "minecraft:bricks"), java.util.Map.entry("battles", "minecraft:iron_sword"),
+            java.util.Map.entry("recruited", "minecraft:lead"), java.util.Map.entry("seen", "minecraft:spyglass"),
+            java.util.Map.entry("smelted", "minecraft:furnace"), java.util.Map.entry("armor", "minecraft:iron_chestplate"),
+            java.util.Map.entry("planted", "minecraft:wheat_seeds"), java.util.Map.entry("biomes", "minecraft:map"),
+            java.util.Map.entry("towers", "minecraft:chiseled_stone_bricks"), java.util.Map.entry("walked", "minecraft:leather_boots"),
+            java.util.Map.entry("xp", "minecraft:experience_bottle"), java.util.Map.entry("deaths", "minecraft:skeleton_skull")));
+
+    /** One "recruit creatures of this influence" line per influence: {influence, name, icon, five titles}. */
+    private static final String[][] INFLUENCES = {
+            {"none", "Normal", "minecraft:white_wool", "Plain and Simple", "Nothing Special", "Vanilla Flavored", "Normcore", "Extraordinarily Ordinary"},
+            {"fire", "Fire", "minecraft:blaze_powder", "Playing With Fire", "Hot Hands", "Fire Hazard", "Smoke Alarm Fatigue", "Too Hot to Handle"},
+            {"frost", "Frost", "minecraft:snowball", "Chill Vibes", "Cold Shoulder", "Brain Freeze", "Snow Problem", "Absolute Zero"},
+            {"storm", "Storm", "minecraft:lightning_rod", "Feeling Charged", "Under the Weather", "Brainstorming", "Shocking Behavior", "Eye of the Storm"},
+            {"earth", "Earth", "minecraft:cobblestone", "Down to Earth", "Rock Solid", "Between a Rock", "Stone Cold", "Mountain Mover"},
+            {"water", "Water", "minecraft:water_bucket", "Making a Splash", "Testing the Waters", "In Too Deep", "Water You Doing?", "Tidal Wave"},
+            {"nature", "Nature", "minecraft:oak_sapling", "Tree Hugger", "Back to Nature", "Wild at Heart", "Photosynthesizer", "Mother Nature's Favorite"},
+            {"void", "Void", "minecraft:ender_pearl", "Null and Void", "Lost in Space", "Empty Inside", "Staring Into the Abyss", "The Abyss Stares Back"},
+            {"fae", "Fae", "minecraft:pink_petals", "Pixie Dust", "Away With the Fairies", "Glamour Shot", "Changeling", "Fae-mous"},
+            {"darkness", "Darkness", "minecraft:ink_sac", "Lights Out", "Afraid of the Dark", "Shady Business", "Embrace the Dark", "Eternal Night Owl"},
+            {"arcane", "Arcane", "minecraft:amethyst_shard", "Abracadabra", "Spell Check", "Mana Addict", "Wizard Hat Required", "Archmage"},
+            {"radiant", "Radiant", "minecraft:glowstone_dust", "Bright Idea", "Glow Up", "Shine On", "Sun Worshipper", "Supernova"}};
+
+    static {
+        List<Track> all = new ArrayList<>(MAIN);
+        for (String[] f : INFLUENCES) {
+            all.add(new Track("rec_" + f[0], f[1] + " Recruits", f[1].toLowerCase() + " creatures recruited",
+                    new long[]{1, 10, 15, 25, 30}, new int[]{1, 2, 3, 4, 6}, new String[]{f[3], f[4], f[5], f[6], f[7]}));
+            ICONS.put("rec_" + f[0], f[2]);
+        }
+        TRACKS = List.copyOf(all);
+    }
+
     /** Set while XP is moved around rather than earned (spending XP gives back the rest). */
     public static final ThreadLocal<Boolean> NOT_GAINED = ThreadLocal.withInitial(() -> false);
 
@@ -74,6 +109,12 @@ public final class Achievements {
         void serantis$addSmelted(long n);
         /** Every biome the player has stood in (ids like minecraft:plains). */
         java.util.Set<String> serantis$biomes();
+        /** Creatures recruited, by influence (none, fire, ...). */
+        long serantis$recruitedOf(String influence);
+        void serantis$addRecruited(String influence, long n);
+        /** False until the per-influence counts were started from the creatures the player already had. */
+        boolean serantis$recruitsSeeded();
+        void serantis$setRecruitsSeeded();
         long serantis$planted();
         void serantis$addPlanted(long n);
         long serantis$xpGained();
@@ -142,6 +183,7 @@ public final class Achievements {
             case "planted" -> h.serantis$planted();
             case "armor" -> armorCrafted(stats);
             case "towers" -> towersBuilt(p);
+            case String s when s.startsWith("rec_") -> h.serantis$recruitedOf(s.substring(4));
             case "biomes" -> h.serantis$biomes().size();
             case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;
@@ -154,6 +196,12 @@ public final class Achievements {
     /** Pays out every tier the player has reached and not been paid for. */
     public static void check(ServerPlayer p) {
         Holder h = (Holder) p;
+        if (!h.serantis$recruitsSeeded()) {
+            // Recruits by influence weren't counted before: start from the creatures the player owns now.
+            h.serantis$setRecruitsSeeded();
+            for (var c : dev.ahrivaea.party.Party.get(p)) recruited(p, c.influence());
+            for (var c : dev.ahrivaea.party.Party.box(p)) recruited(p, c.influence());
+        }
         boolean any = false;
         for (Track t : TRACKS) {
             long v = value(p, t.id());
@@ -172,6 +220,12 @@ public final class Achievements {
             p.level().playSound(null, p.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.2f);
             PartySync.sync(p);
         }
+    }
+
+    /** A creature of this influence was recruited. */
+    public static void recruited(ServerPlayer p, dev.ahrivaea.creature.Influence influence) {
+        if (p == null) return;
+        ((Holder) p).serantis$addRecruited(influence == null ? "none" : influence.getSerializedName(), 1);
     }
 
     private static void give(ServerPlayer p, int count) {
@@ -193,6 +247,7 @@ public final class Achievements {
             JsonObject o = new JsonObject();
             o.addProperty("name", t.name());
             o.addProperty("verb", t.verb());
+            o.addProperty("icon", ICONS.getOrDefault(t.id(), "minecraft:golden_apple"));
             o.addProperty("value", value(p, t.id()));
             int claimed = h.serantis$claimed(t.id());
             o.addProperty("claimed", claimed);

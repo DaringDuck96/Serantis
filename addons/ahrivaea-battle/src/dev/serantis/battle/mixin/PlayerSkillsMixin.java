@@ -29,6 +29,12 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Unique private final java.util.Set<String> serantis$biomes = new java.util.LinkedHashSet<>();
     @Override public java.util.Set<String> serantis$biomes() { return serantis$biomes; }
     @Override public long serantis$planted() { return serantis$planted; }
+    @Unique private final java.util.Map<String, Long> serantis$recruits = new java.util.HashMap<>();
+    @Unique private boolean serantis$recruitsSeeded;
+    @Override public long serantis$recruitedOf(String influence) { return serantis$recruits.getOrDefault(influence, 0L); }
+    @Override public void serantis$addRecruited(String influence, long n) { serantis$recruits.merge(influence, n, Long::sum); }
+    @Override public boolean serantis$recruitsSeeded() { return serantis$recruitsSeeded; }
+    @Override public void serantis$setRecruitsSeeded() { serantis$recruitsSeeded = true; }
     @Override public void serantis$addPlanted(long n) { serantis$planted += n; }
     @Override public long serantis$xpGained() { return serantis$xpGained; }
     @Override public void serantis$addXpGained(long n) { serantis$xpGained += n; }
@@ -53,6 +59,9 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         out.putLong("SerantisXpGained", serantis$xpGained);
         out.putLong("SerantisPlanted", serantis$planted);
         out.putString("SerantisBiomes", String.join(",", serantis$biomes));
+        StringBuilder rec = new StringBuilder(serantis$recruitsSeeded ? "seeded" : "");
+        serantis$recruits.forEach((k, v) -> rec.append(',').append(k).append(':').append(v));
+        out.putString("SerantisRecruits", rec.toString());
         out.putString("SerantisAchievements", dev.serantis.battle.Achievements.encode(this));
     }
 
@@ -63,6 +72,13 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$smelted = in.getLongOr("SerantisSmelted", 0L);
         serantis$xpGained = in.getLongOr("SerantisXpGained", 0L);
         serantis$planted = in.getLongOr("SerantisPlanted", 0L);
+        serantis$recruits.clear();
+        String rec = in.getStringOr("SerantisRecruits", "");
+        serantis$recruitsSeeded = rec.startsWith("seeded");
+        for (String part : rec.split(",")) {
+            String[] kv = part.split(":");
+            if (kv.length == 2) try { serantis$recruits.put(kv[0].trim(), Long.parseLong(kv[1].trim())); } catch (NumberFormatException ignored) { }
+        }
         serantis$biomes.clear();
         for (String s : in.getStringOr("SerantisBiomes", "").split(",")) if (!s.isBlank()) serantis$biomes.add(s.trim());
         serantis$claimed.clear();
