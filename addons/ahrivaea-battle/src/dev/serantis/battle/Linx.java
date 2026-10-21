@@ -89,6 +89,7 @@ public final class Linx {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:helm_of_linx"));
         HELM = Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties()
                 .humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET).rarity(Rarity.EPIC).setId(key)
+                .component(DataComponents.EQUIPPABLE, InfluenceArmor.look(net.minecraft.world.entity.EquipmentSlot.HEAD, "linx", net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_DIAMOND))
                 .component(DataComponents.LORE, new ItemLore(List.of(
                         line("Phase Jump, Shape Lift, Waymark, High Jump"),
                         line("Keys in Controls > Serantis (Z, R, G, V)"))))));

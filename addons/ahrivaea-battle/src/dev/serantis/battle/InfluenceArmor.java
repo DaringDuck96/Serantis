@@ -83,6 +83,7 @@ public final class InfluenceArmor {
         Item item = stack.getItem();
         if (item == WingedBoots.BOOTS) return "winged_boots";
         if (item == TeleportBoots.BOOTS) return "teleporting_boots";
+        if (item == Linx.HELM) return "linx_helmet";
         String inf = INFLUENCE_OF.get(item);
         if (inf == null) return null;
         String id = BuiltInRegistries.ITEM.getKey(item).getPath();

@@ -486,7 +486,7 @@ A weapon can carry one Bane and one Infusion together.
 - **Waymark (G):** sneak + G marks where you're standing; G takes you back there from anywhere, even another dimension, once a minute.
 - **High Jump (V):** turns 2-block jumps on or off. The longer falls that come with it don't hurt.
 
-None of the four work in battle. Until it has its own model, the helm looks like a gold helmet in your inventory and diamond when worn.
+None of the four work in battle. Worn, the helm shows its own 3D design (in your inventory it still looks like a gold helmet for now).
 
 ## Co-op
 
