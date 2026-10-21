@@ -1,7 +1,3 @@
-/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/mixin/BattlesMixin.java:98: error: incompatible types: Player cannot be converted to ServerPlayer
-        int coop = dev.serantis.battle.coop.CoopBattles.extraArena(dev.serantis.battle.Masters.SPAWN_PLAYER.get());   // co-op: room for allies, or a spar's rival team
-                                                                                                               ^
 Note: /home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/Locomotion.java uses or overrides a deprecated API.
 Note: Recompile with -Xlint:deprecation for details.
-Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
-1 error
+OK
