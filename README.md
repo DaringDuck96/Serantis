@@ -419,3 +419,9 @@ Win and you can recruit him (a standard Level 10 Legendary, like the Acolyte of 
 **The Acolytes' dex pages.** The Creature Dex counts the 433 forms you can find (the retired Arcane Dragon is left out of it), and the two Acolytes have bonus pages after them that don't count towards the total: seen once you've met them, caught once you've recruited them, so a finished dex can read 434/433 or 435/433.
 
 The words live in `addons/ahrivaea-battle/serantis_battle/figure_scenes.json`, so they're easy to change or add to.
+
+**Pacing (0.103).** The longest grinds were trimmed at the top end only, so the early game plays the same:
+- **Achievements:** Blocks Placed, Seeds Planted and Items Smelted now top out at 150,000 (100 · 1k · 10k · 50k · 150k), Experience Gained at 250,000 (… 75k · 250k). Blocks Walked is now **Distance Traveled** (10k · 50k · 150k · 400k · 1M): walking, sprinting, sneaking, swimming, elytra, horses, boats, pigs, striders, minecarts and riding your creatures all count.
+- **Your bases count:** every seed your workers plant counts towards your Seeds Planted, and every item a furnace at one of your bases finishes counts towards your Items Smelted (while you're online). Taking items out of a furnace still counts everywhere else.
+- **Battle XP grows with the game:** 10 for a win, plus 4 + the creature's level for each one beaten (5 at Level 1, 24 at Level 20), and half again for Super Rare and Legendary creatures. Creature Masters still pay double. Before, every creature paid about 10 and it fell as your skill tree grew.
+- **Skill tree:** each skill costs 10% more than the last (was 12.6%): the first few cost about the same, and the whole tree is about 145,000 XP instead of 450,000.

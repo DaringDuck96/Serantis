@@ -39,7 +39,7 @@ public final class Achievements {
 
     public static final List<Track> TRACKS;
     private static final List<Track> MAIN = List.of(
-            new Track("placed", "Blocks Placed", "blocks placed", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+            new Track("placed", "Blocks Placed", "blocks placed", new long[]{100, 1_000, 10_000, 50_000, 150_000}, FIVE,
                     new String[]{"Some Assembly Required", "Brick by Brick", "Not Just a Dirt Hut", "Zoning Violation", "Terraformer"}),
             new Track("battles", "Battles Won", "battles won", new long[]{1, 10, 50, 100, 250, 500}, SIX,
                     new String[]{"Beginner's Luck", "Getting the Hang of It", "Tactical Genius (Allegedly)", "Undefeated-ish", "Grid Lord", "Final Boss Energy"}),
@@ -47,19 +47,19 @@ public final class Achievements {
                     new String[]{"Making Friends", "Petting Zoo", "Animal Magnetism", "Creature Hoarder", "Noah Would Be Proud", "Zookeeper Supreme"}),
             new Track("seen", "Creatures Seen", "creatures seen", new long[]{5, 25, 50, 150, 300, Retired.FORMS}, SIX,
                     new String[]{"Wait, What Was That?", "Bird Watcher", "Taking Field Notes", "I've Seen Things", "Walking Encyclopedia", "Seen It All"}),
-            new Track("smelted", "Items Smelted", "items smelted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+            new Track("smelted", "Items Smelted", "items smelted", new long[]{100, 1_000, 10_000, 50_000, 150_000}, FIVE,
                     new String[]{"Hot Stuff", "Cooking With Lava", "Total Smeltdown", "Industrial Revolution", "Forge of the Gods"}),
             new Track("armor", "Armor Crafted", "armor pieces crafted", new long[]{5, 10, 25, 100, 250}, new int[]{2, 4, 8, 16, 32},
                     new String[]{"Suit Up", "Fashion Forward", "Runway Ready", "Tin Can Collector", "Walking Armory"}),
-            new Track("planted", "Seeds Planted", "seeds planted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+            new Track("planted", "Seeds Planted", "seeds planted", new long[]{100, 1_000, 10_000, 50_000, 150_000}, FIVE,
                     new String[]{"Seeds of Doubt", "Green Thumb", "Down on the Farm", "Old MacDonald Had a Lot", "Feed the World"}),
             new Track("biomes", "Biomes Visited", "biomes visited", new long[]{3, 8, 15, 20, 30}, new int[]{1, 2, 3, 4, 6},
                     new String[]{"Day Tripper", "Sightseer", "Backpacker", "Globetrotter", "Professional Tourist"}),
             new Track("towers", "Towers Built", "towers rebuilt and claimed", new long[]{1, 2, 3, 4, 5}, new int[]{6, 10, 16, 24, 40},
                     new String[]{"Home Sweet Spire", "Double Decker", "Skyline Starter", "Real Estate Mogul", "Lord of the Spires"}),
-            new Track("walked", "Blocks Walked", "blocks walked", new long[]{10_000, 50_000, 250_000, 1_000_000, 5_000_000}, FIVE,
-                    new String[]{"Stretch Your Legs", "Out for a Stroll", "Are We There Yet?", "Who Needs Horses?", "Walked to the Moon"}),
-            new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
+            new Track("walked", "Distance Traveled", "blocks traveled", new long[]{10_000, 50_000, 150_000, 400_000, 1_000_000}, FIVE,
+                    new String[]{"Stretch Your Legs", "Out for a Stroll", "Are We There Yet?", "Frequent Traveler", "Around the World"}),
+            new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 75_000, 250_000}, FIVE,
                     new String[]{"Shiny Green Orbs", "Book Smart", "Big Brain Energy", "Seasoned Veteran", "Ascended"}),
             new Track("deaths", "Times Defeated", "deaths", new long[]{1, 5, 10, 50, 100}, new int[]{2, 4, 8, 16, 32},
                     new String[]{"Oops", "Respawn Regular", "Fall Damage Enthusiast", "Death's Frequent Flyer", "Immortal (Technically)"}),
@@ -127,6 +127,9 @@ public final class Achievements {
         boolean serantis$recruitsSeeded();
         void serantis$setRecruitsSeeded();
         long serantis$planted();
+        /** Centimetres ridden on creatures (Minecraft only counts horses, pigs and the like). */
+        long serantis$rodeCm();
+        void serantis$addRodeCm(long cm);
         void serantis$addPlanted(long n);
         /** Lore books found (every drop counts, repeats too). */
         long serantis$loreBooks();
@@ -185,6 +188,17 @@ public final class Achievements {
         }
     }
 
+    /** Distance Traveled: on foot (walking, sprinting, sneaking, swimming), by elytra, and riding (horses, boats, pigs, striders,
+     *  minecarts; creatures you ride are counted separately, see serantis$rodeCm). In blocks. */
+    private static long traveled(ServerStatsCounter stats) {
+        long cm = 0;
+        for (var s : new net.minecraft.resources.Identifier[]{Stats.WALK_ONE_CM, Stats.SPRINT_ONE_CM, Stats.CROUCH_ONE_CM, Stats.SWIM_ONE_CM,
+                Stats.WALK_ON_WATER_ONE_CM, Stats.WALK_UNDER_WATER_ONE_CM, Stats.AVIATE_ONE_CM, Stats.HORSE_ONE_CM, Stats.BOAT_ONE_CM,
+                Stats.PIG_ONE_CM, Stats.STRIDER_ONE_CM, Stats.MINECART_ONE_CM})
+            cm += stats.getValue(Stats.CUSTOM, s);
+        return cm / 100;
+    }
+
     public static long value(ServerPlayer p, String id) {
         ServerStatsCounter stats = p.getStats();
         Holder h = (Holder) p;
@@ -199,8 +213,7 @@ public final class Achievements {
             case "towers" -> towersBuilt(p);
             case String s when s.startsWith("rec_") -> h.serantis$recruitedOf(s.substring(4));
             case "biomes" -> h.serantis$biomes().size();
-            case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
-                    + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;
+            case "walked" -> traveled(stats) + h.serantis$rodeCm() / 100;
             case "xp" -> h.serantis$xpGained();
             case "lore" -> h.serantis$loreBooks();
             case "deaths" -> stats.getValue(Stats.CUSTOM, Stats.DEATHS);

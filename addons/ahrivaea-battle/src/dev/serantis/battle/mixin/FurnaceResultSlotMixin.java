@@ -20,6 +20,10 @@ public abstract class FurnaceResultSlotMixin {
 
     @Inject(method = "checkTakeAchievements", at = @At("HEAD"))
     private void serantis$smelted(ItemStack stack, CallbackInfo ci) {
-        if (player instanceof ServerPlayer && removeCount > 0) ((Achievements.Holder) player).serantis$addSmelted(removeCount);
+        if (!(player instanceof ServerPlayer sp) || removeCount <= 0) return;
+        var container = ((net.minecraft.world.inventory.Slot) (Object) this).container;
+        if (container instanceof net.minecraft.world.level.block.entity.BlockEntity be && be.getLevel() instanceof net.minecraft.server.level.ServerLevel level
+                && dev.serantis.battle.BaseCredit.inOwnBase(sp, level, be.getBlockPos())) return;   // already counted as it smelted
+        ((Achievements.Holder) player).serantis$addSmelted(removeCount);
     }
 }

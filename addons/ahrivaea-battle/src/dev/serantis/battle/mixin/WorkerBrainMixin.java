@@ -32,6 +32,12 @@ public abstract class WorkerBrainMixin {
         return dev.serantis.battle.PlayerClass.is(owner, "performer") ? dev.serantis.battle.PlayerClass.PERFORMER_WORK : 1.0;
     }
 
+    // A seed a worker plants counts towards its base owner's Seeds Planted.
+    @Inject(method = "complete", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"))
+    private void serantis$planted(org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if (self != null && self.level() instanceof net.minecraft.server.level.ServerLevel level) dev.serantis.battle.BaseCredit.planted(level, core);
+    }
+
     // A Bard working at the same base: everyone there works 15% faster.
     private double serantis$bard() {
         if (core == null || !(self.level() instanceof net.minecraft.server.level.ServerLevel level)) return 1.0;

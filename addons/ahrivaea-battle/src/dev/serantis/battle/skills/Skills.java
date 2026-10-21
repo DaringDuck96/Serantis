@@ -23,7 +23,7 @@ import java.util.Set;
  */
 public final class Skills {
     public static final int START_STAT = 33;
-    public static final double BASE_COST = 150, GROWTH = 1.126;
+    public static final double BASE_COST = 150, GROWTH = 1.10;
 
     public record Node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
                        int attack, int defense, int magic, int speed, int luck, int health, int walk, int tiles, int mining,

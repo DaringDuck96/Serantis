@@ -20,6 +20,7 @@ public abstract class ServerPlayerSkillsMixin {
         a.serantis$addSmelted(b.serantis$smelted() - a.serantis$smelted());
         a.serantis$addXpGained(b.serantis$xpGained() - a.serantis$xpGained());
         a.serantis$addPlanted(b.serantis$planted() - a.serantis$planted());
+        a.serantis$addRodeCm(b.serantis$rodeCm() - a.serantis$rodeCm());
         a.serantis$addLoreBooks(b.serantis$loreBooks() - a.serantis$loreBooks());
         a.serantis$biomes().addAll(b.serantis$biomes());
         if (b.serantis$recruitsSeeded()) a.serantis$setRecruitsSeeded();
@@ -71,6 +72,7 @@ public abstract class ServerPlayerSkillsMixin {
         if (self.tickCount % 100 == 61) dev.serantis.battle.Towns.check(self);
         dev.serantis.battle.WingedBoots.tick(self);
         dev.serantis.battle.FigureVisit.tick(self);
+        dev.serantis.battle.BaseCredit.ride(self);
         if (self.tickCount % 20 == 7) dev.serantis.battle.GoblinRaids.tick(self);
         if (self.tickCount % 100 == 83) dev.serantis.battle.GoblinRaids.sweep(self);
     }

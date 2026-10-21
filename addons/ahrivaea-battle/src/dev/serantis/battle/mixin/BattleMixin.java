@@ -102,6 +102,14 @@ public abstract class BattleMixin implements BattleAccess {
 
     @Redirect(method = "finish", at = @At(value = "FIELD", target = "Ldev/ahrivaea/battle/Battle;poolXp:I", opcode = 181))
     private void serantis$masterXp(Battle self, int xp) {
+        // 10 for the win, plus for each creature beaten 4 + its level (5 XP at Level 1, 24 at Level 20), x1.5 if Super Rare or Legendary.
+        int sum = 10;
+        for (Battle.Defeated d : self.defeated) {
+            String r = dev.serantis.battle.Apples.rarity(d.species(), d.influence());
+            double f = "Legendary".equals(r) || "Super Rare".equals(r) ? 1.5 : 1.0;
+            sum += (int) Math.round((4 + Math.max(1, d.level())) * f);
+        }
+        if (!self.defeated.isEmpty()) { xp = sum; self.characterXp = sum; }
         self.poolXp = serantis$master != null ? xp * 2 : xp;
     }
 

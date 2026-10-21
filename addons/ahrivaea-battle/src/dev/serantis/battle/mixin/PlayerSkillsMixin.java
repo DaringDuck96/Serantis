@@ -21,7 +21,9 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Override public Set<String> serantis$skills() { return serantis$skills; }
 
     // Achievements: items smelted, experience gained, and tiers already paid.
-    @Unique private long serantis$smelted, serantis$xpGained, serantis$planted, serantis$loreBooks;
+    @Unique private long serantis$smelted, serantis$xpGained, serantis$planted, serantis$loreBooks, serantis$rodeCm;
+    @Override public long serantis$rodeCm() { return serantis$rodeCm; }
+    @Override public void serantis$addRodeCm(long cm) { serantis$rodeCm += cm; }
     @Unique private final java.util.Map<String, Integer> serantis$claimed = new java.util.HashMap<>();
 
     @Override public long serantis$smelted() { return serantis$smelted; }
@@ -93,6 +95,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         out.putLong("SerantisSmelted", serantis$smelted);
         out.putLong("SerantisXpGained", serantis$xpGained);
         out.putLong("SerantisPlanted", serantis$planted);
+        out.putLong("SerantisRode", serantis$rodeCm);
         out.putLong("SerantisLoreBooks", serantis$loreBooks);
         out.putString("SerantisBiomes", String.join(",", serantis$biomes));
         StringBuilder rec = new StringBuilder(serantis$recruitsSeeded ? "seeded" : "");
@@ -126,6 +129,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$smelted = in.getLongOr("SerantisSmelted", 0L);
         serantis$xpGained = in.getLongOr("SerantisXpGained", 0L);
         serantis$planted = in.getLongOr("SerantisPlanted", 0L);
+        serantis$rodeCm = in.getLongOr("SerantisRode", 0L);
         serantis$loreBooks = in.getLongOr("SerantisLoreBooks", 0L);
         serantis$recruits.clear();
         String rec = in.getStringOr("SerantisRecruits", "");
