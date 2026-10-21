@@ -18,8 +18,13 @@
             [
               "action",
               "*The Mysterious Figure scoffs*"
+            ],
+            [
+              "figure",
+              "So you'll need to be stronger still. Remember me, at least: the Acolyte of the First."
             ]
-          ]
+          ],
+          "reveal": true
         },
         {
           "text": "Tell me who you are.",

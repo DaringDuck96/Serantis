@@ -394,7 +394,7 @@ The raid is **Easy** (3-4 raiders), **Medium** (5-6), **Hard** (7-8) or **Very H
 
 | Visit | When | What it's about |
 |---|---|---|
-| "You're getting stronger." | 10 battles fought, won or lost (fleeing doesn't count; players from before this count their wins) | Ask who it is and it bows: a follower of the First, your guide to destiny. From then on it's the **Acolyte of the First** in every scene, in its trial and as a recruit (players who don't ask keep calling it the Mysterious Figure) |
+| "You're getting stronger." | 10 battles fought, won or lost (fleeing doesn't count; players from before this count their wins) | Ask who it is and it bows: a follower of the First, your guide to destiny; brush it off and it scoffs. Either way it tells you its name, and from then on it's the **Acolyte of the First** in every scene, in its trial and as a recruit |
 | "Look at this place." | A base of yours reaches Level 2 | The Age of Ashes; look beyond your walls |
 | "A Master's Stone." | Your first Gym Master Stone | The twelve Sovereigns; find the other Masters |
 | "You found one." | Your first tower rebuilt | The towers were the First Dragon's watchposts; the roar |
