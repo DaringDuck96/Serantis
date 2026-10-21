@@ -145,7 +145,6 @@ public abstract class WorkerBrainMixin {
             }
             if (room) {
                 self.setDeltaMovement(dir.getStepX() * 0.28, step == 2 ? 0.62 : 0.5, dir.getStepZ() * 0.28);
-                self.hasImpulse = true;
                 return;
             }
         }
