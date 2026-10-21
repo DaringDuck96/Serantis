@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Lore books: every creature you beat in battle has a 1% chance to drop one, picked at random from
+ * Lore books: every creature you beat in battle has a 2.5% chance to drop one, picked at random from
  * serantis_battle/lore_books.json (a list of {"title", "author", "text"}, optionally "heading" and "subtitle" for the
  * first page; blank lines in the text separate paragraphs).
  */

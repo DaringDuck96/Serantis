@@ -34,7 +34,7 @@ Every player, whatever their class, starts with the written book **Serantia: A W
 
 ### Lore books
 
-Every creature you beat in battle has a **1% chance** to drop a lore book with the battle's loot, picked at random from all the lore books. They're kept in `addons/ahrivaea-battle/serantis_battle/lore_books.json`: a list of books, each with a `title`, an `author` and its `text` (a blank line starts a new paragraph). Each book gets a heading page with its title, then its text laid out over as many pages as it needs.
+Every creature you beat in battle has a **2.5% chance** to drop a lore book with the battle's loot, picked at random from all the lore books. They're kept in `addons/ahrivaea-battle/serantis_battle/lore_books.json`: a list of books, each with a `title`, an `author` and its `text` (a blank line starts a new paragraph). Each book gets a heading page with its title, then its text laid out over as many pages as it needs.
 
 ### Classes
 
