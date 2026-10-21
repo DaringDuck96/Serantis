@@ -1,2 +1,8 @@
-# classes 1792618421
-smoke
+# classes 1792618662
+sig:net.minecraft.world.level.block.ChestBlock
+sig:net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity
+sig:net.minecraft.world.RandomizableContainer
+sig:net.minecraft.network.protocol.game.ClientboundSoundPacket
+sig:net.minecraft.server.level.ServerPlayer
+sig:net.minecraft.server.level.ServerPlayerGameMode
+sig:net.minecraft.world.level.storage.loot.BuiltInLootTables
