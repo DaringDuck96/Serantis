@@ -1,8 +1,0 @@
-Compiled from "ItemAttributeModifiers.java"
-public class net.minecraft.world.item.component.ItemAttributeModifiers$Builder {
-  private final com.google.common.collect.ImmutableList$Builder<net.minecraft.world.item.component.ItemAttributeModifiers$Entry> entries;
-  private net.minecraft.world.item.component.ItemAttributeModifiers$Builder();
-  public net.minecraft.world.item.component.ItemAttributeModifiers$Builder add(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier, net.minecraft.world.entity.EquipmentSlotGroup);
-  public net.minecraft.world.item.component.ItemAttributeModifiers$Builder add(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier, net.minecraft.world.entity.EquipmentSlotGroup, net.minecraft.world.item.component.ItemAttributeModifiers$Display);
-  public net.minecraft.world.item.component.ItemAttributeModifiers build();
-}

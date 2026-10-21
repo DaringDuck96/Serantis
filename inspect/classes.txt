@@ -1,5 +1,8 @@
 # classes
-sig:net.minecraft.world.item.Item$Properties
-sig:net.minecraft.world.item.component.ItemAttributeModifiers
-sig:net.minecraft.world.item.component.ItemAttributeModifiers$Builder
-sig:net.minecraft.world.item.Item
+sig:net.minecraft.world.item.component.ItemContainerContents
+sig:net.minecraft.world.inventory.ChestMenu
+sig:net.minecraft.world.SimpleMenuProvider
+sig:net.minecraft.world.SimpleContainer
+sig:com.mojang.blaze3d.platform.InputConstants
+sig:net.minecraft.world.item.ItemStack
+sig:net.minecraft.world.inventory.MenuType

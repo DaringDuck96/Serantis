@@ -1,5 +1,0 @@
-Compiled from "ItemAttributeModifiers.java"
-class net.minecraft.world.item.component.ItemAttributeModifiers$1 {
-  static final int[] $SwitchMap$net$minecraft$world$entity$ai$attributes$AttributeModifier$Operation;
-  static {};
-}
