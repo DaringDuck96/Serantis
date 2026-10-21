@@ -19,8 +19,8 @@ public interface BattlesAccess {
     @Accessor("SPAWNING")
     static void serantis$setSpawning(boolean spawning) { throw new AssertionError(); }
 
-    @Invoker("placeEntity")
-    static void serantis$placeEntity(Battle b, Unit u) { throw new AssertionError(); }
+    @Accessor("ACTIVE")
+    static java.util.Map<UUID, Battle> serantis$active() { throw new AssertionError(); }
 
     @Invoker("removeEntity")
     static void serantis$removeEntity(Battle b, Unit u) { throw new AssertionError(); }

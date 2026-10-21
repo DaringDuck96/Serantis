@@ -127,7 +127,7 @@ public final class RecipeGuide {
     private static Item item(String id) {
         if (id.startsWith("#")) return TAGS.getOrDefault(id.substring(1), Items.BARRIER);
         Item i = BuiltInRegistries.ITEM.getValue(Identifier.parse(id));
-        return i == null ? Items.BARRIER : i;
+        return i == null || i == Items.AIR ? Items.BARRIER : i;
     }
 
     /** How tall the page is. */

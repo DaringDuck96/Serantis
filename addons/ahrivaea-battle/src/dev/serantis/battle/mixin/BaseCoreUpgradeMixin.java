@@ -21,6 +21,10 @@ public abstract class BaseCoreUpgradeMixin {
 
     @Inject(method = "tryUpgrade", at = @At("RETURN"))
     private void serantis$after(ServerPlayer player, ItemStack stack, CallbackInfo ci) {
-        if (serantis$levelBefore < 2 && ((BaseCoreBlockEntity) (Object) this).baseLevel() >= 2 && player != null) dev.serantis.battle.Backpacks.reward(player);
+        BaseCoreBlockEntity self = (BaseCoreBlockEntity) (Object) this;
+        if (serantis$levelBefore < 2 && self.baseLevel() >= 2 && player != null) {
+            var owner = self.owner() == null ? null : player.level().getServer().getPlayerList().getPlayer(self.owner());
+            dev.serantis.battle.Backpacks.reward(owner != null ? owner : player);   // a group member's upgrade still rewards the owner
+        }
     }
 }

@@ -32,8 +32,7 @@ public abstract class BattlesMixin {
     // Allies and sparring rivals aren't in the creatures mod's list of battles: their actions are routed here.
     @Inject(method = "handle", at = @At("HEAD"), cancellable = true)
     private static void serantis$coopRoute(ServerPlayer player, String json, CallbackInfoReturnable<String> cir) {
-        dev.serantis.battle.coop.CoopBattles.ACTOR.set(player);
-        String r = dev.serantis.battle.coop.CoopBattles.route(player, json);
+        String r = dev.serantis.battle.coop.CoopBattles.route(player, json);   // sets the acting player for battle actions
         if (r != dev.serantis.battle.coop.CoopBattles.PASS) {
             dev.serantis.battle.coop.CoopBattles.ACTOR.remove();
             cir.setReturnValue(r);
@@ -61,7 +60,7 @@ public abstract class BattlesMixin {
 
     @Inject(method = "goHome", at = @At("HEAD"))
     private static void serantis$ownerLeft(ServerPlayer p, Battle b, CallbackInfo ci) {
-        if (p != null) dev.serantis.battle.coop.CoopBattles.ownerLeft(b);
+        dev.serantis.battle.coop.CoopBattles.ownerLeft(b);             // also when the owner logged out (p is null then)
     }
 
     @Inject(method = "start", at = @At("HEAD"))
@@ -222,32 +221,41 @@ public abstract class BattlesMixin {
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
         if (dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null) return;   // a spar's stand-in creature
-        if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { cir.setReturnValue(null); return; }   // the Mysterious Figure doesn't fight
-        if (dev.serantis.battle.VillagerTalk.ask(player, entity)) { cir.setReturnValue(null); return; }   // a villager talks before it fights
+        if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { serantis$refuse(cir); return; }   // the Mysterious Figure doesn't fight
+        if (dev.serantis.battle.VillagerTalk.ask(player, entity)) { serantis$refuse(cir); return; }   // a villager talks before it fights
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
             dev.serantis.battle.GoblinRaids.open(player, entity);
-            cir.setReturnValue(null);
+            serantis$refuse(cir);
             return;
         }
         if (dev.serantis.battle.Riddles.isRiddleDragon(entity) && !dev.serantis.battle.Riddles.solved(player, entity)) {
             dev.serantis.battle.Riddles.ask(player, entity);          // an End dragon asks its riddle first
-            cir.setReturnValue(null);
+            serantis$refuse(cir);
             return;
         }
         if (dev.serantis.battle.Villages.isGuard(entity)) {
             player.sendSystemMessage(net.minecraft.network.chat.Component.literal("I wouldn't try that, punk..."));
-            cir.setReturnValue(null);
+            serantis$refuse(cir);
             return;
         }
         if (dev.serantis.battle.Wanderer.isWanderer(entity)) {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The Wandering Trader doesn't fight. Right-click to swap a creature."));
-            cir.setReturnValue(null);
+            serantis$refuse(cir);
             return;
         }
         if (dev.serantis.battle.Market.isBlackMarket(entity)) {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The Black Market Merchant doesn't fight. Right-click to see what's for sale."));
-            cir.setReturnValue(null);
+            serantis$refuse(cir);
         }
+    }
+
+    /** Battles.start refused before it began: nothing it set up for the battle should linger. */
+    @Unique
+    private static void serantis$refuse(CallbackInfoReturnable<Battle> cir) {
+        SERANTIS_BIGGEST.remove();
+        dev.serantis.battle.Masters.SPAWN_PLAYER.remove();
+        dev.serantis.battle.coop.CoopBattles.clearStart();
+        cir.setReturnValue(null);
     }
 
     // Names chosen on the screen come back as a battle action.

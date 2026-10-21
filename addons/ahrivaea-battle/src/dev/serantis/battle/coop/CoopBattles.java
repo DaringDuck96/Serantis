@@ -183,6 +183,9 @@ public final class CoopBattles {
 
     // ------------------------------------------------------------------ battle start: offers to join
 
+    /** A start that was refused before it began: forget where it was. */
+    public static void clearStart() { START_HOME.remove(); }
+
     /** Battles.start, at its head: where the battle is (for who's close enough to join). */
     public static void starting(ServerPlayer owner) {
         START_HOME.set(new Object[]{owner.level(), owner.position(), owner.level().getBiome(owner.blockPosition())});
@@ -262,6 +265,7 @@ public final class CoopBattles {
         if (anchor == null) return;
         UUID id = p.getUUID();
         int[] cell = acc.serantis$freeCellNear(anchor.x, anchor.z, Unit.Side.PLAYER);
+        if (b.unitAt(cell[0], cell[1]) != null) { p.sendSystemMessage(Component.literal("There's no room left on that battlefield.").withStyle(ChatFormatting.RED)); return; }
         Unit me = acc.serantis$addPlayer(p, cell[0], cell[1]);
         if (me == null) return;
         i.control.put(me.id, id);
@@ -292,7 +296,7 @@ public final class CoopBattles {
         } finally {
             BattlesAccess.serantis$setSpawning(false);
         }
-        for (Unit u : b.units) BattlesAccess.serantis$placeEntity(b, u);
+        for (Unit u : b.units) dev.serantis.battle.mixin.BattlesInvoker.serantis$placeEntity(b, u);
         say(b, p.getPlainTextName() + " joins the battle" + (added.isEmpty() ? "!" : " with " + added.size() + " creature" + (added.size() == 1 ? "" : "s") + "!")
                 + (extra == 0 ? "" : extra == 1 ? " Another enemy joins the fray!" : " " + extra + " more enemies join the fray!"));
         Battles.send(b);
@@ -304,6 +308,7 @@ public final class CoopBattles {
         if (sp == null) return null;
         var acc = (BattleRaidAccess) (Object) b;
         int[] cell = acc.serantis$freeCellNear(nearX, nearZ, side);
+        if (b.unitAt(cell[0], cell[1]) != null) return null;              // the field is full
         Unit u = acc.serantis$addCreature(side, sp, c.influence(), c.variant(), c.level(), c.health(), -1, cell[0], cell[1]);
         if (u == null) return null;
         MoveEngine.fromCaught(u, c);
@@ -345,6 +350,7 @@ public final class CoopBattles {
         if (pick != null) { sp = pick.species(); inf = pick.influence(); lvl = pick.level(); }
         var acc = (BattleRaidAccess) (Object) b;
         int[] cell = acc.serantis$freeCellNear(like.x, like.z, Unit.Side.ENEMY);
+        if (b.unitAt(cell[0], cell[1]) != null) return false;
         Unit u = acc.serantis$addCreature(Unit.Side.ENEMY, sp, inf, variant, lvl, -1f, -1, cell[0], cell[1]);
         if (u == null) return false;
         BlockPos at = b.cellPos(u);
@@ -437,7 +443,7 @@ public final class CoopBattles {
             BlockPos at = b.cellPos(ru);
             rival.teleportTo(b.level, at.getX() + 0.5, at.getY(), at.getZ() + 0.5, Set.of(), 0f, 30f, true);
         }
-        for (Unit u : b.units) BattlesAccess.serantis$placeEntity(b, u);
+        for (Unit u : b.units) dev.serantis.battle.mixin.BattlesInvoker.serantis$placeEntity(b, u);
         b.log.clear();
         say(b, "A friendly spar: " + a.getPlainTextName() + " vs " + rival.getPlainTextName() + "! No XP, loot or recruiting, and nobody really gets hurt.");
         say(b, "Turn 1: " + a.getPlainTextName() + "'s turn");
@@ -491,6 +497,8 @@ public final class CoopBattles {
         Unit u = b.unit(opt(j, "unit"));
         if (u == null || !u.alive() || u.side != Unit.Side.ENEMY || !controls(b, u, rival)) return "That's not one of your units.";
         if (u.acted) return u.name + " has already acted this turn.";
+        var queue = ((BattleAccess) (Object) b).serantis$enemyQueue();
+        if (!queue.contains(u)) return u.name + " can't act this turn.";       // frozen, stunned or asleep
         int tx = opt(j, "x"), tz = opt(j, "z");
         if (!b.grid.inside(tx, tz)) return "That's off the battlefield.";
         Integer cost = b.reachable(u).get(tx + tz * b.grid.size);
@@ -520,7 +528,7 @@ public final class CoopBattles {
             default -> "Unknown action.";
         };
         if (problem != null) { u.x = ox; u.z = oz; return problem; }
-        BattlesAccess.serantis$placeEntity(b, u);
+        dev.serantis.battle.mixin.BattlesInvoker.serantis$placeEntity(b, u);
         switch (kind) {
             case "attack" -> ((BattleAccess) (Object) b).serantis$attack(u, t, u.moves.get(action.move()), true);
             case "rally" -> {
@@ -532,13 +540,14 @@ public final class CoopBattles {
             default -> { }
         }
         u.acted = true;
+        queue.remove(u);
         var st = MoveEngine.state(u);
         if (u.alive() && st.startX != Integer.MIN_VALUE && (st.startX != tx || st.startZ != tz)) {
             Field field = ((BattleAccess) (Object) b).serantis$field();
             field.enter(b, u, field.walked(b, u, st.startX, st.startZ, tx, tz));
         }
         if (!((BattleAccess) (Object) b).serantis$checkEnd() && b.phase == Battle.Phase.ENEMY
-                && b.units.stream().noneMatch(x -> x.alive() && x.side == Unit.Side.ENEMY && !x.acted)) endRivalTurn(b);
+                && b.units.stream().noneMatch(x -> x.alive() && x.side == Unit.Side.ENEMY && !x.acted && queue.contains(x))) endRivalTurn(b);
         return null;
     }
 
@@ -674,6 +683,7 @@ public final class CoopBattles {
         try { j = JsonParser.parseString(json).getAsJsonObject(); } catch (RuntimeException e) { return PASS; }
         String kind = j.has("kind") ? j.get("kind").getAsString() : "";
         if (kind.startsWith("serantis_")) return PASS;
+        ACTOR.set(p);
         UUID id = p.getUUID();
         Battle b = JOINED.get(id);
         if (b != null) {
@@ -776,7 +786,7 @@ public final class CoopBattles {
         }
         ServerPlayer owner = b.player();
         if (i.rival != null) {                                         // the winner gets Bragging Rights (and only that)
-            ServerPlayer winner = o == Battle.Outcome.WON ? owner : online(b, i.rival);
+            ServerPlayer winner = o == Battle.Outcome.WON ? owner : o == Battle.Outcome.LOST ? online(b, i.rival) : null;   // a flee proves nothing
             if (winner != null) {
                 var h = (dev.serantis.battle.Welcome.Holder) winner;
                 h.serantis$setFigureMet(h.serantis$figureMet() | SPAR_WON);
@@ -804,7 +814,7 @@ public final class CoopBattles {
         int xp = b.poolXp;
         if (xp > 0) Party.addXp(p, xp);
         dev.ahrivaea.villager.Villagers.award(p, dev.ahrivaea.villager.Villagers.BATTLES_WON);
-        dev.serantis.battle.Bounties.battleWon(p, b.defeated, ((BattleAccess) (Object) b).serantis$master() != null);
+        dev.serantis.battle.Bounties.battleWon(p, b.defeated, ((BattleAccess) (Object) b).serantis$master() != null, false);   // the group contract counted it once already
         p.sendSystemMessage(Component.literal("Victory alongside " + name(b, b.playerId) + "! +" + xp + " XP.").withStyle(ChatFormatting.GREEN));
     }
 

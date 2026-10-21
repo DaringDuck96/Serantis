@@ -15,7 +15,6 @@ public abstract class EntityRemovedMixin {
         if ((Object) this instanceof CreatureEntity c && reason.shouldDestroy()) dev.serantis.battle.Companions.forget(c);
         if ((Object) this instanceof net.minecraft.server.level.ServerPlayer p) {
             dev.serantis.battle.Linx.left(p);                           // carried Shape Lift blocks go back
-            if (reason == Entity.RemovalReason.UNLOADED_WITH_PLAYER) dev.serantis.battle.coop.CoopBattles.disconnected(p);   // logged out
         }
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 
 /** A co-op question for this player: a group invite, a spar challenge, or a group member's battle to join. */
 public class CoopPromptScreen extends Screen {
-    private static int shown = -1;
+    private static String shown = "";
     private final int id;
     private final long opened = System.currentTimeMillis();
     private int startLeft = -1;
@@ -34,8 +34,9 @@ public class CoopPromptScreen extends Screen {
         JsonObject p = prompt();
         if (p == null) return;
         int id = p.get("id").getAsInt();
-        if (id == shown) return;
-        shown = id;
+        String key = id + "|" + p.get("from").getAsString() + "|" + p.get("kind").getAsString();
+        if (key.equals(shown)) return;
+        shown = key;
         mc.gui.setScreen(new CoopPromptScreen(id));
     }
 

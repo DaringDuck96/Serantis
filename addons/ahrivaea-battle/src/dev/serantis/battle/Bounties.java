@@ -102,7 +102,9 @@ public final class Bounties {
 
     // ------------------------------------------------------------------ progress
 
-    private static void progress(ServerPlayer p, String kind, String param, int n) {
+    private static void progress(ServerPlayer p, String kind, String param, int n) { progress(p, kind, param, n, true); }
+
+    private static void progress(ServerPlayer p, String kind, String param, int n, boolean group) {
         if (p == null || n <= 0) return;
         List<Contract> list = today(p);
         boolean changed = false;
@@ -114,15 +116,18 @@ public final class Bounties {
             if (list.get(i).done()) p.sendSystemMessage(Component.literal("Bounty complete: " + describe(list.get(i)) + ". Claim it at a village bell!").withStyle(ChatFormatting.GOLD));
         }
         if (changed) save(p, list);
-        groupProgress(p, kind, param, n);
+        if (group) groupProgress(p, kind, param, n);
     }
 
     /** A battle was won: the creatures beaten, and whether it was a Master's. */
-    public static void battleWon(ServerPlayer p, List<dev.ahrivaea.battle.Battle.Defeated> beaten, boolean master) {
+    public static void battleWon(ServerPlayer p, List<dev.ahrivaea.battle.Battle.Defeated> beaten, boolean master) { battleWon(p, beaten, master, true); }
+
+    /** group: whether this also counts for the group contract (a co-op battle counts once, for its owner). */
+    public static void battleWon(ServerPlayer p, List<dev.ahrivaea.battle.Battle.Defeated> beaten, boolean master, boolean group) {
         if (p == null) return;
-        progress(p, "win", "-", 1);
-        if (master) progress(p, "master", "-", 1);
-        for (var d : beaten) progress(p, "defeat", d.influence() == null ? "none" : d.influence().getSerializedName(), 1);
+        progress(p, "win", "-", 1, group);
+        if (master) progress(p, "master", "-", 1, group);
+        for (var d : beaten) progress(p, "defeat", d.influence() == null ? "none" : d.influence().getSerializedName(), 1, group);
     }
 
     public static void recruited(ServerPlayer p, dev.ahrivaea.party.CaughtCreature c) {
@@ -237,7 +242,7 @@ public final class Bounties {
         if (g.bountyDay() == day && !g.bounty().isEmpty()) {
             try { return Contract.decode(g.bounty()); } catch (RuntimeException ignored) { }
         }
-        RandomSource r = RandomSource.create(day * 977L + g.id() * 7919L);
+        RandomSource r = RandomSource.create(day * 977L + 13L);         // the same for every group that day: re-forming a group can't re-roll it
         Contract c = switch (r.nextInt(4)) {
             case 0 -> new Contract("defeat", INFLUENCES[r.nextInt(INFLUENCES.length)], 12 + r.nextInt(9), 0, false);
             case 1 -> new Contract("win", "-", 8 + r.nextInt(5), 0, false);
@@ -278,6 +283,10 @@ public final class Bounties {
         var g = dev.serantis.battle.coop.Groups.of(p);
         Contract c = groupContract(p);
         if (g == null || c == null || g.claimed().contains(p.getUUID())) return;
+        if (dev.serantis.battle.coop.Groups.claimedDay(p) == day(p)) {
+            p.sendSystemMessage(Component.literal("You've already claimed a group contract today.").withStyle(ChatFormatting.YELLOW));
+            return;
+        }
         if ("deliver".equals(c.kind()) && !c.done()) {
             Item item = BuiltInRegistries.ITEM.getValue(Identifier.parse(c.param()));
             int need = c.goal() - c.progress(), left = need;
@@ -302,6 +311,7 @@ public final class Bounties {
         }
         if (!c.done()) return;
         g.claimed().add(p.getUUID());
+        dev.serantis.battle.coop.Groups.setClaimedDay(p, day(p));
         dev.serantis.battle.coop.Groups.save(p.level().getServer());
         int xp = (int) Math.round(xp(p, c) * 1.5);
         dev.serantis.battle.skills.XpBank.give(p, xp);
@@ -340,7 +350,7 @@ public final class Bounties {
             go.addProperty("text", "Group: " + describe(gc));
             go.addProperty("progress", gc.progress());
             go.addProperty("goal", gc.goal());
-            go.addProperty("claimed", g.claimed().contains(p.getUUID()));
+            go.addProperty("claimed", g.claimed().contains(p.getUUID()) || dev.serantis.battle.coop.Groups.claimedDay(p) == day(p));
             go.addProperty("deliver", "deliver".equals(gc.kind()));
             go.addProperty("xp", (int) Math.round(xp(p, gc) * 1.5));
             go.addProperty("ingots", GROUP_INGOTS);

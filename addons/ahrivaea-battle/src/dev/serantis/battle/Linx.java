@@ -53,7 +53,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *   <li><b>Shape Lift</b>: pick a shape and size (sphere, cube, diamond, pillar, disc; 3, 5 or 7 across) and lift that
  *   shape of natural blocks (stone, dirt, sand, logs, ores... never water, lava, bedrock or anything with a block
  *   entity; a menu toggle lets placed blocks move too, still never water, lava, bedrock or block entities).
- *   Carry it, and set it down; any carried block that lands where a block already is breaks.</li>
+ *   Carry it, and set it down; any carried block that lands where a block already is breaks (with no drops).
+ *   Blocks of a battle being fought on the spot can't be lifted or landed on.</li>
  *   <li><b>Waymark</b>: sneak + the key marks where you stand; the key takes you back there (any dimension, once a minute).</li>
  *   <li><b>High Jump</b>: toggles jumping 2 blocks high (and the longer fall that comes with it doesn't hurt).</li>
  * </ol>
@@ -208,7 +209,7 @@ public final class Linx {
             say(p, "Shape Lift (" + (n.any ? "placed blocks too" : "natural blocks only") + "): look at the blocks and press the key to lift.", ChatFormatting.AQUA);
             return;
         }
-        if (l == null) return;
+        if (l == null) { say(p, "Pick a shape first: sneak + the Shape Lift key.", ChatFormatting.YELLOW); return; }
         ServerLevel level = (ServerLevel) p.level();
         if (l.origin == null) {                                     // lift what's aimed at
             BlockPos centre = aimed(p);
@@ -216,7 +217,7 @@ public final class Linx {
             for (BlockPos off : cells(l.shape, l.size)) {
                 BlockPos at = centre.offset(off);
                 BlockState s = level.getBlockState(at);
-                if (!movable(level, at, s, l.any) || !level.mayInteract(p, at)) continue;
+                if (!movable(level, at, s, l.any) || !level.mayInteract(p, at) || inBattleField(level, at)) continue;
                 if (s.hasProperty(BlockStateProperties.WATERLOGGED)) s = s.setValue(BlockStateProperties.WATERLOGGED, false);
                 l.offsets.add(off);
                 l.states.add(s);
@@ -242,6 +243,14 @@ public final class Linx {
         l.states.clear();
     }
 
+    /** Inside the field of a battle being fought on the spot: those blocks stay put. */
+    private static boolean inBattleField(ServerLevel level, BlockPos at) {
+        for (var b : dev.serantis.battle.mixin.BattlesAccess.serantis$active().values())
+            if (b.level == level && at.getX() >= b.grid.originX && at.getZ() >= b.grid.originZ
+                    && at.getX() < b.grid.originX + b.grid.size && at.getZ() < b.grid.originZ + b.grid.size) return true;
+        return false;
+    }
+
     private static BlockPos aimed(ServerPlayer p) {
         HitResult hit = p.pick(REACH, 1f, false);
         return hit instanceof BlockHitResult b && hit.getType() == HitResult.Type.BLOCK ? b.getBlockPos() : null;
@@ -258,14 +267,13 @@ public final class Linx {
         for (int i = 0; i < l.offsets.size(); i++) {
             BlockPos at = centre.offset(l.offsets.get(i));
             BlockState s = l.states.get(i), there = level.getBlockState(at);
-            boolean free = level.isInWorldBounds(at) && level.getWorldBorder().isWithinBounds(at) && (p == null || level.mayInteract(p, at))
+            boolean free = level.isInWorldBounds(at) && level.getWorldBorder().isWithinBounds(at) && (p == null || level.mayInteract(p, at)) && (p == null || !inBattleField(level, at))
                     && (there.isAir() || there.canBeReplaced()) && !there.is(Blocks.BEDROCK);
             if (free) {
                 if (!there.getFluidState().isEmpty() && s.hasProperty(BlockStateProperties.WATERLOGGED) && there.getFluidState().is(net.minecraft.tags.FluidTags.WATER))
                     s = s.setValue(BlockStateProperties.WATERLOGGED, true);
                 level.setBlock(at, s, Block.UPDATE_ALL);
-            } else {
-                Block.dropResources(s, level, level.isInWorldBounds(at) ? at : l.origin.offset(l.offsets.get(i)));
+            } else {                                                // it breaks: no drops (no free ores without a pickaxe)
                 level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, s), at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 8, 0.25, 0.25, 0.25, 0.05);
                 broke++;
             }

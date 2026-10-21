@@ -66,6 +66,7 @@ public final class Groups {
     private static final Map<UUID, Group> BY_PLAYER = new ConcurrentHashMap<>();
     private static final List<Group> ALL = new ArrayList<>();
     private static final Map<UUID, Prompt> PROMPTS = new ConcurrentHashMap<>();
+    private static final Map<UUID, Long> CLAIMED_DAY = new ConcurrentHashMap<>();   // the last day each player claimed a group contract
     private static MinecraftServer loadedFor;
     private static int nextId = 1, nextPrompt = 1;
 
@@ -83,6 +84,7 @@ public final class Groups {
         BY_PLAYER.clear();
         ALL.clear();
         PROMPTS.clear();
+        CLAIMED_DAY.clear();
         nextId = 1;
         try {
             Path f = file(server);
@@ -105,6 +107,8 @@ public final class Groups {
                 for (UUID m : g.members.keySet()) BY_PLAYER.put(m, g);
                 nextId = Math.max(nextId, g.id + 1);
             }
+            if (root.has("claimedDay"))
+                for (var e : root.getAsJsonObject("claimedDay").entrySet()) CLAIMED_DAY.put(UUID.fromString(e.getKey()), e.getValue().getAsLong());
         } catch (Exception e) {
             dev.ahrivaea.Ahrivaea.LOGGER.warn("Couldn't read serantis_groups.json", e);
         }
@@ -129,6 +133,9 @@ public final class Groups {
             gs.add(o);
         }
         root.add("groups", gs);
+        JsonObject cd = new JsonObject();
+        CLAIMED_DAY.forEach((id, day) -> cd.addProperty(id.toString(), day));
+        root.add("claimedDay", cd);
         try {
             Files.writeString(file(server), GSON.toJson(root), StandardCharsets.UTF_8);
         } catch (Exception e) {
@@ -150,6 +157,11 @@ public final class Groups {
         ensure(server);
         return id == null ? null : BY_PLAYER.get(id);
     }
+
+    /** The last day this player claimed a group contract (-1: never). Kept per player, so changing groups can't claim twice. */
+    public static long claimedDay(ServerPlayer p) { ensure(server(p)); return CLAIMED_DAY.getOrDefault(p.getUUID(), -1L); }
+
+    public static void setClaimedDay(ServerPlayer p, long day) { ensure(server(p)); CLAIMED_DAY.put(p.getUUID(), day); }
 
     /** Are these two players in the same group? */
     public static boolean same(MinecraftServer server, UUID a, UUID b) {
