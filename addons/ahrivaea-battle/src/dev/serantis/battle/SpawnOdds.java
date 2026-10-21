@@ -24,6 +24,31 @@ public final class SpawnOdds {
     /** Near a base with a Noble at work: Rare or rarer 35% of the time instead of 15%. */
     public static final int[] NOBLE    = {50, 15, 22, 10, 3};
 
+    /**
+     * Collecting: every 100 different creatures you've recruited (your dex's caught count, up to 400) moves
+     * 3 points of the Common chance to the rarer ones: +1 Uncommon, +1 Rare, +0.5 Super Rare, +0.5 Legendary.
+     * A Noble's bonus (one Noble's; more don't add up) comes on top. In tenths of a percent.
+     */
+    private static final int[] COLLECT_STEP = {-30, 10, 10, 5, 5};
+    public static final int COLLECT_EVERY = 100, COLLECT_MAX_STEPS = 4;
+
+    public static int collectSteps(net.minecraft.world.entity.player.Player p) {
+        if (!(p instanceof net.minecraft.server.level.ServerPlayer sp)) return 0;
+        return Math.min(COLLECT_MAX_STEPS, dev.ahrivaea.party.Dex.count(sp, dev.ahrivaea.party.Dex.CAUGHT) / COLLECT_EVERY);
+    }
+
+    /** The rarity odds for a spawn near this player (tenths of a percent). */
+    public static int[] odds(net.minecraft.world.entity.player.Player p, boolean noble) {
+        int steps = collectSteps(p);
+        int[] out = new int[RARITY.length];
+        for (int i = 0; i < out.length; i++) {
+            out[i] = PERCENT[i] * 10 + steps * COLLECT_STEP[i];
+            if (noble) out[i] += (NOBLE[i] - PERCENT[i]) * 10;
+            out[i] = Math.max(0, out[i]);
+        }
+        return out;
+    }
+
     /** Common creatures of these influences spawn 5% more often (spawn weight x1.05) than other Common creatures. */
     public static final java.util.Set<Influence> COMMON_BOOST = java.util.EnumSet.of(Influence.NONE, Influence.FIRE, Influence.FROST,
             Influence.EARTH, Influence.STORM, Influence.NATURE, Influence.WATER);
@@ -49,7 +74,7 @@ public final class SpawnOdds {
     /** A creature of a rolled rarity, or empty to let the creatures mod pick as it normally would. */
     public static Optional<Species.Pick> pick(Holder<Biome> biome, Level level, RandomSource random,
                                               BiPredicate<Species, Influence> filter) {
-        int[] percent = Villages.NOBLE_SPAWN.get() ? NOBLE : PERCENT;
+        int[] percent = odds(Masters.SPAWN_PLAYER.get(), Villages.NOBLE_SPAWN.get());
         Villages.NOBLE_SPAWN.set(false);
         List<Integer> left = new ArrayList<>();
         for (int i = 0; i < RARITY.length; i++) left.add(i);

@@ -425,3 +425,15 @@ The words live in `addons/ahrivaea-battle/serantis_battle/figure_scenes.json`, s
 - **Your bases count:** every seed your workers plant counts towards your Seeds Planted, and every item a furnace at one of your bases finishes counts towards your Items Smelted (while you're online). Taking items out of a furnace still counts everywhere else.
 - **Battle XP grows with the game:** 10 for a win, plus 4 + the creature's level for each one beaten (5 at Level 1, 24 at Level 20), and half again for Super Rare and Legendary creatures. Creature Masters still pay double. Before, every creature paid about 10 and it fell as your skill tree grew.
 - **Skill tree:** each skill costs 10% more than the last (was 12.6%): the first few cost about the same, and the whole tree is about 145,000 XP instead of 450,000.
+
+**Collecting makes rare creatures easier to find.** Every 100 *different* creatures you've recruited (your dex's caught count; duplicates don't count) shifts the spawn odds near you towards rarer creatures, up to 400:
+
+| Different creatures recruited | Common | Uncommon | Rare | Super Rare | Legendary |
+|---|---|---|---|---|---|
+| 0-99 | 70% | 15% | 10% | 4% | 1% |
+| 100 | 67% | 16% | 11% | 4.5% | 1.5% |
+| 200 | 64% | 17% | 12% | 5% | 2% |
+| 300 | 61% | 18% | 13% | 5.5% | 2.5% |
+| 400+ | 58% | 19% | 14% | 6% | 3% |
+
+A Noble at your base adds its bonus on top (-20 Common, +12 Rare, +6 Super Rare, +2 Legendary), so at 400 with a Noble it's 38 / 19 / 26 / 12 / 5. More than one Noble doesn't add more.
