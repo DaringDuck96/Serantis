@@ -1,0 +1,15 @@
+{
+  "values": [
+    "serantis_battle:infusion_fire",
+    "serantis_battle:infusion_frost",
+    "serantis_battle:infusion_storm",
+    "serantis_battle:infusion_earth",
+    "serantis_battle:infusion_water",
+    "serantis_battle:infusion_nature",
+    "serantis_battle:infusion_void",
+    "serantis_battle:infusion_fae",
+    "serantis_battle:infusion_darkness",
+    "serantis_battle:infusion_arcane",
+    "serantis_battle:infusion_radiant"
+  ]
+}

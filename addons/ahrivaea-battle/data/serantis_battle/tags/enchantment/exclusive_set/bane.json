@@ -1,0 +1,16 @@
+{
+  "values": [
+    "serantis_battle:bane_none",
+    "serantis_battle:bane_fire",
+    "serantis_battle:bane_frost",
+    "serantis_battle:bane_storm",
+    "serantis_battle:bane_earth",
+    "serantis_battle:bane_water",
+    "serantis_battle:bane_nature",
+    "serantis_battle:bane_void",
+    "serantis_battle:bane_fae",
+    "serantis_battle:bane_darkness",
+    "serantis_battle:bane_arcane",
+    "serantis_battle:bane_radiant"
+  ]
+}

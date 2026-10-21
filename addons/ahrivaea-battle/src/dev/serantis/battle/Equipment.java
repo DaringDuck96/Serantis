@@ -45,7 +45,9 @@ public final class Equipment {
         double damage = hand.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY)
                 .compute(Attributes.ATTACK_DAMAGE, 1.0, EquipmentSlot.MAINHAND) + WeaponEnchants.sharpness(p, hand);   // Sharpness counts
         List<BattleMove> out = new ArrayList<>();
-        out.add(BattleMove.forWeapon(hand.isEmpty() ? "Punch" : hand.getHoverName().getString(), damage, ranged));
+        var infused = WeaponEnchants.infusion(p, hand);                 // an infused weapon says so
+        String name = hand.isEmpty() ? "Punch" : hand.getHoverName().getString() + (infused == null ? "" : " (" + infused.displayName() + ")");
+        out.add(BattleMove.forWeapon(name, damage, ranged));
         out.addAll(Staffs.spellsInHand(p));
         return out;
     }

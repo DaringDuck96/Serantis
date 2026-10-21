@@ -11,9 +11,10 @@ import net.minecraft.world.item.enchantment.Enchantments;
 /**
  * Weapon enchantments count in creature battles (your weapon attack, not staff spells):
  *  - Sharpness: +0.5 per level + 0.5 attack damage (as in Minecraft), added to the weapon's power.
- *  - Smite: +10% damage per level against Darkness and Void creatures.
- *  - Bane of Arthropods: +10% per level against Nature creatures.
- *  - Impaling: +10% per level against Water creatures.
+ *  - Banes (Quenching, Thawing, Grounding, ... one per influence, I-III, only one per weapon): +10% damage per level
+ *    against creatures of that influence. (Smite, Bane of Arthropods and Impaling only matter outside battles.)
+ *  - Infusions (Emberbrand, Rimebite, Thunderstrike, ... one per influence but Normal, only one per weapon): the weapon
+ *    attack takes on that influence, with its type matchups (super-effective, resisted...).
  *  - Fire Aspect (+8% per level) and Flame (+15%): against anything but Fire creatures.
  *  - Power: +12% per level (bows and crossbows).
  *  - Breach: +8% per level (it cuts through armour; here, defence). Density: +5% per level.
@@ -34,14 +35,24 @@ public final class WeaponEnchants {
         return l > 0 ? 0.5 * l + 0.5 : 0;
     }
 
+    private static ResourceKey<Enchantment> key(String id) {
+        return ResourceKey.create(Registries.ENCHANTMENT, net.minecraft.resources.Identifier.parse("serantis_battle:" + id));
+    }
+
+    /** The influence this weapon is infused with (null: none). */
+    public static dev.ahrivaea.creature.Influence infusion(Player p, ItemStack weapon) {
+        if (p == null || weapon == null || weapon.isEmpty()) return null;
+        for (var inf : dev.ahrivaea.creature.Influence.values())
+            if (inf != dev.ahrivaea.creature.Influence.NONE && level(p, weapon, key("infusion_" + inf.getSerializedName())) > 0) return inf;
+        return null;
+    }
+
     /** Damage multiplier for the player's weapon attack on a creature of this influence. */
-    public static double multiplier(Player p, ItemStack weapon, String targetInfluence) {
+    public static double multiplier(Player p, ItemStack weapon, dev.ahrivaea.creature.Influence target) {
         if (weapon == null || weapon.isEmpty()) return 1;
-        String t = targetInfluence == null ? "none" : targetInfluence;
+        String t = target == null ? "none" : target.getSerializedName();
         double m = 1;
-        if ("darkness".equals(t) || "void".equals(t)) m += 0.10 * level(p, weapon, Enchantments.SMITE);
-        if ("nature".equals(t)) m += 0.10 * level(p, weapon, Enchantments.BANE_OF_ARTHROPODS);
-        if ("water".equals(t)) m += 0.10 * level(p, weapon, Enchantments.IMPALING);
+        m += 0.10 * level(p, weapon, key("bane_" + t));                  // its Bane
         if (!"fire".equals(t)) {
             m += 0.08 * level(p, weapon, Enchantments.FIRE_ASPECT);
             m += 0.15 * Math.min(1, level(p, weapon, Enchantments.FLAME));
@@ -49,6 +60,11 @@ public final class WeaponEnchants {
         m += 0.12 * level(p, weapon, Enchantments.POWER);
         m += 0.08 * level(p, weapon, Enchantments.BREACH);
         m += 0.05 * level(p, weapon, Enchantments.DENSITY);
+        var infused = infusion(p, weapon);                               // an infused weapon hits as its influence
+        if (infused != null && target != null) {
+            double plain = dev.ahrivaea.creature.Influence.NONE.against(target);
+            m *= infused.against(target) / (plain <= 0 ? 1 : plain);
+        }
         return m;
     }
 

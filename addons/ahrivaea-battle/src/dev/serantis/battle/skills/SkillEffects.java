@@ -33,7 +33,7 @@ public final class SkillEffects {
         double mult = 1;
         if (attacker.isPlayer) {
             if (dev.serantis.battle.moves.MoveBook.of(move) == null)        // the weapon attack (not a spell): its enchantments count
-                mult *= dev.serantis.battle.WeaponEnchants.multiplier(p, p.getMainHandItem(), target.influence == null ? null : target.influence.getSerializedName());
+                mult *= dev.serantis.battle.WeaponEnchants.multiplier(p, p.getMainHandItem(), target.influence);
             if (move.maxRange() <= 1 && Skills.has(p, "might_4")) mult *= 1.05;
             if (move.move().category() == DamageCalc.Category.MAGIC && Skills.has(p, "arcana_3")) mult *= 1.05;
             if (crit && Skills.has(p, "might_6")) mult *= 2.25 / 2.0;

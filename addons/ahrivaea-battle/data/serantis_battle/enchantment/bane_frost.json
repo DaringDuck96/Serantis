@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.serantis_battle.bane_frost"
+  },
+  "effects": {},
+  "exclusive_set": "#serantis_battle:exclusive_set/bane",
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 8
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#minecraft:enchantable/sword",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#serantis_battle:battle_weapons",
+  "weight": 5
+}

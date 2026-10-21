@@ -451,12 +451,16 @@ A Noble at your base adds its bonus on top (-20 Common, +12 Rare, +6 Super Rare,
 | Enchantment | In battle |
 |---|---|
 | Sharpness | +0.5 per level + 0.5 attack damage, as in Minecraft |
-| Smite | +10% damage per level against Darkness and Void creatures |
-| Bane of Arthropods | +10% per level against Nature creatures |
-| Impaling | +10% per level against Water creatures |
 | Fire Aspect | +8% per level against anything but Fire creatures |
 | Flame | +15% against anything but Fire creatures |
 | Power | +12% per level |
 | Breach | +8% per level |
 | Density | +5% per level |
 | Looting | +5% per level that each creature you beat drops its loot twice |
+
+**Influence enchantments.** Two new families for swords, axes, maces, tridents, bows and crossbows, from the enchanting table, books, librarians and loot:
+
+- **Banes** (I-III, one per weapon; about as common as Smite): +10% damage per level against creatures of one influence. Quenching (Fire), Thawing (Frost), Grounding (Storm), Shattering (Earth), Draining (Water), Withering (Nature), Anchoring (Void), Cold Iron (Fae), Dawnlight (Darkness), Nullifying (Arcane), Eclipse (Radiant), Wildstrike (Normal). Smite, Bane of Arthropods and Impaling no longer do anything in battle (they still work on mobs).
+- **Infusions** (one level, one per weapon; about as rare as Fire Aspect): your weapon attack takes on an influence, with all its type matchups: super-effective against what that influence beats, resisted by what resists it. Emberbrand (Fire), Rimebite (Frost), Thunderstrike (Storm), Quakeborn (Earth), Tidecutter (Water), Thornlash (Nature), Voidrend (Void), Feytouch (Fae), Shadowbite (Darkness), Runeblade (Arcane), Sunforged (Radiant). The weapon's attack shows its influence in battle, e.g. "Diamond Sword (Fire)". Swap weapons mid-fight with Equip to pick the right one.
+
+A weapon can carry one Bane and one Infusion together.
