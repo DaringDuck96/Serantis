@@ -135,11 +135,19 @@ public class FigureScreen extends Screen {
         if (visibleChars() < text.length()) { shownAt = System.currentTimeMillis() - 100_000; return true; }
         if (index + 1 < lines.size()) { show(index + 1); return true; }
         if (!chose && !choices().isEmpty()) { choosing = true; DialogueCamera.focusPlayer(true); rebuildWidgets(); return true; }
+        boolean fight = scene.has("battle") && scene.get("battle").getAsBoolean();
+        JsonObject o = new JsonObject();
+        o.addProperty("kind", "serantis_visit_done");
+        o.addProperty("fight", fight);
+        if (fight) {                                                     // the battle camera takes over
+            dev.ahrivaea.client.battle.BattleClient.send(o);
+            DialogueCamera.end(false);
+            Minecraft.getInstance().gui.setScreen(null);
+            return true;
+        }
         leaving = true;                                                  // it vanishes
         leftAt = System.currentTimeMillis();
         DialogueCamera.wideShot();
-        JsonObject o = new JsonObject();
-        o.addProperty("kind", "serantis_visit_done");
         dev.ahrivaea.client.battle.BattleClient.send(o);
         return true;
     }

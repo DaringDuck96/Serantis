@@ -82,6 +82,7 @@ public abstract class BattlesMixin {
             String temperament = ((BattleAccess) (Object) battle).serantis$defeatedTemperaments().get(battle.defeated.get(index));
             if (temperament != null) ((MovesHolder) (Object) caught).serantis$setTemperament(temperament);
         }
+        caught = dev.serantis.battle.FigureVisit.recruited(battle, caught);   // the Mysterious Figure joins at Level 10
         caught = dev.serantis.battle.Villages.onRecruit(sp, caught);     // a villager starts its first deed now
         boolean added = Party.addAnywhere(player, caught);
         if (added) dev.serantis.battle.Naming.offer(sp, caught);
@@ -98,7 +99,8 @@ public abstract class BattlesMixin {
     @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battles;reinforcements(ILnet/minecraft/util/RandomSource;)I"))
     private static int serantis$guardCount(int level, net.minecraft.util.RandomSource random, ServerPlayer player, dev.ahrivaea.creature.CreatureEntity target) {
         int raid = dev.serantis.battle.GoblinRaids.raidSize();
-        if (raid > 0) return raid - 1;                                  // a goblin raid: the rest of the raiders
+        if (raid > 0) return raid - 1;
+        if (dev.serantis.battle.FigureVisit.FIGHTING.get()) return 0;  // the Mysterious Figure fights alone                                  // a goblin raid: the rest of the raiders
         String master = dev.serantis.battle.Masters.influenceOf(target);
         if (master != null) {                                           // a Creature Master brings 3-5 of its own
             SERANTIS_MASTER.set(master);
@@ -164,7 +166,7 @@ public abstract class BattlesMixin {
     // Black Market Merchants don't fight.
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
-        if (dev.serantis.battle.Intro.isFigure(entity)) { cir.setReturnValue(null); return; }   // the Mysterious Figure doesn't fight
+        if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { cir.setReturnValue(null); return; }   // the Mysterious Figure doesn't fight
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
             dev.serantis.battle.GoblinRaids.open(player, entity);
             cir.setReturnValue(null);
@@ -254,8 +256,9 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
-            if ("serantis_visit_done".equals(kind)) {     // the Mysterious Figure leaves
-                dev.serantis.battle.FigureVisit.done(player);
+            if ("serantis_visit_done".equals(kind)) {     // the Mysterious Figure leaves (or fights)
+                if (o.has("fight") && o.get("fight").getAsBoolean()) dev.serantis.battle.FigureVisit.fight(player);
+                else dev.serantis.battle.FigureVisit.done(player);
                 cir.setReturnValue(null);
                 return;
             }

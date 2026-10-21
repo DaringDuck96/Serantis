@@ -351,6 +351,7 @@ public final class GoblinRaids {
     public static void finished(Battle b, Battle.Outcome outcome) {
         Raid r = IN_BATTLE.remove(b);
         if (r == null) return;
+        FigureVisit.clearWild(b);                         // the raid leader doesn't stay behind
         ServerPlayer p = b.player();
         if (p == null) return;
         if (outcome == Battle.Outcome.WON) {

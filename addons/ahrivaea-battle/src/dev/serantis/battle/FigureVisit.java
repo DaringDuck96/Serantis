@@ -55,6 +55,7 @@ public final class FigureVisit {
             case "stone" -> stones(p) >= 1;
             case "tower" -> Achievements.value(p, "towers") >= 1;
             case "towers" -> Achievements.value(p, "towers") >= 3;
+            case "eternita" -> ((Masters.Holder) p).serantis$eternita();
             case "nether" -> p.level().dimension() == net.minecraft.world.level.Level.NETHER;
             default -> false;
         };
@@ -183,6 +184,102 @@ public final class FigureVisit {
         }
         return true;
     }
+
+    // ------------------------------------------------------------------ the trial
+
+    /** Set while the Mysterious Figure's battle is being started (the battle code reads it). */
+    public static final ThreadLocal<Boolean> FIGHTING = ThreadLocal.withInitial(() -> false);
+    private static final java.util.Set<dev.ahrivaea.battle.Battle> TRIALS = java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
+
+    public static boolean isTrial(dev.ahrivaea.battle.Battle b) { return b != null && TRIALS.contains(b); }
+
+    /** The talk ended with "prove it": the whole party against the figure. */
+    public static void fight(ServerPlayer p) {
+        Visit v = ACTIVE.remove(p.getUUID());
+        if (v == null) return;
+        Welcome.Holder h = (Welcome.Holder) p;
+        h.serantis$setFigureMet(h.serantis$figureMet() | scenes().getOrDefault(v.scene, 0));
+        ServerLevel level = (ServerLevel) p.level();
+        Entity e = level.getEntity(v.figure);
+        dev.ahrivaea.battle.Battle b = null;
+        if (e instanceof CreatureEntity c && Battles.of(p) == null) {
+            FIGHTING.set(true);
+            try { b = Battles.start(p, c); } finally { FIGHTING.set(false); }
+        }
+        if (b == null) { if (e != null) e.discard(); PartySync.sync(p); return; }
+        TRIALS.add(b);
+        fillParty(p, b);
+        dev.serantis.battle.moves.MoveEngine.figureBoss(b);
+        Battles.send(b);
+        PartySync.sync(p);
+    }
+
+    /** Every party creature fights (a battle usually takes four). */
+    private static void fillParty(ServerPlayer p, dev.ahrivaea.battle.Battle b) {
+        var me = b.playerUnit();
+        if (me == null) return;
+        java.util.Set<Integer> in = new java.util.HashSet<>();
+        for (var u : b.units) if (u.side == dev.ahrivaea.battle.Unit.Side.PLAYER && !u.isPlayer) in.add(u.partySlot);
+        var acc = (dev.serantis.battle.mixin.BattleRaidAccess) (Object) b;
+        var party = dev.ahrivaea.party.Party.get(p);
+        for (int i = 0; i < party.size(); i++) {
+            var c = party.get(i);
+            if (in.contains(i) || c == null || c.health() <= 0) continue;
+            var sp = dev.ahrivaea.creature.Species.get(c.species()).orElse(null);
+            if (sp == null) continue;
+            int[] cell = acc.serantis$freeCellNear(me.x, me.z, dev.ahrivaea.battle.Unit.Side.PLAYER);
+            if (cell == null) break;
+            var u = acc.serantis$addCreature(dev.ahrivaea.battle.Unit.Side.PLAYER, sp, c.influence(), c.variant(), c.level(), c.health(), i, cell[0], cell[1]);
+            if (u == null) continue;
+            BlockPos at = b.cellPos(u);
+            CreatureEntity e = dev.ahrivaea.Ahrivaea.spawn(b.level, sp, c.influence(), c.level(), c.health(), at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+            if (e == null) continue;
+            e.setVariant(c.variant());
+            e.tame(p);
+            e.setNoAi(true);
+            e.capSize(1.4f);
+            u.entity = e.getUUID();
+        }
+    }
+
+    /** The trial ended. Win: the figure can be recruited. Lose: you keep the stone, but not the figure. */
+    public static void finished(dev.ahrivaea.battle.Battle b, dev.ahrivaea.battle.Battle.Outcome outcome) {
+        if (!TRIALS.remove(b)) return;
+        clearWild(b);
+        if (outcome == dev.ahrivaea.battle.Battle.Outcome.WON) WON.add(b);
+        ServerPlayer p = b.player();
+        if (p == null) return;
+        if (outcome == dev.ahrivaea.battle.Battle.Outcome.WON)
+            say(p, "\"You are worthy. More than I dared hope.\" The Mysterious Figure kneels. \"If you'll have me... I'll follow you.\"");
+        else say(p, "\"Not yet.\" The Mysterious Figure turns away. \"Keep the stone. You'll need it. But you aren't ready for me.\" And it's gone.");
+    }
+
+    /** No wild creature comes back into the world after this battle. */
+    public static void clearWild(dev.ahrivaea.battle.Battle b) {
+        try {
+            var f = dev.ahrivaea.battle.Battle.class.getDeclaredField("wild");
+            f.setAccessible(true);
+            f.set(b, null);
+        } catch (ReflectiveOperationException | RuntimeException ignored) { }
+    }
+
+    private static void say(ServerPlayer p, String text) {
+        p.sendSystemMessage(net.minecraft.network.chat.Component.literal(text).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+    }
+
+    /** A recruited Mysterious Figure: Level 10, and an ordinary villager's stats and moves. */
+    public static dev.ahrivaea.party.CaughtCreature recruited(dev.ahrivaea.battle.Battle b, dev.ahrivaea.party.CaughtCreature c) {
+        if (!wasTrial(b) || c == null) return c;
+        var sp = dev.ahrivaea.creature.Species.get(c.species()).orElse(null);
+        float hp = sp == null ? c.health() : sp.statsFor(c.influence()).maxHealth(10);
+        c = c.withProgress(10, 0).withHealth(hp);
+        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setMoves(null);
+        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setNickname("Mysterious Figure");
+        return c;
+    }
+
+    private static final java.util.Set<dev.ahrivaea.battle.Battle> WON = java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new java.util.WeakHashMap<>()));
+    private static boolean wasTrial(dev.ahrivaea.battle.Battle b) { return WON.contains(b); }
 
     /** The talk is over: it vanishes in a puff of smoke. */
     public static void done(ServerPlayer p) {

@@ -190,6 +190,29 @@ public final class MoveEngine {
         acc(b).serantis$say("The " + name + " sends out its team! Its creatures can't be recruited, but winning pays double XP and a Gym Master Stone.");
     }
 
+    /** The Mysterious Figure's trial (after the Eternita Stone): alone, level 20, and far stronger than anything wild. */
+    public static void figureBoss(Battle b) {
+        for (Unit u : b.units) {
+            if (u.isPlayer || u.side != Unit.Side.ENEMY) continue;
+            ((UnitAccess) (Object) u).serantis$setName("Mysterious Figure");
+            ((UnitAccess) (Object) u).serantis$setStats(new dev.ahrivaea.creature.Stats(230, 115, 105, 95, 125, 95, 100));
+            if (!MoveBook.available()) continue;
+            List<MoveSpec> best = null;
+            int bestPower = -1;
+            String[] kinds = {"void", "arcane", "darkness", "radiant"};
+            for (int i = 0; i < 12; i++) {
+                dev.ahrivaea.creature.Influence inf = dev.ahrivaea.creature.Influence.NONE;
+                for (var x : dev.ahrivaea.creature.Influence.values()) if (x.getSerializedName().equals(kinds[i % kinds.length])) inf = x;
+                List<MoveSpec> roll = MoveBook.roll(inf, b.random);
+                int power = 0;
+                for (MoveSpec m : roll) power += Math.max(0, m.sheetPower);
+                if (power > bestPower) { bestPower = power; best = roll; }
+            }
+            if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best));
+        }
+        acc(b).serantis$say("The Mysterious Figure stands alone against you all. Prove you're worthy of the Eternita Stone.");
+    }
+
     public static String encodeUnit(Unit u) {
         List<MoveSpec> specs = new ArrayList<>();
         for (BattleMove m : u.moves) { MoveSpec s = MoveBook.of(m); if (s != null) specs.add(s); }

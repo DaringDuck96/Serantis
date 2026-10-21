@@ -1,74 +1,337 @@
 {
-  "_doc": "The Mysterious Figure's visits after the opening scene. Each plays once, when its trigger is met (see FigureVisit). bit: its flag in the player's saved figure scenes. lines: what it says as it arrives. choices: what you can answer, and its reply. end: its parting words before it vanishes. Speakers: figure, action.",
+  "_doc": "The Mysterious Figure's visits after the opening scene. Each plays once, when its trigger is met (see FigureVisit). bit: its flag in the player's saved figure scenes. lines: what it says as it arrives. choices: what you can answer, and its reply. end: its parting words before it vanishes. Speakers: figure, action. battle: true ends the talk in a battle against the figure instead of it vanishing (the Eternita Stone trial).",
   "scenes": [
     {
-      "id": "battles", "bit": 2, "trigger": "10 battles fought, won or lost",
-      "lines": [["figure", "You're getting stronger."]],
+      "id": "battles",
+      "bit": 2,
+      "trigger": "10 battles fought, won or lost",
+      "lines": [
+        [
+          "figure",
+          "You're getting stronger."
+        ]
+      ],
       "choices": [
-        {"text": "Yeah, so?", "reply": [["action", "*The Mysterious Figure scoffs*"]]},
-        {"text": "Tell me who you are.", "reply": [["action", "*The Mysterious Figure bows*"], ["figure", "I am but a humble follower of the First, and your personal guide to destiny."]]}
+        {
+          "text": "Yeah, so?",
+          "reply": [
+            [
+              "action",
+              "*The Mysterious Figure scoffs*"
+            ]
+          ]
+        },
+        {
+          "text": "Tell me who you are.",
+          "reply": [
+            [
+              "action",
+              "*The Mysterious Figure bows*"
+            ],
+            [
+              "figure",
+              "I am but a humble follower of the First, and your personal guide to destiny."
+            ]
+          ]
+        }
       ],
       "end": []
     },
     {
-      "id": "base", "bit": 4, "trigger": "a base of yours reaches Level 2",
+      "id": "base",
+      "bit": 4,
+      "trigger": "a base of yours reaches Level 2",
       "lines": [
-        ["figure", "Look at this place. Walls, fires, creatures working side by side."],
-        ["figure", "This is what Serantia looked like, once. Before the Ashes."]
+        [
+          "figure",
+          "Look at this place. Walls, fires, creatures working side by side."
+        ],
+        [
+          "figure",
+          "This is what Serantia looked like, once. Before the Ashes."
+        ]
       ],
       "choices": [
-        {"text": "Before the Ashes?", "reply": [["figure", "The old kingdoms burned their world down reaching for power. The Council saved what it could. It wasn't enough."]]},
-        {"text": "It's just a base.", "reply": [["figure", "Every kingdom that ever stood began as 'just' something."]]}
+        {
+          "text": "Before the Ashes?",
+          "reply": [
+            [
+              "figure",
+              "The old kingdoms burned their world down reaching for power. The Council saved what it could. It wasn't enough."
+            ]
+          ]
+        },
+        {
+          "text": "It's just a base.",
+          "reply": [
+            [
+              "figure",
+              "Every kingdom that ever stood began as 'just' something."
+            ]
+          ]
+        }
       ],
-      "end": [["figure", "Keep building. But a home is where rebuilding begins, not where it ends. Look beyond your walls."]]
+      "end": [
+        [
+          "figure",
+          "Keep building. But a home is where rebuilding begins, not where it ends. Look beyond your walls."
+        ]
+      ]
     },
     {
-      "id": "stone", "bit": 8, "trigger": "your first Gym Master Stone",
+      "id": "stone",
+      "bit": 8,
+      "trigger": "your first Gym Master Stone",
       "lines": [
-        ["figure", "A Master's Stone. You've earned the respect of one who walks with an influence."],
-        ["figure", "There are twelve influences, and twelve Sovereigns who shaped them. Every stone brings you a little closer to understanding them."]
+        [
+          "figure",
+          "A Master's Stone. You've earned the respect of one who walks with an influence."
+        ],
+        [
+          "figure",
+          "There are twelve influences, and twelve Sovereigns who shaped them. Every stone brings you a little closer to understanding them."
+        ]
       ],
       "choices": [
-        {"text": "Who are the Sovereigns?", "reply": [["figure", "The Twelve Dragons of the Council of Eternita. Look for the old books. They remember more than I'm allowed to say."]]},
-        {"text": "What if I collect them all?", "reply": [["action", "*The Mysterious Figure smiles faintly*"], ["figure", "Then perhaps the First will hear your name."]]}
+        {
+          "text": "Who are the Sovereigns?",
+          "reply": [
+            [
+              "figure",
+              "The Twelve Dragons of the Council of Eternita. Look for the old books. They remember more than I'm allowed to say."
+            ]
+          ]
+        },
+        {
+          "text": "What if I collect them all?",
+          "reply": [
+            [
+              "action",
+              "*The Mysterious Figure smiles faintly*"
+            ],
+            [
+              "figure",
+              "Then perhaps the First will hear your name."
+            ]
+          ]
+        }
       ],
-      "end": [["figure", "The other Masters are out there, wandering. Find them. Get stronger."]]
+      "end": [
+        [
+          "figure",
+          "The other Masters are out there, wandering. Find them. Get stronger."
+        ]
+      ]
     },
     {
-      "id": "tower", "bit": 16, "trigger": "your first tower rebuilt",
+      "id": "tower",
+      "bit": 16,
+      "trigger": "your first tower rebuilt",
       "lines": [
-        ["figure", "You found one. And you rebuilt it."],
-        ["figure", "The towers were the First Dragon's watchposts, long before the Age of Ashes. While they stood, the world stood with them."]
+        [
+          "figure",
+          "You found one. And you rebuilt it."
+        ],
+        [
+          "figure",
+          "The towers were the First Dragon's watchposts, long before the Age of Ashes. While they stood, the world stood with them."
+        ]
       ],
       "choices": [
-        {"text": "Why do the towers matter?", "reply": [["figure", "Every tower that rises again is a thread pulling Serantia back together. And something out there can feel it pulling."]]},
-        {"text": "What was that roar, the day we met?", "reply": [["action", "*The Mysterious Figure hesitates*"], ["figure", "Something that would rather this world stayed broken. Don't go looking for it. Not yet."]]}
+        {
+          "text": "Why do the towers matter?",
+          "reply": [
+            [
+              "figure",
+              "Every tower that rises again is a thread pulling Serantia back together. And something out there can feel it pulling."
+            ]
+          ]
+        },
+        {
+          "text": "What was that roar, the day we met?",
+          "reply": [
+            [
+              "action",
+              "*The Mysterious Figure hesitates*"
+            ],
+            [
+              "figure",
+              "Something that would rather this world stayed broken. Don't go looking for it. Not yet."
+            ]
+          ]
+        }
       ],
-      "end": [["figure", "There are more towers. Find them, before it does."]]
+      "end": [
+        [
+          "figure",
+          "There are more towers. Find them, before it does."
+        ]
+      ]
     },
     {
-      "id": "nether", "bit": 32, "trigger": "your first steps in the Nether",
+      "id": "nether",
+      "bit": 32,
+      "trigger": "your first steps in the Nether",
       "lines": [
-        ["figure", "So. You've found another realm."],
-        ["figure", "Serantia was never just one world. The Sovereigns hid pieces of creation in places like this, where the unworthy wouldn't wander."]
+        [
+          "figure",
+          "So. You've found another realm."
+        ],
+        [
+          "figure",
+          "Serantia was never just one world. The Sovereigns hid pieces of creation in places like this, where the unworthy wouldn't wander."
+        ]
       ],
       "choices": [
-        {"text": "There are more realms?", "reply": [["figure", "More than you'd believe. Some lie beneath your feet. Some beyond the stars. And one waits at the very end of everything."]]},
-        {"text": "This place is horrible.", "reply": [["action", "*The Mysterious Figure laughs*"], ["figure", "Horrible places keep the best secrets."]]}
+        {
+          "text": "There are more realms?",
+          "reply": [
+            [
+              "figure",
+              "More than you'd believe. Some lie beneath your feet. Some beyond the stars. And one waits at the very end of everything."
+            ]
+          ]
+        },
+        {
+          "text": "This place is horrible.",
+          "reply": [
+            [
+              "action",
+              "*The Mysterious Figure laughs*"
+            ],
+            [
+              "figure",
+              "Horrible places keep the best secrets."
+            ]
+          ]
+        }
       ],
-      "end": [["figure", "Explore it. Carefully. The answers were never kept in one place."]]
+      "end": [
+        [
+          "figure",
+          "Explore it. Carefully. The answers were never kept in one place."
+        ]
+      ]
     },
     {
-      "id": "towers", "bit": 64, "trigger": "three towers rebuilt",
+      "id": "towers",
+      "bit": 64,
+      "trigger": "three towers rebuilt",
       "lines": [
-        ["figure", "Three towers standing again. The land is changing around them. Can you feel it?"],
-        ["figure", "The Council feels it too. They're watching you now."]
+        [
+          "figure",
+          "Three towers standing again. The land is changing around them. Can you feel it?"
+        ],
+        [
+          "figure",
+          "The Council feels it too. They're watching you now."
+        ]
       ],
       "choices": [
-        {"text": "Is that a good thing?", "reply": [["figure", "For you? We'll see. For Serantia, it's the first good thing in a thousand years."]]},
-        {"text": "Who else is watching?", "reply": [["action", "*The Mysterious Figure glances at the sky*"], ["figure", "Something old. Something that was cast off and never forgave it. It knows your name now."]]}
+        {
+          "text": "Is that a good thing?",
+          "reply": [
+            [
+              "figure",
+              "For you? We'll see. For Serantia, it's the first good thing in a thousand years."
+            ]
+          ]
+        },
+        {
+          "text": "Who else is watching?",
+          "reply": [
+            [
+              "action",
+              "*The Mysterious Figure glances at the sky*"
+            ],
+            [
+              "figure",
+              "Something old. Something that was cast off and never forgave it. It knows your name now."
+            ]
+          ]
+        }
       ],
-      "end": [["figure", "Get stronger. Find the rest of the towers. We may not have as much time as I hoped."]]
+      "end": [
+        [
+          "figure",
+          "Get stronger. Find the rest of the towers. We may not have as much time as I hoped."
+        ]
+      ]
+    },
+    {
+      "id": "eternita",
+      "bit": 128,
+      "trigger": "the Eternita Stone",
+      "battle": true,
+      "lines": [
+        [
+          "figure",
+          "So. The Eternita Stone."
+        ],
+        [
+          "action",
+          "*The Mysterious Figure studies the stone in your hands*"
+        ],
+        [
+          "figure",
+          "Do you understand what you're holding? It was cut from the First Dragon's own scales, in the age before ages."
+        ],
+        [
+          "figure",
+          "The Masters gave it to you because they believe you're worthy of it. I'm not so easily convinced."
+        ],
+        [
+          "figure",
+          "Are you ready for it?"
+        ]
+      ],
+      "choices": [
+        {
+          "text": "I'm ready.",
+          "reply": [
+            [
+              "figure",
+              "Everyone says that. Few ever are."
+            ]
+          ]
+        },
+        {
+          "text": "I've earned it.",
+          "reply": [
+            [
+              "figure",
+              "From the Masters, perhaps. Not from me."
+            ]
+          ]
+        },
+        {
+          "text": "Who are you to judge me?",
+          "reply": [
+            [
+              "action",
+              "*The Mysterious Figure's eyes flash*"
+            ],
+            [
+              "figure",
+              "Someone who has watched a thousand would-be heroes hold that stone. And watched it break them."
+            ]
+          ]
+        }
+      ],
+      "end": [
+        [
+          "figure",
+          "Words are cheap. Prove it."
+        ],
+        [
+          "action",
+          "*The Mysterious Figure draws itself up to its full height. The air turns cold.*"
+        ],
+        [
+          "figure",
+          "All of you, against me. Hold nothing back. I won't."
+        ]
+      ]
     }
   ]
 }

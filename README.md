@@ -400,5 +400,8 @@ The raid is **Easy** (3-4 raiders), **Medium** (5-6), **Hard** (7-8) or **Very H
 | "You found one." | Your first tower rebuilt | The towers were the First Dragon's watchposts; the roar |
 | "So. You've found another realm." | Your first steps in the Nether | Serantia was never just one world |
 | "Three towers standing again." | Three towers rebuilt | The Council is watching, and so is something older |
+| "So. The Eternita Stone." | You earn the Eternita Stone | It doubts you're worthy and demands you prove it: **a battle** |
+
+**The Eternita trial.** The last visit ends in a fight: your whole party (every creature in it, not just four) and you against the Mysterious Figure alone, at Level 20 and far stronger than anything in the wild (230 HP stat, 115 Attack, 125 Magic, and the strongest of a dozen rolled sets of Void, Arcane, Darkness and Radiant moves). Win and it kneels and offers to follow you: recruit it from the battle results like any creature, and it joins at Level 10 with an ordinary villager's stats and fresh moves, named "Mysterious Figure". Lose (or flee) and you keep the stone, but the Figure leaves and can't be recruited. It's a one-time fight.
 
 The words live in `addons/ahrivaea-battle/serantis_battle/figure_scenes.json`, so they're easy to change or add to.
