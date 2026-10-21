@@ -1,5 +1,2 @@
 # Minecraft classes
-find:model/cuboid/
-net.minecraft.client.resources.model.cuboid.CuboidRotation
-net.minecraft.client.resources.model.cuboid.CuboidRotation$EulerXYZRotation
-net.minecraft.client.resources.model.cuboid.CuboidRotation$SingleAxisRotation
+net.minecraft.client.resources.model.cuboid.CuboidModelElement$Deserializer

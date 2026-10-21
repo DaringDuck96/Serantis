@@ -1,4 +1,0 @@
-Compiled from "CuboidRotation.java"
-public interface net.minecraft.client.resources.model.cuboid.CuboidRotation$RotationValue {
-  public abstract org.joml.Matrix4f transformation();
-}
