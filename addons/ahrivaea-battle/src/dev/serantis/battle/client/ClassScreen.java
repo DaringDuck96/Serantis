@@ -111,7 +111,7 @@ public class ClassScreen extends Screen {
         g.centeredText(font, "How do you want to take on Serantia? You choose once.", width / 2, 26, DIM);
         if (picked == null) { g.text(font, "Hover a class to see what it brings.", l, 72, TEXT); return; }
         g.text(font, picked.name() + ": +" + PlayerClass.START_BOOST + " " + Temperament.label(picked.stat())
-                + " at first, easing to +" + PlayerClass.MIN_BOOST + " as you learn skills.", l, 70, TEXT);
+                + ", for good.", l, 70, TEXT);
         g.text(font, picked.perk(), l, 82, TEXT);
         if ("wizard".equals(picked.id())) g.text(font, "Your staff's influence:", l, 100, GOLD);
         if ("performer".equals(picked.id())) g.text(font, "Your starter's temperament (hover for what it changes):", l, 100, GOLD);

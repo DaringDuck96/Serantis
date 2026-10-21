@@ -23,8 +23,7 @@ import java.util.List;
  *  - Wizard: Magic boost; starts with a Magic Staff of the influence they choose.
  *  - Journeyman: Luck boost; starts with 2 Golden Apples.
  *  - Performer: Charisma boost; picks the temperament (nature) of their starter.
- * The boost is +15 to that stat to begin with, 3 less for every skill learned, never below +3: a real edge
- * early on that hardly shows once a few skills are learned.
+ * The boost is a flat +5 to that stat, for good.
  */
 public final class PlayerClass {
     public record Kind(String id, String name, String stat, String perk) {}
@@ -36,7 +35,7 @@ public final class PlayerClass {
             new Kind("journeyman", "Journeyman", "luck", "Starts with 2 Golden Apples."),
             new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter."));
 
-    public static final int START_BOOST = 15, PER_SKILL = 3, MIN_BOOST = 3;
+    public static final int START_BOOST = 5, PER_SKILL = 0, MIN_BOOST = 5;
 
     /** Added to players: their class, and the temperament a Performer chose for a starter not picked yet. */
     public interface Holder {
@@ -89,7 +88,7 @@ public final class PlayerClass {
         }
         h.serantis$setPlayerClass(k.id());
         p.sendSystemMessage(Component.literal("You are a " + k.name() + "! +" + START_BOOST + " " + Temperament.label(k.stat())
-                + " to start with, easing to +" + MIN_BOOST + " as you learn skills. " + k.perk()).withStyle(ChatFormatting.GOLD));
+                + ", for good. " + k.perk()).withStyle(ChatFormatting.GOLD));
         PartySync.sync(p);
     }
 
