@@ -95,7 +95,7 @@ public abstract class BattlesMixin {
         if (biggest != null && biggest > 1) cir.setReturnValue(Math.min(19, cir.getReturnValue() + 2 * (biggest - 1)));
         int raid = dev.serantis.battle.GoblinRaids.extraArena();         // room for a raid's base defenders
         if (raid > 0) cir.setReturnValue(Math.min(19, cir.getReturnValue() + raid));
-        int coop = dev.serantis.battle.coop.CoopBattles.extraArena(dev.serantis.battle.Masters.SPAWN_PLAYER.get());   // co-op: room for allies, or a spar's rival team
+        int coop = dev.serantis.battle.coop.CoopBattles.extraArena(dev.serantis.battle.Masters.SPAWN_PLAYER.get() instanceof ServerPlayer sp ? sp : null);   // co-op: room for allies, or a spar's rival team
         if (coop > 0) cir.setReturnValue(Math.min(19, cir.getReturnValue() + coop));
     }
 
