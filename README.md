@@ -504,3 +504,9 @@ None of the four work in battle. Until it has its own model, the helm looks like
 **Your first battle.** Until you've finished a battle, the battle screen shows a tip box that follows along: pick a unit, pick a tile, choose an action (moves, Rally, potions), pick a target, end your turn, watch the enemy turn, and what to do on the result screen. After the opening scene, a chat tip points you at your first fight.
 
 **Item tooltips.** Every modpack item that doesn't already explain itself says what it's for when you hover over it: Gym Master Stones and the Eternita Stone, Type Mastery Trophies, staffs, the backpack, Winged Boots, Vessels, treats and feeds, Stellar gear, the Base Core, Mining Post and Creature Dynamo, creature drops and dyed water. (Orichalcum, the Helm of Linx, Teleporting Boots and influence armour already had their own lines; Orichalcum's now also says what it makes.) The tips live in `addons/ahrivaea-battle/serantis_battle/item_tips.json`.
+
+**Workers that can't get somewhere.** A base worker that stops getting closer to its job gets itself through:
+- **Jumps:** a step of 1 or 2 blocks with room on top, it jumps (up to twice a normal jump).
+- **Digs:** otherwise it digs through natural blocks in its way (stone, dirt, sand, gravel, logs, leaves, ores and the like). It never touches anything a player placed, a block that holds items, crops or saplings, water, or anything harder than stone (obsidian, for example). It only digs inside its base, and the blocks drop as usual.
+- **Hops:** after 15 seconds without getting there, it hops right next to the job.
+- **Moves on:** if even that fails, it sets that job aside for a minute and does its other work, instead of trying the same unreachable spot forever.

@@ -113,4 +113,73 @@ public abstract class WorkerBrainMixin {
         for (net.minecraft.core.BlockPos p : serantis$setAside) ((BaseCoreAccess) (Object) be).serantis$claimed().remove(p, SERANTIS_SET_ASIDE);
         serantis$setAside.clear();
     }
+
+    // ---- getting through: a worker that isn't getting closer jumps up to 2 blocks, or digs through natural blocks
+    @Shadow private String status;
+
+    @org.spongepowered.asm.mixin.Unique private static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> SERANTIS_NATURAL =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.parse("serantis_battle:linx_movable"));
+
+    @Inject(method = "tick", at = @At("RETURN"))
+    private void serantis$getThrough(net.minecraft.server.level.ServerLevel level, org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if (status == null || !status.startsWith("On the way") || travelTicks < 30 || travelTicks % 15 != 0) return;
+        net.minecraft.core.BlockPos target = serantis$target();
+        if (target == null || self.isNoGravity() || self.isInWater() || self.isPassenger() || self.isVehicle()) return;
+        dev.ahrivaea.base.BaseCoreBlockEntity be = dev.ahrivaea.base.Bases.coreAt(level, core);
+        if (be == null) return;
+        net.minecraft.world.phys.Vec3 at = self.position();
+        double dx = target.getX() + 0.5 - at.x, dz = target.getZ() + 0.5 - at.z;
+        if (dx * dx + dz * dz < 0.5) return;                            // right above or below it: nothing in the way sideways
+        net.minecraft.core.Direction dir = net.minecraft.core.Direction.getApproximateNearest(dx, 0, dz);
+        int height = Math.max(1, (int) Math.ceil(self.getBbHeight()));
+        int width = Math.max(1, (int) Math.ceil(self.getBbWidth()));
+        net.minecraft.core.BlockPos feet = self.blockPosition();
+        net.minecraft.core.BlockPos front = feet.relative(dir, Math.max(1, (width + 1) / 2));
+        // 1) a step of 1-2 blocks with room on top: jump it (twice a normal jump)
+        int step = 0;
+        while (step < 3 && serantis$solid(level, front.above(step))) step++;
+        if (step >= 1 && step <= 2 && self.onGround()) {
+            boolean room = true;
+            for (int y = 0; y < height + 1 && room; y++) {
+                room = !serantis$solid(level, front.above(step + y)) && !serantis$solid(level, feet.above(height + y));
+            }
+            if (room) {
+                self.setDeltaMovement(dir.getStepX() * 0.28, step == 2 ? 0.62 : 0.5, dir.getStepZ() * 0.28);
+                self.hasImpulse = true;
+                return;
+            }
+        }
+        // 2) otherwise dig through natural blocks in the way (never anything a player placed)
+        int broken = 0;
+        net.minecraft.core.Direction side = dir.getClockWise();
+        for (int y = height - 1; y >= 0 && broken < 3; y--)
+            for (int w = -(width - 1) / 2; w <= width / 2 && broken < 3; w++) {
+                net.minecraft.core.BlockPos p = front.above(y).relative(side, w);
+                if (serantis$diggable(level, be, p)) {
+                    level.destroyBlock(p, true, self);
+                    broken++;
+                }
+            }
+        if (target.getY() > feet.getY()) {                              // climbing up: clear headroom too
+            net.minecraft.core.BlockPos head = feet.above(height);
+            if (broken < 3 && serantis$diggable(level, be, head)) level.destroyBlock(head, true, self);
+        }
+    }
+
+    @org.spongepowered.asm.mixin.Unique
+    private static boolean serantis$solid(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos p) {
+        return !level.getBlockState(p).getCollisionShape(level, p).isEmpty();
+    }
+
+    /** A natural block inside the base that a worker may dig out of its way. */
+    @org.spongepowered.asm.mixin.Unique
+    private static boolean serantis$diggable(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, net.minecraft.core.BlockPos p) {
+        if (!be.contains(p) || !level.isLoaded(p)) return false;
+        var st = level.getBlockState(p);
+        if (st.isAir() || st.hasBlockEntity() || !st.getFluidState().isEmpty() || !st.is(SERANTIS_NATURAL)) return false;
+        if (st.is(net.minecraft.tags.BlockTags.SAPLINGS) || st.getBlock() instanceof net.minecraft.world.level.block.CropBlock) return false;   // the farm stays
+        float hard = st.getDestroySpeed(level, p);
+        if (hard < 0 || hard > 3f) return false;                        // no obsidian or the like
+        return !dev.ahrivaea.base.PlacedBlocks.isPlaced(level, p);      // never something a player built
+    }
 }
