@@ -1,0 +1,10 @@
+Compiled from "Gui.java"
+class net.minecraft.client.gui.Gui$1 implements net.minecraft.client.gui.Font$GlyphVisitor {
+  private int index;
+  final net.minecraft.client.renderer.state.gui.GuiTextRenderState val$text;
+  final net.minecraft.client.gui.Gui this$0;
+  net.minecraft.client.gui.Gui$1();
+  public void acceptGlyph(net.minecraft.client.gui.font.TextRenderable$Styled);
+  public void acceptEmptyArea(net.minecraft.client.gui.font.EmptyArea);
+  private void renderDebugMarkers(net.minecraft.client.gui.font.ActiveArea, boolean);
+}
