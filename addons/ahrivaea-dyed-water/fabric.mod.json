@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "serantis_dyed_water",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "name": "Serantis Dyed Water",
     "description": "Craft a water bucket with any dye to get dyed water: it flows, swims and works like water, tinted the dye's colour.",
     "authors": [
