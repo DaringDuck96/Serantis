@@ -1,7 +1,2 @@
-# 1792621665
-sig:net.minecraft.client.model.Model
-sig:net.minecraft.client.model.geom.ModelPart
-sig:net.minecraft.client.model.geom.ModelLayers
-sig:net.minecraft.client.model.player.PlayerModel
-sig:net.minecraft.client.renderer.entity.EntityRendererProvider$Context
-net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer
+# 1792621816
+compile wip/armor-models
