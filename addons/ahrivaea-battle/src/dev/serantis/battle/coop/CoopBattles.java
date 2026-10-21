@@ -209,6 +209,27 @@ public final class CoopBattles {
         }
     }
 
+    /** How many of the owner's group are close enough to be asked to join a battle starting now. */
+    public static int possibleAllies(ServerPlayer owner) {
+        if (owner == null || SPAR_STARTING.get() != null || dev.serantis.battle.FigureVisit.FIGHTING.get()) return 0;
+        Groups.Group g = Groups.of(owner);
+        if (g == null) return 0;
+        int n = 0;
+        for (UUID m : g.members()) {
+            if (m.equals(owner.getUUID())) continue;
+            ServerPlayer p = owner.level().getServer().getPlayerList().getPlayer(m);
+            if (p != null && p.level() == owner.level() && p.distanceTo(owner) <= JOIN_RANGE && Battles.of(p) == null) n++;
+        }
+        return Math.min(MAX_ALLIES, n);
+    }
+
+    /** Extra arena size for a co-op battle: room for the allies who might join (and their creatures), or a spar's rival team. */
+    public static int extraArena(ServerPlayer owner) {
+        if (SPAR_STARTING.get() != null) return 3;
+        int allies = possibleAllies(owner);
+        return allies == 0 ? 0 : allies == 1 ? 2 : 3;
+    }
+
     /** Why this player can't join the owner's battle right now (null: they can). */
     public static String joinable(ServerPlayer p, ServerPlayer owner) {
         if (owner == null) return "They're not online.";
