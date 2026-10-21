@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * Creature Masters, the "gym leaders".
  *
- * A Creature Master turns up in 2% of wild creature spawns (each wild creature spawn has a 2%
+ * A Creature Master turns up in 1% of wild creature spawns (each wild creature spawn has a 1%
  * chance to be one instead), with an influence that fits the biome. It's Level 12-20 and leads 3-5
  * creatures of its influence, each 3-5 levels away from its own. Its team is 25% stronger than wild
  * creatures (it's 40% stronger) and always fights with the best of several move sets. You don't have to
@@ -45,7 +45,7 @@ import java.util.Map;
  */
 public final class Masters {
     public static final String ROLE = "creature_master";
-    public static final double CHANCE = 0.02;
+    public static final double CHANCE = 0.01;
     public static final int MAX_STONES = 5;
     public static final double STAT_BOOST_TEAM = 1.25, STAT_BOOST_MASTER = 1.4;
     public static final double MASTERY_PER_STONE = 0.03;

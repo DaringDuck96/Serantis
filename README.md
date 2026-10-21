@@ -228,7 +228,7 @@ How often each profession turns up in a village: Farmer and Mason are the most c
 
 ### Creature Masters
 
-Creature Masters are the gym leaders. They turn up fairly often: any wild creature that spawns has a 2% chance to be a Creature Master instead (nearby players get a chat message). Each one has an influence that fits the biome it appears in, shown in its name ("Fire Creature Master"), is Level 12 to 20, and stays for a day. It can't be hurt outside battle, and you don't have to fight it.
+Creature Masters are the gym leaders. They turn up fairly often: any wild creature that spawns has a 1% chance to be a Creature Master instead (nearby players get a chat message). Each one has an influence that fits the biome it appears in, shown in its name ("Fire Creature Master"), is Level 12 to 20, and stays for a day. It can't be hurt outside battle, and you don't have to fight it.
 
 Hit it with a weapon to challenge it. It fights alongside 3 to 5 creatures of its influence, each 3 to 5 levels above or below its own and more often Rare or rarer than wild creatures. Its team is 25% stronger than wild creatures (the Master 40%), and each of them fights with the strongest of several move sets. None of them can be recruited. Beat the Master and it leaves; the battle pays **double XP** and gives you a **Gym Master Stone** of its influence. Lose or run, and it stays until its day is up.
 
