@@ -43,7 +43,14 @@ public final class EndDragons {
         }
     }
 
-    public static void tick() {
+    private static net.minecraft.server.MinecraftServer server;
+
+    public static void tick(net.minecraft.server.MinecraftServer now) {
+        if (now != server) {                                    // another world in the same run: forget the last one's queue
+            server = now;
+            synchronized (PENDING) { PENDING.clear(); }
+            RISING.clear();
+        }
         if (!RISING.isEmpty()) rise();
         List<Pending> todo;
         synchronized (PENDING) {
@@ -88,6 +95,7 @@ public final class EndDragons {
                 d.setNoAi(false);
                 sound(level, r.x(), r.toY(), r.z(), "entity.ender_dragon.growl", 6f, 0.8f);
                 level.sendParticles(net.minecraft.core.particles.ParticleTypes.EXPLOSION_EMITTER, r.x(), r.toY(), r.z(), 1, 0, 0, 0, 0);
+                d.removeTag("serantis_rising");
                 d.addTag("serantis_riddle_ask");                                 // now it asks its riddle
                 it.remove();
             }
@@ -112,6 +120,7 @@ public final class EndDragons {
             e.setNoAi(true);
             e.setNoGravity(true);
             e.noPhysics = true;
+            e.addTag("serantis_rising");                        // if the world saves mid-rise, the battle add-on frees it after reloading
             RISING.add(new Rising(e, x + 0.5, z + 0.5, y + 1 - DEPTH, y + 1, new int[]{0}));
         }
 

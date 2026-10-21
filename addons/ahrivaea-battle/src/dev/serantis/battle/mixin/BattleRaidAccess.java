@@ -28,4 +28,10 @@ public interface BattleRaidAccess {
 
     @Invoker("startEnemyPhase")
     void serantis$startEnemyPhase();
+
+    @org.spongepowered.asm.mixin.gen.Accessor("lead")
+    Unit serantis$lead();
+
+    @org.spongepowered.asm.mixin.gen.Accessor("outCreatures")
+    java.util.List<dev.ahrivaea.party.CaughtCreature> serantis$outCreatures();
 }

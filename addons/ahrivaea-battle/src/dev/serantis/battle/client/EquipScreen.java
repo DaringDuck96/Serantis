@@ -15,7 +15,9 @@ import java.util.function.BiConsumer;
 /** Picking gear in battle (it takes your attack this turn). Calls back with (inventory slot or -1, hand 0/1). */
 public class EquipScreen extends Screen {
     private static final int W = 300, GOLD = 0xFFF2C94C, DIM = 0xFF9AA4B4;
-    private final Screen parent;
+    private Screen parent;
+
+    public void setParent(Screen parent) { this.parent = parent; }
     private final BiConsumer<Integer, Integer> pick;
 
     public EquipScreen(Screen parent, BiConsumer<Integer, Integer> pick) {

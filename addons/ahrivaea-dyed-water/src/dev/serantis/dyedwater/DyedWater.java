@@ -60,6 +60,8 @@ public final class DyedWater implements ModInitializer {
             ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, id(name + "_bucket"));
             k.bucket = Registry.register(BuiltInRegistries.ITEM, itemKey,
                     new BucketItem(k.source, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).setId(itemKey)));
+            var pour = net.minecraft.world.level.block.DispenserBlock.DISPENSER_REGISTRY.get(Items.WATER_BUCKET);
+            if (pour != null) net.minecraft.world.level.block.DispenserBlock.registerBehavior(k.bucket, pour);   // dispensers pour it like water
             KINDS.add(k);
         }
     }

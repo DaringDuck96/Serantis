@@ -59,7 +59,7 @@ public final class Wanderer {
     static CaughtCreature randomCreature(RandomSource random, int level) {
         Map<String, List<Object[]>> byRarity = new HashMap<>();
         for (Species sp : Species.all()) {
-            if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id())) continue;
+            if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id()) || Retired.unbuyable(sp.id())) continue;   // no End dragons or bosses for sale
             for (Influence inf : sp.forms().keySet())
                 if (!Retired.is(sp, inf)) byRarity.computeIfAbsent(RecruitRules.rarity(sp, inf), k -> new ArrayList<>()).add(new Object[]{sp, inf});
         }

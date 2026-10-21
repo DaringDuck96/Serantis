@@ -135,6 +135,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$tutor != null) out.putString("SerantisTutor", serantis$tutor);
         if (serantis$home != null) out.putString("SerantisHome", serantis$home);
         out.putInt("SerantisMoveMode", serantis$moveMode);
+        if (dev.serantis.battle.BattleHold.isHeld((CreatureEntity) (Object) this)) out.putBoolean("SerantisHeld", true);
         if (serantis$leaveAt > 0) {
             out.putLong("SerantisLeaveAt", serantis$leaveAt);
             out.putInt("SerantisSwaps", serantis$swaps);
@@ -160,6 +161,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         serantis$moveMode = (byte) in.getIntOr("SerantisMoveMode", dev.serantis.battle.Locomotion.UNSET);
         serantis$swaps = in.getIntOr("SerantisSwaps", 0);
         if (serantis$leaveAt > 0) serantis$stock = in.read("SerantisStock", CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
+        if (in.getBooleanOr("SerantisHeld", false)) dev.serantis.battle.BattleHold.loadedHeld((CreatureEntity) (Object) this);   // saved mid-battle
     }
 
     // ...and carried over when it's caught or sent out from the party.

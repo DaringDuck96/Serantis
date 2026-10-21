@@ -3,6 +3,6 @@
   "minVersion": "0.8",
   "package": "dev.serantis.enddragons.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["VanillaMobsMixin"],
+  "mixins": ["VanillaMobsMixin", "EnderDragonFightAccess"],
   "injectors": {"defaultRequire": 1}
 }

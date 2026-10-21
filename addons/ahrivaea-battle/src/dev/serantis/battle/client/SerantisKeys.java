@@ -7,13 +7,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 
-/** Serantis keys, all rebindable under Controls > Serantis: the backpack (B) and the Helm of Linx (Z, X, C, V). */
+/** Serantis keys, all rebindable under Controls > Serantis: the backpack (B) and the Helm of Linx (Z, R, G, V). */
 public final class SerantisKeys {
     public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Identifier.parse("serantis_battle:serantis"));
     public static final KeyMapping BACKPACK = new KeyMapping("key.serantis_battle.backpack", InputConstants.KEY_B, CATEGORY);
     public static final KeyMapping PHASE = new KeyMapping("key.serantis_battle.phase_jump", InputConstants.KEY_Z, CATEGORY);
-    public static final KeyMapping LIFT = new KeyMapping("key.serantis_battle.shape_lift", InputConstants.KEY_X, CATEGORY);
-    public static final KeyMapping WAYMARK = new KeyMapping("key.serantis_battle.waymark", InputConstants.KEY_C, CATEGORY);
+    public static final KeyMapping LIFT = new KeyMapping("key.serantis_battle.shape_lift", InputConstants.KEY_R, CATEGORY);   // X and C are vanilla's toolbar keys
+    public static final KeyMapping WAYMARK = new KeyMapping("key.serantis_battle.waymark", InputConstants.KEY_G, CATEGORY);
     public static final KeyMapping HIGH_JUMP = new KeyMapping("key.serantis_battle.high_jump", InputConstants.KEY_V, CATEGORY);
     public static final KeyMapping[] ALL = {BACKPACK, PHASE, LIFT, WAYMARK, HIGH_JUMP};
 

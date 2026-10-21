@@ -101,7 +101,7 @@ public final class GoblinRaids {
         UUID owner = core.owner();
         if (owner == null || BY_OWNER.containsKey(owner)) return 0;
         ServerPlayer p = level.getServer().getPlayerList().getPlayer(owner);
-        if (p == null) return 0;
+        if (p == null || inRaidBattle(p)) return 0;                    // already fighting one
         RandomSource random = level.getRandom();
         Raid r = new Raid();
         r.owner = owner;

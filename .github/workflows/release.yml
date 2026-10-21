@@ -75,6 +75,16 @@ jobs:
             unzip -l "$jar" | tail -1
           done
 
+      # Every Ahrivaea mod needs Fabric API: ship the matching one so the zip is all a player needs (Apache-2.0).
+      - name: Add Fabric API
+        run: |
+          set -e
+          meta="$(curl -sSf https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml)"
+          fv="$(echo "$meta" | grep -oE '<version>[^<]*\+26\.3[^<]*</version>' | sed -E 's#</?version>##g' | tail -1)"
+          echo "Fabric API $fv"
+          rm -f mods/fabric-api-*.jar
+          curl -sSfL "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/$fv/fabric-api-$fv.jar" -o "mods/fabric-api-$fv.jar"
+
       - name: Build zip
         run: |
           VERSION="$(tr -d '[:space:]' < VERSION)"

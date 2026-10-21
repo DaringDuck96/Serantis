@@ -49,6 +49,8 @@ public final class EnemyBrain {
 
     /** One enemy's turn: move (maybe) and act, following its mentality. */
     public static void act(Battle b, Unit u) {
+        MoveEngine.state(u).startX = u.x;                               // where it started, for "moved 2+ tiles" bonuses
+        MoveEngine.state(u).startZ = u.z;
         BattleAccess acc = (BattleAccess) (Object) b;
         String mind = active(b, u);
         int size = b.grid.size;

@@ -32,6 +32,6 @@ public abstract class BlockItemPlantedMixin {
         Block b = getBlock();
         if (b instanceof CropBlock || b instanceof StemBlock || b instanceof NetherWartBlock || b instanceof CocoaBlock
                 || b instanceof PitcherCropBlock || b instanceof SweetBerryBushBlock)
-            ((Achievements.Holder) player).serantis$addPlanted(1);
+            if (dev.serantis.battle.BaseCredit.freshPlanting(player, context.getClickedPos())) ((Achievements.Holder) player).serantis$addPlanted(1);
     }
 }

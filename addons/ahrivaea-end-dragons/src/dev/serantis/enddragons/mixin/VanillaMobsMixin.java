@@ -18,6 +18,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(targets = "dev.ahrivaea.creature.VanillaMobs")
 public abstract class VanillaMobsMixin {
 
+    // The creatures mod marks the fight won the moment the dragon is added to the world, but vanilla only
+    // records which dragon belongs to the fight on the next line, so the "won" call was ignored and the fight
+    // kept spawning dragons. Tell the fight which dragon this is first.
+    @Inject(method = "lambda$init$1", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/level/dimension/end/EnderDragonFight;setDragonKilled(Lnet/minecraft/world/entity/boss/enderdragon/EnderDragon;)V"))
+    private static void serantis$ownDragon(Entity entity, ServerLevel level, CallbackInfo ci) {
+        var fight = level.getDragonFight();
+        if (fight != null) ((EnderDragonFightAccess) fight).serantis$setDragonUUID(entity.getUUID());
+    }
+
     // Runs at the mod's "The Ender Dragon appeared and was defeated straight away" log line.
     @Inject(method = "lambda$init$1", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;)V"))
     private static void serantis$dragonAppeared(Entity entity, ServerLevel level, CallbackInfo ci) {
@@ -29,6 +39,6 @@ public abstract class VanillaMobsMixin {
     // The mod's end-of-server-tick handler, where it also spawns its replacement creatures.
     @Inject(method = "lambda$init$2", at = @At("HEAD"))
     private static void serantis$tick(MinecraftServer server, CallbackInfo ci) {
-        EndDragons.tick();
+        EndDragons.tick(server);
     }
 }

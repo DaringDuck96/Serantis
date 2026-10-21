@@ -238,8 +238,22 @@ public abstract class BattleScreenMixin {
         if (index < 0 || index >= list.size()) return;
         JsonObject e = list.get(index).getAsJsonObject();
         if (e.has("why") && !e.get("why").isJsonNull() && !e.get("why").getAsString().isEmpty()) return;   // can't recruit this one
-        dev.serantis.battle.client.RenameScreen.open((net.minecraft.client.gui.screens.Screen) (Object) this,
-                e.has("name") ? e.get("name").getAsString() : "creature");
+        // wait for the server: only a recruit that went through (it leaves the list) gets the naming prompt
+        serantis$naming = new Object[]{e.has("name") ? e.get("name").getAsString() : "creature", list.size(), System.currentTimeMillis()};
+    }
+
+    private static Object[] serantis$naming;                            // {name, recruit count when asked, millis}
+
+    private void serantis$maybeName() {
+        Object[] n = serantis$naming;
+        if (n == null) return;
+        if (System.currentTimeMillis() - (long) n[2] > 4000) { serantis$naming = null; return; }   // refused (not enough XP...)
+        JsonObject st = state();
+        if (st == null || !st.has("result") || !st.get("result").isJsonObject()) return;
+        var list = st.getAsJsonObject("result").getAsJsonArray("recruits");
+        if (list == null || list.size() >= (int) n[1]) return;
+        serantis$naming = null;
+        dev.serantis.battle.client.RenameScreen.open((net.minecraft.client.gui.screens.Screen) (Object) this, (String) n[0]);
     }
 
     // Moves that only affect the user happen as soon as they're chosen.
@@ -348,6 +362,7 @@ public abstract class BattleScreenMixin {
     // ---- battle feel: words over units (CRITICAL!, MISS, Super effective!, KO!), on top of everything
     @Inject(method = "extractRenderState", at = @At("TAIL"))
     private void serantis$labels(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial, CallbackInfo ci) {
+        serantis$maybeName();
         BattleGrid grid = BattleClient.grid();
         if (grid == null) return;
         var font = net.minecraft.client.Minecraft.getInstance().font;
@@ -384,6 +399,10 @@ public abstract class BattleScreenMixin {
             g.centeredText(font, text, 0, 0, (alpha << 24) | color);
             g.pose().popMatrix();
         }
-        dev.serantis.battle.client.BattleTutorial.draw((BattleScreen) (Object) this, g, font);
+    }
+
+    @Inject(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V"))
+    private void serantis$tutorial(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial, CallbackInfo ci) {
+        dev.serantis.battle.client.BattleTutorial.draw((BattleScreen) (Object) this, g, net.minecraft.client.Minecraft.getInstance().font);   // under the buttons
     }
 }

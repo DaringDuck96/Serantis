@@ -173,7 +173,7 @@ public final class Market {
     static List<CaughtCreature> stock(RandomSource random) {
         Map<String, List<Object[]>> byRarity = new java.util.HashMap<>();
         for (Species sp : Species.all()) {
-            if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id())) continue;
+            if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id()) || Retired.unbuyable(sp.id())) continue;   // no End dragons or bosses for sale
             for (Influence inf : sp.forms().keySet())
                 if (!Retired.is(sp, inf)) byRarity.computeIfAbsent(RecruitRules.rarity(sp, inf), k -> new ArrayList<>()).add(new Object[]{sp, inf});
         }
@@ -225,10 +225,10 @@ public final class Market {
         if (have < cost) { tell(p, "That costs " + cost + " XP; you have " + have + "."); return; }
         CaughtCreature c = stock.remove(index);
         XpBank.take(p, cost);
-        boolean added = Party.addAnywhere(p, c);
-        if (added) TypeMastery.gained(p, c.influence());
-        if (!added) { XpBank.give(p, cost); tell(p, "You have no room for another creature."); return; }
+        boolean inParty = Party.addAnywhere(p, c);                     // a full party sends it to the box: still bought
+        TypeMastery.gained(p, c.influence());
         ((Holder) m).serantis$setStock(stock);
+        if (!inParty) tell(p, "Your party is full, so it went to your box (/party box).");
         String name = Species.get(c.species()).map(sp -> sp.nameFor(c.influence())).orElse(c.species());
         p.sendSystemMessage(Component.literal("You bought a Level " + c.level() + " " + name + " from the Black Market for "
                 + cost + " XP. No questions asked.").withStyle(ChatFormatting.DARK_PURPLE));

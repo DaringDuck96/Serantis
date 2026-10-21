@@ -56,7 +56,7 @@ public final class TeleportBoots {
     /** Every tick, per player. */
     public static void tick(ServerPlayer p) {
         ItemStack boots = p.getItemBySlot(EquipmentSlot.FEET);
-        if (!boots.is(BOOTS) || p.isSpectator()) { TAPS.remove(p.getUUID()); return; }
+        if (!boots.is(BOOTS) || p.isSpectator() || p.getAbilities().flying) { TAPS.remove(p.getUUID()); return; }   // creative flight: sneak is "down"
         long[] t = TAPS.computeIfAbsent(p.getUUID(), k -> new long[]{0, -100});
         boolean sneaking = p.isShiftKeyDown();
         boolean pressed = sneaking && t[0] == 0;
@@ -118,7 +118,7 @@ public final class TeleportBoots {
     }
 
     private static boolean danger(BlockState s) {
-        return s.is(Blocks.LAVA) || s.is(Blocks.MAGMA_BLOCK) || s.is(Blocks.CACTUS) || s.is(Blocks.SWEET_BERRY_BUSH) || s.is(Blocks.POWDER_SNOW)
+        return s.is(Blocks.LAVA) || s.is(Blocks.MAGMA_BLOCK) || s.is(Blocks.NETHER_PORTAL) || s.is(Blocks.END_PORTAL) || s.is(Blocks.END_GATEWAY) || s.is(Blocks.CACTUS) || s.is(Blocks.SWEET_BERRY_BUSH) || s.is(Blocks.POWDER_SNOW)
                 || s.is(BlockTags.FIRE) || s.is(Blocks.CAMPFIRE) || s.is(Blocks.SOUL_CAMPFIRE) || s.is(Blocks.WITHER_ROSE) || s.is(Blocks.POINTED_DRIPSTONE);
     }
 }

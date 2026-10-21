@@ -79,7 +79,7 @@ public final class Masters {
     static Item trophy(String name, int stack, Rarity rarity) {
         ResourceKey<net.minecraft.world.level.block.Block> blockKey = ResourceKey.create(Registries.BLOCK, id(name));
         var block = Registry.register(BuiltInRegistries.BLOCK, blockKey, new TrophyBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
-                .setId(blockKey).strength(1.5f, 6f).sound(net.minecraft.world.level.block.SoundType.AMETHYST)
+                .setId(blockKey).strength(1.5f, 1200f).sound(net.minecraft.world.level.block.SoundType.AMETHYST)
                 .lightLevel(state -> 5).noOcclusion()));
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id(name));
         return Registry.register(BuiltInRegistries.ITEM, key, new net.minecraft.world.item.BlockItem(block,

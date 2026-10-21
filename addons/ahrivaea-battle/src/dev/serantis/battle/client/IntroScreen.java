@@ -48,6 +48,8 @@ public class IntroScreen extends Screen {
     private static JsonObject starterOffer;
     private static boolean started, finished;
 
+    public static void resetForNewWorld() { step = -1; answer = null; started = false; finished = false; }
+
     private Entity figure;
     private long shownAt, eventAt;
 

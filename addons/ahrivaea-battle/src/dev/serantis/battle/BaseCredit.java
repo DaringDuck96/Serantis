@@ -65,4 +65,17 @@ public final class BaseCredit {
         double d = Math.sqrt((now.x - was.x) * (now.x - was.x) + (now.z - was.z) * (now.z - was.z) + (now.y - was.y) * (now.y - was.y));
         if (d > 0.01 && d < 10) ((Achievements.Holder) p).serantis$addRodeCm(Math.round(d * 100));
     }
+
+    /** Spots each player planted recently (packed pos -> game time): replanting the same spot within a day doesn't count again. */
+    private static final Map<UUID, Map<Long, Long>> PLANTED = new ConcurrentHashMap<>();
+
+    public static boolean freshPlanting(net.minecraft.server.level.ServerPlayer p, net.minecraft.core.BlockPos pos) {
+        long now = p.level().getGameTime();
+        Map<Long, Long> mine = PLANTED.computeIfAbsent(p.getUUID(), k -> new java.util.HashMap<>());
+        if (mine.size() > 4096) mine.values().removeIf(t -> now - t > 24000);
+        Long before = mine.put(pos.asLong(), now);
+        return before == null || now - before > 24000 || now < before;
+    }
+
+    public static void forgetAll() { PLANTED.clear(); LAST_RIDE.clear(); }
 }

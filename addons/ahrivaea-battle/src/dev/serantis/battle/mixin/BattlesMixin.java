@@ -28,6 +28,29 @@ public abstract class BattlesMixin {
     // Arenas grow for big creatures: +2 tiles per footprint step of the biggest one in the fight.
     @Unique private static final ThreadLocal<Integer> SERANTIS_BIGGEST = new ThreadLocal<>();
 
+    // ---- villagers wait hidden instead of being replaced by a jobless copy (see BattleHold)
+    @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/creature/CreatureEntity;discard()V", ordinal = 1))
+    private static void serantis$holdVillager(CreatureEntity e, ServerPlayer player, CreatureEntity wild) {
+        if (e == wild) dev.serantis.battle.BattleHold.source(e);       // the arena copy takes over its moves, temperament and job
+        if (e == wild && dev.serantis.battle.BattleHold.wantsHold(e)) dev.serantis.battle.BattleHold.hold(e);
+        else e.discard();
+    }
+
+    @Inject(method = "start", at = @At("RETURN"))
+    private static void serantis$heldStarted(ServerPlayer player, CreatureEntity wild, CallbackInfoReturnable<Battle> cir) {
+        dev.serantis.battle.BattleHold.started(cir.getReturnValue());
+    }
+
+    @Inject(method = "cleanUp", at = @At("TAIL"))
+    private static void serantis$heldEnded(Battle b, CallbackInfo ci) { dev.serantis.battle.BattleHold.ended(b); }
+
+    @Redirect(method = "goHome", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/Ahrivaea;spawn(Lnet/minecraft/server/level/ServerLevel;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;IFDDD)Ldev/ahrivaea/creature/CreatureEntity;", ordinal = 0))
+    private static CreatureEntity serantis$noLookAlike(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.creature.Species sp, dev.ahrivaea.creature.Influence inf,
+                                                      int lvl, float hp, double x, double y, double z, ServerPlayer p, Battle b) {
+        if (dev.serantis.battle.BattleHold.keptFor(b)) return null;      // the real one is still there
+        return dev.ahrivaea.Ahrivaea.spawn(level, sp, inf, lvl, hp, x, y, z);
+    }
+
     // ---- co-op (see CoopBattles)
     // Allies and sparring rivals aren't in the creatures mod's list of battles: their actions are routed here.
     @Inject(method = "handle", at = @At("HEAD"), cancellable = true)
@@ -132,11 +155,11 @@ public abstract class BattlesMixin {
         }
         caught = dev.serantis.battle.FigureVisit.recruited(battle, caught);   // the Mysterious Figure joins at Level 10
         caught = dev.serantis.battle.Villages.onRecruit(sp, caught);     // a villager starts its first deed now
-        boolean added = Party.addAnywhere(player, caught);
+        boolean added = Party.addAnywhere(player, caught);             // false: the party was full and it went to the box
         if (added) dev.serantis.battle.Naming.offer(sp, caught);
-        if (added) dev.serantis.battle.Achievements.recruited(sp, caught.influence());
-        if (added) dev.serantis.battle.TypeMastery.gained(sp, caught.influence());
-        if (added) dev.serantis.battle.Bounties.recruited(sp, caught);
+        dev.serantis.battle.Achievements.recruited(sp, caught.influence());   // recruited either way
+        dev.serantis.battle.TypeMastery.gained(sp, caught.influence());
+        dev.serantis.battle.Bounties.recruited(sp, caught);
         return added;
     }
 
@@ -221,6 +244,7 @@ public abstract class BattlesMixin {
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
         if (dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null) return;   // a spar's stand-in creature
+        if (dev.serantis.battle.BattleHold.isHeld(entity)) { serantis$refuse(cir); return; }   // waiting out another player's battle
         if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { serantis$refuse(cir); return; }   // the Mysterious Figure doesn't fight
         if (dev.serantis.battle.VillagerTalk.ask(player, entity)) { serantis$refuse(cir); return; }   // a villager talks before it fights
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first

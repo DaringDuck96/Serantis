@@ -67,6 +67,7 @@ public abstract class ServerPlayerSkillsMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void serantis$achievements(CallbackInfo ci) {
         ServerPlayer self = (ServerPlayer) (Object) this;
+        dev.serantis.battle.WorldScope.check(self.level().getServer());   // a different world in the same run: forget the last one's state
         if (self.tickCount % 20 == 5)       // note the biome the player is standing in
             ((dev.serantis.battle.Achievements.Holder) self).serantis$biomes().add(self.level().getBiome(self.blockPosition()).getRegisteredName());
         if (self.tickCount % 100 == 37) dev.serantis.battle.Achievements.check(self);

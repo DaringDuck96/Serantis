@@ -207,7 +207,7 @@ public final class FigureVisit {
                 e.snapTo(e.getX() + to.x / flat * step, ny, e.getZ() + to.z / flat * step);
             }
         }
-        if (v.ticks > 20 * 120) done(p);                  // never left hanging (and the dark lifts)
+        if (v.ticks > 20 * 120) abandon(p);               // never left hanging (and the dark lifts); the scene comes back later
     }
 
     private static void start(ServerPlayer p, String scene) {
@@ -442,6 +442,17 @@ public final class FigureVisit {
             h.serantis$setFigureMet(h.serantis$figureMet() | NAMED);
         }
         done(p);
+    }
+
+    /** The visit timed out (the player was away): he leaves, and the scene isn't marked seen, so it plays again later. */
+    private static void abandon(ServerPlayer p) {
+        Visit v = ACTIVE.get(p.getUUID());
+        if (v == null) return;
+        int bit = scenes().getOrDefault(v.scene, 0);
+        Welcome.Holder h = (Welcome.Holder) p;
+        int before = h.serantis$figureMet();
+        done(p);
+        h.serantis$setFigureMet((h.serantis$figureMet() & ~bit) | (before & bit));
     }
 
     public static void done(ServerPlayer p) {

@@ -118,6 +118,15 @@ public final class Harbinger {
     public static void check(ServerPlayer p) {
         int[] w = WATCHING.get(p.getUUID());
         if (w != null && ++w[2] > 30) watched(p);
+        if (p.tickCount % 200 < 20 && p.level() instanceof ServerLevel level)     // one saved mid-rise comes back frozen underground: free it
+            for (CreatureEntity c : level.getEntitiesOfClass(CreatureEntity.class, p.getBoundingBox().inflate(48), Harbinger::is)) {
+                if (!c.isNoGravity() || RISING.stream().anyMatch(r -> r.e() == c) || dev.ahrivaea.battle.Battles.inBattle(c)) continue;
+                var top = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, c.blockPosition());
+                c.noPhysics = false;
+                c.setNoGravity(false);
+                c.setNoAi(false);
+                c.snapTo(c.getX(), Math.max(c.getY(), top.getY()), c.getZ());
+            }
     }
 
     /** A battle against a Harbinger began: it taunts you. */

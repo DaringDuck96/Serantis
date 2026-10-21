@@ -69,6 +69,12 @@ public final class MoveBook {
         return byId.get(id);
     }
 
+    /** Is this the name of a catalog move? (A weapon renamed to one gets a suffix, see Equipment.) */
+    public static boolean isMoveName(String name) {
+        load();
+        return byName.containsKey(name);
+    }
+
     /** The catalog move behind a BattleMove, or null for the creatures mod's own moves (weapons, etc.). */
     public static MoveSpec of(BattleMove m) {
         if (m == null) return null;

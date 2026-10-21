@@ -39,14 +39,19 @@ public final class Tunneler {
         BlockState st = p.level().getBlockState(pos);
         float hard = st.getDestroySpeed(p.level(), pos);
         if (st.isAir() || hard < 0) return null;
-        return new float[]{lvl, hard};
+        int face = -1;                                                  // the face you hit decides which way the pane goes
+        var hit = p.pick(p.blockInteractionRange() + 1, 1f, false);
+        if (hit instanceof net.minecraft.world.phys.BlockHitResult bh && bh.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK && bh.getBlockPos().equals(pos))
+            face = bh.getDirection().getOpposite().ordinal();
+        return new float[]{lvl, hard, face};
     }
 
     /** After the block broke: mine the rest of the pane. */
     public static void after(ServerPlayer p, BlockPos pos, float[] info) {
         int lvl = (int) info[0];
         float maxHard = Math.max(1.5f, info[1] * 3f);
-        Direction facing = Direction.getApproximateNearest(p.getLookAngle());   // the way you're looking: the pane goes deeper that way
+        Direction facing = info.length > 2 && info[2] >= 0 ? Direction.values()[(int) info[2]]   // into the face you hit
+                : Direction.getApproximateNearest(p.getLookAngle());
         Direction.Axis axis = facing.getAxis();
         BUSY.set(true);
         try {
@@ -61,7 +66,7 @@ public final class Tunneler {
                     ItemStack tool = p.getMainHandItem();
                     if (tool.isEmpty() || level(p, tool) <= 0) return;       // the pickaxe broke
                     BlockState st = p.level().getBlockState(t);
-                    if (st.isAir()) continue;
+                    if (st.isAir() || st.hasBlockEntity() || !p.level().mayInteract(p, t)) continue;   // never chests, furnaces or Base Cores; never spawn protection
                     float h = st.getDestroySpeed(p.level(), t);
                     if (h < 0 || h > maxHard) continue;
                     if (st.requiresCorrectToolForDrops() && !tool.isCorrectToolForDrops(st)) continue;

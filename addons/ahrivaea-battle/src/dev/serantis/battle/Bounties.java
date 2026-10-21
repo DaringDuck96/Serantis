@@ -215,6 +215,7 @@ public final class Bounties {
             if (book != null) {
                 var content = book.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);
                 if (content != null) ((Welcome.Holder) p).serantis$loreTitles().add(content.title().raw());
+                ((Achievements.Holder) p).serantis$addLoreBooks(1);
                 give(p, book);
                 extra += ", and a lore book";
             }

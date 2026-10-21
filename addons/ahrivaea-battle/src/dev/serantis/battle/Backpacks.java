@@ -83,9 +83,27 @@ public final class Backpacks {
         NonNullList<ItemStack> items = NonNullList.withSize(SLOTS, ItemStack.EMPTY);
         pack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(items);
         SimpleContainer box = new SimpleContainer(SLOTS) {
+            private boolean ejecting;
+
             @Override
             public void setChanged() {                     // every change goes straight back into the backpack
                 super.setChanged();
+                if (!ejecting) {                           // no backpacks or shulker boxes inside a backpack
+                    ejecting = true;
+                    try {
+                        for (int i = 0; i < getContainerSize(); i++) {
+                            ItemStack s = getItem(i);
+                            boolean nested = s.is(BACKPACK) || s.getItem() instanceof net.minecraft.world.item.BlockItem bi
+                                    && bi.getBlock() instanceof net.minecraft.world.level.block.ShulkerBoxBlock;
+                            if (!nested) continue;
+                            setItem(i, ItemStack.EMPTY);
+                            if (!p.getInventory().add(s) && !s.isEmpty()) p.drop(s, false);
+                            tell(p, "Backpacks and shulker boxes can't go inside a backpack.");
+                        }
+                    } finally {
+                        ejecting = false;
+                    }
+                }
                 List<ItemStack> now = new ArrayList<>();
                 for (int i = 0; i < getContainerSize(); i++) now.add(getItem(i).copy());
                 ItemStack worn = h.serantis$backpack();

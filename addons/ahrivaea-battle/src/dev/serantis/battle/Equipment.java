@@ -47,6 +47,7 @@ public final class Equipment {
         List<BattleMove> out = new ArrayList<>();
         var infused = WeaponEnchants.infusion(p, hand);                 // an infused weapon says so
         String name = hand.isEmpty() ? "Punch" : hand.getHoverName().getString() + (infused == null ? "" : " (" + infused.displayName() + ")");
+        if (dev.serantis.battle.moves.MoveBook.isMoveName(name)) name += " (weapon)";   // a sword renamed "Pummel" is still just a sword
         out.add(BattleMove.forWeapon(name, damage, ranged));
         out.addAll(Staffs.spellsInHand(p));
         return out;

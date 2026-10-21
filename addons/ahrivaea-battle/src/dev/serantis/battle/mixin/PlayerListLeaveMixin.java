@@ -13,5 +13,6 @@ public abstract class PlayerListLeaveMixin {
     @Inject(method = "remove", at = @At("HEAD"))
     private void serantis$leaving(ServerPlayer player, CallbackInfo ci) {
         dev.serantis.battle.coop.CoopBattles.disconnected(player);
+        dev.serantis.battle.WingedBoots.forget(player);
     }
 }

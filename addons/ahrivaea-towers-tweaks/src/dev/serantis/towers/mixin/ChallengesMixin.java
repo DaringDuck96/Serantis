@@ -56,8 +56,8 @@ public abstract class ChallengesMixin {
     private static String serantis$wording(String text) {
         if (text == null) return null;
         return text
-                .replace("Protected until rebuilt; the top donor then claims it.", "Unclaimed: the first player to make an offering claims it.")
-                .replace("Its top donor claims it.", "The first player to make an offering claims it.")
+                .replace("Protected until rebuilt; the top donor then claims it.", "Protected until rebuilt; then it's the claimer's (the first player to make an offering).")
+                .replace("Its top donor claims it.", "Then it goes to whoever made the first offering.")
                 .replace(" as its top donor. Only", ". Only")
                 .replace("(only they and their guild can build around it)", "(once it's rebuilt, only they and their guild can build around it)");
     }

@@ -56,6 +56,8 @@ public class WelcomeScreen extends Screen {
 
     private static boolean shown;
 
+    public static void resetForNewWorld() { shown = false; }
+
     private Screen parent;
 
     public void setParent(Screen parent) { this.parent = parent; }

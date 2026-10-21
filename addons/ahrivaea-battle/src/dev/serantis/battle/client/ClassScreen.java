@@ -19,6 +19,8 @@ public class ClassScreen extends Screen {
     private static final int GOLD = 0xFFF2C94C, TEXT = 0xFFE6E2D8, DIM = 0xFF9AA4B4;
     private static boolean shown;
 
+    public static void resetForNewWorld() { shown = false; }
+
     private final Screen parent;
     private PlayerClass.Kind picked;
     private String extra;

@@ -60,6 +60,15 @@ public final class MoveEngine {
 
     /** A new unit gets the creature's saved moves (party creatures) or three random ones. */
     public static void assignNewUnit(Battle b, Unit u) {
+        assignNewUnitOuter(b, u);
+        if (u.side == Unit.Side.PLAYER && !u.isPlayer && u.partySlot <= -2) {          // a creature that was out with the player
+            var out = ((dev.serantis.battle.mixin.BattleRaidAccess) (Object) b).serantis$outCreatures();
+            int i = -2 - u.partySlot;
+            if (out != null && i >= 0 && i < out.size()) fromCaught(u, out.get(i));
+        }
+    }
+
+    private static void assignNewUnitOuter(Battle b, Unit u) {
         boolean guard = dev.serantis.battle.Villages.NEXT_GUARD.get();
         if (guard && u.side == Unit.Side.ENEMY) {
             dev.serantis.battle.Villages.NEXT_GUARD.set(false);
@@ -150,7 +159,7 @@ public final class MoveEngine {
     public static void assignFromWorld(Battle b) {
         if (b == null || !MoveBook.available()) return;
         for (Unit u : b.units) {
-            if (u.isPlayer || u.entity == null || u.side != Unit.Side.ENEMY) continue;
+            if (u.isPlayer || u.entity == null || u.side != Unit.Side.ENEMY || state(u).guard) continue;   // Town Guards keep their guard stats
             Entity e = b.level.getEntity(u.entity);
             if (!(e instanceof CreatureEntity)) continue;
             MovesHolder h = (MovesHolder) (Object) e;
@@ -171,9 +180,10 @@ public final class MoveEngine {
         acc(b).serantis$setMaster(influence);
         boolean grand = dev.serantis.battle.Masters.grand(b.player(), influence);   // all 5 stones already: a Grandmaster
         String name = dev.serantis.battle.Masters.influenceName(influence) + (grand ? " Grandmaster" : " Creature Master");
+        Unit leadUnit = ((dev.serantis.battle.mixin.BattleRaidAccess) (Object) b).serantis$lead();
         for (Unit u : b.units) {
             if (u.isPlayer || u.side != Unit.Side.ENEMY || u.stats == null) continue;
-            boolean lead = master != null && master.getUUID().equals(u.entity);
+            boolean lead = u == leadUnit || master != null && master.getUUID().equals(u.entity);   // in the arena the Master is a copy
             if (lead) ((UnitAccess) (Object) u).serantis$setName(name);
             double f = (lead ? dev.serantis.battle.Masters.STAT_BOOST_MASTER : dev.serantis.battle.Masters.STAT_BOOST_TEAM)
                     * (grand ? dev.serantis.battle.FigureVisit.LEVEL_25 : 1.0);
@@ -389,7 +399,8 @@ public final class MoveEngine {
         return null;
     }
 
-    private static void afterDamage(Battle b, Unit a, Unit u, int dealt) {
+    /** After damage lands: a sleeper wakes, and Counter Stance hits back. Also for weapon hits (see BattleMixin). */
+    public static void afterDamage(Battle b, Unit a, Unit u, int dealt) {
         BattleAccess acc = acc(b);
         UnitState us = state(u);
         if (us.remove("sleep")) acc.serantis$say(u.name + " wakes up!");
@@ -600,7 +611,8 @@ public final class MoveEngine {
 
     /** The unit's battle stats with its current stat changes (and any "ignores X" on the hit in progress). */
     public static DamageCalc.Fighter adjustFighter(Unit u, DamageCalc.Fighter f) {
-        if (f == null || u.isPlayer && state(u).effects.isEmpty()) return f;
+        Object[] ignoring = IGNORE.get();
+        if (f == null || u.isPlayer && state(u).effects.isEmpty() && (ignoring == null || ignoring[0] != u)) return f;
         UnitState st = state(u);
         int atk = st.stage("attack"), def = st.stage("defense"), mag = st.stage("magic"), spd = st.stage("speed");
         if (st.has("frightened")) { atk -= 3; mag -= 3; }
@@ -664,6 +676,7 @@ public final class MoveEngine {
 
     /** Best damaging move this unit can use on the target from this distance (for the AI and counterattacks). */
     public static BattleMove bestMove(Battle b, Unit u, Unit t, int distance) {
+        if (state(u).has("freeze") || state(u).has("stun") || state(u).has("sleep")) return null;   // can't strike back like that
         BattleMove best = null;
         double bestScore = -1;
         for (BattleMove m : u.moves) {
@@ -736,6 +749,7 @@ public final class MoveEngine {
         for (Unit u : new ArrayList<>(b.units)) {
             if (u.side != side || !u.alive()) continue;
             UnitState st = state(u);
+            st.startX = Integer.MIN_VALUE;                              // a move's "moved 2+ tiles" doesn't carry into the other side's turn
             for (UnitState.Effect e : new ArrayList<>(st.effects)) {
                 if (!"status".equals(e.kind) || e.fresh || !u.alive()) continue;
                 int dmg = switch (e.key) {

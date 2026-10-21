@@ -65,7 +65,7 @@ public final class VillagerTalk {
         PartySync.sync(p);
         if (!fight || id == null) return;
         Entity e = p.level().getEntity(id);
-        if (!(e instanceof CreatureEntity c) || !c.isAlive() || p.distanceToSqr(c) > 12 * 12 || Battles.of(p) != null) return;
+        if (!(e instanceof CreatureEntity c) || !c.isAlive() || p.distanceToSqr(c) > 12 * 12 || Battles.of(p) != null || Battles.inBattle(c)) return;
         GO.set(true);
         try { Battles.start(p, c); } finally { GO.set(false); }
     }

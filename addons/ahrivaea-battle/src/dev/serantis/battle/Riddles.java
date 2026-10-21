@@ -48,7 +48,7 @@ public final class Riddles {
         return data;
     }
 
-    private static JsonObject riddle(String species) {
+    static JsonObject riddle(String species) {
         JsonObject d = data();
         return d.has("dragons") && d.getAsJsonObject("dragons").has(species) ? d.getAsJsonObject("dragons").getAsJsonObject(species) : null;
     }
@@ -108,12 +108,24 @@ public final class Riddles {
         PartySync.sync(p);
         if (s == null || !fight || s.wrong() >= 0) return;
         Entity e = p.level().getEntity(s.entity());
-        if (e instanceof CreatureEntity dragon && dragon.isAlive() && p.distanceToSqr(dragon) < 48 * 48 && dev.ahrivaea.battle.Battles.of(p) == null)
+        if (e instanceof CreatureEntity dragon && dragon.isAlive() && p.distanceToSqr(dragon) < 48 * 48 && dev.ahrivaea.battle.Battles.of(p) == null
+                && !dev.ahrivaea.battle.Battles.inBattle(dragon))
             dev.ahrivaea.battle.Battles.start(p, dragon);
     }
 
     /** A dragon that has just risen asks everyone near it. */
     public static void tick(CreatureEntity e) {
+        if (e.tickCount > 200 && e.entityTags().contains("serantis_rising")) {   // saved mid-rise and reloaded: let it out
+            e.removeTag("serantis_rising");
+            e.noPhysics = false;
+            e.setNoGravity(false);
+            e.setNoAi(false);
+            if (e.level() instanceof net.minecraft.server.level.ServerLevel lv) {
+                var top = lv.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, e.blockPosition());
+                e.snapTo(e.getX(), Math.max(e.getY(), top.getY()), e.getZ());
+            }
+            e.addTag(ASK_TAG);
+        }
         if (!e.entityTags().contains(ASK_TAG) || !(e.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
         e.removeTag(ASK_TAG);
         for (ServerPlayer p : level.players())

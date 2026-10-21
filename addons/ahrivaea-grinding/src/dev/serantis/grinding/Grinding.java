@@ -14,7 +14,7 @@ import java.util.WeakHashMap;
  */
 public final class Grinding {
     /** What's left in the input slot once the result is taken (an odd item stays put). */
-    public record Leftover(int slot, ItemStack stack) {}
+    public record Leftover(int slot, ItemStack stack, ItemStack input) {}
 
     private static final Map<Container, Leftover> LEFTOVER = new WeakHashMap<>();
 
@@ -38,7 +38,7 @@ public final class Grinding {
         else return null;
         int made = in.getCount() / 2;
         if (made <= 0) return ItemStack.EMPTY;
-        synchronized (LEFTOVER) { LEFTOVER.put(slots, new Leftover(index, in.copyWithCount(in.getCount() - made * 2))); }
+        synchronized (LEFTOVER) { LEFTOVER.put(slots, new Leftover(index, in.copyWithCount(in.getCount() - made * 2), in.copy())); }
         return new ItemStack(output(in), made);
     }
 

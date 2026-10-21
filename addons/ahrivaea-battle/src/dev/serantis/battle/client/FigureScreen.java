@@ -72,7 +72,9 @@ public class FigureScreen extends Screen {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.gui.screen() != null) return;
         JsonObject v = visit();
-        if (v == null) return;
+        if (v == null) { opened = ""; return; }
+        String key = v.get("entity").getAsInt() + "|" + (v.has("scene") ? v.get("scene").getAsString() : "");
+        if (key.equals(opened) || dev.ahrivaea.client.battle.BattleClient.active()) return;   // already shown (the server hasn't caught up yet)
         Entity e = mc.level.getEntity(v.get("entity").getAsInt());
         JsonObject sc = v.has("scene") ? scene(v.get("scene").getAsString()) : null;
         if (e == null || sc == null) return;
@@ -86,8 +88,14 @@ public class FigureScreen extends Screen {
         FigureScreen s = new FigureScreen(e, sc);
         if (v.has("name")) s.name = v.get("name").getAsString();
         if (v.has("npc")) s.npc = v.get("npc").getAsString();
+        opened = key;
         mc.gui.setScreen(s);
     }
+
+    /** The visit this screen was last opened for, so it doesn't reopen while the server catches up. */
+    private static String opened = "";
+
+    public static void resetForNewWorld() { opened = ""; }
 
     private boolean arrived() {
         JsonObject v = visit();

@@ -55,7 +55,8 @@ public class RenameScreen extends Screen {
             o.addProperty("name", clean.equals(species) ? "" : clean);
             BattleClient.send(o);
         }
-        Minecraft.getInstance().gui.setScreen(parent);
+        boolean deadBattle = parent instanceof dev.ahrivaea.client.battle.BattleScreen && !dev.ahrivaea.client.battle.BattleClient.active();
+        Minecraft.getInstance().gui.setScreen(deadBattle ? null : parent);
     }
 
     @Override

@@ -46,7 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Helm of Linx (5 Orichalcum Ingots around a Nether Star): diamond-strong, and while it's worn, four abilities
- * on their own keys (Z, X, C, V by default; Controls > Serantis to change them):
+ * on their own keys (Z, R, G, V by default; Controls > Serantis to change them):
  * <ol>
  *   <li><b>Phase Jump</b>: with a ceiling within 10 blocks above your head, rise up through it and come out standing
  *   safely on top. Never through bedrock, never somewhere that would hurt. Sneak + the key within a minute: go back.</li>
@@ -91,7 +91,7 @@ public final class Linx {
                 .humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET).rarity(Rarity.EPIC).setId(key)
                 .component(DataComponents.LORE, new ItemLore(List.of(
                         line("Phase Jump, Shape Lift, Waymark, High Jump"),
-                        line("Keys in Controls > Serantis (Z, X, C, V)"))))));
+                        line("Keys in Controls > Serantis (Z, R, G, V)"))))));
     }
 
     private static Component line(String s) {
@@ -191,6 +191,7 @@ public final class Linx {
 
     private static boolean movable(ServerLevel level, BlockPos pos, BlockState s, boolean any) {
         if (s.isAir() || s.is(Blocks.BEDROCK) || s.hasBlockEntity() || (!any && !s.is(MOVABLE))) return false;
+        if (s.getBlock() instanceof TrophyBlock || s.getBlock().getExplosionResistance() >= 1200f) return false;   // trophies, reinforced deepslate and the like stay put
         if (!s.getFluidState().isEmpty() && !s.hasProperty(BlockStateProperties.WATERLOGGED)) return false;
         return s.getDestroySpeed(level, pos) >= 0;
     }
@@ -223,8 +224,9 @@ public final class Linx {
                 l.states.add(s);
             }
             if (l.offsets.isEmpty()) { say(p, l.any ? "Nothing there that can be lifted." : "Nothing natural there to lift.", ChatFormatting.YELLOW); return; }
-            for (int i = l.offsets.size() - 1; i >= 0; i--)       // top down, so nothing drops out of the shape
-                level.setBlock(centre.offset(l.offsets.get(i)), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+            int quiet = Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE | Block.UPDATE_SUPPRESS_DROPS;   // no half-doors or tall flowers popping off as drops
+            for (int i = l.offsets.size() - 1; i >= 0; i--) level.setBlock(centre.offset(l.offsets.get(i)), Blocks.AIR.defaultBlockState(), quiet);
+            for (BlockPos off : l.offsets) level.updateNeighborsAt(centre.offset(off), Blocks.AIR);   // then the world around it reacts
             l.level = level;
             l.origin = centre;
             l.hold = Math.max(l.size / 2 + 2.5, Math.min(REACH, p.getEyePosition().distanceTo(Vec3.atCenterOf(centre))));
@@ -264,6 +266,7 @@ public final class Linx {
     private static int place(ServerPlayer p, Lift l, BlockPos centre) {
         ServerLevel level = l.level;
         int broke = 0;
+        List<BlockPos> placed = new ArrayList<>();
         for (int i = 0; i < l.offsets.size(); i++) {
             BlockPos at = centre.offset(l.offsets.get(i));
             BlockState s = l.states.get(i), there = level.getBlockState(at);
@@ -272,12 +275,14 @@ public final class Linx {
             if (free) {
                 if (!there.getFluidState().isEmpty() && s.hasProperty(BlockStateProperties.WATERLOGGED) && there.getFluidState().is(net.minecraft.tags.FluidTags.WATER))
                     s = s.setValue(BlockStateProperties.WATERLOGGED, true);
-                level.setBlock(at, s, Block.UPDATE_ALL);
+                level.setBlock(at, s, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);   // the whole shape first, then neighbour updates
+                placed.add(at);
             } else {                                                // it breaks: no drops (no free ores without a pickaxe)
                 level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, s), at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 8, 0.25, 0.25, 0.25, 0.05);
                 broke++;
             }
         }
+        for (BlockPos at : placed) level.updateNeighborsAt(at, level.getBlockState(at).getBlock());
         return broke;
     }
 
@@ -319,6 +324,7 @@ public final class Linx {
         if (to == null) return;
         double x = Double.parseDouble(f[1]), y = Double.parseDouble(f[2]), z = Double.parseDouble(f[3]);
         BlockPos spot = BlockPos.containing(x, y, z);
+        to.getChunk(spot.getX() >> 4, spot.getZ() >> 4);                 // far away or in another dimension: load it first
         if (!TeleportBoots.safe(to, spot)) {
             spot = TeleportBoots.safeNear(to, x, y, z);
             if (spot == null) { say(p, "Your Waymark isn't safe to land on any more.", ChatFormatting.RED); return; }

@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MinecraftTradeMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void serantis$trades(CallbackInfo ci) {
+        dev.serantis.battle.client.ClientScope.tick();                 // a new world: "shown once" flags start fresh
         TradeClient.tick();
         dev.serantis.battle.client.IntroScreen.autoOpen();
         dev.serantis.battle.client.FigureScreen.autoOpen();

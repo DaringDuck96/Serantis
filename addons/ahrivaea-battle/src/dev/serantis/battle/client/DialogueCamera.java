@@ -69,6 +69,7 @@ public final class DialogueCamera {
 
     /** Where the camera should be this frame: {x, y, z, yaw, pitch}, or null to leave it alone. */
     public static double[] frame(float partial) {
+        if (dev.ahrivaea.client.battle.BattleClient.active()) return null;   // the battle camera rules during a battle
         Minecraft mc = Minecraft.getInstance();
         if (!active || mc.player == null) return null;
         if (speaker == null || (speaker.isRemoved() && (anchor == null || !wide))) { active = false; return null; }

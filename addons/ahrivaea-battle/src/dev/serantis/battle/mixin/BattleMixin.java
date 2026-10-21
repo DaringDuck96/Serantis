@@ -50,6 +50,7 @@ public abstract class BattleMixin implements BattleAccess {
     @Unique private Field serantis$field;
     @Unique private boolean serantis$struck, serantis$crit;
     @Unique private double serantis$mult = 1;
+    @Unique private int serantis$hpBefore;
 
     @Override public Field serantis$field() {
         if (serantis$field == null) serantis$field = new Field();
@@ -180,6 +181,7 @@ public abstract class BattleMixin implements BattleAccess {
         serantis$struck = false;
         serantis$crit = false;
         serantis$mult = 1;
+        serantis$hpBefore = target.hp;
     }
 
     @Redirect(method = "strike", at = @At(value = "INVOKE",
@@ -201,6 +203,8 @@ public abstract class BattleMixin implements BattleAccess {
         if (serantis$struck && serantis$mult > 1.0) Fx.flash(self, target, Fx.SUPER);
         else if (serantis$struck && serantis$mult < 1.0) Fx.flash(self, target, Fx.WEAK);
         Fx.hitSound(self, target, move.move().influence(), serantis$struck, serantis$crit);
+        if (serantis$struck && MoveBook.of(move) == null && target.hp < serantis$hpBefore)   // weapon hits (catalog moves do this themselves)
+            MoveEngine.afterDamage(self, attacker, target, serantis$hpBefore - target.hp);
     }
 
     // Losing a battle wears down the player's armour and held items (XP is never lost).

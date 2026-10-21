@@ -38,7 +38,8 @@ public class RaidScreen extends Screen {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.gui.screen() != null) return;
         JsonObject r = raid();
-        if (r != null && r.get("talking").getAsBoolean() && !r.toString().equals(dismissed)) mc.gui.setScreen(new RaidScreen());
+        if (r == null || !r.get("talking").getAsBoolean()) { dismissed = ""; return; }
+        if (!r.getAsJsonArray("entities").toString().equals(dismissed)) mc.gui.setScreen(new RaidScreen());
     }
 
     private int left() { return (width - W) / 2; }
@@ -105,7 +106,7 @@ public class RaidScreen extends Screen {
 
     private static void dismiss() {
         JsonObject r = raid();
-        dismissed = r == null ? "" : r.toString();
+        dismissed = r == null ? "" : r.getAsJsonArray("entities").toString();   // this raid, whatever its countdown says
     }
 
     @Override
@@ -120,4 +121,6 @@ public class RaidScreen extends Screen {
 
     @Override
     public boolean isPauseScreen() { return false; }
+
+    public static void resetForNewWorld() { dismissed = ""; }
 }

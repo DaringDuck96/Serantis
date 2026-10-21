@@ -35,12 +35,17 @@ public class RiddleScreen extends Screen {
         return s != null && s.has("serantis_riddle") ? s.getAsJsonObject("serantis_riddle") : null;
     }
 
+    private static int opened = -1;
+
+    public static void resetForNewWorld() { opened = -1; }
+
     /** Every client tick: a dragon asking us its riddle opens the cutscene. */
     public static void autoOpen() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.gui.screen() != null) return;
         JsonObject r = riddle();
-        if (r == null) return;
+        if (r == null) { opened = -1; return; }
+        if (r.get("entity").getAsInt() == opened || dev.ahrivaea.client.battle.BattleClient.active()) return;   // already shown
         Entity e = mc.level.getEntity(r.get("entity").getAsInt());
         if (e == null) return;
         float face = e.getBbHeight() * 0.85f;
@@ -52,6 +57,7 @@ public class RiddleScreen extends Screen {
         RiddleScreen s = new RiddleScreen(e);
         s.line = r.get("line").getAsString();
         s.seenWrong = r.get("wrong").getAsInt();
+        opened = r.get("entity").getAsInt();
         mc.gui.setScreen(s);
     }
 

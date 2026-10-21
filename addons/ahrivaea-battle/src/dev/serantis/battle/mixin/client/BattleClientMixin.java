@@ -14,6 +14,7 @@ public abstract class BattleClientMixin {
     @Redirect(method = "receive", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
     private static void serantis$keepNaming(Gui gui, Screen screen) {
         if (gui.screen() instanceof RenameScreen naming) { naming.setParent(screen); return; }
+        if (gui.screen() instanceof dev.serantis.battle.client.EquipScreen equip && screen instanceof dev.ahrivaea.client.battle.BattleScreen) { equip.setParent(screen); return; }
         gui.setScreen(screen);
     }
 }
