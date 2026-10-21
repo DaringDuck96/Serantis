@@ -1,10 +1,121 @@
 Compiled from "Gui.java"
 class net.minecraft.client.gui.Gui$1 implements net.minecraft.client.gui.Font$GlyphVisitor {
   private int index;
+
   final net.minecraft.client.renderer.state.gui.GuiTextRenderState val$text;
+
   final net.minecraft.client.gui.Gui this$0;
+
   net.minecraft.client.gui.Gui$1();
+    Code:
+         0: aload_0
+         1: aload_2
+         2: putfield      #1                  // Field val$text:Lnet/minecraft/client/renderer/state/gui/GuiTextRenderState;
+         5: aload_0
+         6: aload_1
+         7: dup
+         8: invokestatic  #7                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+        11: pop
+        12: putfield      #13                 // Field this$0:Lnet/minecraft/client/gui/Gui;
+        15: aload_0
+        16: invokespecial #17                 // Method java/lang/Object."<init>":()V
+        19: return
+
   public void acceptGlyph(net.minecraft.client.gui.font.TextRenderable$Styled);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: iconst_0
+         3: invokevirtual #23                 // Method renderDebugMarkers:(Lnet/minecraft/client/gui/font/ActiveArea;Z)V
+         6: return
+
   public void acceptEmptyArea(net.minecraft.client.gui.font.EmptyArea);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: iconst_1
+         3: invokevirtual #23                 // Method renderDebugMarkers:(Lnet/minecraft/client/gui/font/ActiveArea;Z)V
+         6: return
+
   private void renderDebugMarkers(net.minecraft.client.gui.font.ActiveArea, boolean);
+    Code:
+         0: iload_2
+         1: ifeq          10
+         4: sipush        128
+         7: goto          13
+        10: sipush        255
+        13: aload_0
+        14: dup
+        15: getfield      #27                 // Field index:I
+        18: dup_x1
+        19: iconst_1
+        20: iadd
+        21: putfield      #27                 // Field index:I
+        24: iconst_1
+        25: iand
+        26: bipush        64
+        28: imul
+        29: isub
+        30: istore_3
+        31: aload_1
+        32: invokeinterface #31,  1           // InterfaceMethod net/minecraft/client/gui/font/ActiveArea.style:()Lnet/minecraft/network/chat/Style;
+        37: astore        4
+        39: aload         4
+        41: invokevirtual #37                 // Method net/minecraft/network/chat/Style.getClickEvent:()Lnet/minecraft/network/chat/ClickEvent;
+        44: ifnull        51
+        47: iload_3
+        48: goto          52
+        51: iconst_0
+        52: istore        5
+        54: aload         4
+        56: invokevirtual #43                 // Method net/minecraft/network/chat/Style.getHoverEvent:()Lnet/minecraft/network/chat/HoverEvent;
+        59: ifnull        66
+        62: iload_3
+        63: goto          67
+        66: iconst_0
+        67: istore        6
+        69: iload         5
+        71: ifeq          79
+        74: iload         6
+        76: ifne          83
+        79: iload_3
+        80: goto          84
+        83: iconst_0
+        84: istore        7
+        86: sipush        128
+        89: iload         5
+        91: iload         6
+        93: iload         7
+        95: invokestatic  #47                 // Method net/minecraft/util/ARGB.color:(IIII)I
+        98: istore        8
+       100: aload_0
+       101: getfield      #13                 // Field this$0:Lnet/minecraft/client/gui/Gui;
+       104: getfield      #53                 // Field net/minecraft/client/gui/Gui.guiRenderState:Lnet/minecraft/client/renderer/state/gui/GuiRenderState;
+       107: new           #59                 // class net/minecraft/client/renderer/state/gui/ColoredRectangleRenderState
+       110: dup
+       111: getstatic     #61                 // Field net/minecraft/client/renderer/RenderPipelines.GUI:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+       114: invokestatic  #67                 // Method net/minecraft/client/gui/render/TextureSetup.noTexture:()Lnet/minecraft/client/gui/render/TextureSetup;
+       117: aload_0
+       118: getfield      #1                  // Field val$text:Lnet/minecraft/client/renderer/state/gui/GuiTextRenderState;
+       121: getfield      #73                 // Field net/minecraft/client/renderer/state/gui/GuiTextRenderState.pose:Lorg/joml/Matrix3x2fc;
+       124: aload_1
+       125: invokeinterface #79,  1           // InterfaceMethod net/minecraft/client/gui/font/ActiveArea.activeLeft:()F
+       130: f2i
+       131: aload_1
+       132: invokeinterface #83,  1           // InterfaceMethod net/minecraft/client/gui/font/ActiveArea.activeTop:()F
+       137: f2i
+       138: aload_1
+       139: invokeinterface #86,  1           // InterfaceMethod net/minecraft/client/gui/font/ActiveArea.activeRight:()F
+       144: f2i
+       145: aload_1
+       146: invokeinterface #89,  1           // InterfaceMethod net/minecraft/client/gui/font/ActiveArea.activeBottom:()F
+       151: f2i
+       152: iload         8
+       154: iload         8
+       156: aload_0
+       157: getfield      #1                  // Field val$text:Lnet/minecraft/client/renderer/state/gui/GuiTextRenderState;
+       160: getfield      #92                 // Field net/minecraft/client/renderer/state/gui/GuiTextRenderState.scissor:Lnet/minecraft/client/gui/navigation/ScreenRectangle;
+       163: invokespecial #96                 // Method net/minecraft/client/renderer/state/gui/ColoredRectangleRenderState."<init>":(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/client/gui/render/TextureSetup;Lorg/joml/Matrix3x2fc;IIIIIILnet/minecraft/client/gui/navigation/ScreenRectangle;)V
+       166: invokevirtual #99                 // Method net/minecraft/client/renderer/state/gui/GuiRenderState.addGuiElement:(Lnet/minecraft/client/renderer/state/gui/GuiElementRenderState;)V
+       169: return
 }
