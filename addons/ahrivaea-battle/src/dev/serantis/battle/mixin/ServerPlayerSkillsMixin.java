@@ -20,6 +20,7 @@ public abstract class ServerPlayerSkillsMixin {
         a.serantis$addSmelted(b.serantis$smelted() - a.serantis$smelted());
         a.serantis$addXpGained(b.serantis$xpGained() - a.serantis$xpGained());
         a.serantis$addPlanted(b.serantis$planted() - a.serantis$planted());
+        a.serantis$addLoreBooks(b.serantis$loreBooks() - a.serantis$loreBooks());
         a.serantis$biomes().addAll(b.serantis$biomes());
         if (b.serantis$recruitsSeeded()) a.serantis$setRecruitsSeeded();
         for (String inf : new String[]{"none", "fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "arcane", "radiant"})

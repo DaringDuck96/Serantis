@@ -63,6 +63,8 @@ public final class Achievements {
                     new String[]{"Shiny Green Orbs", "Book Smart", "Big Brain Energy", "Seasoned Veteran", "Ascended"}),
             new Track("deaths", "Times Defeated", "deaths", new long[]{1, 5, 10, 50, 100}, new int[]{2, 4, 8, 16, 32},
                     new String[]{"Oops", "Respawn Regular", "Fall Damage Enthusiast", "Death's Frequent Flyer", "Immortal (Technically)"}),
+            new Track("lore", "Lore Books Collected", "lore books collected", new long[]{1, 5, 10, 20, 30}, new int[]{2, 4, 8, 16, 32},
+                    new String[]{"Light Reading", "Bookworm", "Well Read", "Lorekeeper", "Krea's Apprentice"}),
             new Track("eternita", "The Eternita Stone", "Eternita Stone earned", new long[]{1}, new int[]{0},
                     new String[]{"I Won! I Won the Game!"}));
 
@@ -77,6 +79,7 @@ public final class Achievements {
             java.util.Map.entry("planted", "minecraft:wheat_seeds"), java.util.Map.entry("biomes", "minecraft:map"),
             java.util.Map.entry("towers", "minecraft:chiseled_stone_bricks"), java.util.Map.entry("walked", "minecraft:leather_boots"),
             java.util.Map.entry("xp", "minecraft:experience_bottle"), java.util.Map.entry("deaths", "minecraft:skeleton_skull"),
+            java.util.Map.entry("lore", "minecraft:written_book"),
             java.util.Map.entry("eternita", "serantis_battle:eternita_stone")));
 
     /** One "recruit creatures of this influence" line per influence: {influence, name, icon, five titles}. */
@@ -123,6 +126,9 @@ public final class Achievements {
         void serantis$setRecruitsSeeded();
         long serantis$planted();
         void serantis$addPlanted(long n);
+        /** Lore books found (every drop counts, repeats too). */
+        long serantis$loreBooks();
+        void serantis$addLoreBooks(long n);
         long serantis$xpGained();
         void serantis$addXpGained(long n);
         int serantis$claimed(String track);
@@ -194,6 +200,7 @@ public final class Achievements {
             case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;
             case "xp" -> h.serantis$xpGained();
+            case "lore" -> h.serantis$loreBooks();
             case "deaths" -> stats.getValue(Stats.CUSTOM, Stats.DEATHS);
             case "eternita" -> p instanceof Masters.Holder m && m.serantis$eternita() ? 1 : 0;
             default -> 0;

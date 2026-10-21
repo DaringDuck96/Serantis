@@ -21,7 +21,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Override public Set<String> serantis$skills() { return serantis$skills; }
 
     // Achievements: items smelted, experience gained, and tiers already paid.
-    @Unique private long serantis$smelted, serantis$xpGained, serantis$planted;
+    @Unique private long serantis$smelted, serantis$xpGained, serantis$planted, serantis$loreBooks;
     @Unique private final java.util.Map<String, Integer> serantis$claimed = new java.util.HashMap<>();
 
     @Override public long serantis$smelted() { return serantis$smelted; }
@@ -36,6 +36,8 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Override public boolean serantis$recruitsSeeded() { return serantis$recruitsSeeded; }
     @Override public void serantis$setRecruitsSeeded() { serantis$recruitsSeeded = true; }
     @Override public void serantis$addPlanted(long n) { serantis$planted += n; }
+    @Override public long serantis$loreBooks() { return serantis$loreBooks; }
+    @Override public void serantis$addLoreBooks(long n) { serantis$loreBooks += n; }
     @Override public long serantis$xpGained() { return serantis$xpGained; }
     @Override public void serantis$addXpGained(long n) { serantis$xpGained += n; }
     @Unique private final java.util.Map<String, Integer> serantis$stones = new java.util.HashMap<>();
@@ -86,6 +88,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         out.putLong("SerantisSmelted", serantis$smelted);
         out.putLong("SerantisXpGained", serantis$xpGained);
         out.putLong("SerantisPlanted", serantis$planted);
+        out.putLong("SerantisLoreBooks", serantis$loreBooks);
         out.putString("SerantisBiomes", String.join(",", serantis$biomes));
         StringBuilder rec = new StringBuilder(serantis$recruitsSeeded ? "seeded" : "");
         serantis$recruits.forEach((k, v) -> rec.append(',').append(k).append(':').append(v));
@@ -116,6 +119,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$smelted = in.getLongOr("SerantisSmelted", 0L);
         serantis$xpGained = in.getLongOr("SerantisXpGained", 0L);
         serantis$planted = in.getLongOr("SerantisPlanted", 0L);
+        serantis$loreBooks = in.getLongOr("SerantisLoreBooks", 0L);
         serantis$recruits.clear();
         String rec = in.getStringOr("SerantisRecruits", "");
         serantis$recruitsSeeded = rec.startsWith("seeded");
