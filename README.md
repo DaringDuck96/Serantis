@@ -30,7 +30,7 @@ The creatures mod's Arcane Dragon is retired: the Clockwork Dragon is the arcane
 
 ### Welcome guide
 
-The first time a player joins, a welcome guide pops up (over the starter screen, which comes back after). It welcomes them to Serantia (the world's name; the pack and repository are called Serantis) and runs through what it's about: picking a starter, battling and recruiting creatures, collecting them, XP as the main currency, rebuilding towers, Creature Masters and their stones, achievements, winning the game with the Eternita Stone, and that it's still Minecraft, where building and creativity are as valid a way to play as any battle. Read it again any time from the **Guide** button on the party screen.
+The first time a player joins, a welcome guide pops up (over the starter screen, which comes back after). It welcomes them to Serantia (the world's name; the pack and repository are called Serantis) and runs through what it's about: picking a starter, battling and recruiting creatures, collecting them, XP as the main currency, rebuilding towers, Creature Masters and their stones, achievements, winning the game with the Eternita Stone, and that it's still Minecraft, where building and creativity are as valid a way to play as any battle. Read it again any time from the **Guide** button on the party screen. The guide has a second tab, **Your Base**, also opened by the **Guide** button on a Base Core's screen: how bases work (area, levels, putting creatures to work), how a worker decides what to do and how fast it works, what every job does and needs, chests and item-frame labels, raids, knock-outs, and what villagers add to a base.
 
 ### Battle stats and levels
 

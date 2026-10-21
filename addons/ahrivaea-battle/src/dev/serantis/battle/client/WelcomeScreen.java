@@ -52,12 +52,21 @@ public class WelcomeScreen extends Screen {
 
     private static boolean shown;
 
-    private final Screen parent;
+    private Screen parent;
+
+    public void setParent(Screen parent) { this.parent = parent; }
     private final boolean first;
+    private int tab;
+    private static final String[] TABS = {"Welcome", "Your Base"};
+    private static final String[] SUBTITLES = {"A world of creatures, towers and masters (and it's still Minecraft)",
+            "How creatures work at your base, and what to expect from them"};
     private final List<Object[]> lines = new ArrayList<>();      // {text, color, gapBefore}
     private int scroll, contentH, panelW, viewTop, viewBottom;
 
     public WelcomeScreen(Screen parent) { this(parent, false); }
+
+    /** Opens the guide on a tab: 0 the welcome, 1 how bases and their workers work. */
+    public WelcomeScreen(Screen parent, int tab) { this(parent, false); this.tab = tab; }
 
     private WelcomeScreen(Screen parent, boolean first) {
         super(Component.literal("Welcome to Serantia"));
@@ -92,11 +101,18 @@ public class WelcomeScreen extends Screen {
     @Override
     protected void init() {
         panelW = Math.min(380, width - 24);
-        viewTop = 40;
+        viewTop = 64;
         viewBottom = height - 34;
         lines.clear();
         int h = 0;
-        for (String[] part : GUIDE) {
+        for (int i = 0; i < TABS.length; i++) {
+            final int t = i;
+            Button b = Button.builder(Component.literal(TABS[i]), btn -> { tab = t; scroll = 0; rebuildWidgets(); })
+                    .bounds(width / 2 - TABS.length * 47 + i * 94, 38, 90, 18).build();
+            b.active = i != tab;
+            addRenderableWidget(b);
+        }
+        for (String[] part : tab == 1 ? BaseGuide.TEXT : GUIDE) {
             int gap = h == 0 ? 0 : 10;
             if (part[0] != null) { lines.add(new Object[]{part[0], HEAD, gap}); h += gap + 12; gap = 0; }
             boolean firstLine = true;
@@ -134,9 +150,9 @@ public class WelcomeScreen extends Screen {
         g.pose().pushMatrix();
         g.pose().translate(width / 2f, 10);
         g.pose().scale(1.5f, 1.5f);
-        g.centeredText(font, "Welcome to Serantia!", 0, 0, GOLD);
+        g.centeredText(font, tab == 1 ? "Your Base and Its Workers" : "Welcome to Serantia!", 0, 0, GOLD);
         g.pose().popMatrix();
-        g.centeredText(font, "A world of creatures, towers and masters (and it's still Minecraft)", width / 2, 26, DIM);
+        g.centeredText(font, SUBTITLES[tab], width / 2, 26, DIM);
 
         int x = (width - panelW) / 2 + 10, y = viewTop - scroll;
         for (Object[] line : lines) {
