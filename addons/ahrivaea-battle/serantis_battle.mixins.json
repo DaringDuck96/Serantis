@@ -38,6 +38,8 @@
     "BlockItemPlantedMixin",
     "VanillaMobsVillagerMixin",
     "WildSpawnerNobleMixin",
+    "LevelBandSpawnerMixin",
+    "LevelBandVanillaMixin",
     "ServerLevelInnMixin",
     "VillagersRolesMixin",
     "FloatGoalMixin",
