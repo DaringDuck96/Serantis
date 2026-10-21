@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Teleporting Boots (diamond boots + 3 ender pearls): as strong as diamond boots. Double-tap sneak while wearing
  * them to teleport to the safest spot about 10 blocks the way you're facing: solid ground, room to stand, no
  * lava, fire, cactus or magma. Up to 3 blocks up or down to find it, and closer if there's nowhere safe at 10.
- * Each jump costs 1 durability and the boots need 3 seconds to recharge.
+ * Each jump costs 1 durability and the boots need 3 seconds to recharge. In battle they give you Flight instead.
  */
 public final class TeleportBoots {
     public static final int RANGE = 10, COOLDOWN = 60, DOUBLE_TAP = 8;

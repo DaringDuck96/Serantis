@@ -42,6 +42,12 @@ public abstract class UnitMixin implements UnitAccess {
     }
 
     // Movement per turn from Speed and level (see Pace). The player keeps the creatures mod's own.
+    // Teleporting Boots: the player flies in battle (over water, lava and obstacles, like a flying creature).
+    @Inject(method = "flies", at = @At("RETURN"), cancellable = true)
+    private void serantis$teleportFlight(CallbackInfoReturnable<Boolean> cir) {
+        if (isPlayer && !cir.getReturnValue() && dev.serantis.battle.moves.MoveEngine.state((Unit) (Object) this).flight) cir.setReturnValue(true);
+    }
+
     @Inject(method = "squares", at = @At("HEAD"), cancellable = true)
     private void serantis$squares(CallbackInfoReturnable<Integer> cir) {
         if (!isPlayer && stats != null) cir.setReturnValue(dev.serantis.battle.Pace.squares(level, stats.speed()));

@@ -37,6 +37,7 @@ public final class UnitState {
     public boolean guard;
     public String temperament;  // see Temperament
     public int bonusTiles;      // extra battle movement (the player's Swiftness nodes)
+    public boolean flight;      // the player wears Teleporting Boots: they fly in battle
     public String lastMoveId;
     public int lastMoveTurn = -99;
     public int startX = Integer.MIN_VALUE, startZ;

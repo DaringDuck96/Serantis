@@ -175,6 +175,8 @@ public abstract class BattleMixin implements BattleAccess {
     @Inject(method = "addPlayer", at = @At("RETURN"))
     private void serantis$playerTiles(net.minecraft.server.level.ServerPlayer player, int x, int z, CallbackInfoReturnable<Unit> cir) {
         if (cir.getReturnValue() != null) MoveEngine.state(cir.getReturnValue()).bonusTiles = dev.serantis.battle.skills.Skills.tiles(player);
+        if (cir.getReturnValue() != null && player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET).is(dev.serantis.battle.TeleportBoots.BOOTS))
+            MoveEngine.state(cir.getReturnValue()).flight = true;        // Teleporting Boots: Flight in battle
     }
 
     // Fortune: creatures beaten in battle may drop twice, and rare drops come up more often.
