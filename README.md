@@ -250,6 +250,10 @@ Gym Master Stones and the Eternita Stone are **trophies**: place one and it stan
 
 Collect all 5 stones of all 12 influences (60 in all) and you get the rainbow **Eternita Stone**: wild creatures that spawn around you are Mutated 5 times in 100 instead of 1 in 100. It also earns the achievement "I Won! I Won the Game!".
 
+### Creatures are never lost
+
+A creature only leaves you if you release it. A creature you've sent out that gets left behind (you teleport, go through a portal, die and respawn far away, log out, or just get more than 96 blocks away) comes back to your party, or your box if the party is full: straight away if it's still nearby in the world, or within a second or so if its chunk has unloaded (the game remembers a copy of every creature you have out, and the one left in the world vanishes when its chunk next loads, so it's never duplicated). A creature that belongs to you can't die in the world either: a blow that would finish it leaves it on 1 HP, and if it was out it goes back to your party to recover (creatures working at a base stay put).
+
 ### Trading creatures
 
 Right-click another player and choose **Send trade request**. They get a request to accept or decline (it expires after 60 seconds). If they accept, a trade screen opens for both of you: each picks one creature from their party, sees what the other is offering (level, influence, rarity, HP, movement and stats), and presses **Confirm trade**. When both have confirmed, the two creatures swap owners, keeping their level, moves, temperament, name and golden apples. Changing a pick means both have to confirm again, and either player can cancel at any time (closing the screen cancels too). You can't trade during a battle, and only creatures in your party can be traded.

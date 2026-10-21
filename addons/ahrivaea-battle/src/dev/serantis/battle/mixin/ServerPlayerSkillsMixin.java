@@ -30,6 +30,10 @@ public abstract class ServerPlayerSkillsMixin {
         ma.serantis$setEternita(mb.serantis$eternita());
         ((dev.serantis.battle.Welcome.Holder) (Object) this).serantis$setWelcomed(((dev.serantis.battle.Welcome.Holder) (Object) old).serantis$welcomed());
         ((dev.serantis.battle.Welcome.Holder) (Object) this).serantis$setWelcomeSent(true);
+        var co = (dev.serantis.battle.Companions.Holder) (Object) this;
+        var cb = (dev.serantis.battle.Companions.Holder) (Object) old;
+        co.serantis$out().putAll(cb.serantis$out());
+        co.serantis$gone().addAll(cb.serantis$gone());
         for (var t : dev.serantis.battle.Achievements.TRACKS) a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
         // XP is the main currency: it's kept through death.
         ServerPlayer self = (ServerPlayer) (Object) this;
@@ -52,5 +56,6 @@ public abstract class ServerPlayerSkillsMixin {
             ((dev.serantis.battle.Achievements.Holder) self).serantis$biomes().add(self.level().getBiome(self.blockPosition()).getRegisteredName());
         if (self.tickCount % 100 == 37) dev.serantis.battle.Achievements.check(self);
         if (self.tickCount % 20 == 11) dev.serantis.battle.Welcome.tick(self);
+        if (self.tickCount % 20 == 3) dev.serantis.battle.Companions.check(self);
     }
 }

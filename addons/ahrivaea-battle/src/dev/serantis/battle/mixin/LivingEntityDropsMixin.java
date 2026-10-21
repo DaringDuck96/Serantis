@@ -46,4 +46,10 @@ public abstract class LivingEntityDropsMixin {
                 && self.hasPassenger(e -> e instanceof net.minecraft.world.entity.player.Player p && p.isLocalPlayer()))
             cir.setReturnValue(false);
     }
+
+    // A player's creature can't die in the world: it's left on 1 HP (and goes home if it was out). See Companions.
+    @Inject(method = "die", at = @At("HEAD"), cancellable = true)
+    private void serantis$neverLost(DamageSource source, CallbackInfo ci) {
+        if ((Object) this instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Companions.spare(c)) ci.cancel();
+    }
 }

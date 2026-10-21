@@ -15,7 +15,7 @@ import java.util.Set;
 
 /** Players remember the skill tree nodes they've bought. */
 @Mixin(Player.class)
-public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder, dev.serantis.battle.Masters.Holder, dev.serantis.battle.Welcome.Holder {
+public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.battle.Achievements.Holder, dev.serantis.battle.Masters.Holder, dev.serantis.battle.Welcome.Holder, dev.serantis.battle.Companions.Holder {
     @Unique private final Set<String> serantis$skills = new LinkedHashSet<>();
 
     @Override public Set<String> serantis$skills() { return serantis$skills; }
@@ -41,6 +41,10 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Unique private final java.util.Map<String, Integer> serantis$stones = new java.util.HashMap<>();
     @Unique private boolean serantis$eternita;
     @Unique private boolean serantis$welcomed, serantis$welcomeSent;
+    @Unique private final java.util.Map<java.util.UUID, dev.ahrivaea.party.CaughtCreature> serantis$out = new java.util.LinkedHashMap<>();
+    @Unique private final java.util.Set<java.util.UUID> serantis$gone = new java.util.HashSet<>();
+    @Override public java.util.Map<java.util.UUID, dev.ahrivaea.party.CaughtCreature> serantis$out() { return serantis$out; }
+    @Override public java.util.Set<java.util.UUID> serantis$gone() { return serantis$gone; }
     @Override public boolean serantis$welcomed() { return serantis$welcomed; }
     @Override public void serantis$setWelcomed(boolean seen) { serantis$welcomed = seen; }
     @Override public boolean serantis$welcomeSent() { return serantis$welcomeSent; }
@@ -78,6 +82,12 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$stones.forEach((k, v) -> st.append(',').append(k).append(':').append(v));
         out.putString("SerantisMastery", st.toString());
         out.putInt("SerantisWelcomed", serantis$welcomed ? 1 : 0);
+        java.util.List<String> outIds = new java.util.ArrayList<>(), goneIds = new java.util.ArrayList<>();
+        for (var id : serantis$out.keySet()) outIds.add(id.toString());
+        for (var id : serantis$gone) goneIds.add(id.toString());
+        out.store("SerantisOutIds", com.mojang.serialization.Codec.STRING.listOf(), outIds);
+        out.store("SerantisOut", dev.ahrivaea.party.CaughtCreature.CODEC.listOf(), new java.util.ArrayList<>(serantis$out.values()));
+        out.store("SerantisGone", com.mojang.serialization.Codec.STRING.listOf(), goneIds);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
@@ -100,6 +110,14 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
         serantis$stones.clear();
         serantis$welcomed = in.getIntOr("SerantisWelcomed", 0) == 1;
+        serantis$out.clear();
+        serantis$gone.clear();
+        var outIds = in.read("SerantisOutIds", com.mojang.serialization.Codec.STRING.listOf()).orElse(java.util.List.of());
+        var outCreatures = in.read("SerantisOut", dev.ahrivaea.party.CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
+        for (int i = 0; i < Math.min(outIds.size(), outCreatures.size()); i++)
+            try { serantis$out.put(java.util.UUID.fromString(outIds.get(i)), outCreatures.get(i)); } catch (IllegalArgumentException ignored) { }
+        for (String s : in.read("SerantisGone", com.mojang.serialization.Codec.STRING.listOf()).orElse(java.util.List.of()))
+            try { serantis$gone.add(java.util.UUID.fromString(s)); } catch (IllegalArgumentException ignored) { }
         String st = in.getStringOr("SerantisMastery", "");
         serantis$eternita = st.startsWith("eternita");
         for (String part : st.split(",")) {

@@ -34,7 +34,8 @@
     "ServerLevelInnMixin",
     "VillagersRolesMixin",
     "FloatGoalMixin",
-    "ProjectileBattleMixin"
+    "ProjectileBattleMixin",
+    "EntityRemovedMixin"
   ],
   "client": [
     "client.PartyScreenMixin",
