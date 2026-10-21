@@ -114,7 +114,7 @@ public final class Riddles {
 
     /** A dragon that has just risen asks everyone near it. */
     public static void tick(CreatureEntity e) {
-        if (!e.getTags().contains(ASK_TAG) || !(e.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
+        if (!e.entityTags().contains(ASK_TAG) || !(e.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
         e.removeTag(ASK_TAG);
         for (ServerPlayer p : level.players())
             if (p.distanceToSqr(e) < 48 * 48 && !p.isSpectator()) ask(p, e);
