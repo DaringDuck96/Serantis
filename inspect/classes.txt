@@ -1,7 +1,3 @@
 # classes
-sig:net.minecraft.world.level.StructureManager
-sig:net.minecraft.world.level.levelgen.structure.StructureStart
-sig:net.minecraft.tags.StructureTags
-sig:net.minecraft.world.level.storage.LevelResource
-sig:net.minecraft.world.level.levelgen.structure.StructurePiece
-sig:net.minecraft.world.level.levelgen.structure.BoundingBox
+sig:net.minecraft.server.level.ServerLevel
+sig:net.minecraft.server.MinecraftServer

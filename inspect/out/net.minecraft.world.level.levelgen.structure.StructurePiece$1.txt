@@ -1,5 +1,0 @@
-Compiled from "StructurePiece.java"
-class net.minecraft.world.level.levelgen.structure.StructurePiece$1 {
-  static final int[] $SwitchMap$net$minecraft$core$Direction;
-  static {};
-}
