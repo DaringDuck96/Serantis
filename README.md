@@ -32,6 +32,10 @@ The creatures mod's Arcane Dragon is retired: the Clockwork Dragon is the arcane
 
 Every player, whatever their class, starts with the written book **Serantia: A World Forged by Dragons** (the story of the Twelve Great Dragon Lords and the Council of Eternia). Players already in the world get it the next time they join. It's given once; the text is in `addons/ahrivaea-battle/src/dev/serantis/battle/LoreBook.java`.
 
+### Lore books
+
+Every creature you beat in battle has a **1% chance** to drop a lore book with the battle's loot, picked at random from all the lore books. They're kept in `addons/ahrivaea-battle/serantis_battle/lore_books.json`: a list of books, each with a `title`, an `author` and its `text` (a blank line starts a new paragraph). Each book gets a heading page with its title, then its text laid out over as many pages as it needs.
+
 ### Classes
 
 After the welcome guide, every player chooses a class, once (players already in the world choose the next time they join):

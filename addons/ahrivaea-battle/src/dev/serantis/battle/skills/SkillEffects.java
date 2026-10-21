@@ -48,6 +48,8 @@ public final class SkillEffects {
         try {
             List<ItemStack> out = new ArrayList<>(Drops.roll(species, influence, level, random, access));
             if (p != null && Skills.has(p, "fortune_4") && random.nextFloat() < 0.05f) out.addAll(Drops.roll(species, influence, level, random, access));
+            ItemStack lore = dev.serantis.battle.LoreDrops.roll(random);          // 1 in 100: a lore book
+            if (lore != null) out.add(lore);
             return out;
         } finally {
             LOOTER.remove();

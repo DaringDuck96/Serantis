@@ -51,10 +51,10 @@ public final class LoreBook {
     }
 
     /** The pages: the heading first, then the paragraphs, a paragraph split by sentence where it won't fit. */
-    static List<String> pages() {
+    static List<String> pages(String[] text) {
         List<String> pages = new ArrayList<>();
         StringBuilder page = new StringBuilder();
-        for (String para : TEXT) {
+        for (String para : text) {
             String chunk = para;
             if (!page.isEmpty() && page.length() + 2 + chunk.length() <= PAGE_CHARS) { page.append("\n\n").append(chunk); continue; }
             if (chunk.length() <= PAGE_CHARS) {
@@ -71,12 +71,16 @@ public final class LoreBook {
         return pages;
     }
 
-    public static ItemStack book() {
+    public static ItemStack book() { return book(TITLE, HEADING, "Serantia", TEXT); }
+
+    /** A signed written book: a heading page, then the paragraphs laid out over as many pages as they need. */
+    public static ItemStack book(String title, String heading, String author, String[] paragraphs) {
         List<Filterable<Component>> content = new ArrayList<>();
-        content.add(Filterable.passThrough(Component.literal("\n\n" + HEADING).withStyle(ChatFormatting.BOLD)));
-        for (String p : pages()) content.add(Filterable.passThrough(Component.literal(p)));
+        content.add(Filterable.passThrough(Component.literal("\n\n" + heading).withStyle(ChatFormatting.BOLD)));
+        for (String p : pages(paragraphs)) content.add(Filterable.passThrough(Component.literal(p)));
         ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
-        stack.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(Filterable.passThrough(TITLE), "Serantia", 0, content, true));
+        String shortTitle = title.length() > 32 ? title.substring(0, 31).trim() + "\u2026" : title;    // Minecraft's limit
+        stack.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(Filterable.passThrough(shortTitle), author, 0, content, true));
         return stack;
     }
 
