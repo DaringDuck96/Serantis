@@ -1,2 +1,4 @@
-# classes 1792614438
-smoke
+# classes 1792614530
+asset:data/minecraft/enchantment/sharpness.json
+asset:data/minecraft/enchantment/fire_aspect.json
+asset:data/minecraft/enchantment/efficiency.json
