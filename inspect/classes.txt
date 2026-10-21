@@ -1,2 +1,2 @@
 # classes
-compile wip/acolyte
+compile wip/dex
