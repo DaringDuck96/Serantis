@@ -65,9 +65,10 @@ final class BaseGuide {
                     + "(logs, ores, seeds, foods, and so on), and Transport workers move stacks into the best-labelled chest. Unlabelled "
                     + "chests are used for anything, preferring one that already holds the same item. If every chest is full, items are "
                     + "dropped."},
-            {"Raids", "Some nights, if you're at your base, raiders come for it: the bigger the base, the more often and the more of "
-                    + "them. They glow, attack your workers and steal from your chests near the core. Defense workers drop what "
-                    + "they're doing and fight them; the raid ends when they're beaten, at daybreak, or after five minutes."},
+            {"Raids", "Some nights, if you're at your base, 3-10 goblins gather at its edge (the bigger the base, the more often and "
+                    + "the stronger they are) and you have 3 minutes to click one. Pay them a little XP and they leave, or fight. In "
+                    + "the raid battle every worker with its Defense job on fights beside you and your party. Lose and they take "
+                    + "10-40% of your XP, depending on how big the raid was."},
             {"Knocked out, never lost", "Workers can only be hurt by raiders. One that would fall is knocked out instead: it rests for "
                     + "a minute, healing as it goes, then gets back to work. Your creatures are never lost unless you release them."},
 

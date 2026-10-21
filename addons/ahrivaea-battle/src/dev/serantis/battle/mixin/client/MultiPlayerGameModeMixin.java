@@ -23,6 +23,11 @@ public abstract class MultiPlayerGameModeMixin {
             cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }
+        if (hand == InteractionHand.MAIN_HAND && dev.serantis.battle.client.RaidScreen.isRaider(target)) {   // goblins raiding your base
+            TradeClient.send("serantis_raid_open", "entity", target.getId());
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
         if (hand == InteractionHand.MAIN_HAND && !player.isShiftKeyDown() && dev.serantis.battle.Honing.isSmith(target)
                 && dev.serantis.battle.Honing.improvable(player.getMainHandItem())) {      // a Smith, holding a weapon: improve it
             dev.serantis.battle.client.SmithScreen.open(target.getId());

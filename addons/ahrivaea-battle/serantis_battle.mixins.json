@@ -25,6 +25,8 @@
     "DropsMixin",
     "LivingEntityDropsMixin",
     "TunnelerMixin",
+    "RaidsMixin",
+    "BattleRaidAccess",
     "BlockSkillsMixin",
     "ItemCombinerMenuAccessor",
     "AnvilMenuSkillsMixin",

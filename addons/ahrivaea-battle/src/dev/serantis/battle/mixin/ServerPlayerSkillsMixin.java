@@ -68,5 +68,7 @@ public abstract class ServerPlayerSkillsMixin {
         if (self.tickCount % 20 == 3) dev.serantis.battle.Companions.check(self);
         if (self.tickCount % 100 == 61) dev.serantis.battle.Towns.check(self);
         dev.serantis.battle.WingedBoots.tick(self);
+        if (self.tickCount % 20 == 7) dev.serantis.battle.GoblinRaids.tick(self);
+        if (self.tickCount % 100 == 83) dev.serantis.battle.GoblinRaids.sweep(self);
     }
 }

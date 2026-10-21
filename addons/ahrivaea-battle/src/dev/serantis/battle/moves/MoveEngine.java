@@ -107,6 +107,16 @@ public final class MoveEngine {
         ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(specs));
     }
 
+    /** A creature that isn't in the party (a raid's base defender): its own temperament, apples, nickname and moves. */
+    public static void fromCaught(Unit u, CaughtCreature c) {
+        if (u == null || c == null) return;
+        MovesHolder h = (MovesHolder) (Object) c;
+        if (h.serantis$nickname() != null && !h.serantis$nickname().isEmpty()) ((UnitAccess) (Object) u).serantis$setName(h.serantis$nickname());
+        if (h.serantis$temperament() != null) setTemperament(u, h.serantis$temperament(), h.serantis$apples());
+        List<MoveSpec> saved = MoveBook.available() ? MoveBook.decode(h.serantis$moves()) : null;
+        if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved));
+    }
+
     /** Moves a big creature to the nearest spot its whole body fits (or makes it smaller if none does). */
     static void settle(Battle b, Unit u) {
         UnitState st = state(u);

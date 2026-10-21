@@ -46,6 +46,8 @@ public abstract class BattlesMixin {
     private static void serantis$growArena(Arena.Theme theme, int a, int b, CallbackInfoReturnable<Integer> cir) {
         Integer biggest = SERANTIS_BIGGEST.get();
         if (biggest != null && biggest > 1) cir.setReturnValue(Math.min(19, cir.getReturnValue() + 2 * (biggest - 1)));
+        int raid = dev.serantis.battle.GoblinRaids.extraArena();         // room for a raid's base defenders
+        if (raid > 0) cir.setReturnValue(Math.min(19, cir.getReturnValue() + raid));
     }
 
     // Wild creatures fight with the moves saved on them.
@@ -95,6 +97,8 @@ public abstract class BattlesMixin {
 
     @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battles;reinforcements(ILnet/minecraft/util/RandomSource;)I"))
     private static int serantis$guardCount(int level, net.minecraft.util.RandomSource random, ServerPlayer player, dev.ahrivaea.creature.CreatureEntity target) {
+        int raid = dev.serantis.battle.GoblinRaids.raidSize();
+        if (raid > 0) return raid - 1;                                  // a goblin raid: the rest of the raiders
         String master = dev.serantis.battle.Masters.influenceOf(target);
         if (master != null) {                                           // a Creature Master brings 3-5 of its own
             SERANTIS_MASTER.set(master);
@@ -110,6 +114,8 @@ public abstract class BattlesMixin {
             "Ldev/ahrivaea/party/RecruitRules;reinforcement(Lnet/minecraft/core/Holder;Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;I)Ljava/util/Optional;"))
     private static java.util.Optional<dev.ahrivaea.creature.Species.LevelledPick> serantis$guard(net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> biome,
             net.minecraft.world.level.Level level, net.minecraft.util.RandomSource random, dev.ahrivaea.creature.Species species, dev.ahrivaea.creature.Influence influence, int lvl) {
+        var raider = dev.serantis.battle.GoblinRaids.nextPick();
+        if (raider != null) return java.util.Optional.of(raider);
         if (SERANTIS_MASTER.get() != null) {
             var pick = dev.serantis.battle.Masters.teamPick(SERANTIS_MASTER.get(), SERANTIS_MASTER_LEVEL.get(), random);
             if (pick != null) return java.util.Optional.of(pick);
@@ -149,9 +155,20 @@ public abstract class BattlesMixin {
         return "Hit it with a weapon (or shoot it) to battle it.";
     }
 
+    // Raid goblins: no ordinary battles; hitting one is a raid fight's own business (see GoblinRaids).
+    @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/creature/Variant;roll(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/util/RandomSource;)Ldev/ahrivaea/creature/Variant;"))
+    private static dev.ahrivaea.creature.Variant serantis$raidVariant(net.minecraft.server.level.ServerLevel level, net.minecraft.util.RandomSource random) {
+        return dev.serantis.battle.GoblinRaids.STARTING.get() != null ? dev.ahrivaea.creature.Variant.NONE : dev.ahrivaea.creature.Variant.roll(level, random);
+    }
+
     // Black Market Merchants don't fight.
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
+            dev.serantis.battle.GoblinRaids.open(player, entity);
+            cir.setReturnValue(null);
+            return;
+        }
         if (dev.serantis.battle.Riddles.isRiddleDragon(entity) && !dev.serantis.battle.Riddles.solved(player, entity)) {
             dev.serantis.battle.Riddles.ask(player, entity);          // an End dragon asks its riddle first
             cir.setReturnValue(null);
@@ -233,6 +250,16 @@ public abstract class BattlesMixin {
             }
             if ("serantis_welcome_seen".equals(kind)) {
                 dev.serantis.battle.Welcome.seen(player);
+                cir.setReturnValue(null);
+                return;
+            }
+            if (kind.startsWith("serantis_raid_")) {      // goblins at the base
+                switch (kind) {
+                    case "serantis_raid_open" -> dev.serantis.battle.GoblinRaids.open(player, o.has("entity") ? o.get("entity").getAsInt() : -1);
+                    case "serantis_raid_pay" -> dev.serantis.battle.GoblinRaids.pay(player);
+                    case "serantis_raid_fight" -> dev.serantis.battle.GoblinRaids.refuse(player);
+                    default -> dev.serantis.battle.GoblinRaids.close(player);
+                }
                 cir.setReturnValue(null);
                 return;
             }

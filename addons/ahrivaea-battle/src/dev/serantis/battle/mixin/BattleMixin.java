@@ -158,6 +158,7 @@ public abstract class BattleMixin implements BattleAccess {
     private void serantis$defeat(Battle.Outcome outcome, CallbackInfo ci) {
         Battle self = (Battle) (Object) this;
         if (outcome == Battle.Outcome.LOST && self.player() != null) dev.serantis.battle.Wear.defeat(self.player(), "You were defeated.");
+        dev.serantis.battle.GoblinRaids.finished(self, outcome);
     }
 
     // The player's Swiftness nodes add battle movement.
