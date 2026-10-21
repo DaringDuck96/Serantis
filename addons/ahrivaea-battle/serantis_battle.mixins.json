@@ -32,7 +32,8 @@
     "VanillaMobsVillagerMixin",
     "WildSpawnerNobleMixin",
     "ServerLevelInnMixin",
-    "VillagersRolesMixin"
+    "VillagersRolesMixin",
+    "FloatGoalMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

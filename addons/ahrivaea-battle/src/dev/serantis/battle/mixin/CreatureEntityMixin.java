@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CreatureEntity.class)
-public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.battle.Market.Holder {
+public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.battle.Market.Holder, dev.serantis.battle.Locomotion.Holder {
     @Unique private String serantis$moves;
     @Unique private String serantis$temperament;
     @Unique private String serantis$nickname;
@@ -40,7 +40,19 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Inject(method = "tick", at = @At("HEAD"))
     private void serantis$marketTick(CallbackInfo ci) {
         if (serantis$leaveAt > 0) dev.serantis.battle.Market.tick((CreatureEntity) (Object) this);
+        if (!((CreatureEntity) (Object) this).level().isClientSide()) dev.serantis.battle.Locomotion.tick((CreatureEntity) (Object) this);
     }
+
+    // How it moves in the wild (see Locomotion): flying, diving, crawling the bottom.
+    @Unique private byte serantis$moveMode = dev.serantis.battle.Locomotion.UNSET;
+    @Unique private net.minecraft.world.phys.Vec3 serantis$moveTarget;
+    @Unique private int serantis$retarget;
+    @Override public byte serantis$moveMode() { return serantis$moveMode; }
+    @Override public void serantis$setMoveMode(byte mode) { serantis$moveMode = mode; }
+    @Override public net.minecraft.world.phys.Vec3 serantis$moveTarget() { return serantis$moveTarget; }
+    @Override public void serantis$setMoveTarget(net.minecraft.world.phys.Vec3 target) { serantis$moveTarget = target; }
+    @Override public int serantis$retarget() { return serantis$retarget; }
+    @Override public void serantis$setRetarget(int ticks) { serantis$retarget = ticks; }
 
     @Override public String serantis$apples() { return serantis$apples; }
     @Override public void serantis$setApples(String apples) { serantis$apples = apples; }
@@ -102,6 +114,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$temperament != null) out.putString("SerantisTemperament", serantis$temperament);
         if (serantis$nickname != null) out.putString("SerantisName", serantis$nickname);
         if (serantis$apples != null) out.putString("SerantisApples", serantis$apples);
+        out.putInt("SerantisMoveMode", serantis$moveMode);
         if (serantis$leaveAt > 0) {
             out.putLong("SerantisLeaveAt", serantis$leaveAt);
             out.putInt("SerantisSwaps", serantis$swaps);
@@ -120,6 +133,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         String apples = in.getStringOr("SerantisApples", "");
         if (!apples.isEmpty()) serantis$apples = apples;
         serantis$leaveAt = in.getLongOr("SerantisLeaveAt", 0L);
+        serantis$moveMode = (byte) in.getIntOr("SerantisMoveMode", dev.serantis.battle.Locomotion.UNSET);
         serantis$swaps = in.getIntOr("SerantisSwaps", 0);
         if (serantis$leaveAt > 0) serantis$stock = in.read("SerantisStock", CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
     }

@@ -186,6 +186,12 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 Right after you recruit a creature in battle, or pick your starter, a box pops up to name it (up to 20 characters). **Keep** leaves it with its species name. A named creature shows its name over its head, in battle and on the party screen, where its temperament and species follow in brackets, e.g. "Sparky (Brave Scrap Goblin)". Names are saved with the creature and kept when it's sent out, boxed or levelled up.
 
 
+### Flyers and swimmers in the wild
+
+- **Flyers** (every creature that flies): 60% take to the air when they appear and stay airborne, cruising 4 to 14 blocks above the ground. When a player is nearby they often swoop low around them, so you can still reach one with a sword to start a battle. The other 40% stay on the ground.
+- **Swimmers:** 80% stay beneath the surface. Bottom dwellers (Crab, Giant Octopus, Tortoise, Nautiloper, Whirlpool Leech, Reef Spitter, Revenant, Sahuagin, River Zorling) sink and crawl along the sea floor or river bed; every other swimmer swims around underwater. Ducks always paddle on the surface. The other 20% float at the surface.
+- Tamed creatures, base workers, ridden or leashed creatures and creatures in battle move as usual. Creatures already in your world pick their way of moving the next time they're loaded.
+
 ### Villagers
 
 Villagers in villages now spawn at **Level 5** with their profession already set, so recruiting one (by battle, like any creature) gets you that profession; in battle a villager shows it after its name, e.g. "Villager (Bard)". A villager keeps the profession it was born with: there's no changing it (villagers recruited before this update that were never trained can still be trained once). Each recruit starts on its first deed (toward Novice) from the moment you recruit it.
