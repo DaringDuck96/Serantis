@@ -445,3 +445,18 @@ A Noble at your base adds its bonus on top (-20 Common, +12 Rare, +6 Super Rare,
 **Influence armour.** Every influence except Normal has a full set (helmet, chestplate, leggings, boots), as strong as diamond armour, and named like its staff: Emberwrath (Fire), Rimespire (Frost), Thundercall (Storm), Stoneheart (Earth), Tidecaller (Water), Thornbloom (Nature), Riftwalker (Void), Moonpetal (Fae), Gloomreaver (Darkness), Runeweaver (Arcane) and Dawnbringer (Radiant). In battle, each piece you wear takes 6.25% off the damage you take from attacks of its influence (a full set: 25%). Each piece is crafted like its diamond version with two of the diamonds swapped for: fire charges (Fire), blue ice (Frost), lightning rods (Storm), obsidian (Earth), prismarine crystals (Water), moss blocks (Nature), ender pearls (Void), glow berries (Fae), ink sacs (Darkness), amethyst shards (Arcane) or glowstone dust (Radiant). Until their own models arrive they look like diamond armour.
 
 **Teleporting Boots.** Diamond boots + 3 ender pearls (shapeless). As strong as diamond boots; double-tap sneak while wearing them to teleport to the safest spot about 10 blocks the way you're facing: solid ground with room to stand, and no lava, fire, magma, cactus, berry bushes, powder snow, wither roses or dripstone. It looks up to 3 blocks up or down and one block to either side, and lands closer if there's nowhere safe at 10. Each teleport uses 1 durability and they recharge for 3 seconds. In battle they give you **Flight** instead: you move like a flying creature, over water, lava and obstacles.
+
+**Weapon enchantments count in battle** (for your weapon attack; staff spells aren't affected):
+
+| Enchantment | In battle |
+|---|---|
+| Sharpness | +0.5 per level + 0.5 attack damage, as in Minecraft |
+| Smite | +10% damage per level against Darkness and Void creatures |
+| Bane of Arthropods | +10% per level against Nature creatures |
+| Impaling | +10% per level against Water creatures |
+| Fire Aspect | +8% per level against anything but Fire creatures |
+| Flame | +15% against anything but Fire creatures |
+| Power | +12% per level |
+| Breach | +8% per level |
+| Density | +5% per level |
+| Looting | +5% per level that each creature you beat drops its loot twice |

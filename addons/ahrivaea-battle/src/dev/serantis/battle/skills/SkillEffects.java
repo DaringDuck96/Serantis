@@ -32,6 +32,8 @@ public final class SkillEffects {
         if (p == null) return r;
         double mult = 1;
         if (attacker.isPlayer) {
+            if (dev.serantis.battle.moves.MoveBook.of(move) == null)        // the weapon attack (not a spell): its enchantments count
+                mult *= dev.serantis.battle.WeaponEnchants.multiplier(p, p.getMainHandItem(), target.influence == null ? null : target.influence.getSerializedName());
             if (move.maxRange() <= 1 && Skills.has(p, "might_4")) mult *= 1.05;
             if (move.move().category() == DamageCalc.Category.MAGIC && Skills.has(p, "arcana_3")) mult *= 1.05;
             if (crit && Skills.has(p, "might_6")) mult *= 2.25 / 2.0;
@@ -52,7 +54,8 @@ public final class SkillEffects {
         try {
             List<ItemStack> out = new ArrayList<>(Drops.roll(species, influence, level, random, access));
             boolean journeyman = dev.serantis.battle.PlayerClass.is(p, "journeyman");
-            float twice = (p != null && Skills.has(p, "fortune_4") ? 0.05f : 0f) + (journeyman ? dev.serantis.battle.PlayerClass.JOURNEYMAN_DOUBLE_LOOT : 0f);
+            float twice = (p != null && Skills.has(p, "fortune_4") ? 0.05f : 0f) + (journeyman ? dev.serantis.battle.PlayerClass.JOURNEYMAN_DOUBLE_LOOT : 0f)
+                    + dev.serantis.battle.WeaponEnchants.looting(p);
             if (twice > 0 && random.nextFloat() < twice) out.addAll(Drops.roll(species, influence, level, random, access));
             ItemStack lore = dev.serantis.battle.LoreDrops.roll(random, journeyman ? dev.serantis.battle.PlayerClass.JOURNEYMAN_LORE : 1f);          // 2.5%: a lore book
             if (lore != null) {

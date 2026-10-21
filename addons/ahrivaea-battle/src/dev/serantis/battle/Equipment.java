@@ -43,7 +43,7 @@ public final class Equipment {
         ItemStack hand = p.getMainHandItem();
         boolean ranged = hand.getItem() instanceof BowItem || hand.getItem() instanceof CrossbowItem;
         double damage = hand.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY)
-                .compute(Attributes.ATTACK_DAMAGE, 1.0, EquipmentSlot.MAINHAND);
+                .compute(Attributes.ATTACK_DAMAGE, 1.0, EquipmentSlot.MAINHAND) + WeaponEnchants.sharpness(p, hand);   // Sharpness counts
         List<BattleMove> out = new ArrayList<>();
         out.add(BattleMove.forWeapon(hand.isEmpty() ? "Punch" : hand.getHoverName().getString(), damage, ranged));
         out.addAll(Staffs.spellsInHand(p));

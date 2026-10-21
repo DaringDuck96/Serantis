@@ -374,10 +374,8 @@ public abstract class BattleMixin implements BattleAccess {
     // A linked Magic Staff in either hand adds its spell to the player's moves (see Staffs).
     @Redirect(method = "addPlayer", at = @At(value = "INVOKE", target = "Ljava/util/List;of(Ljava/lang/Object;)Ljava/util/List;"))
     private List<Object> serantis$staffSpells(Object weapon, net.minecraft.server.level.ServerPlayer player, int x, int z) {
-        List<Object> moves = new java.util.ArrayList<>();
-        moves.add(weapon);
-        moves.addAll(dev.serantis.battle.Staffs.spellsInHand(player));
-        return moves;
+        // the weapon attack is rebuilt by Equipment.playerMoves so Sharpness counts too
+        return new java.util.ArrayList<>(dev.serantis.battle.Equipment.playerMoves(player));
     }
 
     // Your health and your battle HP are one stat: battle HP is your max health x 5 (10 hearts = 100 HP),
