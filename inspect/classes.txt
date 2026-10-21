@@ -1,2 +1,9 @@
 # classes
-compile wip/class-perks
+sig:net.minecraft.server.level.ServerPlayerGameMode
+sig:net.minecraft.world.item.enchantment.EnchantmentHelper
+sig:net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase
+sig:net.minecraft.world.item.ItemStack
+find:data/minecraft/enchantment/efficiency.json
+asset:data/minecraft/enchantment/efficiency.json
+asset:data/minecraft/tags/item/pickaxes.json
+asset:data/minecraft/tags/enchantment/in_enchanting_table.json
