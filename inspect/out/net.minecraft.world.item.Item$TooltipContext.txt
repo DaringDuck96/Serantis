@@ -1,0 +1,11 @@
+Compiled from "Item.java"
+public interface net.minecraft.world.item.Item$TooltipContext {
+  public static final net.minecraft.world.item.Item$TooltipContext EMPTY;
+  public abstract net.minecraft.core.HolderLookup$Provider registries();
+  public abstract float tickRate();
+  public abstract net.minecraft.world.level.saveddata.maps.MapItemSavedData mapData(net.minecraft.world.level.saveddata.maps.MapId);
+  public abstract boolean isPeaceful();
+  public static net.minecraft.world.item.Item$TooltipContext of(net.minecraft.world.level.Level);
+  public static net.minecraft.world.item.Item$TooltipContext of(net.minecraft.core.HolderLookup$Provider);
+  static {};
+}
