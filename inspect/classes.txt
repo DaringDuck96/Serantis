@@ -1,2 +1,5 @@
 # Minecraft classes
-find:BlockElement|ElementRotation|BlockModelPart|model/.*Rotation
+find:model/cuboid/
+net.minecraft.client.resources.model.cuboid.CuboidRotation
+net.minecraft.client.resources.model.cuboid.CuboidRotation$EulerXYZRotation
+net.minecraft.client.resources.model.cuboid.CuboidRotation$SingleAxisRotation
