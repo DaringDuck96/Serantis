@@ -1,3 +1,2 @@
 # classes
-sig:net.minecraft.server.level.ServerLevel
-sig:net.minecraft.server.MinecraftServer
+sig:net.minecraft.world.level.ChunkPos
