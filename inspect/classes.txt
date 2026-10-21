@@ -1,6 +1,3 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-net.minecraft.world.inventory.FurnaceResultSlot
-sig:net.minecraft.stats.Stats
-sig:net.minecraft.stats.StatsCounter
-sig:net.minecraft.stats.ServerStatsCounter
-sig:net.minecraft.server.level.ServerPlayer
+sig:net.minecraft.server.level.ServerLevel
+sig:net.minecraft.world.entity.player.Player
