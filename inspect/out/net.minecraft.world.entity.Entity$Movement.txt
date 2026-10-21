@@ -1,0 +1,15 @@
+Compiled from "Entity.java"
+final class net.minecraft.world.entity.Entity$Movement extends java.lang.Record {
+  private final net.minecraft.world.phys.Vec3 from;
+  private final net.minecraft.world.phys.Vec3 to;
+  private final java.util.Optional<net.minecraft.world.phys.Vec3> axisDependentOriginalMovement;
+  public net.minecraft.world.entity.Entity$Movement(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.entity.Entity$Movement(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+  private net.minecraft.world.entity.Entity$Movement(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, java.util.Optional<net.minecraft.world.phys.Vec3>);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.phys.Vec3 from();
+  public net.minecraft.world.phys.Vec3 to();
+  public java.util.Optional<net.minecraft.world.phys.Vec3> axisDependentOriginalMovement();
+}

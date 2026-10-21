@@ -1,7 +1,0 @@
-Compiled from "Player.java"
-class net.minecraft.world.entity.player.Player$1 implements net.minecraft.world.entity.SlotAccess {
-  final net.minecraft.world.entity.player.Player this$0;
-  net.minecraft.world.entity.player.Player$1(net.minecraft.world.entity.player.Player);
-  public net.minecraft.world.item.ItemStack get();
-  public boolean set(net.minecraft.world.item.ItemStack);
-}

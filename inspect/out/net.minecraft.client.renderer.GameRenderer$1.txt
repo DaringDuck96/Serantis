@@ -1,0 +1,9 @@
+Compiled from "GameRenderer.java"
+class net.minecraft.client.renderer.GameRenderer$1 implements com.mojang.renderpearl.api.pipeline.ShaderSource {
+  final net.minecraft.server.packs.resources.ResourceManager val$resourceManager;
+  final java.util.Map val$includes;
+  net.minecraft.client.renderer.GameRenderer$1();
+  public java.lang.String getShader(net.minecraft.resources.Identifier, com.mojang.renderpearl.api.pipeline.ShaderType);
+  public com.mojang.renderpearl.api.pipeline.ShaderSource$CachedIncludeSource getInclude(net.minecraft.resources.Identifier);
+  public void close();
+}
