@@ -24,6 +24,10 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Serantis Towers** | Cheaper first towers (the Ember Spire takes 64 coal, the Timber Watch 64 logs and the Quarry Keep 128 cobblestone), and the first player to make an offering at a tower claims it for good: anyone can help rebuild it, but its Base Core, the extra Base Core and the land around it go to whoever claimed it. |
 | **Serantis Battle and Spawning** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line. Spawns roll their rarity first (70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary), can be any level from 1 to 20, and have a 1% chance of being Mutated. Creatures fight with 3 moves each from the Move Dex, and every wild enemy gets a random battle mentality. |
 
+### Welcome guide
+
+The first time a player joins, a welcome guide pops up (over the starter screen, which comes back after). It runs through what Serantis is about: picking a starter, battling and recruiting creatures, collecting them, XP as the main currency, rebuilding towers, Creature Masters and their stones, achievements, winning the game with the Eternita Stone, and that it's still Minecraft, where building and creativity are as valid a way to play as any battle. Read it again any time from the **Guide** button on the party screen.
+
 ### Battle stats and levels
 
 - Each creature's Level 20 stats are in `addons/ahrivaea-battle/serantis_battle/stats.tsv`, built from the stat sheet with `tools/build_battle_stats.py`. They apply to every creature, including the original creatures mod's, without changing its files.

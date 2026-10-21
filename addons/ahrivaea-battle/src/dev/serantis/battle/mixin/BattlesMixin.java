@@ -173,6 +173,11 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if ("serantis_welcome_seen".equals(kind)) {
+                dev.serantis.battle.Welcome.seen(player);
+                cir.setReturnValue(null);
+                return;
+            }
             if (kind.startsWith("serantis_tutor_")) {     // the Move Tutor
                 int n = o.has("slot") ? o.get("slot").getAsInt() : -1;
                 switch (kind) {
