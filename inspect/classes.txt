@@ -1,7 +1,4 @@
 # Minecraft classes to disassemble (see the workflow for the syntax)
-sig:net.minecraft.world.entity.projectile.arrow.AbstractArrow
-sig:net.minecraft.world.entity.projectile.AbstractArrow
-sig:net.minecraft.world.entity.projectile.Projectile
-sig:net.minecraft.core.component.DataComponents
-sig:net.minecraft.tags.ItemTags
-find:projectile/.*Arrow
+find:block/model/BlockElement
+net.minecraft.client.renderer.block.model.BlockElementRotation
+sig:net.minecraft.client.renderer.block.model.BlockElement

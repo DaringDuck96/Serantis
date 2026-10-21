@@ -1,4 +1,0 @@
-Compiled from "Projectile.java"
-public interface net.minecraft.world.entity.projectile.Projectile$ProjectileFactory<T extends net.minecraft.world.entity.projectile.Projectile> {
-  public abstract T create(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack);
-}

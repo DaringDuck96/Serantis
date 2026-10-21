@@ -1,5 +1,0 @@
-minecraft.jar: net/minecraft/client/model/object/projectile/ArrowModel.class
-minecraft.jar: net/minecraft/world/entity/projectile/arrow/AbstractArrow$Pickup.class
-minecraft.jar: net/minecraft/world/entity/projectile/arrow/AbstractArrow.class
-minecraft.jar: net/minecraft/world/entity/projectile/arrow/Arrow.class
-minecraft.jar: net/minecraft/world/entity/projectile/arrow/SpectralArrow.class
