@@ -1,2 +1,6 @@
 # classes
-sig:net.minecraft.world.entity.Entity
+sig:net.minecraft.world.item.Item$Properties
+sig:net.minecraft.world.item.equipment.ArmorMaterials
+sig:net.minecraft.world.item.equipment.ArmorType
+sig:net.minecraft.world.entity.player.Abilities
+sig:net.minecraft.world.entity.LivingEntity
