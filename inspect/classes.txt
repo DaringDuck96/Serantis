@@ -1,2 +1,16 @@
-# 1792619297
-smoke
+# 1792621586
+sig:net.minecraft.client.renderer.entity.player.AvatarRenderer
+sig:net.minecraft.client.renderer.SubmitNodeCollector
+sig:net.minecraft.client.renderer.OrderedSubmitNodeCollector
+sig:net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer
+sig:net.minecraft.client.renderer.entity.layers.RenderLayer
+sig:net.minecraft.client.model.HumanoidModel
+sig:net.minecraft.world.item.equipment.Equippable$Builder
+sig:net.minecraft.world.item.equipment.Equippable
+sig:net.minecraft.world.item.equipment.EquipmentAssets
+sig:net.minecraft.client.renderer.entity.state.HumanoidRenderState
+sig:net.minecraft.client.renderer.entity.state.AvatarRenderState
+sig:net.minecraft.client.renderer.rendertype.RenderTypes
+sig:net.minecraft.client.renderer.entity.LivingEntityRenderer
+sig:net.minecraft.client.renderer.entity.layers.CustomHeadLayer
+asset:assets/minecraft/equipment/diamond.json
