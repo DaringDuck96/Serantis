@@ -28,6 +28,10 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 
 The creatures mod's Arcane Dragon is retired: the Clockwork Dragon is the arcane dragon in Serantia. It never spawns, and Wandering Traders, Black Market Merchants and Creature Masters never hand it out, so the dex counts 433 creature forms to find.
 
+### The book of Serantia
+
+Every player, whatever their class, starts with the written book **Serantia: A World Forged by Dragons** (the story of the Twelve Great Dragon Lords and the Council of Eternia). Players already in the world get it the next time they join. It's given once; the text is in `addons/ahrivaea-battle/src/dev/serantis/battle/LoreBook.java`.
+
 ### Classes
 
 After the welcome guide, every player chooses a class, once (players already in the world choose the next time they join):

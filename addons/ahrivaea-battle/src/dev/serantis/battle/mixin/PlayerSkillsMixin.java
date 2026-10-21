@@ -40,7 +40,9 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Override public void serantis$addXpGained(long n) { serantis$xpGained += n; }
     @Unique private final java.util.Map<String, Integer> serantis$stones = new java.util.HashMap<>();
     @Unique private boolean serantis$eternita;
-    @Unique private boolean serantis$welcomed, serantis$welcomeSent;
+    @Unique private boolean serantis$welcomed, serantis$welcomeSent, serantis$loreBook;
+    @Override public boolean serantis$loreBook() { return serantis$loreBook; }
+    @Override public void serantis$setLoreBook(boolean given) { serantis$loreBook = given; }
     @Unique private String serantis$playerClass, serantis$pendingTemperament;
     @Unique private net.minecraft.world.item.ItemStack serantis$backpack = net.minecraft.world.item.ItemStack.EMPTY;
     @Override public net.minecraft.world.item.ItemStack serantis$backpack() { return serantis$backpack; }
@@ -93,6 +95,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$stones.forEach((k, v) -> st.append(',').append(k).append(':').append(v));
         out.putString("SerantisMastery", st.toString());
         out.putInt("SerantisWelcomed", serantis$welcomed ? 1 : 0);
+        out.putInt("SerantisLoreBook", serantis$loreBook ? 1 : 0);
         if (serantis$playerClass != null) out.putString("SerantisClass", serantis$playerClass);
         if (!serantis$backpack.isEmpty()) out.store("SerantisBackpack", net.minecraft.world.item.ItemStack.OPTIONAL_CODEC, serantis$backpack);
         if (serantis$pendingTemperament != null) out.putString("SerantisStarterTemperament", serantis$pendingTemperament);
@@ -126,6 +129,7 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         dev.serantis.battle.Achievements.decode(this, in.getStringOr("SerantisAchievements", ""));
         serantis$stones.clear();
         serantis$welcomed = in.getIntOr("SerantisWelcomed", 0) == 1;
+        serantis$loreBook = in.getIntOr("SerantisLoreBook", 0) == 1;
         serantis$backpack = in.read("SerantisBackpack", net.minecraft.world.item.ItemStack.OPTIONAL_CODEC).orElse(net.minecraft.world.item.ItemStack.EMPTY);
         String cls = in.getStringOr("SerantisClass", ""), pend = in.getStringOr("SerantisStarterTemperament", "");
         serantis$playerClass = cls.isEmpty() ? null : cls;

@@ -13,6 +13,9 @@ public final class Welcome {
         /** Not saved: whether the guide's been offered to this player since they joined. */
         boolean serantis$welcomeSent();
         void serantis$setWelcomeSent(boolean sent);
+        /** Whether they've been given the book "Serantia: A World Forged by Dragons". */
+        boolean serantis$loreBook();
+        void serantis$setLoreBook(boolean given);
     }
 
     private Welcome() {}
@@ -20,6 +23,7 @@ public final class Welcome {
     /** A few seconds after joining, a player who hasn't read the guide is sent it. */
     public static void tick(ServerPlayer p) {
         Holder h = (Holder) p;
+        if (!h.serantis$loreBook() && p.tickCount >= 20) { h.serantis$setLoreBook(true); LoreBook.give(p); }
         if (h.serantis$welcomeSent() || p.tickCount < 40) return;
         if (h.serantis$welcomed() && PlayerClass.of(p) != null) return;          // nothing to show (guide read, class picked)
         h.serantis$setWelcomeSent(true);

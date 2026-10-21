@@ -30,6 +30,7 @@ public abstract class ServerPlayerSkillsMixin {
         ma.serantis$setEternita(mb.serantis$eternita());
         ((dev.serantis.battle.Welcome.Holder) (Object) this).serantis$setWelcomed(((dev.serantis.battle.Welcome.Holder) (Object) old).serantis$welcomed());
         ((dev.serantis.battle.Welcome.Holder) (Object) this).serantis$setWelcomeSent(true);
+        ((dev.serantis.battle.Welcome.Holder) (Object) this).serantis$setLoreBook(((dev.serantis.battle.Welcome.Holder) (Object) old).serantis$loreBook());
         var co = (dev.serantis.battle.Companions.Holder) (Object) this;
         var cb = (dev.serantis.battle.Companions.Holder) (Object) old;
         co.serantis$out().putAll(cb.serantis$out());
