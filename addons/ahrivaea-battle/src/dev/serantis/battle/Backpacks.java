@@ -108,14 +108,14 @@ public final class Backpacks {
         p.closeContainer();
         h.serantis$setBackpack(ItemStack.EMPTY);
         ItemStack copy = pack.copy();
-        if (!p.getInventory().add(copy) && !copy.isEmpty()) p.drop(copy, false);
+        if (!p.getInventory().add(copy) && !copy.isEmpty()) p.level().addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(p.level(), p.getX(), p.getY(), p.getZ(), copy));
         tell(p, "Backpack off. Right-click it to put it back on.");
     }
 
     /** A base just reached Level 2: its owner earns a backpack. */
     public static void reward(ServerPlayer p) {
         ItemStack pack = new ItemStack(BACKPACK);
-        if (!p.getInventory().add(pack) && !pack.isEmpty()) p.drop(pack, false);
+        if (!p.getInventory().add(pack) && !pack.isEmpty()) p.level().addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(p.level(), p.getX(), p.getY(), p.getZ(), pack));
         p.sendSystemMessage(Component.literal("Your base reached Level 2! You earned a Backpack: right-click it to wear it, then press B to open 36 extra slots.")
                 .withStyle(ChatFormatting.GOLD));
     }
