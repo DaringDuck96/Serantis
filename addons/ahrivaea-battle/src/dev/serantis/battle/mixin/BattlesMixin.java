@@ -255,7 +255,7 @@ public abstract class BattlesMixin {
                 return;
             }
             if ("serantis_visit_done".equals(kind)) {     // the Mysterious Figure leaves
-                dev.serantis.battle.FigureVisit.done(player, o.has("bowed") && o.get("bowed").getAsBoolean());
+                dev.serantis.battle.FigureVisit.done(player);
                 cir.setReturnValue(null);
                 return;
             }

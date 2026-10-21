@@ -18,15 +18,67 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * The Mysterious Figure's second visit: after your 10th battle (won or lost), it walks up to you wherever you
- * are (you can't move while it does; client/FigureScreen), says you're getting stronger, and vanishes, with
- * a scoff or, if you ask who it is, a bow and an answer.
+ * The Mysterious Figure's visits after the opening scene (serantis_battle/figure_scenes.json): at milestones it
+ * walks up to you wherever you are (you can't move while it does; client/FigureScreen), talks, and vanishes.
+ * Each plays once: after 10 battles, a base at Level 2, the first Gym Master Stone, the first tower rebuilt,
+ * the first steps in the Nether, three towers rebuilt. At most one every 5 minutes.
  */
 public final class FigureVisit {
     public static final int BATTLES = 10;
     private static final double STEP = 0.11, STOP = 2.2;
 
+    /** The scenes, by id: their flag bits. */
+    private static java.util.Map<String, Integer> scenes;
+    private static final java.util.Map<UUID, Long> LAST_SCENE = new ConcurrentHashMap<>();
+    private static final long GAP = 20 * 60 * 5;
+
+    private static synchronized java.util.Map<String, Integer> scenes() {
+        if (scenes == null) {
+            java.util.Map<String, Integer> out = new java.util.LinkedHashMap<>();
+            try (var in = FigureVisit.class.getResourceAsStream("/serantis_battle/figure_scenes.json")) {
+                if (in != null) for (var e : com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8))
+                        .getAsJsonObject().getAsJsonArray("scenes")) {
+                    var o = e.getAsJsonObject();
+                    out.put(o.get("id").getAsString(), o.get("bit").getAsInt());
+                }
+            } catch (Exception ignored) { }
+            scenes = out;
+        }
+        return scenes;
+    }
+
+    /** A milestone met for this scene? */
+    private static boolean reached(ServerPlayer p, String id) {
+        return switch (id) {
+            case "battles" -> ((Welcome.Holder) p).serantis$battlesFought() >= BATTLES;
+            case "base" -> ownsBase(p, 2);
+            case "stone" -> stones(p) >= 1;
+            case "tower" -> Achievements.value(p, "towers") >= 1;
+            case "towers" -> Achievements.value(p, "towers") >= 3;
+            case "nether" -> p.level().dimension() == net.minecraft.world.level.Level.NETHER;
+            default -> false;
+        };
+    }
+
+    private static int stones(ServerPlayer p) {
+        int n = 0;
+        for (String inf : Masters.INFLUENCES) n += ((Masters.Holder) p).serantis$stones(inf);
+        return n;
+    }
+
+    /** A base of theirs (loaded right now) at this level or higher. */
+    private static boolean ownsBase(ServerPlayer p, int lvl) {
+        for (ServerLevel level : p.level().getServer().getAllLevels())
+            for (BlockPos pos : dev.ahrivaea.base.Bases.cores(level)) {
+                if (!level.isLoaded(pos)) continue;
+                var core = dev.ahrivaea.base.Bases.coreAt(level, pos);
+                if (core != null && p.getUUID().equals(core.owner()) && core.baseLevel() >= lvl) return true;
+            }
+        return false;
+    }
+
     private static final class Visit {
+        String scene;
         UUID figure;
         boolean arrived;
         int ticks;
@@ -65,12 +117,13 @@ public final class FigureVisit {
         if (v == null) {
             if (p.tickCount % 20 != 13) return;
             Welcome.Holder h = (Welcome.Holder) p;
-            if (h.serantis$figureMet() >= 2) return;
             seed(p);
-            if (h.serantis$battlesFought() < BATTLES || Intro.active(p) || Battles.of(p) != null || p.isSpectator()) return;
-            long since = p.level().getGameTime() - LAST_BATTLE.getOrDefault(p.getUUID(), 0L);
-            if (since < 60 || !p.onGround() || p.isPassenger() || p.isSleeping()) return;
-            start(p);
+            if (Intro.pending(p) || Battles.of(p) != null || p.isSpectator()) return;
+            long now = p.level().getGameTime();
+            if (now - LAST_BATTLE.getOrDefault(p.getUUID(), -1000L) < 60 || now - LAST_SCENE.getOrDefault(p.getUUID(), -GAP) < GAP) return;
+            if (!p.onGround() || p.isPassenger() || p.isSleeping()) return;
+            for (var e : scenes().entrySet())
+                if ((h.serantis$figureMet() & e.getValue()) == 0 && reached(p, e.getKey())) { start(p, e.getKey()); return; }
             return;
         }
         ServerLevel level = (ServerLevel) p.level();
@@ -93,10 +146,10 @@ public final class FigureVisit {
                 e.snapTo(e.getX() + to.x / flat * step, ny, e.getZ() + to.z / flat * step);
             }
         }
-        if (v.ticks > 20 * 120) done(p, false);           // never left hanging
+        if (v.ticks > 20 * 120) done(p);                  // never left hanging
     }
 
-    private static void start(ServerPlayer p) {
+    private static void start(ServerPlayer p, String scene) {
         ServerLevel level = (ServerLevel) p.level();
         // it comes from the first direction with open ground ~9 blocks away, else from close by
         Vec3 from = null;
@@ -111,7 +164,9 @@ public final class FigureVisit {
         CreatureEntity f = Intro.figureAt(level, from.x, from.y, from.z);
         if (f == null) return;
         Visit v = new Visit();
+        v.scene = scene;
         v.figure = f.getUUID();
+        LAST_SCENE.put(p.getUUID(), p.level().getGameTime());
         ACTIVE.put(p.getUUID(), v);
         PartySync.sync(p);
     }
@@ -130,10 +185,11 @@ public final class FigureVisit {
     }
 
     /** The talk is over: it vanishes in a puff of smoke. */
-    public static void done(ServerPlayer p, boolean bowed) {
+    public static void done(ServerPlayer p) {
         Visit v = ACTIVE.remove(p.getUUID());
         if (v == null) return;
-        ((Welcome.Holder) p).serantis$setFigureMet(2);
+        Welcome.Holder h = (Welcome.Holder) p;
+        h.serantis$setFigureMet(h.serantis$figureMet() | scenes().getOrDefault(v.scene, 0));
         ServerLevel level = (ServerLevel) p.level();
         Entity e = level.getEntity(v.figure);
         if (e != null) {
@@ -153,6 +209,7 @@ public final class FigureVisit {
         JsonObject o = new JsonObject();
         o.addProperty("entity", e == null ? -1 : e.getId());
         o.addProperty("arrived", v.arrived);
+        o.addProperty("scene", v.scene);
         state.add("serantis_visit", o);
     }
 }

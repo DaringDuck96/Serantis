@@ -13,24 +13,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Mysterious Figure's visit after your 10th battle (see FigureVisit on the server): a cutscene while it
- * walks up to you, then a short talk, then it vanishes.
+ * The Mysterious Figure's visits (see FigureVisit on the server; the words are in serantis_battle/figure_scenes.json):
+ * a cutscene while it walks up to you, then a short talk, then it vanishes.
  */
 public class FigureScreen extends Screen {
     private static final int GOLD = 0xFFB89BE8, TEXT = 0xFFF0ECE4, YOU = 0xFF8FD1E8, DIM = 0xFF9AA4B4;
     private static final String NAME = "Mysterious Figure";
-    private static final String[] CHOICES = {"Yeah, so?", "Tell me who you are."};
+    private static com.google.gson.JsonArray all;
 
     private final Entity figure;
     private final List<String[]> lines = new ArrayList<>();     // {"figure"/"player"/"action", text}
     private int index = -1;
     private long shownAt, leftAt;
-    private boolean choosing, chose, bowed, leaving;
+    private boolean choosing, chose, leaving;
+    private final JsonObject scene;
 
-    private FigureScreen(Entity figure) {
+    private FigureScreen(Entity figure, JsonObject scene) {
         super(Component.literal(NAME));
         this.figure = figure;
+        this.scene = scene;
     }
+
+    private static JsonObject scene(String id) {
+        if (all == null) {
+            try (var in = FigureScreen.class.getResourceAsStream("/serantis_battle/figure_scenes.json")) {
+                all = in == null ? new com.google.gson.JsonArray()
+                        : com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonArray("scenes");
+            } catch (Exception e) {
+                all = new com.google.gson.JsonArray();
+            }
+        }
+        for (var e : all) if (e.getAsJsonObject().get("id").getAsString().equals(id)) return e.getAsJsonObject();
+        return null;
+    }
+
+    private void add(com.google.gson.JsonArray rows) {
+        if (rows != null) for (var r : rows) lines.add(new String[]{r.getAsJsonArray().get(0).getAsString(), r.getAsJsonArray().get(1).getAsString()});
+    }
+
+    private com.google.gson.JsonArray choices() { return scene.getAsJsonArray("choices"); }
 
     static JsonObject visit() {
         JsonObject s = TradeClient.state();
@@ -44,7 +65,8 @@ public class FigureScreen extends Screen {
         JsonObject v = visit();
         if (v == null) return;
         Entity e = mc.level.getEntity(v.get("entity").getAsInt());
-        if (e == null) return;
+        JsonObject sc = v.has("scene") ? scene(v.get("scene").getAsString()) : null;
+        if (e == null || sc == null) return;
         float face = e.getBbHeight() * 0.85f;
         try {
             float h = dev.ahrivaea.client.GeoModels.height("villager", "mysterious_figure");
@@ -52,7 +74,7 @@ public class FigureScreen extends Screen {
         } catch (RuntimeException ignored) { }
         DialogueCamera.start(e, face);
         DialogueCamera.wideShot();
-        mc.gui.setScreen(new FigureScreen(e));
+        mc.gui.setScreen(new FigureScreen(e, sc));
     }
 
     private boolean arrived() {
@@ -70,22 +92,21 @@ public class FigureScreen extends Screen {
     @Override
     protected void init() {
         if (!choosing) return;
-        int bw = Math.min(260, width - 40), y = height - 30 - CHOICES.length * 22;
-        for (int i = 0; i < CHOICES.length; i++) {
+        int n = choices().size(), bw = Math.min(260, width - 40), y = height - 30 - n * 22;
+        for (int i = 0; i < n; i++) {
             int pick = i;
-            addRenderableWidget(Button.builder(Component.literal(CHOICES[i]), b -> choose(pick)).bounds(width / 2 - bw / 2, y + i * 22, bw, 20).build());
+            String text = choices().get(i).getAsJsonObject().get("text").getAsString();
+            addRenderableWidget(Button.builder(Component.literal(text), b -> choose(pick)).bounds(width / 2 - bw / 2, y + i * 22, bw, 20).build());
         }
     }
 
     private void choose(int pick) {
         choosing = false;
         chose = true;
-        bowed = pick == 1;
-        lines.add(new String[]{"player", CHOICES[pick]});
-        if (bowed) {
-            lines.add(new String[]{"action", "*The Mysterious Figure bows*"});
-            lines.add(new String[]{"figure", "I am but a humble follower of the First, and your personal guide to destiny."});
-        } else lines.add(new String[]{"action", "*The Mysterious Figure scoffs*"});
+        JsonObject c = choices().get(pick).getAsJsonObject();
+        lines.add(new String[]{"player", c.get("text").getAsString()});
+        add(c.getAsJsonArray("reply"));
+        add(scene.getAsJsonArray("end"));
         show(index + 1);
     }
 
@@ -93,7 +114,8 @@ public class FigureScreen extends Screen {
     public void tick() {
         super.tick();
         if (index < 0 && arrived()) {                                   // it's here: it speaks
-            lines.add(new String[]{"figure", "You're getting stronger."});
+            add(scene.getAsJsonArray("lines"));
+            if (lines.isEmpty()) lines.add(new String[]{"action", "..."});
             show(0);
         }
         if (!leaving && visit() == null && index >= 0) { leaving = true; leftAt = System.currentTimeMillis(); }   // it left on its own
@@ -112,13 +134,12 @@ public class FigureScreen extends Screen {
         String text = lines.get(index)[1];
         if (visibleChars() < text.length()) { shownAt = System.currentTimeMillis() - 100_000; return true; }
         if (index + 1 < lines.size()) { show(index + 1); return true; }
-        if (!chose) { choosing = true; DialogueCamera.focusPlayer(true); rebuildWidgets(); return true; }
+        if (!chose && !choices().isEmpty()) { choosing = true; DialogueCamera.focusPlayer(true); rebuildWidgets(); return true; }
         leaving = true;                                                  // it vanishes
         leftAt = System.currentTimeMillis();
         DialogueCamera.wideShot();
         JsonObject o = new JsonObject();
         o.addProperty("kind", "serantis_visit_done");
-        o.addProperty("bowed", bowed);
         dev.ahrivaea.client.battle.BattleClient.send(o);
         return true;
     }

@@ -390,4 +390,15 @@ The raid is **Easy** (3-4 raiders), **Medium** (5-6), **Hard** (7-8) or **Very H
 
 **The opening scene.** Before anything else, a new player wakes at spawn beside a **Mysterious Figure**. The camera pulls back to show the two of them, then a conversation plays out in the cutscene style: it asks whether you remember anything, you answer (two or three choices at each turn), it tells you this is Serantia, and asks about yourself (you choose your class) and who's with you (you choose your starter). It says Serantia needs you to help rebuild, a roar echoes in the distance, and with "Find the towers. Save Serantia." it vanishes as the screen goes dark. When the light comes back you're alone, and the welcome guide opens. Players who already have a class, a creature or have read the guide never see it. Until its own model arrives, the Figure wears the Black Market Merchant's.
 
-**The Mysterious Figure returns.** After your 10th battle (won or lost; fleeing doesn't count, and players from before this update count their battles won), once you're back on your feet, the Mysterious Figure walks up to you wherever you are, while the camera watches from the side and you can't move. "You're getting stronger." Answer "Yeah, so?" and it scoffs and vanishes; ask "Tell me who you are." and it bows: "I am but a humble follower of the First, and your personal guide to destiny." Then it vanishes in a puff of smoke. It only happens once.
+**The Mysterious Figure returns.** At milestones in the early and middle game the Mysterious Figure walks up to you wherever you are (the camera watches from the side and you can't move), says a few words, lets you answer, and vanishes in a puff of smoke. Each visit happens once, at most one every 5 minutes, never during a battle:
+
+| Visit | When | What it's about |
+|---|---|---|
+| "You're getting stronger." | 10 battles fought, won or lost (fleeing doesn't count; players from before this count their wins) | Ask who it is and it bows: a follower of the First, your guide to destiny |
+| "Look at this place." | A base of yours reaches Level 2 | The Age of Ashes; look beyond your walls |
+| "A Master's Stone." | Your first Gym Master Stone | The twelve Sovereigns; find the other Masters |
+| "You found one." | Your first tower rebuilt | The towers were the First Dragon's watchposts; the roar |
+| "So. You've found another realm." | Your first steps in the Nether | Serantia was never just one world |
+| "Three towers standing again." | Three towers rebuilt | The Council is watching, and so is something older |
+
+The words live in `addons/ahrivaea-battle/serantis_battle/figure_scenes.json`, so they're easy to change or add to.
