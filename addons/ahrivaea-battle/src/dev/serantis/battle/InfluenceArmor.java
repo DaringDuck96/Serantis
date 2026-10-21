@@ -49,7 +49,9 @@ public final class InfluenceArmor {
     public static void register() {
         ResourceKey<Item> ore = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:orichalcum_ingot"));
         ORICHALCUM = Registry.register(BuiltInRegistries.ITEM, ore, new Item(new Item.Properties().setId(ore)
-                .component(DataComponents.LORE, new ItemLore(List.of(Component.literal("A reward from village bounty boards")
+                .component(DataComponents.LORE, new ItemLore(List.of(Component.literal("Only from village bounty boards (right-click a bell).")
+                        .withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GRAY)),
+                        Component.literal("Makes influence armour and the Helm of Linx.")
                         .withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GRAY)))))));
         for (String inf : NAMES.keySet())
             for (int i = 0; i < PIECES.length; i++) {

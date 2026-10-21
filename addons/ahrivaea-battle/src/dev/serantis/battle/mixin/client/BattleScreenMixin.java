@@ -98,6 +98,7 @@ public abstract class BattleScreenMixin {
             serantis$battle = st.get("serantis_fx_battle").getAsInt();
             serantis$seen = 0;
             serantis$playing.clear();
+            dev.serantis.battle.client.BattleFeel.reset();
             serantis$pinned = -1;
         }
         if (st.has("serantis_fx")) {
@@ -106,6 +107,15 @@ public abstract class BattleScreenMixin {
                 JsonObject e = el.getAsJsonObject();
                 long id = e.get("id").getAsLong();
                 if (id <= serantis$seen) continue;
+                int k = e.get("kind").getAsInt();
+                if (k == Fx.CRIT) { dev.serantis.battle.client.BattleFeel.crit(); dev.serantis.battle.client.BattleFeel.label(e.get("cell").getAsLong(), k); }
+                if (k == Fx.MISS) dev.serantis.battle.client.BattleFeel.label(e.get("cell").getAsLong(), k);
+                if (Fx.isLabel(k)) {
+                    if (k == Fx.KO) dev.serantis.battle.client.BattleFeel.knockout();
+                    dev.serantis.battle.client.BattleFeel.label(e.get("cell").getAsLong(), k);
+                    newest = Math.max(newest, id);
+                    continue;
+                }
                 serantis$playing.removeIf(p -> p[0] == e.get("cell").getAsLong() && p[1] != Fx.ATTACK && e.get("kind").getAsInt() != Fx.ATTACK);
                 serantis$playing.add(new long[]{e.get("cell").getAsLong(), e.get("kind").getAsLong(), now, e.has("size") ? e.get("size").getAsLong() : 1});
                 newest = Math.max(newest, id);
@@ -333,5 +343,47 @@ public abstract class BattleScreenMixin {
                 .tooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.literal(
                         "Change your weapon, shield or staff. It takes the place of your attack this turn.")))
                 .bounds(wait.getX(), wait.getY() + wait.getHeight() + 1, wait.getWidth(), wait.getHeight()).build());
+    }
+
+    // ---- battle feel: words over units (CRITICAL!, MISS, Super effective!, KO!), on top of everything
+    @Inject(method = "extractRenderState", at = @At("TAIL"))
+    private void serantis$labels(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial, CallbackInfo ci) {
+        BattleGrid grid = BattleClient.grid();
+        if (grid == null) return;
+        var font = net.minecraft.client.Minecraft.getInstance().font;
+        dev.serantis.battle.client.BattleFeel.prune();
+        for (long[] l : dev.serantis.battle.client.BattleFeel.LABELS) {
+            int cell = (int) l[0], kind = (int) l[1];
+            if (!grid.inside(cell % grid.size, cell / grid.size)) continue;
+            float age = dev.serantis.battle.client.BattleFeel.age(l);
+            double[] r = cellRect(cell % grid.size, cell / grid.size);
+            String text = switch (kind) {
+                case Fx.CRIT -> "CRITICAL!";
+                case Fx.MISS -> "MISS";
+                case Fx.SUPER -> "Super effective!";
+                case Fx.WEAK -> "Not very effective";
+                case Fx.KO -> "KO!";
+                default -> "";
+            };
+            int color = switch (kind) {
+                case Fx.CRIT -> 0xFF3030;
+                case Fx.MISS -> 0xDDDDDD;
+                case Fx.SUPER -> 0xFFD24A;
+                case Fx.WEAK -> 0x8FA8C8;
+                default -> 0xFF6A3A;
+            };
+            float scale = kind == Fx.KO ? 2.4f - age * 0.6f : kind == Fx.CRIT ? 1.9f - age * 0.4f : 1.2f;
+            int alpha = (int) (255 * Math.max(0, Math.min(1, 1.5 - age * 1.5)));
+            if (alpha < 8) continue;
+            float pop = age < 0.12f ? 0.6f + age / 0.12f * 0.4f : 1f;      // a quick pop-in
+            double cx = (r[0] + r[2]) / 2, top = Math.min(r[1], r[3]);
+            int lift = kind == Fx.SUPER || kind == Fx.WEAK ? 34 : 22;
+            g.pose().pushMatrix();
+            g.pose().translate((float) cx, (float) (top - lift - age * 18));
+            g.pose().scale(scale * pop, scale * pop);
+            g.centeredText(font, text, 0, 0, (alpha << 24) | color);
+            g.pose().popMatrix();
+        }
+        dev.serantis.battle.client.BattleTutorial.draw((BattleScreen) (Object) this, g, font);
     }
 }

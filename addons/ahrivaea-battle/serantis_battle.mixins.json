@@ -65,7 +65,9 @@
     "client.CoreBreakMixin",
     "client.ScreenAccessor",
     "client.DialogueCameraMixin",
-    "client.OptionsKeysMixin"
+    "client.OptionsKeysMixin",
+    "client.BattleCameraMixin",
+    "client.ItemTipsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -49,6 +49,7 @@ public abstract class BattleMixin implements BattleAccess {
     @Unique private int serantis$defeatedBefore;
     @Unique private Field serantis$field;
     @Unique private boolean serantis$struck, serantis$crit;
+    @Unique private double serantis$mult = 1;
 
     @Override public Field serantis$field() {
         if (serantis$field == null) serantis$field = new Field();
@@ -178,6 +179,7 @@ public abstract class BattleMixin implements BattleAccess {
     private void serantis$beforeStrike(Unit attacker, Unit target, BattleMove move, CallbackInfo ci) {
         serantis$struck = false;
         serantis$crit = false;
+        serantis$mult = 1;
     }
 
     @Redirect(method = "strike", at = @At(value = "INVOKE",
@@ -188,6 +190,7 @@ public abstract class BattleMixin implements BattleAccess {
         serantis$struck = true;
         serantis$crit = crit;
         DamageCalc.Result r = MoveEngine.flyerBonus(target, move, DamageCalc.calculate(a, d, m, crit, x, y, extras));
+        serantis$mult = r.multiplier();
         return dev.serantis.battle.skills.SkillEffects.battle((Battle) (Object) this, attacker, target, move, crit, r);
     }
 
@@ -195,6 +198,9 @@ public abstract class BattleMixin implements BattleAccess {
     private void serantis$afterStrike(Unit attacker, Unit target, BattleMove move, CallbackInfo ci) {
         Battle self = (Battle) (Object) this;
         Fx.flash(self, target, !serantis$struck ? Fx.MISS : serantis$crit ? Fx.CRIT : Fx.DAMAGE);
+        if (serantis$struck && serantis$mult > 1.0) Fx.flash(self, target, Fx.SUPER);
+        else if (serantis$struck && serantis$mult < 1.0) Fx.flash(self, target, Fx.WEAK);
+        Fx.hitSound(self, target, move.move().influence(), serantis$struck, serantis$crit);
     }
 
     // Losing a battle wears down the player's armour and held items (XP is never lost).
@@ -374,6 +380,10 @@ public abstract class BattleMixin implements BattleAccess {
     private void serantis$afterView(UUID viewer, CallbackInfoReturnable<JsonObject> cir) {
         MoveEngine.decorate((Battle) (Object) this, cir.getReturnValue());
         dev.serantis.battle.coop.CoopBattles.view((Battle) (Object) this, viewer, cir.getReturnValue());
+        Battle self = (Battle) (Object) this;                          // a player's very first battle: the screen walks them through it
+        var vp = viewer == null || self.level == null ? null : self.level.getServer().getPlayerList().getPlayer(viewer);
+        if (vp != null && ((dev.serantis.battle.Welcome.Holder) vp).serantis$battlesFought() == 0 && !dev.serantis.battle.coop.CoopBattles.isSpar(self))
+            cir.getReturnValue().addProperty("serantis_tutorial", true);
     }
 
     // Villagers (Creature Masters and Town Guards included) are never Enraged or Mutated.
@@ -405,7 +415,11 @@ public abstract class BattleMixin implements BattleAccess {
 
     // Remember a knocked-out creature's moves so recruiting it keeps them.
     @Inject(method = "knockOut", at = @At("HEAD"))
-    private void serantis$beforeKnockOut(Unit unit, CallbackInfo ci) { serantis$defeatedBefore = defeated.size(); }
+    private void serantis$beforeKnockOut(Unit unit, CallbackInfo ci) {
+        serantis$defeatedBefore = defeated.size();
+        Fx.flash((Battle) (Object) this, unit, Fx.KO);
+        Fx.koSound((Battle) (Object) this, unit);
+    }
 
     @Inject(method = "knockOut", at = @At("RETURN"))
     private void serantis$afterKnockOut(Unit unit, CallbackInfo ci) {

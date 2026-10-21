@@ -68,9 +68,9 @@ public final class Field {
     public void fx(Battle b, Unit u, int kind) {
         long now = b.level.getGameTime();
         fx.removeIf(e -> now - e[3] > FX_KEEP_TICKS);
-        if (kind != dev.serantis.battle.fx.Fx.ATTACK) {
+        if (kind != dev.serantis.battle.fx.Fx.ATTACK && !dev.serantis.battle.fx.Fx.isLabel(kind)) {
             for (long[] e : fx) {
-                if (e[3] != now || e[4] != u.id || e[2] == dev.serantis.battle.fx.Fx.ATTACK) continue;
+                if (e[3] != now || e[4] != u.id || e[2] == dev.serantis.battle.fx.Fx.ATTACK || dev.serantis.battle.fx.Fx.isLabel((int) e[2])) continue;
                 if (e[2] >= kind) return;           // something more important already showed this moment
                 e[0] = fxNext++; e[1] = idx(b, u.x, u.z); e[2] = kind; e[5] = Body.size(u);
                 return;

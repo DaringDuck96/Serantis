@@ -137,6 +137,8 @@ public final class Intro {
         if (figure != null) {
             Entity e = ((ServerLevel) p.level()).getEntity(figure);
             if (e != null) e.discard();
+            p.sendSystemMessage(net.minecraft.network.chat.Component.literal("Tip: hit a wild creature with your weapon to start your first battle. The battle screen will walk you through it.")
+                    .withStyle(net.minecraft.ChatFormatting.AQUA));
         }
         PartySync.sync(p);
     }
