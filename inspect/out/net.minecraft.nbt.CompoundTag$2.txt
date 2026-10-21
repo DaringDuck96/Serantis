@@ -1,0 +1,6 @@
+Compiled from "CompoundTag.java"
+class net.minecraft.nbt.CompoundTag$2 {
+  static final int[] $SwitchMap$net$minecraft$nbt$StreamTagVisitor$EntryResult;
+  static final int[] $SwitchMap$net$minecraft$nbt$StreamTagVisitor$ValueResult;
+  static {};
+}

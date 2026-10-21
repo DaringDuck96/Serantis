@@ -1,0 +1,22 @@
+Compiled from "CustomData.java"
+public final class net.minecraft.world.item.component.CustomData {
+  public static final net.minecraft.world.item.component.CustomData EMPTY;
+  public static final com.mojang.serialization.Codec<net.minecraft.nbt.CompoundTag> COMPOUND_TAG_CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.component.CustomData> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.item.component.CustomData> STREAM_CODEC;
+  private final net.minecraft.nbt.CompoundTag tag;
+  private net.minecraft.world.item.component.CustomData(net.minecraft.nbt.CompoundTag);
+  public static net.minecraft.world.item.component.CustomData of(net.minecraft.nbt.CompoundTag);
+  public boolean matchedBy(net.minecraft.nbt.CompoundTag);
+  public static void update(net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.CustomData>, net.minecraft.world.item.ItemStack, java.util.function.Consumer<net.minecraft.nbt.CompoundTag>);
+  public static void set(net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.CustomData>, net.minecraft.world.item.ItemStack, net.minecraft.nbt.CompoundTag);
+  public net.minecraft.world.item.component.CustomData update(java.util.function.Consumer<net.minecraft.nbt.CompoundTag>);
+  public boolean isEmpty();
+  public net.minecraft.nbt.CompoundTag copyTag();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+  private static net.minecraft.nbt.CompoundTag lambda$static$1(net.minecraft.world.item.component.CustomData);
+  private static net.minecraft.nbt.CompoundTag lambda$static$0(net.minecraft.world.item.component.CustomData);
+  static {};
+}
