@@ -24,6 +24,7 @@
     "PlayerCharacterMixin",
     "DropsMixin",
     "LivingEntityDropsMixin",
+    "TunnelerMixin",
     "BlockSkillsMixin",
     "ItemCombinerMenuAccessor",
     "AnvilMenuSkillsMixin",
