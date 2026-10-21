@@ -1,4 +1,0 @@
-Compiled from "MenuType.java"
-interface net.minecraft.world.inventory.MenuType$MenuSupplier<T extends net.minecraft.world.inventory.AbstractContainerMenu> {
-  public abstract T create(int, net.minecraft.world.entity.player.Inventory);
-}

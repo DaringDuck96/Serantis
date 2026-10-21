@@ -1,7 +1,0 @@
-Compiled from "ItemContainerContents.java"
-public class net.minecraft.world.item.component.ItemContainerContents$Mutable extends net.minecraft.world.item.component.GrowableMutableContainer<net.minecraft.world.item.component.ItemContainerContents> {
-  private net.minecraft.world.item.component.ItemContainerContents$Mutable(java.util.List<net.minecraft.world.item.ItemStack>);
-  public boolean canInsertNewSlots();
-  public net.minecraft.world.item.component.ItemContainerContents toImmutable();
-  public java.lang.Object toImmutable();
-}
