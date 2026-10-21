@@ -1,0 +1,9 @@
+Compiled from "ServerPlayer.java"
+class net.minecraft.server.level.ServerPlayer$3 implements net.minecraft.commands.CommandSource {
+  final net.minecraft.server.level.ServerPlayer this$0;
+  net.minecraft.server.level.ServerPlayer$3(net.minecraft.server.level.ServerPlayer);
+  public boolean acceptsSuccess();
+  public boolean acceptsFailure();
+  public boolean shouldInformAdmins();
+  public void sendSystemMessage(net.minecraft.network.chat.Component);
+}

@@ -1,0 +1,12 @@
+Compiled from "ChestBlock.java"
+class net.minecraft.world.level.block.ChestBlock$3 implements net.minecraft.world.level.block.DoubleBlockCombiner$Combiner<net.minecraft.world.level.block.entity.ChestBlockEntity, it.unimi.dsi.fastutil.floats.Float2FloatFunction> {
+  final net.minecraft.world.level.block.entity.LidBlockEntity val$entity;
+  net.minecraft.world.level.block.ChestBlock$3(net.minecraft.world.level.block.entity.LidBlockEntity);
+  public it.unimi.dsi.fastutil.floats.Float2FloatFunction acceptDouble(net.minecraft.world.level.block.entity.ChestBlockEntity, net.minecraft.world.level.block.entity.ChestBlockEntity);
+  public it.unimi.dsi.fastutil.floats.Float2FloatFunction acceptSingle(net.minecraft.world.level.block.entity.ChestBlockEntity);
+  public it.unimi.dsi.fastutil.floats.Float2FloatFunction acceptNone();
+  public java.lang.Object acceptNone();
+  public java.lang.Object acceptSingle(java.lang.Object);
+  public java.lang.Object acceptDouble(java.lang.Object, java.lang.Object);
+  private static float lambda$acceptDouble$0(net.minecraft.world.level.block.entity.ChestBlockEntity, net.minecraft.world.level.block.entity.ChestBlockEntity, float);
+}

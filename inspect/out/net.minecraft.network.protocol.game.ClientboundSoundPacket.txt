@@ -1,0 +1,28 @@
+Compiled from "ClientboundSoundPacket.java"
+public class net.minecraft.network.protocol.game.ClientboundSoundPacket implements net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> {
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.network.protocol.game.ClientboundSoundPacket> STREAM_CODEC;
+  public static final float LOCATION_ACCURACY = 8.0f;
+  private final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> sound;
+  private final net.minecraft.sounds.SoundSource source;
+  private final int x;
+  private final int y;
+  private final int z;
+  private final float volume;
+  private final float pitch;
+  private final long seed;
+  public net.minecraft.network.protocol.game.ClientboundSoundPacket(net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>, net.minecraft.sounds.SoundSource, double, double, double, float, float, long);
+  private net.minecraft.network.protocol.game.ClientboundSoundPacket(net.minecraft.network.RegistryFriendlyByteBuf);
+  private void write(net.minecraft.network.RegistryFriendlyByteBuf);
+  public net.minecraft.network.protocol.PacketType<net.minecraft.network.protocol.game.ClientboundSoundPacket> type();
+  public void handle(net.minecraft.network.protocol.game.ClientGamePacketListener);
+  public net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> getSound();
+  public net.minecraft.sounds.SoundSource getSource();
+  public double getX();
+  public double getY();
+  public double getZ();
+  public float getVolume();
+  public float getPitch();
+  public long getSeed();
+  public void handle(net.minecraft.network.PacketListener);
+  static {};
+}

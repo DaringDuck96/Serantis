@@ -1,0 +1,10 @@
+Compiled from "ChestBlock.java"
+class net.minecraft.world.level.block.ChestBlock$2 implements net.minecraft.world.level.block.DoubleBlockCombiner$Combiner<net.minecraft.world.level.block.entity.ChestBlockEntity, java.util.Optional<net.minecraft.world.MenuProvider>> {
+  net.minecraft.world.level.block.ChestBlock$2();
+  public java.util.Optional<net.minecraft.world.MenuProvider> acceptDouble(net.minecraft.world.level.block.entity.ChestBlockEntity, net.minecraft.world.level.block.entity.ChestBlockEntity);
+  public java.util.Optional<net.minecraft.world.MenuProvider> acceptSingle(net.minecraft.world.level.block.entity.ChestBlockEntity);
+  public java.util.Optional<net.minecraft.world.MenuProvider> acceptNone();
+  public java.lang.Object acceptNone();
+  public java.lang.Object acceptSingle(java.lang.Object);
+  public java.lang.Object acceptDouble(java.lang.Object, java.lang.Object);
+}

@@ -1,0 +1,16 @@
+Compiled from "RandomizableContainer.java"
+public interface net.minecraft.world.RandomizableContainer extends net.minecraft.world.Container {
+  public static final java.lang.String LOOT_TABLE_TAG = "LootTable";
+  public static final java.lang.String LOOT_TABLE_SEED_TAG = "LootTableSeed";
+  public abstract net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable> getLootTable();
+  public abstract void setLootTable(net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>);
+  public default void setLootTable(net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>, long);
+  public abstract long getLootTableSeed();
+  public abstract void setLootTableSeed(long);
+  public abstract net.minecraft.core.BlockPos getBlockPos();
+  public abstract net.minecraft.world.level.Level getLevel();
+  public static void setBlockEntityLootTable(net.minecraft.world.level.BlockGetter, net.minecraft.util.RandomSource, net.minecraft.core.BlockPos, net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>);
+  public default boolean tryLoadLootTable(net.minecraft.world.level.storage.ValueInput);
+  public default boolean trySaveLootTable(net.minecraft.world.level.storage.ValueOutput);
+  public default void unpackLootTable(net.minecraft.world.entity.player.Player);
+}

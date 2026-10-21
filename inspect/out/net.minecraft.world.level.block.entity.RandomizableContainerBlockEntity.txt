@@ -1,0 +1,20 @@
+Compiled from "RandomizableContainerBlockEntity.java"
+public abstract class net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity extends net.minecraft.world.level.block.entity.BaseContainerBlockEntity implements net.minecraft.world.RandomizableContainer {
+  protected net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable> lootTable;
+  protected long lootTableSeed;
+  protected net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?>, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable> getLootTable();
+  public void setLootTable(net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>);
+  public long getLootTableSeed();
+  public void setLootTableSeed(long);
+  public boolean isEmpty();
+  public net.minecraft.world.item.ItemStack getItem(int);
+  public net.minecraft.world.item.ItemStack removeItem(int, int);
+  public net.minecraft.world.item.ItemStack removeItemNoUpdate(int);
+  public void setItem(int, net.minecraft.world.item.ItemStack);
+  public boolean canOpen(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int, net.minecraft.world.entity.player.Inventory, net.minecraft.world.entity.player.Player);
+  protected void applyImplicitComponents(net.minecraft.core.component.DataComponentGetter);
+  protected void collectImplicitComponents(net.minecraft.core.component.DataComponentMap$Builder);
+  public void removeComponentsFromTag(net.minecraft.world.level.storage.ValueOutput);
+}
