@@ -78,6 +78,14 @@ public final class FigureVisit {
         return false;
     }
 
+    /** Set once you've asked who it is (the 10-battle visit): from then on it's the Acolyte of the First. */
+    public static final int NAMED = 256;
+    public static final String TITLE = "Mysterious Figure", REVEALED = "Acolyte of the First";
+
+    public static String name(ServerPlayer p) {
+        return p != null && (((Welcome.Holder) p).serantis$figureMet() & NAMED) != 0 ? REVEALED : TITLE;
+    }
+
     private static final class Visit {
         String scene;
         UUID figure;
@@ -209,7 +217,7 @@ public final class FigureVisit {
         if (b == null) { if (e != null) e.discard(); PartySync.sync(p); return; }
         TRIALS.add(b);
         fillParty(p, b);
-        dev.serantis.battle.moves.MoveEngine.figureBoss(b);
+        dev.serantis.battle.moves.MoveEngine.figureBoss(b, name(p));
         Battles.send(b);
         PartySync.sync(p);
     }
@@ -250,8 +258,8 @@ public final class FigureVisit {
         ServerPlayer p = b.player();
         if (p == null) return;
         if (outcome == dev.ahrivaea.battle.Battle.Outcome.WON)
-            say(p, "\"You are worthy. More than I dared hope.\" The Mysterious Figure kneels. \"If you'll have me... I'll follow you.\"");
-        else say(p, "\"Not yet.\" The Mysterious Figure turns away. \"Keep the stone. You'll need it. But you aren't ready for me.\" And it's gone.");
+            say(p, "\"You are worthy. More than I dared hope.\" The " + name(p) + " kneels. \"If you'll have me... I'll follow you.\"");
+        else say(p, "\"Not yet.\" The " + name(p) + " turns away. \"Keep the stone. You'll need it. But you aren't ready for me.\" And it's gone.");
     }
 
     /** No wild creature comes back into the world after this battle. */
@@ -306,7 +314,7 @@ public final class FigureVisit {
         c = c.withProgress(10, 0).withHealth(hp);
         var moves = dev.serantis.battle.moves.MoveBook.rollAny(net.minecraft.util.RandomSource.create(), 6);   // six fresh moves, any influence
         ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setMoves(moves.isEmpty() ? null : dev.serantis.battle.moves.MoveBook.encode(moves));
-        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setNickname("Mysterious Figure");
+        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setNickname(name(b.player()));
         return c;
     }
 
@@ -314,6 +322,14 @@ public final class FigureVisit {
     private static boolean wasTrial(dev.ahrivaea.battle.Battle b) { return WON.contains(b); }
 
     /** The talk is over: it vanishes in a puff of smoke. */
+    public static void done(ServerPlayer p, boolean named) {
+        if (named && ACTIVE.containsKey(p.getUUID())) {
+            Welcome.Holder h = (Welcome.Holder) p;
+            h.serantis$setFigureMet(h.serantis$figureMet() | NAMED);
+        }
+        done(p);
+    }
+
     public static void done(ServerPlayer p) {
         Visit v = ACTIVE.remove(p.getUUID());
         if (v == null) return;
@@ -339,6 +355,7 @@ public final class FigureVisit {
         o.addProperty("entity", e == null ? -1 : e.getId());
         o.addProperty("arrived", v.arrived);
         o.addProperty("scene", v.scene);
+        o.addProperty("name", name(p));
         state.add("serantis_visit", o);
     }
 }

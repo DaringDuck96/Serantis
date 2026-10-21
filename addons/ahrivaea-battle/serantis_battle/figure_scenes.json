@@ -1,5 +1,5 @@
 {
-  "_doc": "The Mysterious Figure's visits after the opening scene. Each plays once, when its trigger is met (see FigureVisit). bit: its flag in the player's saved figure scenes. lines: what it says as it arrives. choices: what you can answer, and its reply. end: its parting words before it vanishes. Speakers: figure, action. battle: true ends the talk in a battle against the figure instead of it vanishing (the Eternita Stone trial).",
+  "_doc": "The Mysterious Figure's visits after the opening scene. Each plays once, when its trigger is met (see FigureVisit). bit: its flag in the player's saved figure scenes. lines: what it says as it arrives. choices: what you can answer, and its reply. end: its parting words before it vanishes. Speakers: figure, action. battle: true ends the talk in a battle against the figure instead of it vanishing (the Eternita Stone trial). A choice with reveal: true tells you its name: from then on it is the Acolyte of the First (its name in every scene, battle and as a recruit). \"Mysterious Figure\" in any line is replaced by its current name.",
   "scenes": [
     {
       "id": "battles",
@@ -31,8 +31,13 @@
             [
               "figure",
               "I am but a humble follower of the First, and your personal guide to destiny."
+            ],
+            [
+              "figure",
+              "You may call me the Acolyte of the First."
             ]
-          ]
+          ],
+          "reveal": true
         }
       ],
       "end": []

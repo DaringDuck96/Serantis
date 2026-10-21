@@ -195,10 +195,10 @@ public final class MoveEngine {
     }
 
     /** The Mysterious Figure's trial (after the Eternita Stone): alone, level 20, and far stronger than anything wild. */
-    public static void figureBoss(Battle b) {
+    public static void figureBoss(Battle b, String name) {
         for (Unit u : b.units) {
             if (u.isPlayer || u.side != Unit.Side.ENEMY) continue;
-            ((UnitAccess) (Object) u).serantis$setName("Mysterious Figure");
+            ((UnitAccess) (Object) u).serantis$setName(name);
             var l = dev.serantis.battle.FigureVisit.legendStats();       // a Legendary, as strong as at Level 25
             double f = dev.serantis.battle.FigureVisit.LEVEL_25;
             ((UnitAccess) (Object) u).serantis$setStats(new dev.ahrivaea.creature.Stats((int) Math.round(l.hp() * f), (int) Math.round(l.attack() * f),
@@ -215,7 +215,7 @@ public final class MoveEngine {
             }
             if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best));
         }
-        acc(b).serantis$say("The Mysterious Figure stands alone against you all. Prove you're worthy of the Eternita Stone.");
+        acc(b).serantis$say("The " + name + " stands alone against you all. Prove you're worthy of the Eternita Stone.");
     }
 
     public static String encodeUnit(Unit u) {

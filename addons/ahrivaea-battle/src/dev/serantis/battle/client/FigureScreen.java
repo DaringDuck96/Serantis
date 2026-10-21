@@ -18,7 +18,8 @@ import java.util.List;
  */
 public class FigureScreen extends Screen {
     private static final int GOLD = 0xFFB89BE8, TEXT = 0xFFF0ECE4, YOU = 0xFF8FD1E8, DIM = 0xFF9AA4B4;
-    private static final String NAME = "Mysterious Figure";
+    private String name = "Mysterious Figure";
+    private boolean named;
     private static com.google.gson.JsonArray all;
 
     private final Entity figure;
@@ -29,7 +30,7 @@ public class FigureScreen extends Screen {
     private final JsonObject scene;
 
     private FigureScreen(Entity figure, JsonObject scene) {
-        super(Component.literal(NAME));
+        super(Component.literal("Mysterious Figure"));
         this.figure = figure;
         this.scene = scene;
     }
@@ -48,7 +49,8 @@ public class FigureScreen extends Screen {
     }
 
     private void add(com.google.gson.JsonArray rows) {
-        if (rows != null) for (var r : rows) lines.add(new String[]{r.getAsJsonArray().get(0).getAsString(), r.getAsJsonArray().get(1).getAsString()});
+        if (rows != null) for (var r : rows)
+            lines.add(new String[]{r.getAsJsonArray().get(0).getAsString(), r.getAsJsonArray().get(1).getAsString().replace("Mysterious Figure", name)});
     }
 
     private com.google.gson.JsonArray choices() { return scene.getAsJsonArray("choices"); }
@@ -74,7 +76,9 @@ public class FigureScreen extends Screen {
         } catch (RuntimeException ignored) { }
         DialogueCamera.start(e, face);
         DialogueCamera.wideShot();
-        mc.gui.setScreen(new FigureScreen(e, sc));
+        FigureScreen s = new FigureScreen(e, sc);
+        if (v.has("name")) s.name = v.get("name").getAsString();
+        mc.gui.setScreen(s);
     }
 
     private boolean arrived() {
@@ -104,6 +108,7 @@ public class FigureScreen extends Screen {
         choosing = false;
         chose = true;
         JsonObject c = choices().get(pick).getAsJsonObject();
+        named = c.has("reveal") && c.get("reveal").getAsBoolean();
         lines.add(new String[]{"player", c.get("text").getAsString()});
         add(c.getAsJsonArray("reply"));
         add(scene.getAsJsonArray("end"));
@@ -139,6 +144,7 @@ public class FigureScreen extends Screen {
         JsonObject o = new JsonObject();
         o.addProperty("kind", "serantis_visit_done");
         o.addProperty("fight", fight);
+        o.addProperty("named", named);
         if (fight) {                                                     // the battle camera takes over
             dev.ahrivaea.client.battle.BattleClient.send(o);
             DialogueCamera.end(false);
@@ -176,7 +182,7 @@ public class FigureScreen extends Screen {
         String[] line = lines.get(index);
         var player = Minecraft.getInstance().player;
         boolean you = "player".equals(line[0]), action = "action".equals(line[0]);
-        if (!action) g.text(font, you ? (player == null ? "You" : player.getPlainTextName()) : NAME, l, top + 8, you ? YOU : GOLD);
+        if (!action) g.text(font, you ? (player == null ? "You" : player.getPlainTextName()) : name, l, top + 8, you ? YOU : GOLD);
         String text = line[1];
         int n = Math.min(text.length(), visibleChars()), y = top + 22;
         for (String row : wrap(text.substring(0, n), w)) { g.text(font, row, l, y, action ? DIM : TEXT); y += 11; }
