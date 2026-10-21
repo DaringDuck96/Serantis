@@ -1,0 +1,38 @@
+Compiled from "StructureTags.java"
+public interface net.minecraft.tags.StructureTags {
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> EYE_OF_ENDER_LOCATED;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> DOLPHIN_LOCATED;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_WOODLAND_MANSION_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_OCEAN_MONUMENT_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_SAVANNA_VILLAGE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_DESERT_VILLAGE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_PLAINS_VILLAGE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_TAIGA_VILLAGE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_SNOWY_VILLAGE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_JUNGLE_PYRAMID_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_SWAMP_HUT_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_TREASURE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_BURIED_TRIAL_CHAMBERS_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ANCIENT_CITY_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_MINESHAFT_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_DESERT_PYRAMID_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_OCEAN_RUIN_WARM_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> CATS_SPAWN_IN;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> CATS_SPAWN_AS_BLACK;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> VILLAGE;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> MINESHAFT;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> SHIPWRECK;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> RUINED_PORTAL;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> OCEAN_RUIN;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ABANDONED_CAMP;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_BAMBOO_JUNGLE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_CHERRY_GROVE_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_BIRCH_FOREST_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_DAPPLED_FOREST_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_FLOWER_FOREST_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_PALE_GARDEN_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_SWAMP_MAPS;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> ON_ABANDONED_CAMP_WINDSWEPT_FOREST_MAPS;
+  private static net.minecraft.tags.TagKey<net.minecraft.world.level.levelgen.structure.Structure> create(java.lang.String);
+  static {};
+}

@@ -1,0 +1,25 @@
+Compiled from "StructureStart.java"
+public final class net.minecraft.world.level.levelgen.structure.StructureStart {
+  public static final java.lang.String INVALID_START_ID = "INVALID";
+  public static final net.minecraft.world.level.levelgen.structure.StructureStart INVALID_START;
+  private static final org.slf4j.Logger LOGGER;
+  private final net.minecraft.world.level.levelgen.structure.Structure structure;
+  private final net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer pieceContainer;
+  private final net.minecraft.world.level.ChunkPos chunkPos;
+  private int references;
+  private volatile net.minecraft.world.level.levelgen.structure.BoundingBox cachedBoundingBox;
+  public net.minecraft.world.level.levelgen.structure.StructureStart(net.minecraft.world.level.levelgen.structure.Structure, net.minecraft.world.level.ChunkPos, int, net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer);
+  public static net.minecraft.world.level.levelgen.structure.StructureStart loadStaticStart(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext, net.minecraft.nbt.CompoundTag, long);
+  public net.minecraft.world.level.levelgen.structure.BoundingBox getBoundingBox();
+  public void placeInChunk(net.minecraft.world.level.WorldGenLevel, net.minecraft.world.level.StructureManager, net.minecraft.world.level.chunk.ChunkGenerator, net.minecraft.util.RandomSource, net.minecraft.world.level.levelgen.structure.BoundingBox, net.minecraft.world.level.ChunkPos);
+  public net.minecraft.nbt.CompoundTag createTag(net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext, net.minecraft.world.level.ChunkPos);
+  public boolean isValid();
+  public net.minecraft.world.level.ChunkPos getChunkPos();
+  public boolean canBeReferenced();
+  public void addReference();
+  public int getReferences();
+  protected int getMaxReferences();
+  public net.minecraft.world.level.levelgen.structure.Structure getStructure();
+  public java.util.List<net.minecraft.world.level.levelgen.structure.StructurePiece> getPieces();
+  static {};
+}

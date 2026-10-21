@@ -1,0 +1,7 @@
+Compiled from "StructurePiece.java"
+public abstract class net.minecraft.world.level.levelgen.structure.StructurePiece$BlockSelector {
+  protected net.minecraft.world.level.block.state.BlockState next;
+  public net.minecraft.world.level.levelgen.structure.StructurePiece$BlockSelector();
+  public abstract void next(net.minecraft.util.RandomSource, int, int, int, boolean);
+  public net.minecraft.world.level.block.state.BlockState getNext();
+}

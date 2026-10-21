@@ -1,0 +1,23 @@
+Compiled from "LevelResource.java"
+public final class net.minecraft.world.level.storage.LevelResource extends java.lang.Record {
+  private final java.lang.String id;
+  public static final net.minecraft.world.level.storage.LevelResource PLAYER_ADVANCEMENTS_DIR;
+  public static final net.minecraft.world.level.storage.LevelResource PLAYER_STATS_DIR;
+  public static final net.minecraft.world.level.storage.LevelResource PLAYER_DATA_DIR;
+  public static final net.minecraft.world.level.storage.LevelResource PLAYER_OLD_DATA_DIR;
+  public static final net.minecraft.world.level.storage.LevelResource LEVEL_DATA_FILE;
+  public static final net.minecraft.world.level.storage.LevelResource OLD_LEVEL_DATA_FILE;
+  public static final net.minecraft.world.level.storage.LevelResource ICON_FILE;
+  public static final net.minecraft.world.level.storage.LevelResource LOCK_FILE;
+  public static final net.minecraft.world.level.storage.LevelResource GENERATED_DIR;
+  public static final net.minecraft.world.level.storage.LevelResource DATAPACK_DIR;
+  public static final net.minecraft.world.level.storage.LevelResource MAP_RESOURCE_FILE;
+  public static final net.minecraft.world.level.storage.LevelResource DATA;
+  public static final net.minecraft.world.level.storage.LevelResource ROOT;
+  public net.minecraft.world.level.storage.LevelResource(java.lang.String);
+  public java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public java.lang.String id();
+  static {};
+}

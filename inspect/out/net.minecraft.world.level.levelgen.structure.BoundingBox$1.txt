@@ -1,0 +1,5 @@
+Compiled from "BoundingBox.java"
+class net.minecraft.world.level.levelgen.structure.BoundingBox$1 {
+  static final int[] $SwitchMap$net$minecraft$core$Direction;
+  static {};
+}
