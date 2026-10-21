@@ -54,6 +54,8 @@ public final class Achievements {
                     new String[]{"Seeds of Doubt", "Green Thumb", "Down on the Farm", "Old MacDonald Had a Lot", "Feed the World"}),
             new Track("biomes", "Biomes Visited", "biomes visited", new long[]{3, 8, 15, 20, 30}, new int[]{1, 2, 3, 4, 6},
                     new String[]{"Day Tripper", "Sightseer", "Backpacker", "Globetrotter", "Professional Tourist"}),
+            new Track("towers", "Towers Built", "towers rebuilt and claimed", new long[]{1, 2, 3, 4, 5}, new int[]{6, 10, 16, 24, 40},
+                    new String[]{"Home Sweet Spire", "Double Decker", "Skyline Starter", "Real Estate Mogul", "Lord of the Spires"}),
             new Track("walked", "Blocks Walked", "blocks walked", new long[]{10_000, 50_000, 250_000, 1_000_000, 5_000_000}, FIVE,
                     new String[]{"Stretch Your Legs", "Out for a Stroll", "Are We There Yet?", "Who Needs Horses?", "Walked to the Moon"}),
             new Track("xp", "Experience Gained", "experience gained", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
@@ -112,6 +114,22 @@ public final class Achievements {
         return total;
     }
 
+    /** Finished towers (Ahrivaea Tower Challenges) that belong to the player. */
+    private static long towersBuilt(ServerPlayer p) {
+        try {
+            var server = ((net.minecraft.server.level.ServerLevel) p.level()).getServer();
+            String me = p.getUUID().toString();
+            long n = 0;
+            for (int i = 0; i < 128; i++) {
+                var st = dev.ahrivaea.challenge.Challenges.state(server, dev.ahrivaea.challenge.StrongholdTowers.towerId(i)).orElse(null);
+                if (st != null && st.complete && me.equals(st.owner)) n++;
+            }
+            return n;
+        } catch (LinkageError | RuntimeException e) {
+            return 0;                                   // the towers mod isn't installed
+        }
+    }
+
     public static long value(ServerPlayer p, String id) {
         ServerStatsCounter stats = p.getStats();
         Holder h = (Holder) p;
@@ -123,6 +141,7 @@ public final class Achievements {
             case "smelted" -> h.serantis$smelted();
             case "planted" -> h.serantis$planted();
             case "armor" -> armorCrafted(stats);
+            case "towers" -> towersBuilt(p);
             case "biomes" -> h.serantis$biomes().size();
             case "walked" -> ((long) stats.getValue(Stats.CUSTOM, Stats.WALK_ONE_CM) + stats.getValue(Stats.CUSTOM, Stats.SPRINT_ONE_CM)
                     + stats.getValue(Stats.CUSTOM, Stats.CROUCH_ONE_CM)) / 100;

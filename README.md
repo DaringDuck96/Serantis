@@ -119,7 +119,7 @@ The gain goes on the stat's Level 20 value, like the rest of the stat, so it is 
 
 ### Achievements
 
-Milestones in eleven areas pay out golden apples (see Golden apples), each tier with its own title. They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: the title you've earned in each, your progress toward the next tier, every tier and what it pays (hover a tier for its title and details), and how many golden apples you've earned so far.
+Milestones in twelve areas pay out golden apples (see Golden apples), each tier with its own title. They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: the title you've earned in each, your progress toward the next tier, every tier and what it pays (hover a tier for its title and details), and how many golden apples you've earned so far.
 
 | Achievement | Tiers and titles | Golden apples per tier |
 |---|---|---|
@@ -131,11 +131,12 @@ Milestones in eleven areas pay out golden apples (see Golden apples), each tier 
 | Armor Crafted | 5 Suit Up · 10 Fashion Forward · 25 Runway Ready · 100 Tin Can Collector · 250 Walking Armory | 2 · 4 · 8 · 16 · 32 |
 | Seeds Planted | 100 Seeds of Doubt · 1,000 Green Thumb · 10,000 Down on the Farm · 100,000 Old MacDonald Had a Lot · 1,000,000 Feed the World | 3 · 6 · 12 · 24 · 48 |
 | Biomes Visited | 3 Day Tripper · 8 Sightseer · 15 Backpacker · 20 Globetrotter · 30 Professional Tourist | 1 · 2 · 3 · 4 · 6 |
+| Towers Built | 1 Home Sweet Spire · 2 Double Decker · 3 Skyline Starter · 4 Real Estate Mogul · 5 Lord of the Spires | 6 · 10 · 16 · 24 · 40 |
 | Blocks Walked | 10,000 Stretch Your Legs · 50,000 Out for a Stroll · 250,000 Are We There Yet? · 1,000,000 Who Needs Horses? · 5,000,000 Walked to the Moon | 3 · 6 · 12 · 24 · 48 |
 | Experience Gained | 100 Shiny Green Orbs · 1,000 Book Smart · 10,000 Big Brain Energy · 100,000 Seasoned Veteran · 1,000,000 Ascended | 3 · 6 · 12 · 24 · 48 |
 | Times Defeated | 1 Oops · 5 Respawn Regular · 10 Fall Damage Enthusiast · 50 Death's Frequent Flyer · 100 Immortal (Technically) | 2 · 4 · 8 · 16 · 32 |
 
-That's 935 golden apples in all. Where the counts come from: blocks placed, blocks walked (walking, sprinting and crouching) and times defeated (deaths) are Minecraft's own statistics, so they include everything you did before these were added; battles won and creatures recruited are the creatures mod's statistics; creatures seen is your creature dex; items smelted counts items you take out of furnaces, smokers and blast furnaces; armor crafted counts helmets, chestplates, leggings and boots you've crafted or upgraded at a smithing table (Minecraft's own statistic, so it includes the past; elytra don't count); biomes visited counts every different biome you've stood in, in any dimension (from when this was added); seeds planted counts crops you plant by hand (wheat, beetroot, carrots, potatoes, torchflowers, pitcher pods, melon and pumpkin seeds, nether wart, cocoa and sweet berries); experience gained counts all XP you earn (from mining, battles and anything else), not XP you spend.
+That's 1,031 golden apples in all. Where the counts come from: blocks placed, blocks walked (walking, sprinting and crouching) and times defeated (deaths) are Minecraft's own statistics, so they include everything you did before these were added; battles won and creatures recruited are the creatures mod's statistics; creatures seen is your creature dex; items smelted counts items you take out of furnaces, smokers and blast furnaces; armor crafted counts helmets, chestplates, leggings and boots you've crafted or upgraded at a smithing table (Minecraft's own statistic, so it includes the past; elytra don't count); towers built counts finished towers that belong to you (the ones you claimed with the first offering); biomes visited counts every different biome you've stood in, in any dimension (from when this was added); seeds planted counts crops you plant by hand (wheat, beetroot, carrots, potatoes, torchflowers, pitcher pods, melon and pumpkin seeds, nether wart, cocoa and sweet berries); experience gained counts all XP you earn (from mining, battles and anything else), not XP you spend.
 
 ### Experience and the skill tree
 
