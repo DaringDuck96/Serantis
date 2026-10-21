@@ -1,5 +1,5 @@
 # classes
-sig:net.minecraft.world.item.component.CustomData
-sig:net.minecraft.world.item.component.ItemLore
-sig:net.minecraft.nbt.CompoundTag
-sig:net.minecraft.client.multiplayer.MultiPlayerGameMode
+sig:net.minecraft.world.item.Item$Properties
+sig:net.minecraft.world.item.component.ItemAttributeModifiers
+sig:net.minecraft.world.item.component.ItemAttributeModifiers$Builder
+sig:net.minecraft.world.item.Item
