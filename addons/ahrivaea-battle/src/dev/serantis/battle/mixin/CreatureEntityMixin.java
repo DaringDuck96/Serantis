@@ -43,8 +43,15 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Override public void serantis$setSwaps(int swaps) { serantis$swaps = swaps; }
     @Override public void serantis$setLeaveAt(long tick) { serantis$leaveAt = tick; }
 
+    @Unique private net.minecraft.world.item.ItemStack serantis$carriedLoad;
+
     @Inject(method = "tick", at = @At("HEAD"))
     private void serantis$marketTick(CallbackInfo ci) {
+        if (serantis$carriedLoad != null && !((CreatureEntity) (Object) this).level().isClientSide()
+                && ((CreatureEntity) (Object) this).level() instanceof net.minecraft.server.level.ServerLevel sl) {   // what it carried when saved: put down
+            ((CreatureEntity) (Object) this).spawnAtLocation(sl, serantis$carriedLoad);
+            serantis$carriedLoad = null;
+        }
         if (serantis$leaveAt > 0) dev.serantis.battle.Market.tick((CreatureEntity) (Object) this);
         CreatureEntity self = (CreatureEntity) (Object) this;
         if (!self.level().isClientSide()) {
@@ -136,6 +143,9 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$home != null) out.putString("SerantisHome", serantis$home);
         out.putInt("SerantisMoveMode", serantis$moveMode);
         if (dev.serantis.battle.BattleHold.isHeld((CreatureEntity) (Object) this)) out.putBoolean("SerantisHeld", true);
+        var brain = ((CreatureEntity) (Object) this).brain();             // a worker's load is saved with it
+        if (brain != null && !((WorkerBrainAccess) (Object) brain).serantis$carried().isEmpty())
+            out.store("SerantisCarried", net.minecraft.world.item.ItemStack.CODEC, ((WorkerBrainAccess) (Object) brain).serantis$carried());
         if (serantis$leaveAt > 0) {
             out.putLong("SerantisLeaveAt", serantis$leaveAt);
             out.putInt("SerantisSwaps", serantis$swaps);
@@ -162,6 +172,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         serantis$swaps = in.getIntOr("SerantisSwaps", 0);
         if (serantis$leaveAt > 0) serantis$stock = in.read("SerantisStock", CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
         if (in.getBooleanOr("SerantisHeld", false)) dev.serantis.battle.BattleHold.loadedHeld((CreatureEntity) (Object) this);   // saved mid-battle
+        serantis$carriedLoad = in.read("SerantisCarried", net.minecraft.world.item.ItemStack.CODEC).orElse(null);
     }
 
     // ...and carried over when it's caught or sent out from the party.

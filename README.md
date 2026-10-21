@@ -509,4 +509,9 @@ None of the four work in battle. Until it has its own model, the helm looks like
 - **Jumps:** a step of 1 or 2 blocks with room on top, it jumps (up to twice a normal jump).
 - **Digs:** otherwise it digs through natural blocks in its way (stone, dirt, sand, gravel, logs, leaves, ores and the like). It never touches anything a player placed, a block that holds items, crops or saplings, water, or anything harder than stone (obsidian, for example). It only digs inside its base, and the blocks drop as usual.
 - **Hops:** after 15 seconds without getting there, it hops right next to the job.
-- **Moves on:** if even that fails, it sets that job aside for a minute and does its other work, instead of trying the same unreachable spot forever.
+- **Moves on:** if even that fails, it sets that job aside and does its other work, instead of trying the same unreachable spot forever. Every worker at that base skips it too, for 1 minute, then 2, 4 and so on up to about half an hour if it keeps failing. Anything it was carrying for that job (an item for a chest, a sapling to replant) is left at the Base Core.
+- **Furnaces and brewing stands:** one that never finishes (something unsmeltable in it, or the output slot holding something else) is set aside the same way, so the other furnaces keep running.
+- **Water and lava:** workers keep working and swim up instead of drifting off after their owner. Plants growing underwater aren't on the tending list.
+- **Tall chest stacks:** reach is measured from its whole body, not just its feet, so it can use the top chest of a 3-high wall.
+- **Nothing gets lost:** what a worker is carrying is saved with it, so a restart or unloaded chunk puts it down safely. A worker sent away mid-job drops its load.
+- **Tidying up:** a stale copy of a worker left over from a respawn removes itself, and claims left behind by workers that are gone are cleared, so a quarry never stalls on one.

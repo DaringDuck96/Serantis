@@ -49,7 +49,8 @@
     "BaseShareMixin",
     "BaseCoreShareMixin",
     "PlayerListLeaveMixin",
-    "BaseCoreAccess"
+    "BaseCoreAccess",
+    "WorkerBrainAccess"
   ],
   "client": [
     "client.PartyScreenMixin",

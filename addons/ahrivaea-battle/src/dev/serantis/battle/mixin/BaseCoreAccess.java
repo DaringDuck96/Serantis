@@ -13,4 +13,7 @@ import java.util.UUID;
 public interface BaseCoreAccess {
     @Accessor("claimed")
     Map<BlockPos, UUID> serantis$claimed();
+
+    @Accessor("growables")
+    java.util.Set<BlockPos> serantis$growables();
 }

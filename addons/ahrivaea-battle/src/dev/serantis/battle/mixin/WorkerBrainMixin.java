@@ -3,6 +3,7 @@ package dev.serantis.battle.mixin;
 import dev.ahrivaea.base.WorkerBrain;
 import dev.ahrivaea.creature.CreatureEntity;
 import dev.serantis.battle.Pace;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,47 +46,100 @@ public abstract class WorkerBrainMixin {
         return dev.serantis.battle.Villages.has(base, "bard") ? dev.serantis.battle.Villages.BARD_SPEED : 1.0;
     }
 
-    // ---- never stuck (see the class notes in the README's base section)
-    // The creatures mod gives up on a target it can't walk to after 15 seconds, but then picks the same target
-    // again, forever. Instead: the first time, the worker hops next to the target (as miners already do); if
-    // that doesn't work either, the target is set aside for a minute so the worker gets on with other jobs.
+    // ---- never stuck
+    // The creatures mod gives up on a target it can't walk to after 15 seconds, then picks the same target again,
+    // forever. Instead: the first time, the worker hops to a safe spot next to the target (inside its base); if it
+    // still can't do the job, the target is set aside for every worker at that base, for 1 minute, then 2, 4...
+    // up to 30, and anything it was carrying for it is left at the Base Core.
     @Shadow private int travelTicks;
+    @Shadow private int workTicks;
+    @Shadow private ItemStack carried;
+    @Shadow private net.minecraft.core.BlockPos plantAt;
     @Shadow private void finish(dev.ahrivaea.base.BaseCoreBlockEntity be, int wait) { }
-    @Shadow private net.minecraft.core.BlockPos standNear(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos target) { return null; }
 
     @org.spongepowered.asm.mixin.Unique private boolean serantis$hopped;
-    @org.spongepowered.asm.mixin.Unique private final java.util.Map<net.minecraft.core.BlockPos, Long> serantis$unreachable = new java.util.HashMap<>();
     @org.spongepowered.asm.mixin.Unique private final java.util.List<net.minecraft.core.BlockPos> serantis$setAside = new java.util.ArrayList<>();
     @org.spongepowered.asm.mixin.Unique private static final java.util.UUID SERANTIS_SET_ASIDE = new java.util.UUID(0x5e7a, 0x51de);
+    /** Per base core: target -> {set aside until (game time), strikes}. Shared by all its workers. */
+    @org.spongepowered.asm.mixin.Unique private static final java.util.Map<net.minecraft.core.BlockPos, java.util.Map<net.minecraft.core.BlockPos, long[]>> SERANTIS_ASIDE = new java.util.concurrent.ConcurrentHashMap<>();
     @org.spongepowered.asm.mixin.Unique private static java.lang.reflect.Field serantis$taskField;
-    @org.spongepowered.asm.mixin.Unique private static java.lang.reflect.Method serantis$targetOf;
+    @org.spongepowered.asm.mixin.Unique private static java.lang.reflect.Method serantis$targetOf, serantis$kindOf;
 
     @org.spongepowered.asm.mixin.Unique
-    private net.minecraft.core.BlockPos serantis$target() {
+    private Object serantis$task() {
         try {
             if (serantis$taskField == null) {
                 serantis$taskField = WorkerBrain.class.getDeclaredField("task");
                 serantis$taskField.setAccessible(true);
             }
             Object t = serantis$taskField.get(this);
-            if (t == null) return null;
-            if (serantis$targetOf == null) {
+            if (t != null && serantis$targetOf == null) {
                 serantis$targetOf = t.getClass().getDeclaredMethod("target");
                 serantis$targetOf.setAccessible(true);
+                serantis$kindOf = t.getClass().getDeclaredMethod("kind");
+                serantis$kindOf.setAccessible(true);
             }
-            return (net.minecraft.core.BlockPos) serantis$targetOf.invoke(t);
+            return t;
         } catch (ReflectiveOperationException | RuntimeException e) {
             return null;
         }
     }
 
+    @org.spongepowered.asm.mixin.Unique
+    private net.minecraft.core.BlockPos serantis$target() {
+        try { Object t = serantis$task(); return t == null ? null : (net.minecraft.core.BlockPos) serantis$targetOf.invoke(t); }
+        catch (ReflectiveOperationException | RuntimeException e) { return null; }
+    }
+
+    @org.spongepowered.asm.mixin.Unique
+    private String serantis$kind() {
+        try { Object t = serantis$task(); return t == null ? "" : ((Enum<?>) serantis$kindOf.invoke(t)).name(); }
+        catch (ReflectiveOperationException | RuntimeException e) { return ""; }
+    }
+
+    @org.spongepowered.asm.mixin.Unique
+    private static java.util.Map<net.minecraft.core.BlockPos, long[]> serantis$aside(net.minecraft.core.BlockPos core) {
+        return SERANTIS_ASIDE.computeIfAbsent(core.immutable(), k -> new java.util.concurrent.ConcurrentHashMap<>());
+    }
+
+    @org.spongepowered.asm.mixin.Unique
+    private void serantis$setAsideTarget(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos target) {
+        long[] e = serantis$aside(core).computeIfAbsent(target.immutable(), k -> new long[]{0, 0});
+        e[1] = Math.min(e[1] + 1, 6);
+        e[0] = level.getGameTime() + 1200L * (1L << (e[1] - 1));      // 1, 2, 4, 8, 16, 32 minutes (30-ish at most)
+    }
+
+    /** A safe spot inside the base, close enough to the target to work on it, nearest the target. */
+    @org.spongepowered.asm.mixin.Unique
+    private net.minecraft.core.BlockPos serantis$spotNear(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, net.minecraft.core.BlockPos target) {
+        net.minecraft.core.BlockPos best = null;
+        double bestD = Double.MAX_VALUE;
+        net.minecraft.world.phys.Vec3 aim = net.minecraft.world.phys.Vec3.atCenterOf(target);
+        for (net.minecraft.core.BlockPos p : net.minecraft.core.BlockPos.betweenClosed(target.offset(-2, -3, -2), target.offset(2, 1, 2))) {
+            if (p.equals(target) || !be.contains(p) || !level.isLoaded(p) || !dev.serantis.battle.TeleportBoots.safe(level, p)) continue;
+            net.minecraft.world.phys.Vec3 feet = net.minecraft.world.phys.Vec3.atBottomCenterOf(p);
+            double d = Math.min(feet.distanceTo(aim), feet.add(0, self.getBbHeight() * 0.85, 0).distanceTo(aim));
+            if (d > 2.0 || d >= bestD) continue;
+            if (!level.noCollision(self, self.getBoundingBox().move(feet.subtract(self.position())))) continue;
+            best = p.immutable();
+            bestD = d;
+        }
+        return best;
+    }
+
     @org.spongepowered.asm.mixin.injection.Redirect(method = "tick", at = @At(value = "INVOKE",
             target = "Ldev/ahrivaea/base/WorkerBrain;finish(Ldev/ahrivaea/base/BaseCoreBlockEntity;I)V"))
     private void serantis$notStuck(WorkerBrain me, dev.ahrivaea.base.BaseCoreBlockEntity be, int wait, net.minecraft.server.level.ServerLevel level) {
-        if (wait != 100) { finish(be, wait); return; }                 // 100: gave up walking to it
         net.minecraft.core.BlockPos target = serantis$target();
+        String kind = serantis$kind();
+        if (wait == 20 && workTicks > 1200 && target != null && ("SMELT".equals(kind) || "BREW".equals(kind))) {
+            serantis$setAsideTarget(level, target);                     // a furnace or stand that never finishes: let it be for a while
+            finish(be, wait);
+            return;
+        }
+        if (wait != 100) { finish(be, wait); return; }                 // 100: gave up walking to it
         if (target != null && !serantis$hopped) {
-            net.minecraft.core.BlockPos stand = standNear(level, target);
+            net.minecraft.core.BlockPos stand = serantis$spotNear(level, be, target);
             if (stand != null) {                                        // hop next to it and carry on
                 serantis$hopped = true;
                 self.getNavigation().stop();
@@ -94,24 +148,68 @@ public abstract class WorkerBrainMixin {
                 return;
             }
         }
-        if (target != null) serantis$unreachable.put(target.immutable(), level.getGameTime() + 1200);   // set aside for a minute
+        if (!carried.isEmpty() && ("DELIVER".equals(kind) || "PLANT".equals(kind) || "FETCH".equals(kind))) {   // can't take it there: leave it at the core
+            net.minecraft.world.entity.item.ItemEntity item = new net.minecraft.world.entity.item.ItemEntity(level, core.getX() + 0.5, core.getY() + 1.2, core.getZ() + 0.5, carried);
+            level.addFreshEntity(item);
+            carried = ItemStack.EMPTY;
+        }
+        if ("PLANT".equals(kind) || "FETCH".equals(kind)) {             // the replant spot it claimed goes back too
+            if (plantAt != null) ((BaseCoreAccess) (Object) be).serantis$claimed().remove(plantAt, self.getUUID());
+            plantAt = null;
+        }
+        if (target != null) serantis$setAsideTarget(level, target);
         finish(be, wait);
+    }
+
+    @Inject(method = "complete", at = @At("HEAD"))
+    private void serantis$done(org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        net.minecraft.core.BlockPos target = serantis$target();
+        if (target != null) serantis$aside(core).remove(target);      // it worked after all: no more strikes
     }
 
     @Inject(method = "plan", at = @At("HEAD"))
     private void serantis$skipUnreachable(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, CallbackInfoReturnable<?> cir) {
         serantis$hopped = false;                                        // a new task gets its own hop
         long now = level.getGameTime();
-        serantis$unreachable.values().removeIf(until -> until < now);
+        var claimed = ((BaseCoreAccess) (Object) be).serantis$claimed();
+        claimed.entrySet().removeIf(e -> !SERANTIS_SET_ASIDE.equals(e.getValue()) && be.workerFor(e.getValue()) == null);   // claims of workers that are gone
         serantis$setAside.clear();
-        for (net.minecraft.core.BlockPos p : serantis$unreachable.keySet())
-            if (!((BaseCoreAccess) (Object) be).serantis$claimed().containsKey(p)) { ((BaseCoreAccess) (Object) be).serantis$claimed().put(p, SERANTIS_SET_ASIDE); serantis$setAside.add(p); }
+        var aside = serantis$aside(core);
+        aside.entrySet().removeIf(e -> e.getValue()[0] < now - 20L * 60 * 60);   // forgotten after an hour of not failing
+        for (var e : aside.entrySet())
+            if (e.getValue()[0] >= now && !claimed.containsKey(e.getKey())) { claimed.put(e.getKey(), SERANTIS_SET_ASIDE); serantis$setAside.add(e.getKey()); }
+        for (net.minecraft.core.BlockPos p : ((BaseCoreAccess) (Object) be).serantis$growables())   // nothing to tend underwater
+            if (!level.getFluidState(p).isEmpty() && !claimed.containsKey(p)) { claimed.put(p, SERANTIS_SET_ASIDE); serantis$setAside.add(p); }
     }
 
     @Inject(method = "plan", at = @At("RETURN"))
     private void serantis$restoreClaims(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, CallbackInfoReturnable<?> cir) {
-        for (net.minecraft.core.BlockPos p : serantis$setAside) ((BaseCoreAccess) (Object) be).serantis$claimed().remove(p, SERANTIS_SET_ASIDE);
+        var claimed = ((BaseCoreAccess) (Object) be).serantis$claimed();
+        for (net.minecraft.core.BlockPos p : serantis$setAside) claimed.remove(p, SERANTIS_SET_ASIDE);
         serantis$setAside.clear();
+    }
+
+    // A worker its base no longer lists (a stale copy after a respawn): it leaves, dropping what it carried.
+    // In water or lava it keeps working (FloatGoalMixin lets the brain run) and swims up on its own.
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void serantis$ghostAndSwim(net.minecraft.server.level.ServerLevel level, org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        dev.ahrivaea.base.BaseCoreBlockEntity be = dev.ahrivaea.base.Bases.coreAt(level, core);
+        if (be != null && be.workerFor(self.getUUID()) == null) {
+            if (!carried.isEmpty()) { self.spawnAtLocation(level, carried); carried = ItemStack.EMPTY; }
+            self.discard();
+            ci.cancel();
+            return;
+        }
+        if ((self.isInWater() || self.isInLava()) && self.getFluidHeight(self.isInLava() ? net.minecraft.tags.FluidTags.LAVA : net.minecraft.tags.FluidTags.WATER) > self.getFluidJumpThreshold())
+            self.getJumpControl().jump();
+    }
+
+    // Arriving is measured from the nearest of its feet, middle or eyes, so a tall chest stack can be reached.
+    @org.spongepowered.asm.mixin.injection.Redirect(method = "tick", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D", ordinal = 0))
+    private double serantis$reachFromBody(net.minecraft.world.phys.Vec3 feet, net.minecraft.world.phys.Vec3 where) {
+        double h = self.getBbHeight();
+        return Math.min(feet.distanceTo(where), Math.min(feet.add(0, h * 0.5, 0).distanceTo(where), feet.add(0, h * 0.9, 0).distanceTo(where)));
     }
 
     // ---- getting through: a worker that isn't getting closer jumps up to 2 blocks, or digs through natural blocks

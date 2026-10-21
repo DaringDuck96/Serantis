@@ -18,6 +18,7 @@ public abstract class FloatGoalMixin {
 
     @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
     private void serantis$stayUnder(CallbackInfoReturnable<Boolean> cir) {
+        if (mob instanceof CreatureEntity w && w.brain() != null) { cir.setReturnValue(false); return; }   // a worker keeps working (and swims up itself)
         if (mob instanceof CreatureEntity c && !c.isTame()) {
             byte m = ((Locomotion.Holder) c).serantis$moveMode();
             if (m == Locomotion.DIVE || m == Locomotion.CRAWL) cir.setReturnValue(false);
