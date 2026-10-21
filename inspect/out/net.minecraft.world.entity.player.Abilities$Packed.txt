@@ -1,0 +1,24 @@
+Compiled from "Abilities.java"
+public final class net.minecraft.world.entity.player.Abilities$Packed extends java.lang.Record {
+  private final boolean invulnerable;
+  private final boolean flying;
+  private final boolean mayFly;
+  private final boolean instabuild;
+  private final boolean mayBuild;
+  private final float flyingSpeed;
+  private final float walkingSpeed;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.entity.player.Abilities$Packed> CODEC;
+  public net.minecraft.world.entity.player.Abilities$Packed(boolean, boolean, boolean, boolean, boolean, float, float);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public boolean invulnerable();
+  public boolean flying();
+  public boolean mayFly();
+  public boolean instabuild();
+  public boolean mayBuild();
+  public float flyingSpeed();
+  public float walkingSpeed();
+  private static com.mojang.datafixers.kinds.App lambda$static$0(com.mojang.serialization.codecs.RecordCodecBuilder$Instance);
+  static {};
+}

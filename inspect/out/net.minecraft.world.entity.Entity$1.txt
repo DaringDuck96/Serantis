@@ -1,7 +1,0 @@
-Compiled from "Entity.java"
-class net.minecraft.world.entity.Entity$1 {
-  static final int[] $SwitchMap$net$minecraft$world$level$block$Rotation;
-  static final int[] $SwitchMap$net$minecraft$world$level$block$Mirror;
-  static final int[] $SwitchMap$net$minecraft$world$entity$MoveSimulationType;
-  static {};
-}

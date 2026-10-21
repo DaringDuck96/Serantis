@@ -1,0 +1,5 @@
+Compiled from "LivingEntity.java"
+class net.minecraft.world.entity.LivingEntity$1 {
+  static final int[] $SwitchMap$net$minecraft$world$entity$EquipmentSlot;
+  static {};
+}
