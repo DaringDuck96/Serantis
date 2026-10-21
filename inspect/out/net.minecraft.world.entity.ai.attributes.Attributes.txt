@@ -1,0 +1,48 @@
+Compiled from "Attributes.java"
+public class net.minecraft.world.entity.ai.attributes.Attributes {
+  public static final double DEFAULT_ATTACK_SPEED = 4.0d;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> AIR_DRAG_MODIFIER;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ARMOR;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ARMOR_TOUGHNESS;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ATTACK_DAMAGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ATTACK_KNOCKBACK;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ATTACK_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BELOW_NAME_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BLOCK_BREAK_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BLOCK_INTERACTION_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BOUNCINESS;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> BURNING_TIME;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> CAMERA_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> EXPLOSION_KNOCKBACK_RESISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ENTITY_INTERACTION_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FALL_DAMAGE_MULTIPLIER;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FLYING_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FOLLOW_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FRICTION_MODIFIER;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> GRAVITY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> JUMP_STRENGTH;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> KNOCKBACK_RESISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> LUCK;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MAX_ABSORPTION;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MAX_HEALTH;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MINING_EFFICIENCY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MOVEMENT_EFFICIENCY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> MOVEMENT_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> NAME_TAG_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> OXYGEN_BONUS;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SAFE_FALL_DISTANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SCALE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SNEAKING_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SPAWN_REINFORCEMENTS_CHANCE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> STEP_HEIGHT;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SUBMERGED_MINING_SPEED;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SWEEPING_DAMAGE_RATIO;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> TEMPT_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> WATER_MOVEMENT_EFFICIENCY;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> WAYPOINT_TRANSMIT_RANGE;
+  public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> WAYPOINT_RECEIVE_RANGE;
+  public net.minecraft.world.entity.ai.attributes.Attributes();
+  private static net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> register(java.lang.String, net.minecraft.world.entity.ai.attributes.Attribute);
+  public static net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> bootstrap(net.minecraft.core.Registry<net.minecraft.world.entity.ai.attributes.Attribute>);
+  static {};
+}

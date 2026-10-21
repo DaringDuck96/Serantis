@@ -1,0 +1,4 @@
+Compiled from "Options.java"
+interface net.minecraft.client.Options$OptionAccess {
+  public abstract <T> void process(java.lang.String, net.minecraft.client.OptionInstance<T>);
+}

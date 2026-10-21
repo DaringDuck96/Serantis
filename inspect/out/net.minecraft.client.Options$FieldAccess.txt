@@ -1,0 +1,8 @@
+Compiled from "Options.java"
+interface net.minecraft.client.Options$FieldAccess extends net.minecraft.client.Options$OptionAccess {
+  public abstract int process(java.lang.String, int);
+  public abstract boolean process(java.lang.String, boolean);
+  public abstract java.lang.String process(java.lang.String, java.lang.String);
+  public abstract float process(java.lang.String, float);
+  public abstract <T> T process(java.lang.String, T, java.util.function.Function<java.lang.String, T>, java.util.function.Function<T, java.lang.String>);
+}

@@ -1,0 +1,22 @@
+Compiled from "KeyMapping.java"
+public final class net.minecraft.client.KeyMapping$Category extends java.lang.Record {
+  private final net.minecraft.resources.Identifier id;
+  private static final java.util.List<net.minecraft.client.KeyMapping$Category> SORT_ORDER;
+  public static final net.minecraft.client.KeyMapping$Category MOVEMENT;
+  public static final net.minecraft.client.KeyMapping$Category MISC;
+  public static final net.minecraft.client.KeyMapping$Category MULTIPLAYER;
+  public static final net.minecraft.client.KeyMapping$Category GAMEPLAY;
+  public static final net.minecraft.client.KeyMapping$Category INVENTORY;
+  public static final net.minecraft.client.KeyMapping$Category CREATIVE;
+  public static final net.minecraft.client.KeyMapping$Category SPECTATOR;
+  public static final net.minecraft.client.KeyMapping$Category DEBUG;
+  public net.minecraft.client.KeyMapping$Category(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.KeyMapping$Category register(java.lang.String);
+  public static net.minecraft.client.KeyMapping$Category register(net.minecraft.resources.Identifier);
+  public net.minecraft.network.chat.Component label();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.resources.Identifier id();
+  static {};
+}

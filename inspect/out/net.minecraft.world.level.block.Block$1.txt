@@ -1,0 +1,6 @@
+Compiled from "Block.java"
+class net.minecraft.world.level.block.Block$1 extends com.google.common.cache.CacheLoader<net.minecraft.world.phys.shapes.VoxelShape, java.lang.Boolean> {
+  net.minecraft.world.level.block.Block$1();
+  public java.lang.Boolean load(net.minecraft.world.phys.shapes.VoxelShape);
+  public java.lang.Object load(java.lang.Object) throws java.lang.Exception;
+}

@@ -1,0 +1,6 @@
+Compiled from "Options.java"
+class net.minecraft.client.Options$4 implements net.minecraft.client.Options$OptionAccess {
+  final java.util.List val$optionsForReport;
+  net.minecraft.client.Options$4();
+  public <T> void process(java.lang.String, net.minecraft.client.OptionInstance<T>);
+}

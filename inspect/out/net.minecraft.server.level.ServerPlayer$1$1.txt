@@ -1,0 +1,9 @@
+Compiled from "ServerPlayer.java"
+class net.minecraft.server.level.ServerPlayer$1$1 extends com.google.common.cache.CacheLoader<net.minecraft.core.component.TypedDataComponent<?>, java.lang.Integer> {
+  private final com.mojang.serialization.DynamicOps<com.google.common.hash.HashCode> registryHashOps;
+  final net.minecraft.server.level.ServerPlayer$1 this$1;
+  net.minecraft.server.level.ServerPlayer$1$1(net.minecraft.server.level.ServerPlayer$1);
+  public java.lang.Integer load(net.minecraft.core.component.TypedDataComponent<?>);
+  public java.lang.Object load(java.lang.Object) throws java.lang.Exception;
+  private static java.lang.IllegalArgumentException lambda$load$0(net.minecraft.core.component.TypedDataComponent, java.lang.String);
+}
