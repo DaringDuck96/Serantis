@@ -207,11 +207,8 @@ public final class MoveEngine {
             if (!MoveBook.available()) continue;
             List<MoveSpec> best = null;
             int bestPower = -1;
-            String[] kinds = {"void", "arcane", "darkness", "radiant"};
-            for (int i = 0; i < 12; i++) {
-                dev.ahrivaea.creature.Influence inf = dev.ahrivaea.creature.Influence.NONE;
-                for (var x : dev.ahrivaea.creature.Influence.values()) if (x.getSerializedName().equals(kinds[i % kinds.length])) inf = x;
-                List<MoveSpec> roll = MoveBook.roll(inf, b.random);
+            for (int i = 0; i < 12; i++) {                           // six moves from any influence, the strongest of 12 tries
+                List<MoveSpec> roll = MoveBook.rollAny(b.random, 6);
                 int power = 0;
                 for (MoveSpec m : roll) power += Math.max(0, m.sheetPower);
                 if (power > bestPower) { bestPower = power; best = roll; }

@@ -304,7 +304,8 @@ public final class FigureVisit {
         var sp = dev.ahrivaea.creature.Species.get(c.species()).orElse(null);
         float hp = legendStats().maxHealth(10);
         c = c.withProgress(10, 0).withHealth(hp);
-        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setMoves(null);
+        var moves = dev.serantis.battle.moves.MoveBook.rollAny(net.minecraft.util.RandomSource.create(), 6);   // six fresh moves, any influence
+        ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setMoves(moves.isEmpty() ? null : dev.serantis.battle.moves.MoveBook.encode(moves));
         ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setNickname("Mysterious Figure");
         return c;
     }

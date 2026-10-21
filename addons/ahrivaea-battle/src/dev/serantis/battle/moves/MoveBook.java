@@ -131,6 +131,25 @@ public final class MoveBook {
         return out;
     }
 
+    /** {@code n} different random moves from every influence (at least two deal damage): the Mysterious Figure's. */
+    public static List<MoveSpec> rollAny(RandomSource random, int n) {
+        load();
+        List<MoveSpec> pool = new ArrayList<>();
+        for (MoveSpec s : byId.values()) if (s.enabled) pool.add(s);
+        pool.sort((a, b) -> a.id.compareTo(b.id));
+        List<MoveSpec> out = new ArrayList<>();
+        List<MoveSpec> damaging = new ArrayList<>();
+        for (MoveSpec s : pool) if (s.damaging()) damaging.add(s);
+        for (int i = 0; i < 2 && !damaging.isEmpty(); i++) {
+            MoveSpec d = damaging.remove(random.nextInt(damaging.size()));
+            out.add(d);
+            pool.remove(d);
+        }
+        while (out.size() < n && !pool.isEmpty()) out.add(pool.remove(random.nextInt(pool.size())));
+        Collections.sort(out, (a, b) -> Boolean.compare(b.damaging(), a.damaging()));
+        return out;
+    }
+
     public static String encode(List<MoveSpec> specs) {
         StringBuilder sb = new StringBuilder();
         for (MoveSpec s : specs) { if (sb.length() > 0) sb.append(','); sb.append(s.id); }
