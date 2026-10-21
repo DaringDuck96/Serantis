@@ -45,7 +45,8 @@
     "client.PartyClientAccessor",
     "client.MultiPlayerGameModeMixin",
     "client.MinecraftTradeMixin",
-    "client.VillagerScreenMixin"
+    "client.VillagerScreenMixin",
+    "client.CreatureRendererVillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

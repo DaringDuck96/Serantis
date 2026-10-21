@@ -230,6 +230,8 @@ Professions are the creatures mod's (Farmer, Fisherman, Gardener, Weaver, Hunter
 
 The **Alchemist** still sells potions and brewing ingredients for XP, and its trade screen also turns a golden apple from your inventory into 20 XP.
 
+**Villager looks:** each profession wears its own model (with Enraged and Mutated skins): Farmer, Fisherman, Hunter (fletcher), Librarian, Explorer (cartographer), Smith (armorer), Leatherworker, Mason, Jeweler (nitwit), Voidwalker (cleric), Alchemist, Bard, Innkeeper, Noble, Merchant, Move Tutor, Town Guard, Black Market Merchant and Wandering Trader, and villagers with no profession wear the plain villager model. The Gardener and Weaver (shepherd), Netherwright (weaponsmith), Carpenter and Engineer (toolsmith), Cook (butcher) and Creature Masters keep the original villager look with a vanilla outfit until their models are added. The models are converted with `tools/convert_villagers.py`.
+
 How often each profession turns up in a village: Farmer and Mason are the most common; Explorer, Engineer, Leatherworker and Alchemist a little less; Bard, Innkeeper and Move Tutor uncommon; Netherwright and Jeweler rarer; Noble and Voidwalker the rarest.
 
 ### Creature Masters
