@@ -114,6 +114,17 @@ public abstract class BattlesMixin {
         dev.serantis.battle.Villages.NEXT_GUARD.set(false);
     }
 
+    // Any weapon starts a battle, not just a sword.
+    @Redirect(method = "lambda$init$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z"))
+    private static boolean serantis$anyWeapon(net.minecraft.world.item.ItemStack stack, net.minecraft.tags.TagKey<?> tag) {
+        return dev.serantis.battle.Weapons.isWeapon(stack);
+    }
+
+    @org.spongepowered.asm.mixin.injection.ModifyConstant(method = "lambda$init$1", constant = @org.spongepowered.asm.mixin.injection.Constant(stringValue = "Hit it with a sword to battle it."))
+    private static String serantis$weaponHint(String original) {
+        return "Hit it with a weapon (or shoot it) to battle it.";
+    }
+
     // Black Market Merchants don't fight.
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {

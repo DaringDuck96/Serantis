@@ -19,7 +19,7 @@ import java.util.Set;
  *
  * Flyers (every creature that flies): 60% take to the air when they appear and stay airborne,
  * cruising 4-40 blocks above the ground and swooping low around nearby players (so you can still
- * reach one with a sword to battle it). The rest stay on the ground as before.
+ * reach one to battle it). The rest stay on the ground as before.
  *
  * Swimmers: 80% stay beneath the surface. Bottom dwellers (crabs, octopuses, tortoises, nautilopers,
  * leeches, reef spitters, revenants, sahuagin, river zorlings) sink and crawl along the sea floor or

@@ -33,7 +33,8 @@
     "WildSpawnerNobleMixin",
     "ServerLevelInnMixin",
     "VillagersRolesMixin",
-    "FloatGoalMixin"
+    "FloatGoalMixin",
+    "ProjectileBattleMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

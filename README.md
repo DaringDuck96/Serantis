@@ -186,13 +186,17 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 Right after you recruit a creature in battle, or pick your starter, a box pops up to name it (up to 20 characters). **Keep** leaves it with its species name. A named creature shows its name over its head, in battle and on the party screen, where its temperament and species follow in brackets, e.g. "Sparky (Brave Scrap Goblin)". Names are saved with the creature and kept when it's sent out, boxed or levelled up.
 
 
+### Starting a battle
+
+Hit a wild creature with any weapon to battle it: a sword, axe, spear, mace, trident, bow or crossbow (held), or anything else Minecraft counts as a weapon. Or shoot it: an arrow from a bow or crossbow, or a thrown trident, starts the battle as soon as it hits (the arrow drops where it hit, so you can pick it up again).
+
 ### Riding
 
-While you ride a creature, your crosshair passes through the creature you're sitting on, so you can place and break blocks and hit other creatures with a sword to start a battle without getting off.
+While you ride a creature, your crosshair passes through the creature you're sitting on, so you can place and break blocks and hit or shoot other creatures to start a battle without getting off.
 
 ### Flyers and swimmers in the wild
 
-- **Flyers** (every creature that flies): 60% take to the air when they appear and stay airborne, cruising anywhere from 4 to 40 blocks above the ground (more often in the lower half). When a player is nearby they often swoop low around them, so you can still reach one with a sword to start a battle. The other 40% stay on the ground.
+- **Flyers** (every creature that flies): 60% take to the air when they appear and stay airborne, cruising anywhere from 4 to 40 blocks above the ground (more often in the lower half). When a player is nearby they often swoop low around them, so you can still reach one with a melee weapon (or just shoot it) to start a battle. The other 40% stay on the ground.
 - **Swimmers:** 80% stay beneath the surface. Bottom dwellers (Crab, Giant Octopus, Tortoise, Nautiloper, Whirlpool Leech, Reef Spitter, Revenant, Sahuagin, River Zorling) sink and crawl along the sea floor or river bed; every other swimmer swims around underwater. Ducks always paddle on the surface. The other 20% float at the surface.
 - Tamed creatures, base workers, ridden or leashed creatures and creatures in battle move as usual. Creatures already in your world pick their way of moving the next time they're loaded.
 
