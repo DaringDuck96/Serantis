@@ -1,2 +1,2 @@
 # classes
-compile wip/dex
+compile wip/last
