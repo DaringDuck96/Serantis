@@ -1,3 +1,2 @@
 # classes
-compile wip/infuse
-sig:dev.ahrivaea.creature.Influence
+compile wip/journal
