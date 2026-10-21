@@ -1,6 +1,0 @@
-Compiled from "Model.java"
-public class net.minecraft.client.model.Model$Simple extends net.minecraft.client.model.Model<net.minecraft.util.Unit> {
-  public net.minecraft.client.model.Model$Simple(net.minecraft.client.model.geom.ModelPart, java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType>);
-  public void setupAnim(net.minecraft.util.Unit);
-  public void setupAnim(java.lang.Object);
-}

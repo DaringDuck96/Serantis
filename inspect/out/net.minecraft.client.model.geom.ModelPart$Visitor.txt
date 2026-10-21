@@ -1,4 +1,0 @@
-Compiled from "ModelPart.java"
-public interface net.minecraft.client.model.geom.ModelPart$Visitor {
-  public abstract void visit(com.mojang.blaze3d.vertex.PoseStack$Pose, java.lang.String, int, net.minecraft.client.model.geom.ModelPart$Cube);
-}
