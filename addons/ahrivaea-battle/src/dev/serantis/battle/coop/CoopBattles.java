@@ -61,6 +61,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * friendly: no XP, loot, recruiting, armour wear or real damage to anyone's creatures.
  */
 public final class CoopBattles {
+    /** Welcome.Holder figureMet bit: this player has won a spar (the Bragging Rights achievement). */
+    public static final int SPAR_WON = 65536;
     public static final int MAX_ALLIES = 3, ALLY_CREATURES = 2, SPAR_CREATURES = 4, TURN_SECONDS = 90, JOIN_RANGE = 48;
     /** A route answer meaning "not co-op business: let the creatures mod handle it". */
     public static final String PASS = "\u0001pass";
@@ -773,6 +775,14 @@ public final class CoopBattles {
             send(p, b.view(id).toString());
         }
         ServerPlayer owner = b.player();
+        if (i.rival != null) {                                         // the winner gets Bragging Rights (and only that)
+            ServerPlayer winner = o == Battle.Outcome.WON ? owner : online(b, i.rival);
+            if (winner != null) {
+                var h = (dev.serantis.battle.Welcome.Holder) winner;
+                h.serantis$setFigureMet(h.serantis$figureMet() | SPAR_WON);
+                dev.serantis.battle.Achievements.check(winner);
+            }
+        }
         if (i.rival != null && owner != null)
             owner.sendSystemMessage(Component.literal(o == Battle.Outcome.WON ? "You won the spar!" : name(b, i.rival) + " won the spar.")
                     .withStyle(o == Battle.Outcome.WON ? ChatFormatting.GREEN : ChatFormatting.YELLOW));

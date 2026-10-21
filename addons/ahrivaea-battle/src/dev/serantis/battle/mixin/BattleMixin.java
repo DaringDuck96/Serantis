@@ -112,6 +112,18 @@ public abstract class BattleMixin implements BattleAccess {
         if (dev.serantis.battle.coop.CoopBattles.isSpar((Battle) (Object) this)) defeated.clear();   // no loot or recruits from a spar
     }
 
+    // A spar win isn't a battle won (no Battles Won progress): its only prize is Bragging Rights.
+    @Redirect(method = "finish", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/villager/Villagers;award(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/resources/Identifier;)V"))
+    private void serantis$noSparCredit(net.minecraft.server.level.ServerPlayer p, net.minecraft.resources.Identifier stat) {
+        if (!dev.serantis.battle.coop.CoopBattles.isSpar((Battle) (Object) this)) dev.ahrivaea.villager.Villagers.award(p, stat);
+    }
+
+    // ...and no night-time ender pearl either.
+    @Redirect(method = "finish", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isDarkOutside()Z"))
+    private boolean serantis$noSparPearl(net.minecraft.world.level.Level level) {
+        return !dev.serantis.battle.coop.CoopBattles.isSpar((Battle) (Object) this) && level.isDarkOutside();
+    }
+
     @Inject(method = "saveParty", at = @At("HEAD"), cancellable = true)
     private void serantis$sparParty(net.minecraft.server.level.ServerPlayer p, CallbackInfo ci) {
         if (dev.serantis.battle.coop.CoopBattles.skipSaveParty((Battle) (Object) this)) ci.cancel();

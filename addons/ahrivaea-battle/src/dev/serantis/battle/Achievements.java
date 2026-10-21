@@ -68,7 +68,9 @@ public final class Achievements {
             new Track("eternita", "The Eternita Stone", "Eternita Stone earned", new long[]{1}, new int[]{0},
                     new String[]{"I Won! I Won the Game!"}),
             new Track("chaos", "Chaos Seeker", "Acolyte of the Last faced", new long[]{1}, new int[]{0},
-                    new String[]{"Chaos Seeker"}));
+                    new String[]{"Chaos Seeker"}),
+            new Track("bragging", "Bragging Rights", "spar won against another player", new long[]{1}, new int[]{0},
+                    new String[]{"Bragging Rights"}));
 
     /** Tracks that pay XP instead of golden apples (per tier). */
     private static final java.util.Map<String, int[]> XP_REWARD = java.util.Map.of("eternita", new int[]{10_000});
@@ -82,7 +84,8 @@ public final class Achievements {
             java.util.Map.entry("towers", "minecraft:chiseled_stone_bricks"), java.util.Map.entry("walked", "minecraft:leather_boots"),
             java.util.Map.entry("xp", "minecraft:experience_bottle"), java.util.Map.entry("deaths", "minecraft:skeleton_skull"),
             java.util.Map.entry("lore", "minecraft:written_book"),
-            java.util.Map.entry("eternita", "serantis_battle:eternita_stone"), java.util.Map.entry("chaos", "minecraft:wither_rose")));
+            java.util.Map.entry("eternita", "serantis_battle:eternita_stone"), java.util.Map.entry("chaos", "minecraft:wither_rose"),
+            java.util.Map.entry("bragging", "minecraft:goat_horn")));
 
     /** One "recruit creatures of this influence" line per influence: {influence, name, icon, five titles}. */
     private static final String[][] INFLUENCES = {
@@ -219,6 +222,7 @@ public final class Achievements {
             case "deaths" -> stats.getValue(Stats.CUSTOM, Stats.DEATHS);
             case "eternita" -> p instanceof Masters.Holder m && m.serantis$eternita() ? 1 : 0;
             case "chaos" -> (((Welcome.Holder) p).serantis$figureMet() & FigureVisit.CHAOS_FOUGHT) != 0 ? 1 : 0;
+            case "bragging" -> (((Welcome.Holder) p).serantis$figureMet() & dev.serantis.battle.coop.CoopBattles.SPAR_WON) != 0 ? 1 : 0;
             default -> 0;
         };
     }
@@ -238,7 +242,9 @@ public final class Achievements {
             int claimed = h.serantis$claimed(t.id());
             while (claimed < t.tiers().length && v >= t.tiers()[claimed]) {
                 int[] xp = XP_REWARD.get(t.id());
-                if ("chaos".equals(t.id())) {
+                if ("bragging".equals(t.id())) {
+                    p.sendSystemMessage(Component.literal("Achievement unlocked: Bragging Rights! You beat another player in a spar. That's it. That's the prize.").withStyle(ChatFormatting.GOLD));
+                } else if ("chaos".equals(t.id())) {
                     p.sendSystemMessage(Component.literal("Achievement unlocked: Chaos Seeker! Enraged creatures now find you more often (+"
                             + FigureVisit.enragedBonus(p) + "% of wild creatures near you).").withStyle(ChatFormatting.GOLD));
                 } else if (xp != null) {
@@ -307,7 +313,10 @@ public final class Achievements {
             o.add("titles", titles);
             o.add("apples", apples);
             int[] xp = XP_REWARD.get(t.id());
-            if ("chaos".equals(t.id())) {
+            if ("bragging".equals(t.id())) {
+                o.addProperty("badge", "!");
+                o.addProperty("reward", "Nothing but the bragging rights");
+            } else if ("chaos".equals(t.id())) {
                 o.addProperty("badge", "!");
                 o.addProperty("reward", "More Enraged creatures (2% if you beat him, 1% if not)");
             } else if (xp != null) {
