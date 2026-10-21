@@ -306,4 +306,32 @@ public abstract class BattleScreenMixin {
             cir.setReturnValue(true);
         }
     }
+
+    // ---- changing gear: an "Equip" choice under Wait on your own turn (it takes your attack). See Equipment.
+    @Shadow private void reset() { }
+
+    @Inject(method = "rebuild", at = @At("RETURN"))
+    private void serantis$equipButton(CallbackInfo ci) {
+        net.minecraft.client.gui.screens.Screen self = (net.minecraft.client.gui.screens.Screen) (Object) this;
+        net.minecraft.client.gui.components.Button wait = null;
+        for (var c : self.children())
+            if (c instanceof net.minecraft.client.gui.components.Button b && "Wait".equals(b.getMessage().getString())) wait = b;
+        if (wait == null) return;
+        final int unit = selected, x = destX, z = destZ;
+        ((ScreenAccessor) self).serantis$add(net.minecraft.client.gui.components.Button.builder(net.minecraft.network.chat.Component.literal("Equip"),
+                        btn -> net.minecraft.client.Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.EquipScreen(self, (slot, hand) -> {
+                            JsonObject o = new JsonObject();
+                            o.addProperty("kind", "equip");
+                            o.addProperty("unit", unit);
+                            o.addProperty("x", x);
+                            o.addProperty("z", z);
+                            o.addProperty("move", slot);
+                            o.addProperty("target", hand);
+                            dev.ahrivaea.client.battle.BattleClient.send(o);
+                            reset();
+                        })))
+                .tooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.literal(
+                        "Change your weapon, shield or staff. It takes the place of your attack this turn.")))
+                .bounds(wait.getX(), wait.getY() + wait.getHeight() + 1, wait.getWidth(), wait.getHeight()).build());
+    }
 }

@@ -68,4 +68,13 @@ public abstract class PlayerCharacterMixin {
         if (had != null) inst.removeModifier(SERANTIS_MINING);
         if (want > 0) inst.addTransientModifier(new AttributeModifier(SERANTIS_MINING, want, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
     }
+
+    // A shield in the off hand: +20 Defense in battle (see Equipment).
+    @Inject(method = "battleStats", at = @At("RETURN"), cancellable = true)
+    private void serantis$shield(Player player, CallbackInfoReturnable<dev.ahrivaea.creature.Stats> cir) {
+        var s = cir.getReturnValue();
+        if (s == null || player == null || !dev.serantis.battle.Equipment.isShield(player.getOffhandItem())) return;
+        cir.setReturnValue(new dev.ahrivaea.creature.Stats(s.hp(), s.attack(), s.defense() + dev.serantis.battle.Equipment.SHIELD_DEFENSE,
+                s.speed(), s.magic(), s.luck(), s.charisma()));
+    }
 }

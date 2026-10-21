@@ -220,6 +220,11 @@ Right after you recruit a creature in battle, or pick your starter, a box pops u
 
 Hit a wild creature with any weapon to battle it: a sword, axe, spear, mace, trident, bow or crossbow (held), or anything else Minecraft counts as a weapon. Or shoot it: an arrow from a bow or crossbow, or a thrown trident, starts the battle as soon as it hits (the arrow drops where it hit, so you can pick it up again).
 
+### Shields and changing gear in battle
+
+- **Shields:** a shield in your off hand gives you **+20 Defense** in battle (players start at 50), for as long as it's there.
+- **Changing gear:** on your turn, after choosing where to move, pick **Equip** (under Wait) to put a weapon, shield or staff from your inventory into a hand, or to empty a hand. It takes the place of your attack that turn. Shields always go in the off hand; staffs can go in either. Your attack, your staff spells and your Defense change straight away.
+
 ### Riding
 
 While you ride a creature, your crosshair passes through the creature you're sitting on, so you can place and break blocks and hit or shoot other creatures to start a battle without getting off.

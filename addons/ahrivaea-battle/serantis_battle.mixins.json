@@ -49,7 +49,8 @@
     "client.MinecraftTradeMixin",
     "client.VillagerScreenMixin",
     "client.CreatureRendererVillagerMixin",
-    "client.CoreBreakMixin"
+    "client.CoreBreakMixin",
+    "client.ScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

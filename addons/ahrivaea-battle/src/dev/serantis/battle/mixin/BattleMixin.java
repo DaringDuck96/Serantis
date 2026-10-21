@@ -219,6 +219,36 @@ public abstract class BattleMixin implements BattleAccess {
     }
 
     // ---- player actions
+    // Changing gear takes the place of an attack: the player moves (if they chose to), then equips. See Equipment.
+    @Inject(method = "act", at = @At("HEAD"), cancellable = true)
+    private void serantis$equip(Battle.Action action, CallbackInfoReturnable<String> cir) {
+        if (!"equip".equals(action.kind())) return;
+        Battle self = (Battle) (Object) this;
+        net.minecraft.server.level.ServerPlayer p = self.player();
+        Unit u = self.unit(action.unit());
+        if (p == null || u == null || !u.isPlayer) { cir.setReturnValue("Only you can change your gear."); return; }
+        if (u.acted) { cir.setReturnValue("You've already acted this turn."); return; }
+        int slot = action.move(), hand = action.target() == 1 ? 1 : 0;
+        // check first, so a refusal doesn't use up the turn
+        net.minecraft.world.item.ItemStack held = p.getItemInHand(hand == 1 ? net.minecraft.world.InteractionHand.OFF_HAND : net.minecraft.world.InteractionHand.MAIN_HAND);
+        if (slot < 0 && held.isEmpty()) { cir.setReturnValue("That hand is already empty."); return; }
+        if (slot >= 0) {
+            var pick = slot < 36 ? p.getInventory().getItem(slot) : net.minecraft.world.item.ItemStack.EMPTY;
+            if (!dev.serantis.battle.Equipment.battleGear(pick)) { cir.setReturnValue("That's not a weapon, shield or staff."); return; }
+            if (hand == 0 && dev.serantis.battle.Equipment.isShield(pick)) { cir.setReturnValue("Shields go in your off hand."); return; }
+        }
+        String moved = self.act(new Battle.Action("wait", action.unit(), action.toX(), action.toZ(), -1, -1));
+        if (moved != null) { cir.setReturnValue(moved); return; }
+        String why = dev.serantis.battle.Equipment.equip(p, slot, hand);
+        if (why != null) { say(why); cir.setReturnValue(null); return; }
+        ((dev.serantis.battle.moves.UnitAccess) (Object) u).serantis$setMoves(dev.serantis.battle.Equipment.playerMoves(p));
+        ((dev.serantis.battle.moves.UnitAccess) (Object) u).serantis$replaceStats(dev.ahrivaea.character.PlayerCharacter.get(p).battleStats(p));
+        say(p.getPlainTextName() + (slot < 0 ? " puts away their " + (hand == 1 ? "off-hand gear." : "weapon.")
+                : " takes up " + dev.serantis.battle.Equipment.handName(p.getItemInHand(hand == 1
+                        ? net.minecraft.world.InteractionHand.OFF_HAND : net.minecraft.world.InteractionHand.MAIN_HAND)) + "."));
+        cir.setReturnValue(null);
+    }
+
     @Inject(method = "act", at = @At("HEAD"), cancellable = true)
     private void serantis$beforeAct(Battle.Action action, CallbackInfoReturnable<String> cir) {
         String why = MoveEngine.beforeAct((Battle) (Object) this, action);

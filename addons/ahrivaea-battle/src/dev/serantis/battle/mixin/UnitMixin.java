@@ -31,6 +31,9 @@ public abstract class UnitMixin implements UnitAccess {
     @Shadow public int hp;
 
     @Override
+    public void serantis$replaceStats(dev.ahrivaea.creature.Stats next) { this.stats = next; }
+
+    @Override
     public void serantis$setStats(dev.ahrivaea.creature.Stats next) {
         int oldMax = maxHp;
         this.stats = next;
