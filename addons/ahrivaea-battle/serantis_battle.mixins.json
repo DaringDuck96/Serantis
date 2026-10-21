@@ -49,6 +49,8 @@
     "BaseShareMixin",
     "BaseCoreShareMixin",
     "PlayerListLeaveMixin",
+    "WildChestMixin",
+    "WildChestBreakMixin",
     "BaseCoreAccess",
     "WorkerBrainAccess"
   ],

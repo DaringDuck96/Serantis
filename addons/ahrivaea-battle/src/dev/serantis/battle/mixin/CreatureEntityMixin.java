@@ -44,6 +44,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Override public void serantis$setLeaveAt(long tick) { serantis$leaveAt = tick; }
 
     @Unique private net.minecraft.world.item.ItemStack serantis$carriedLoad;
+    @Unique private boolean serantis$announced;                         // its Mutated/Enraged arrival was announced (see SpawnAlerts)
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void serantis$marketTick(CallbackInfo ci) {
@@ -56,6 +57,10 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         CreatureEntity self = (CreatureEntity) (Object) this;
         if (!self.level().isClientSide()) {
             dev.serantis.battle.Locomotion.tick(self);
+            if (!serantis$announced && self.tickCount >= 2) {            // just appeared: a Mutated or Enraged one gets noticed
+                serantis$announced = true;
+                dev.serantis.battle.SpawnAlerts.announce(self);
+            }
             dev.serantis.battle.Companions.tick(self);                  // never left behind
             dev.serantis.battle.Riddles.tick(self);                     // a risen End dragon asks its riddle
             if (self.getVariant() != dev.ahrivaea.creature.Variant.NONE && dev.ahrivaea.villager.Villagers.SPECIES.equals(self.getSpeciesId()))
@@ -142,6 +147,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$tutor != null) out.putString("SerantisTutor", serantis$tutor);
         if (serantis$home != null) out.putString("SerantisHome", serantis$home);
         out.putInt("SerantisMoveMode", serantis$moveMode);
+        if (serantis$announced) out.putBoolean("SerantisAnnounced", true);
         if (dev.serantis.battle.BattleHold.isHeld((CreatureEntity) (Object) this)) out.putBoolean("SerantisHeld", true);
         var brain = ((CreatureEntity) (Object) this).brain();             // a worker's load is saved with it
         if (brain != null && !((WorkerBrainAccess) (Object) brain).serantis$carried().isEmpty())
@@ -173,6 +179,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$leaveAt > 0) serantis$stock = in.read("SerantisStock", CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
         if (in.getBooleanOr("SerantisHeld", false)) dev.serantis.battle.BattleHold.loadedHeld((CreatureEntity) (Object) this);   // saved mid-battle
         serantis$carriedLoad = in.read("SerantisCarried", net.minecraft.world.item.ItemStack.CODEC).orElse(null);
+        serantis$announced = in.getBooleanOr("SerantisAnnounced", false) || in.getIntOr("SerantisMoveMode", -99) != -99;   // creatures saved before this: already seen
     }
 
     // ...and carried over when it's caught or sent out from the party.
