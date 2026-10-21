@@ -478,3 +478,18 @@ A weapon can carry one Bane and one Infusion together.
 - **High Jump (V):** turns 2-block jumps on or off. The longer falls that come with it don't hurt.
 
 None of the four work in battle. Until it has its own model, the helm looks like a gold helmet in your inventory and diamond when worn.
+
+## Co-op
+
+**Groups.** Right-click another player for a menu: trade creatures, **invite them to your group**, or **challenge them to a spar**. A group is up to 4 players and is saved with the world. The **Co-op** button on the party screen shows your group (who's online, how far away, who's in a battle) and has **Leave group**.
+
+**Joining battles.** When someone in your group starts a battle within 48 blocks of you, you get a pop-up asking if you'd like to join (or press **Join battle** on the Co-op page while it's going). You join on their side with yourself and up to 2 of your party creatures, and one more enemy joins the other side for each ally (not in goblin raids, which are already sized). Up to 3 allies can join a battle; an Acolyte's trial can't be joined.
+- Everyone commands only their own units (your allies' show greyed out, with their name). **End turn** marks your units done; the enemies move once every player is done. If someone is waiting, the others have 90 seconds before their turn ends on its own.
+- The battle is only lost when every player is knocked out.
+- Allies who win get the same XP as the battle's owner, battle credit and bounty progress. Loot and recruits stay with the player whose battle it was. **Flee** takes just you out of the battle. Your creatures keep the damage they took, like in your own battles.
+
+**Shared bases.** Group members can use each other's bases as if they were their own: open the Base Core, change jobs and settings, upgrade it, see its quarries, train on its skill tree and use its Move Tutor. Only the owner can add or remove workers, since those creatures would change hands.
+
+**Group contracts.** While you're in a group, the bounty board has a fourth row: one shared contract a day for the whole group (beat 12-20 creatures of an influence, win 8-12 battles, recruit 3 Rare or rarer creatures, or hand in a big delivery, where any amount from anyone helps). Everyone's progress counts, and when it's done **each** member claims it: 1.5x the usual XP, 5 Orichalcum Ingots, 2 golden apples and the usual chance extras.
+
+**Spars.** Challenge a player within 32 blocks to a friendly battle: you against them, each with your own party (they bring up to 4 creatures). The challenger moves first, then the other player; each turn has a 90-second limit. Knock out the other player (or all their units) to win. Spars give no XP, loot or recruits, wear no armour, and leave everyone's creatures exactly as they were.
