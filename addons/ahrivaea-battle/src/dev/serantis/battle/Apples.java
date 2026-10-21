@@ -97,6 +97,7 @@ public final class Apples {
 
     public static Stats of(CaughtCreature c, Stats species) {
         MovesHolder h = (MovesHolder) (Object) c;
+        if (FigureVisit.isFigure(c)) return Temperament.apply(FigureVisit.legendStats(), h.serantis$temperament(), c.level());   // a Legendary: apples do nothing
         return full(species, h.serantis$temperament(), h.serantis$apples(), c.species(), c.influence(), c.level());
     }
 

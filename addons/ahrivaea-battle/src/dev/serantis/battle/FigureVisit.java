@@ -267,11 +267,42 @@ public final class FigureVisit {
         p.sendSystemMessage(net.minecraft.network.chat.Component.literal(text).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
     }
 
-    /** A recruited Mysterious Figure: Level 10, and an ordinary villager's stats and moves. */
+    /** Level 25 against Level 20: how much stronger every stat is (the level curve carried on past 20). */
+    public static final double LEVEL_25 = (0.5 + 0.5 * 24 / 19.0) / 1.0;
+
+    private static dev.ahrivaea.creature.Stats legend;
+
+    /** The average Level 20 stats of the Legendary creatures: what the Mysterious Figure is built on. */
+    public static synchronized dev.ahrivaea.creature.Stats legendStats() {
+        if (legend == null) {
+            double[] sum = new double[7];
+            int n = 0;
+            for (var sp : dev.ahrivaea.creature.Species.all())
+                for (var inf : sp.forms().keySet()) {
+                    if (!"Legendary".equals(dev.ahrivaea.party.RecruitRules.rarity(sp, inf))) continue;
+                    var s = sp.statsFor(inf);
+                    int[] v = {s.hp(), s.attack(), s.defense(), s.speed(), s.magic(), s.luck(), s.charisma()};
+                    for (int i = 0; i < 7; i++) sum[i] += v[i];
+                    n++;
+                }
+            if (n == 0) return new dev.ahrivaea.creature.Stats(85, 85, 85, 85, 85, 85, 85);
+            int[] a = new int[7];
+            for (int i = 0; i < 7; i++) a[i] = (int) Math.round(sum[i] / n);
+            legend = new dev.ahrivaea.creature.Stats(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
+        }
+        return legend;
+    }
+
+    /** A recruited Mysterious Figure (a villager with the figure's role). */
+    public static boolean isFigure(dev.ahrivaea.party.CaughtCreature c) {
+        return c != null && c.job() != null && Intro.ROLE.equals(c.job().profession());
+    }
+
+    /** A recruited Mysterious Figure: Level 10, with a standard Legendary's stats and fresh moves. */
     public static dev.ahrivaea.party.CaughtCreature recruited(dev.ahrivaea.battle.Battle b, dev.ahrivaea.party.CaughtCreature c) {
         if (!wasTrial(b) || c == null) return c;
         var sp = dev.ahrivaea.creature.Species.get(c.species()).orElse(null);
-        float hp = sp == null ? c.health() : sp.statsFor(c.influence()).maxHealth(10);
+        float hp = legendStats().maxHealth(10);
         c = c.withProgress(10, 0).withHealth(hp);
         ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setMoves(null);
         ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$setNickname("Mysterious Figure");

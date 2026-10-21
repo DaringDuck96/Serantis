@@ -76,9 +76,11 @@ public final class MoveEngine {
         if (state(u).size > 1) settle(b, u);
         if (u.isPlayer) return;
         String temperament = null, apples = null;
+        CaughtCreature caught = null;
         if (u.side == Unit.Side.PLAYER && u.partySlot >= 0 && b.player() != null) {
             List<CaughtCreature> party = Party.get(b.player());
             if (u.partySlot < party.size()) {
+                caught = party.get(u.partySlot);
                 MovesHolder h = (MovesHolder) (Object) party.get(u.partySlot);
                 temperament = h.serantis$temperament();
                 apples = h.serantis$apples();
@@ -86,6 +88,7 @@ public final class MoveEngine {
             }
         }
         setTemperament(u, temperament != null ? temperament : dev.serantis.battle.Temperament.roll(b.random), apples);
+        if (dev.serantis.battle.FigureVisit.isFigure(caught)) ((UnitAccess) (Object) u).serantis$setStats(dev.serantis.battle.Apples.of(caught, null));
         if (u.side == Unit.Side.ENEMY) state(u).trait = EnemyBrain.roll(b.random);
         if (!MoveBook.available()) return;
         List<MoveSpec> specs = null;
@@ -113,6 +116,7 @@ public final class MoveEngine {
         MovesHolder h = (MovesHolder) (Object) c;
         if (h.serantis$nickname() != null && !h.serantis$nickname().isEmpty()) ((UnitAccess) (Object) u).serantis$setName(h.serantis$nickname());
         if (h.serantis$temperament() != null) setTemperament(u, h.serantis$temperament(), h.serantis$apples());
+        if (dev.serantis.battle.FigureVisit.isFigure(c)) ((UnitAccess) (Object) u).serantis$setStats(dev.serantis.battle.Apples.of(c, null));
         List<MoveSpec> saved = MoveBook.available() ? MoveBook.decode(h.serantis$moves()) : null;
         if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved));
     }
@@ -195,7 +199,11 @@ public final class MoveEngine {
         for (Unit u : b.units) {
             if (u.isPlayer || u.side != Unit.Side.ENEMY) continue;
             ((UnitAccess) (Object) u).serantis$setName("Mysterious Figure");
-            ((UnitAccess) (Object) u).serantis$setStats(new dev.ahrivaea.creature.Stats(230, 115, 105, 95, 125, 95, 100));
+            var l = dev.serantis.battle.FigureVisit.legendStats();       // a Legendary, as strong as at Level 25
+            double f = dev.serantis.battle.FigureVisit.LEVEL_25;
+            ((UnitAccess) (Object) u).serantis$setStats(new dev.ahrivaea.creature.Stats((int) Math.round(l.hp() * f), (int) Math.round(l.attack() * f),
+                    (int) Math.round(l.defense() * f), (int) Math.round(l.speed() * f), (int) Math.round(l.magic() * f),
+                    (int) Math.round(l.luck() * f), (int) Math.round(l.charisma() * f)));
             if (!MoveBook.available()) continue;
             List<MoveSpec> best = null;
             int bestPower = -1;
