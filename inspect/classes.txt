@@ -1,4 +1,2 @@
 # classes
-sig:net.minecraft.world.entity.LivingEntity
-sig:net.minecraft.world.entity.Mob
-asset:assets/minecraft/sounds.json
+compile

@@ -1,5 +1,0 @@
-Compiled from "Mob.java"
-class net.minecraft.world.entity.Mob$2 {
-  static final int[] $SwitchMap$net$minecraft$world$entity$EquipmentSlot;
-  static {};
-}
