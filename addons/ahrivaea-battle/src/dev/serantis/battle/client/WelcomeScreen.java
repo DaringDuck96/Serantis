@@ -66,7 +66,7 @@ public class WelcomeScreen extends Screen {
     }
 
     /** Every client tick: shows the guide the first time a player joins. */
-    public static void tick() {
+    public static void autoOpen() {
         Minecraft mc = Minecraft.getInstance();
         if (shown || mc.player == null) return;
         JsonObject s = TradeClient.state();
