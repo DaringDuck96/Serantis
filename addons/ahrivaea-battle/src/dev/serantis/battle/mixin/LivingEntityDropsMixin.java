@@ -36,4 +36,14 @@ public abstract class LivingEntityDropsMixin {
                 || dev.serantis.battle.Wanderer.isWanderer((LivingEntity) (Object) this))
                 && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) cir.setReturnValue(false);
     }
+
+    // Riding a creature: your crosshair passes through your own mount, so you can place and break blocks,
+    // and hit other creatures to start a battle, instead of always clicking the creature you're sitting on.
+    @org.spongepowered.asm.mixin.injection.Inject(method = "isPickable", at = @org.spongepowered.asm.mixin.injection.At("HEAD"), cancellable = true)
+    private void serantis$notMyMount(org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity self = (LivingEntity) (Object) this;
+        if (self instanceof dev.ahrivaea.creature.CreatureEntity && self.level().isClientSide()
+                && self.hasPassenger(e -> e instanceof net.minecraft.world.entity.player.Player p && p.isLocalPlayer()))
+            cir.setReturnValue(false);
+    }
 }

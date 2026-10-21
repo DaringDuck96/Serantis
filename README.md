@@ -186,6 +186,10 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 Right after you recruit a creature in battle, or pick your starter, a box pops up to name it (up to 20 characters). **Keep** leaves it with its species name. A named creature shows its name over its head, in battle and on the party screen, where its temperament and species follow in brackets, e.g. "Sparky (Brave Scrap Goblin)". Names are saved with the creature and kept when it's sent out, boxed or levelled up.
 
 
+### Riding
+
+While you ride a creature, your crosshair passes through the creature you're sitting on, so you can place and break blocks and hit other creatures with a sword to start a battle without getting off.
+
 ### Flyers and swimmers in the wild
 
 - **Flyers** (every creature that flies): 60% take to the air when they appear and stay airborne, cruising anywhere from 4 to 40 blocks above the ground (more often in the lower half). When a player is nearby they often swoop low around them, so you can still reach one with a sword to start a battle. The other 40% stay on the ground.
