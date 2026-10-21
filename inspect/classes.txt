@@ -1,2 +1,5 @@
-# classes 1792616593
-net.minecraft.world.level.dimension.end.EnderDragonFight
+# classes 1792616716
+sig:net.minecraft.world.level.block.DispenserBlock
+sig:net.minecraft.core.dispenser.DefaultDispenseItemBehavior
+sig:net.minecraft.core.dispenser.BlockSource
+sig:net.minecraft.world.item.DispensibleContainerItem
