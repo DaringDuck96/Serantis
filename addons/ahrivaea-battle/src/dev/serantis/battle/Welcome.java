@@ -16,6 +16,12 @@ public final class Welcome {
         /** Whether they've been given the book "Serantia: A World Forged by Dragons". */
         boolean serantis$loreBook();
         void serantis$setLoreBook(boolean given);
+        /** Battles finished, won or lost (-1: not counted yet). */
+        int serantis$battlesFought();
+        void serantis$setBattlesFought(int n);
+        /** Which Mysterious Figure scenes have played (2: the one after the 10th battle). */
+        int serantis$figureMet();
+        void serantis$setFigureMet(int n);
     }
 
     private Welcome() {}

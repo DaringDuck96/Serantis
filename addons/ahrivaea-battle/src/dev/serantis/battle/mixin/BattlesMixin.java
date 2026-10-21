@@ -254,6 +254,11 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_visit_done".equals(kind)) {     // the Mysterious Figure leaves
+                dev.serantis.battle.FigureVisit.done(player, o.has("bowed") && o.get("bowed").getAsBoolean());
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_intro_done".equals(kind)) {     // the opening scene is over
                 dev.serantis.battle.Intro.done(player);
                 cir.setReturnValue(null);

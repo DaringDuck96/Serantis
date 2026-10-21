@@ -66,10 +66,10 @@ public final class Intro {
             }
         }
         for (CreatureEntity c : level.getEntitiesOfClass(CreatureEntity.class, p.getBoundingBox().inflate(48), Intro::isFigure))
-            if (!ACTIVE.containsValue(c.getUUID())) c.discard();
+            if (!ACTIVE.containsValue(c.getUUID()) && !FigureVisit.owns(c)) c.discard();
     }
 
-    private static CreatureEntity spawn(ServerLevel level, ServerPlayer p) {
+    static CreatureEntity spawn(ServerLevel level, ServerPlayer p) {
         Species villager = Species.get(dev.ahrivaea.villager.Villagers.SPECIES).orElse(null);
         if (villager == null) return null;
         var look = p.getLookAngle();
@@ -77,17 +77,26 @@ public final class Intro {
         if (len < 1.0E-3) { dx = 0; dz = 1; len = 1; }
         dx /= len; dz /= len;
         double x = p.getX() + dx * 2.5, z = p.getZ() + dz * 2.5;
-        CreatureEntity f = Ahrivaea.spawn(level, villager, Influence.NONE, 20, -1f, x, p.getY(), z);
+        CreatureEntity f = figureAt(level, x, p.getY(), z);
+        if (f == null) return null;
+        float yaw = (float) Math.toDegrees(Math.atan2(p.getZ() - z, p.getX() - x)) - 90f;
+        f.setYRot(yaw);
+        f.setYHeadRot(yaw);
+        f.setYBodyRot(yaw);
+        return f;
+    }
+
+    /** A Mysterious Figure standing here (no AI, can't be hurt or battled). */
+    static CreatureEntity figureAt(ServerLevel level, double x, double y, double z) {
+        Species villager = Species.get(dev.ahrivaea.villager.Villagers.SPECIES).orElse(null);
+        if (villager == null) return null;
+        CreatureEntity f = Ahrivaea.spawn(level, villager, Influence.NONE, 20, -1f, x, y, z);
         if (f == null) return null;
         Villages.setJob(f, new VillagerJob(ROLE, 1, 0));
         f.addTag(TAG);
         f.setNoAi(true);
         f.setCustomName(Component.literal("Mysterious Figure").withStyle(ChatFormatting.DARK_PURPLE));
         f.setCustomNameVisible(false);
-        float yaw = (float) Math.toDegrees(Math.atan2(p.getZ() - z, p.getX() - x)) - 90f;
-        f.setYRot(yaw);
-        f.setYHeadRot(yaw);
-        f.setYBodyRot(yaw);
         return f;
     }
 

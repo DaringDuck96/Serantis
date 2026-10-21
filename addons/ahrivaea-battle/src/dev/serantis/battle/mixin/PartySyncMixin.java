@@ -30,6 +30,7 @@ public abstract class PartySyncMixin {
         if (o != null) dev.serantis.battle.Honing.describe(player, o);
         if (o != null) dev.serantis.battle.GoblinRaids.describe(player, o);
         if (o != null) dev.serantis.battle.Intro.describe(player, o);
+        if (o != null) dev.serantis.battle.FigureVisit.describe(player, o);
         if (o != null) dev.serantis.battle.Welcome.describe(player, o);
         if (o != null) dev.serantis.battle.PlayerClass.describe(player, o);
         if (o != null) dev.serantis.battle.Staffs.describe(player, o);
