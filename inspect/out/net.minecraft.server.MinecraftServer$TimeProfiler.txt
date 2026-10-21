@@ -1,0 +1,7 @@
+Compiled from "MinecraftServer.java"
+class net.minecraft.server.MinecraftServer$TimeProfiler {
+  private final long startNanos;
+  private final int startTick;
+  private net.minecraft.server.MinecraftServer$TimeProfiler(long, int);
+  private net.minecraft.util.profiling.ProfileResults stop(long, int);
+}

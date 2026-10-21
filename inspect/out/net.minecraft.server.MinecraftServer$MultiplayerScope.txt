@@ -1,0 +1,15 @@
+Compiled from "MinecraftServer.java"
+public final class net.minecraft.server.MinecraftServer$MultiplayerScope extends java.lang.Enum<net.minecraft.server.MinecraftServer$MultiplayerScope> {
+  public static final net.minecraft.server.MinecraftServer$MultiplayerScope OFF;
+  public static final net.minecraft.server.MinecraftServer$MultiplayerScope LAN;
+  private final net.minecraft.network.chat.Component translatable;
+  private final net.minecraft.network.chat.Component tooltip;
+  private static final net.minecraft.server.MinecraftServer$MultiplayerScope[] $VALUES;
+  public static net.minecraft.server.MinecraftServer$MultiplayerScope[] values();
+  public static net.minecraft.server.MinecraftServer$MultiplayerScope valueOf(java.lang.String);
+  private net.minecraft.server.MinecraftServer$MultiplayerScope(java.lang.String);
+  public net.minecraft.network.chat.Component getDisplayName();
+  public net.minecraft.network.chat.Component getTooltip();
+  private static net.minecraft.server.MinecraftServer$MultiplayerScope[] $values();
+  static {};
+}

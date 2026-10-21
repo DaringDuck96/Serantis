@@ -1,0 +1,14 @@
+Compiled from "MinecraftServer.java"
+class net.minecraft.server.MinecraftServer$TimeProfiler$1 implements net.minecraft.util.profiling.ProfileResults {
+  final long val$stopNanos;
+  final int val$stopTick;
+  final net.minecraft.server.MinecraftServer$TimeProfiler this$0;
+  net.minecraft.server.MinecraftServer$TimeProfiler$1();
+  public java.util.List<net.minecraft.util.profiling.ResultField> getTimes(java.lang.String);
+  public boolean saveResults(java.nio.file.Path);
+  public long getStartTimeNano();
+  public int getStartTimeTicks();
+  public long getEndTimeNano();
+  public int getEndTimeTicks();
+  public java.lang.String getProfilerResults();
+}

@@ -1,0 +1,7 @@
+Compiled from "MinecraftServer.java"
+class net.minecraft.server.MinecraftServer$2 implements net.minecraft.world.level.gamerules.GameRuleTypeVisitor {
+  final java.util.List val$entries;
+  final net.minecraft.world.level.gamerules.GameRules val$gameRules;
+  net.minecraft.server.MinecraftServer$2();
+  public <T> void visit(net.minecraft.world.level.gamerules.GameRule<T>);
+}

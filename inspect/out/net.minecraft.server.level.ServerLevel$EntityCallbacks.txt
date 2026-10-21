@@ -1,0 +1,19 @@
+Compiled from "ServerLevel.java"
+final class net.minecraft.server.level.ServerLevel$EntityCallbacks implements net.minecraft.world.level.entity.LevelCallback<net.minecraft.world.entity.Entity> {
+  final net.minecraft.server.level.ServerLevel this$0;
+  private net.minecraft.server.level.ServerLevel$EntityCallbacks(net.minecraft.server.level.ServerLevel);
+  public void onCreated(net.minecraft.world.entity.Entity);
+  public void onDestroyed(net.minecraft.world.entity.Entity);
+  public void onTickingStart(net.minecraft.world.entity.Entity);
+  public void onTickingEnd(net.minecraft.world.entity.Entity);
+  public void onTrackingStart(net.minecraft.world.entity.Entity);
+  public void onTrackingEnd(net.minecraft.world.entity.Entity);
+  public void onSectionChange(net.minecraft.world.entity.Entity);
+  public void onSectionChange(java.lang.Object);
+  public void onTrackingEnd(java.lang.Object);
+  public void onTrackingStart(java.lang.Object);
+  public void onTickingEnd(java.lang.Object);
+  public void onTickingStart(java.lang.Object);
+  public void onDestroyed(java.lang.Object);
+  public void onCreated(java.lang.Object);
+}
