@@ -91,8 +91,8 @@ jobs:
           git archive FETCH_HEAD mods | tar -x -C "$D"
           grep -E '^decompile:' inspect/classes.txt | while read -r line; do
             spec="${line#decompile:}"; glob="$(echo "$spec" | awk '{print $1}')"; pre="$(echo "$spec" | awk '{print $2}')"
-            jar="$(ls $D/mods/$glob | head -1)"
-            x="$(mktemp -d)"; (cd "$x" && unzip -qo "$jar" "$pre*" )
+            x="$(mktemp -d)"
+            for jar in $(ls $D/mods/$glob); do (cd "$x" && unzip -qo "$jar" "$pre*" 2>/dev/null || true); done
             o="$(mktemp -d)"
             java -jar "$RUNNER_TEMP/vf.jar" -dgs=1 -log=WARN "$x" "$o" > /dev/null 2>&1 || true
             mkdir -p inspect/out/decomp && cp -r "$o"/. inspect/out/decomp/
