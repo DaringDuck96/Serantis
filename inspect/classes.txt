@@ -1,4 +1,2 @@
-# Minecraft classes to disassemble (see the workflow for the syntax)
-find:block/model/BlockElement
-net.minecraft.client.renderer.block.model.BlockElementRotation
-sig:net.minecraft.client.renderer.block.model.BlockElement
+# Minecraft classes
+find:BlockElement|ElementRotation|BlockModelPart|model/.*Rotation
