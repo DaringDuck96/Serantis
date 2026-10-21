@@ -23,6 +23,10 @@ public abstract class BaseScreenMixin extends Screen {
     @Inject(method = "init", at = @At("RETURN"))
     private void serantis$skillsButton(CallbackInfo ci) {
         BaseScreen self = (BaseScreen) (Object) this;
+        addRenderableWidget(Button.builder(Component.literal("Guide"),
+                        btn -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.WelcomeScreen(self, 1)))
+                .tooltip(Tooltip.create(Component.literal("How creatures work at your base: their jobs, and what to expect from them.")))
+                .bounds(width - 124, 6, 50, 20).build());
         JsonObject st = self.state();
         if (st == null || !st.has("serantis_skills")) return;
         JsonObject s = st.getAsJsonObject("serantis_skills");
@@ -39,6 +43,7 @@ public abstract class BaseScreenMixin extends Screen {
     @Redirect(method = "lambda$register$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
     private static void serantis$keepTree(Gui gui, Screen screen) {
         if (gui.screen() instanceof SkillTreeScreen tree && screen instanceof BaseScreen base) { tree.setParent(base); return; }
+        if (gui.screen() instanceof dev.serantis.battle.client.WelcomeScreen guide && screen instanceof BaseScreen base) { guide.setParent(base); return; }
         gui.setScreen(screen);
     }
 }
