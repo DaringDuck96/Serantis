@@ -127,6 +127,13 @@ public final class Staffs {
     }
 
     /** Influences with a staff of their own (all but Normal). */
+    /** Mages (the Mage of every influence, and the Ember, Rime, Thunder, Rune and Dawn Magi) drop their influence's staff, linked to one of its spells. */
+    public static final float MAGE_DROP = 0.30f;
+
+    public static boolean isMage(dev.ahrivaea.creature.Species s) {
+        return s != null && ("mage".equals(s.id()) || s.id().endsWith("_magus"));
+    }
+
     public static boolean hasStaff(String inf) { return inf != null && !"none".equals(inf) && STAFFS.containsKey(inf); }
 
     /** A Wizard's first staff: linked to a random spell of the chosen influence. */
