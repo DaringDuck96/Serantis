@@ -1,8 +1,0 @@
-Compiled from "ChunkPos.java"
-class net.minecraft.world.level.ChunkPos$1 implements net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.level.ChunkPos> {
-  net.minecraft.world.level.ChunkPos$1();
-  public net.minecraft.world.level.ChunkPos decode(io.netty.buffer.ByteBuf);
-  public void encode(io.netty.buffer.ByteBuf, net.minecraft.world.level.ChunkPos);
-  public void encode(java.lang.Object, java.lang.Object);
-  public java.lang.Object decode(java.lang.Object);
-}

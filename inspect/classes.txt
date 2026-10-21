@@ -1,2 +1,5 @@
 # classes
-sig:net.minecraft.world.level.ChunkPos
+sig:net.minecraft.world.item.component.CustomData
+sig:net.minecraft.world.item.component.ItemLore
+sig:net.minecraft.nbt.CompoundTag
+sig:net.minecraft.client.multiplayer.MultiPlayerGameMode
