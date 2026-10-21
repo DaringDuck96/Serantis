@@ -82,6 +82,22 @@ jobs:
               && echo OK >> "inspect/out/javac-$name.txt" || true
           done
           ls inspect/out
+      - name: Decompile a mod jar from main (lines "decompile:<jar glob> <package path prefix>")
+        run: |
+          grep -E '^decompile:' inspect/classes.txt || exit 0
+          curl -sSfL https://repo1.maven.org/maven2/org/vineflower/vineflower/1.10.1/vineflower-1.10.1.jar -o "$RUNNER_TEMP/vf.jar"
+          git fetch -q origin main
+          D="$RUNNER_TEMP/dmain"; mkdir -p "$D"
+          git archive FETCH_HEAD mods | tar -x -C "$D"
+          grep -E '^decompile:' inspect/classes.txt | while read -r line; do
+            spec="${line#decompile:}"; glob="$(echo "$spec" | awk '{print $1}')"; pre="$(echo "$spec" | awk '{print $2}')"
+            jar="$(ls $D/mods/$glob | head -1)"
+            x="$(mktemp -d)"; (cd "$x" && unzip -qo "$jar" "$pre*" )
+            o="$(mktemp -d)"
+            java -jar "$RUNNER_TEMP/vf.jar" -dgs=1 -log=WARN "$x" "$o" > /dev/null 2>&1 || true
+            mkdir -p inspect/out/decomp && cp -r "$o"/. inspect/out/decomp/
+          done
+          find inspect/out/decomp -name '*.java' | head -100
       - name: Commit output
         run: |
           git config user.name "github-actions"

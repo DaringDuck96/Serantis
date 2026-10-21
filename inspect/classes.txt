@@ -1,2 +1,5 @@
-# classes 1792611108
-compile wip/linx-any
+# classes 1792611810
+decompile:ahrivaea-creatures-*.jar dev/ahrivaea/battle/
+decompile:ahrivaea-creatures-*.jar dev/ahrivaea/client/battle/
+decompile:ahrivaea-creatures-*.jar dev/ahrivaea/party/
+decompile:ahrivaea-creatures-*.jar dev/ahrivaea/base/
