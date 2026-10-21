@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.ahrivaea.Ahrivaea;
-import dev.ahrivaea.battle.Battle;
 import dev.ahrivaea.battle.Battles;
 import dev.ahrivaea.creature.CreatureEntity;
 import dev.ahrivaea.creature.Influence;
@@ -39,8 +38,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * Wild chests: every morning, chests appear on the surface around each player in the Overworld, filled like
@@ -49,7 +46,7 @@ import java.util.WeakHashMap;
  * appear somewhere else.
  *
  * Each wild chest has a 60% chance to be a Mimic: open (or try to break) it and it comes to life and attacks,
- * starting a battle. Beat the Mimic and the chest's loot is yours.
+ * starting a battle. A Mimic was never a real chest, so it holds no loot: all you get is what the Mimic drops.
  */
 public final class WildChests {
     public static final double MIMIC_CHANCE = 0.60, RARE_CHANCE = 0.08;
@@ -71,7 +68,6 @@ public final class WildChests {
 
     private static final List<Wild> CHESTS = new ArrayList<>();
     private static final List<Wild> STALE = new ArrayList<>();            // yesterday's, to clear once their chunk is loaded
-    private static final Map<Battle, List<ItemStack>> MIMIC_LOOT = Collections.synchronizedMap(new WeakHashMap<>());
     private static MinecraftServer loadedFor;
     private static boolean wasDark = true, placedToday;
     private static final java.util.Set<java.util.UUID> SERVED = new java.util.HashSet<>();   // players who got today's chests
@@ -88,7 +84,6 @@ public final class WildChests {
         CHESTS.clear();
         STALE.clear();
         SERVED.clear();
-        MIMIC_LOOT.clear();
         wasDark = true;
         placedToday = false;
         try {
@@ -244,35 +239,18 @@ public final class WildChests {
         if (!(level.getBlockEntity(pos) instanceof ChestBlockEntity chest)) return false;
         Species mimic = Species.get("mimic").orElse(null);
         if (mimic == null) return false;
-        chest.unpackLootTable(p);                                       // what it was guarding: yours if you win
-        List<ItemStack> loot = new ArrayList<>();
-        for (int i = 0; i < chest.getContainerSize(); i++) if (!chest.getItem(i).isEmpty()) loot.add(chest.removeItemNoUpdate(i));
+        chest.setLootTable(null);                                       // a Mimic holds no loot: only what it drops
+        chest.clearContent();
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         CHESTS.remove(w);
         save(level.getServer());
         int lvl = w.rare ? 10 + level.getRandom().nextInt(9) : 4 + level.getRandom().nextInt(10);
         CreatureEntity e = Ahrivaea.spawn(level, mimic, mimic.formOrDefault(Influence.NONE), lvl, -1f, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-        if (e == null) { for (ItemStack s : loot) Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, s); return true; }
+        if (e == null) return true;
         level.playSound(null, pos, SoundEvents.CHEST_OPEN, SoundSource.HOSTILE, 1f, 0.5f);
         level.playSound(null, pos, SoundEvents.RAVAGER_ROAR, SoundSource.HOSTILE, 0.8f, 1.4f);
-        p.sendSystemMessage(Component.literal("The chest was a Mimic! Beat it to claim what it was hiding.").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
-        Battle b = Battles.start(p, e);
-        if (b == null) {                                                // couldn't fight (shouldn't happen): leave the loot
-            for (ItemStack s : loot) Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, s);
-            return true;
-        }
-        MIMIC_LOOT.put(b, loot);
+        p.sendSystemMessage(Component.literal("The chest was a Mimic!").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
+        Battles.start(p, e);
         return true;
-    }
-
-    /** A battle ended: a beaten Mimic gives up the chest's loot. */
-    public static void battleOver(Battle b, Battle.Outcome o) {
-        List<ItemStack> loot = MIMIC_LOOT.remove(b);
-        ServerPlayer p = b.player();
-        if (loot == null || p == null || o != Battle.Outcome.WON) return;
-        for (ItemStack s : loot)
-            if (!p.getInventory().add(s) && !s.isEmpty())
-                p.level().addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(p.level(), p.getX(), p.getY(), p.getZ(), s));
-        p.sendSystemMessage(Component.literal("You beat the Mimic! The chest's loot is yours.").withStyle(ChatFormatting.GOLD));
     }
 }

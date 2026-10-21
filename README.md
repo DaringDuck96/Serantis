@@ -231,7 +231,7 @@ Right after you recruit a creature in battle, or pick your starter, a box pops u
 When a Mutated creature appears anywhere within your render distance you hear a cheerful jingle and see "Did you see something shiny?". When an Enraged one appears you hear a roar and see "Ooh! They look mad!".
 
 ### Wild chests and Mimics
-Every morning chests appear on the surface around each player in the Overworld (about 5 each, 24-96 blocks away, never inside a base). Most hold ordinary loot like the chests in dungeons, mineshafts, shipwrecks, temples and villages; a rare few (about 1 in 12) hold Orichalcum Ingots, diamonds, emeralds, gold and golden apples. **Each wild chest has a 60% chance to be a Mimic**: open it (or try to break it) and it comes alive and battles you. Beat it and you get the chest's loot; lose or flee and the loot is gone. Wild chests vanish the next morning (spilling anything left inside) and new ones appear somewhere else, so don't store things in them.
+Every morning chests appear on the surface around each player in the Overworld (about 5 each, 24-96 blocks away, never inside a base). Most hold ordinary loot like the chests in dungeons, mineshafts, shipwrecks, temples and villages; a rare few (about 1 in 12) hold Orichalcum Ingots, diamonds, emeralds, gold and golden apples. **Each wild chest has a 60% chance to be a Mimic**: open it (or try to break it) and it comes alive and battles you. A Mimic holds no loot: beat it and you only get what the Mimic itself drops. Wild chests vanish the next morning (spilling anything left inside) and new ones appear somewhere else, so don't store things in them.
 
 ### Starting a battle
 
