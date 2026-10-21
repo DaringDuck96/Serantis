@@ -1,2 +1,2 @@
 # classes
-compile wip/pacing
+sig:net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
