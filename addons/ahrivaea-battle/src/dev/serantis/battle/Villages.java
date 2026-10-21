@@ -38,11 +38,11 @@ public final class Villages {
     private static final String[] ROLES = {
             "farmer", "fisherman", "gardener", "weaver", "hunter", "librarian", "explorer", "smith", "netherwright",
             "carpenter", "engineer", "cook", "leatherworker", "mason", "jeweler", "voidwalker", "alchemist",
-            "bard", "innkeeper", "noble"};
+            "bard", "innkeeper", "noble", "merchant"};
     private static final int[] WEIGHTS = {
             10, 8, 8, 8, 8, 8, 6, 8, 4,
             8, 6, 8, 6, 10, 4, 3, 6,
-            5, 5, 3};
+            5, 5, 3, 6};
 
     private Villages() {}
 
@@ -87,12 +87,14 @@ public final class Villages {
 
     public static VillagerJob jobOf(CreatureEntity e) {
         if (e == null || !reflect(e)) return null;
-        try { return getAttached.invoke(e, jobType) instanceof VillagerJob j ? j : null; } catch (ReflectiveOperationException | RuntimeException ex) { return null; }
+        try { return getAttached.invoke(e, jobType) instanceof VillagerJob j && j.profession() != null && !j.profession().isEmpty() ? j : null; } catch (ReflectiveOperationException | RuntimeException ex) { return null; }
     }
 
     /** A villager that just spawned in a village gets its profession. */
     public static void assign(CreatureEntity e, RandomSource random) {
-        if (e != null && jobOf(e) == null) setJob(e, new VillagerJob(rollRole(random), 0, 0));
+        if (e == null || jobOf(e) != null) return;
+        String role = rollRole(random);
+        setJob(e, new VillagerJob(role, Market.MERCHANT.equals(role) ? 1 : 0, 0));     // merchants trade from the start
     }
 
     public static String professionName(String id) {

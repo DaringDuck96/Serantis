@@ -21,11 +21,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CreatureEntity.class)
-public abstract class CreatureEntityMixin implements MovesHolder {
+public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.battle.Market.Holder {
     @Unique private String serantis$moves;
     @Unique private String serantis$temperament;
     @Unique private String serantis$nickname;
     @Unique private String serantis$apples;
+    @Unique private java.util.List<CaughtCreature> serantis$stock = java.util.List.of();
+    @Unique private long serantis$leaveAt;
+
+    @Override public java.util.List<CaughtCreature> serantis$stock() { return serantis$stock; }
+    @Override public void serantis$setStock(java.util.List<CaughtCreature> stock) { serantis$stock = java.util.List.copyOf(stock); }
+    @Override public long serantis$leaveAt() { return serantis$leaveAt; }
+    @Override public void serantis$setLeaveAt(long tick) { serantis$leaveAt = tick; }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void serantis$marketTick(CallbackInfo ci) {
+        if (serantis$leaveAt > 0) dev.serantis.battle.Market.tick((CreatureEntity) (Object) this);
+    }
 
     @Override public String serantis$apples() { return serantis$apples; }
     @Override public void serantis$setApples(String apples) { serantis$apples = apples; }
@@ -87,6 +99,10 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         if (serantis$temperament != null) out.putString("SerantisTemperament", serantis$temperament);
         if (serantis$nickname != null) out.putString("SerantisName", serantis$nickname);
         if (serantis$apples != null) out.putString("SerantisApples", serantis$apples);
+        if (serantis$leaveAt > 0) {
+            out.putLong("SerantisLeaveAt", serantis$leaveAt);
+            out.store("SerantisStock", CaughtCreature.CODEC.listOf(), serantis$stock);
+        }
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
@@ -99,6 +115,8 @@ public abstract class CreatureEntityMixin implements MovesHolder {
         if (!nickname.isEmpty()) serantis$nickname = nickname;
         String apples = in.getStringOr("SerantisApples", "");
         if (!apples.isEmpty()) serantis$apples = apples;
+        serantis$leaveAt = in.getLongOr("SerantisLeaveAt", 0L);
+        if (serantis$leaveAt > 0) serantis$stock = in.read("SerantisStock", CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
     }
 
     // ...and carried over when it's caught or sent out from the party.

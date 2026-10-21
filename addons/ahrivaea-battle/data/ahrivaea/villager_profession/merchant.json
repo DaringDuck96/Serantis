@@ -1,0 +1,19 @@
+{
+ "name": "Merchant",
+ "description": "A travelling trader: like a wandering trader, each merchant sells its own random handful of useful things.",
+ "outfit": "nitwit",
+ "icon": "minecraft:emerald",
+ "order": 21,
+ "ranks": [
+  {
+   "name": "Merchant",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:battles_won",
+    "amount": 1,
+    "text": "Win a battle"
+   },
+   "sells": []
+  }
+ ]
+}

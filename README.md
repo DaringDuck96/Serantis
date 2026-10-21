@@ -196,6 +196,10 @@ Professions are the creatures mod's (Farmer, Fisherman, Gardener, Weaver, Hunter
 - **Innkeeper:** while one works at any base of yours, sleeping through the night refills your hearts.
 - **Noble:** creatures that spawn inside the base or within a chunk (16 blocks) of its border are Rare or rarer 35% of the time (normally 15%): 50% Common, 15% Uncommon, 22% Rare, 10% Super Rare, 3% Legendary.
 
+**Merchants** turn up in villages (and every wandering trader is one). Like a vanilla wandering trader, each merchant sells its own random handful (6 to 8) of useful things from a pool of about 50: ender pearls, name tags, saddles, diamonds, golden carrots, ingots, blaze rods, shulker shells, blue ice, sponges, spyglasses and so on, for XP. Recruit one and its stock is the same every time you open it.
+
+**Black Market Merchants** never live in villages. Any wild creature that spawns in the Overworld has a 0.05% chance to be a Black Market Merchant instead (nearby players hear whispers in chat). Each one carries 3 to 5 creatures that are Rare (70%), Super Rare (25%) or Legendary (5%), Level 10 to 20, and sells each for **350 XP**: right-click it to see what's for sale (the creature goes to your party, or your box if your party is full). It can't be fought, hurt or recruited, and it leaves after a day, or as soon as it sells out.
+
 The **Alchemist** still sells potions and brewing ingredients for XP, and its trade screen also turns a golden apple from your inventory into 20 XP.
 
 How often each profession turns up in a village: Farmer and Mason are the most common; Explorer, Engineer, Leatherworker and Alchemist a little less; Bard and Innkeeper uncommon; Netherwright and Jeweler rarer; Noble and Voidwalker the rarest.

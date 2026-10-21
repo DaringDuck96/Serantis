@@ -16,8 +16,20 @@ public abstract class VillagersRolesMixin {
     @Inject(method = "train", at = @At("HEAD"), cancellable = true)
     private static void serantis$noRetraining(ServerPlayer player, Villagers.Handle handle, CaughtCreature caught, String profession,
                                               CallbackInfoReturnable<String> cir) {
-        if (caught != null && caught.job() != null && !caught.job().profession().equals(profession))
-            cir.setReturnValue("This villager is a " + Villages.professionName(caught.job().profession()) + " for life; it can't change professions.");
+        String current = caught == null || caught.job() == null ? null : caught.job().profession();
+        if (current != null && !current.isEmpty() && dev.ahrivaea.villager.Profession.get(current) != null && !current.equals(profession))
+            cir.setReturnValue("This villager is a " + Villages.professionName(current) + " for life; it can't change professions.");
+    }
+
+    // Merchants: each sells its own random handful of things.
+    @Inject(method = "view", at = @At("RETURN"))
+    private static void serantis$merchantView(ServerPlayer player, Villagers.Handle handle, CaughtCreature caught, CallbackInfoReturnable<com.google.gson.JsonObject> cir) {
+        dev.serantis.battle.Market.decorateView(player, caught, cir.getReturnValue());
+    }
+
+    @Inject(method = "buy", at = @At("HEAD"), cancellable = true)
+    private static void serantis$merchantBuy(ServerPlayer player, CaughtCreature caught, int index, int times, CallbackInfoReturnable<String> cir) {
+        if (dev.serantis.battle.Market.isMerchant(caught)) cir.setReturnValue(dev.serantis.battle.Market.buyFromMerchant(player, caught, index, times));
     }
 
     @Inject(method = "handle", at = @At("HEAD"), cancellable = true)
