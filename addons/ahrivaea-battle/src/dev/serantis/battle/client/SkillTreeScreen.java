@@ -26,13 +26,13 @@ import java.util.Map;
  */
 public class SkillTreeScreen extends Screen {
     /** Branch order puts every capstone next to the branch it also needs. */
-    private static final List<String> BRANCHES = List.of("Vitality", "Guard", "Might", "Arcana", "Fortune", "Swiftness", "Industry");
+    private static final List<String> BRANCHES = List.of("Vitality", "Guard", "Might", "Arcana", "Fortune", "Swiftness", "Industry", "Presence");
     private static final Map<String, Integer> COLOR = Map.of(
             "Vitality", 0xFFE0485A, "Guard", 0xFF8CA0B8, "Might", 0xFFE88A3A, "Arcana", 0xFFB070F0,
-            "Fortune", 0xFF4CCB7A, "Swiftness", 0xFF4CC4EC, "Industry", 0xFFE0C050);
+            "Fortune", 0xFF4CCB7A, "Swiftness", 0xFF4CC4EC, "Industry", 0xFFE0C050, "Presence", 0xFFF07AB8);
     private static final Map<String, Item> ICON = Map.of(
             "Vitality", Items.GOLDEN_APPLE, "Guard", Items.SHIELD, "Might", Items.IRON_SWORD, "Arcana", Items.AMETHYST_SHARD,
-            "Fortune", Items.EMERALD, "Swiftness", Items.FEATHER, "Industry", Items.IRON_PICKAXE);
+            "Fortune", Items.EMERALD, "Swiftness", Items.FEATHER, "Industry", Items.IRON_PICKAXE, "Presence", Items.BELL);
     private static final int GOLD = 0xFFF2C94C;
 
     private record Tile(JsonObject node, String id, int col, int row, int x, int y, int w, int h) {
@@ -69,7 +69,7 @@ public class SkillTreeScreen extends Screen {
 
     @Override
     protected void init() {
-        colW = Math.max(56, Math.min(104, (width - 16) / BRANCHES.size()));
+        colW = Math.max(46, Math.min(96, (width - 12) / BRANCHES.size()));
         left = (width - colW * BRANCHES.size()) / 2;
         top = 92;
         gap = Math.max(20, Math.min(34, (height - top - 40) / 6));

@@ -19,21 +19,27 @@ import java.util.Set;
  * The player skill tree. Every player starts with 40 in every stat. Nodes are bought at your own
  * Base Core (Level 1 or higher) with XP; each node needs the one before it in its branch, a
  * capstone also needs a node from a neighbouring branch, and node N's base level requirement
- * grows with depth. Every node bought makes the next one 15% dearer, whichever branch it's in.
+ * grows with depth. Every node bought makes the next one 12.6% dearer, whichever branch it's in.
  */
 public final class Skills {
     public static final int START_STAT = 40;
-    public static final double BASE_COST = 150, GROWTH = 1.15;
+    public static final double BASE_COST = 150, GROWTH = 1.126;
 
     public record Node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
-                       int attack, int defense, int magic, int speed, int luck, int health, int walk, int tiles, int mining) {}
+                       int attack, int defense, int magic, int speed, int luck, int health, int walk, int tiles, int mining,
+                       int charisma, int discount) {}
 
     public static final Map<String, Node> NODES = new LinkedHashMap<>();
-    public static final List<String> BRANCHES = List.of("Vitality", "Guard", "Might", "Arcana", "Fortune", "Swiftness", "Industry");
+    public static final List<String> BRANCHES = List.of("Vitality", "Guard", "Might", "Arcana", "Fortune", "Swiftness", "Industry", "Presence");
 
     private static void node(String id, String branch, int index, int tier, String name, String desc, List<String> requires,
                              int atk, int def, int mag, int spd, int luck, int health, int walk, int tiles, int mining) {
-        NODES.put(id, new Node(id, branch, index, tier, name, desc, requires, atk, def, mag, spd, luck, health, walk, tiles, mining));
+        NODES.put(id, new Node(id, branch, index, tier, name, desc, requires, atk, def, mag, spd, luck, health, walk, tiles, mining, 0, 0));
+    }
+
+    /** A Presence skill: Charisma and a discount (in %) on everything that costs XP. */
+    private static void presence(String id, int index, int tier, String name, String desc, List<String> requires, int charisma, int discount) {
+        NODES.put(id, new Node(id, "Presence", index, tier, name, desc, requires, 0, 0, 0, 0, 0, 0, 0, 0, 0, charisma, discount));
     }
 
     private static List<String> after(String prev, String... more) {
@@ -93,6 +99,15 @@ public final class Skills {
         node("industry_4", "Industry", 4, 3, "Labor III", "+8% mining and chopping speed", after("industry_3"), 0, 0, 0, 0, 0, 0, 0, 0, 8);
         node("industry_5", "Industry", 5, 4, "Labor IV", "+8% mining and chopping speed", after("industry_4"), 0, 0, 0, 0, 0, 0, 0, 0, 8);
         node("industry_6", "Industry", 6, 5, "Tireless", "+10% mining speed; breaking blocks uses half the hunger", after("industry_5", "swift_4"), 0, 0, 0, 0, 0, 0, 0, 0, 10);
+
+        // Presence: Charisma (stronger rallies in battle) and small discounts on everything that costs XP
+        // (recruiting, villager, merchant and black market purchases, levelling creatures, skills). 10% at most.
+        presence("presence_1", 1, 1, "Charm I", "+3 Charisma; everything that costs XP is 2% cheaper", after(null), 3, 2);
+        presence("presence_2", 2, 1, "Haggler", "Everything that costs XP is 2% cheaper", after("presence_1"), 0, 2);
+        presence("presence_3", 3, 2, "Charm II", "+4 Charisma", after("presence_2"), 4, 0);
+        presence("presence_4", 4, 3, "Silver Tongue", "Everything that costs XP is 3% cheaper", after("presence_3"), 0, 3);
+        presence("presence_5", 5, 4, "Charm III", "+5 Charisma", after("presence_4"), 5, 0);
+        presence("presence_6", 6, 5, "Smooth Talker", "+4 Charisma; everything that costs XP is 3% cheaper", after("presence_5", "industry_4"), 4, 3);
     }
 
     /** The last answer each player got when trying to learn a skill (shown on the tree screen). */
@@ -122,7 +137,7 @@ public final class Skills {
 
     public static Stats stats(Player p) {
         return new Stats(START_STAT + hp(p), START_STAT + sum(p, Node::attack), START_STAT + sum(p, Node::defense), START_STAT + sum(p, Node::speed),
-                START_STAT + sum(p, Node::magic), START_STAT + sum(p, Node::luck), START_STAT);
+                START_STAT + sum(p, Node::magic), START_STAT + sum(p, Node::luck), START_STAT + sum(p, Node::charisma));
     }
 
     /**
@@ -146,6 +161,19 @@ public final class Skills {
         return (health / 2) + (health % 2 == 1 ? "½" : "");
     }
 
+    /** % off everything that costs XP (Presence). */
+    public static int discount(Player p) { return p == null ? 0 : Math.min(25, sum(p, Node::discount)); }
+
+    /** An XP price after the player's Presence discount (never below 1 if it cost anything). */
+    public static int price(Player p, int cost) {
+        int d = discount(p);
+        if (cost <= 0 || d <= 0) return cost;
+        return Math.max(1, (int) Math.round(cost * (100 - d) / 100.0));
+    }
+
+    /** What this player's next skill costs. */
+    public static int nextCost(Player p) { return price(p, cost(owned(p).size())); }
+
     public static int walkPercent(Player p) { return sum(p, Node::walk); }
     public static int tiles(Player p) { return sum(p, Node::tiles); }
     public static int miningPercent(Player p) { return sum(p, Node::mining); }
@@ -157,7 +185,7 @@ public final class Skills {
         if (owned(p).contains(n.id())) return "You already have " + n.name() + ".";
         for (String r : n.requires()) if (!owned(p).contains(r)) return "Needs " + NODES.get(r).name() + " first.";
         if (core.baseLevel() < n.tier()) return "Needs your base at Level " + n.tier() + ".";
-        int cost = cost(owned(p).size());
+        int cost = nextCost(p);
         if (XpBank.points(p) < cost) return "Needs " + cost + " XP (you have " + XpBank.points(p) + ").";
         return null;
     }
@@ -167,7 +195,7 @@ public final class Skills {
         if (n == null) return "No such skill.";
         String why = blocker(p, core, n);
         if (why != null) return why;
-        XpBank.take(p, cost(owned(p).size()));
+        XpBank.take(p, nextCost(p));
         owned(p).add(id);
         PlayerCharacter.applySpeed(p);
         PlayerCharacter.applyHealth(p);
@@ -181,7 +209,7 @@ public final class Skills {
         o.addProperty("owner", owner);
         o.addProperty("baseLevel", core == null ? 0 : core.baseLevel());
         o.addProperty("xp", XpBank.points(p));
-        o.addProperty("next", cost(owned(p).size()));
+        o.addProperty("next", nextCost(p));
         o.addProperty("count", owned(p).size());
         o.addProperty("total", NODES.size());
         String last = LAST.get(p.getUUID());
@@ -206,7 +234,7 @@ public final class Skills {
         o.add("nodes", nodes);
         Stats s = stats(p);
         o.addProperty("summary", "Attack " + s.attack() + " · Defense " + s.defense() + " · Magic " + s.magic() + " · Speed " + s.speed()
-                + " · Luck " + s.luck() + " · " + hearts(20 + health(p)) + " hearts (" + battleHp(20 + health(p)) + " HP in battle) · +" + walkPercent(p) + "% walk · +" + miningPercent(p) + "% mining");
+                + " · Luck " + s.luck() + " · " + hearts(20 + health(p)) + " hearts (" + battleHp(20 + health(p)) + " HP in battle) · Charisma " + s.charisma() + (discount(p) > 0 ? " (" + discount(p) + "% off XP costs)" : "") + " · +" + walkPercent(p) + "% walk · +" + miningPercent(p) + "% mining");
         return o;
     }
 }

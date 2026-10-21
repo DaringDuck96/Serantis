@@ -106,7 +106,7 @@ public final class Market {
             JsonObject o = new JsonObject();
             JsonElement stack = ItemStack.CODEC.encodeStart(ops, new ItemStack(w.item(), w.count())).getOrThrow();
             o.add("stack", stack);
-            o.addProperty("cost", w.cost());
+            o.addProperty("cost", dev.serantis.battle.skills.Skills.price(p, w.cost()));
             o.addProperty("rank", 0);
             offers.add(o);
         }
@@ -119,10 +119,11 @@ public final class Market {
         List<Ware> wares = wares(c);
         if (index < 0 || index >= wares.size()) return "No such item.";
         Ware w = wares.get(index);
+        int cost = dev.serantis.battle.skills.Skills.price(p, w.cost());
         int have = XpBank.points(p);
-        int n = Math.min(Math.max(1, Math.min(64, times)), have / Math.max(1, w.cost()));
-        if (n <= 0) return "That costs " + w.cost() + " XP; you have " + have + ".";
-        XpBank.take(p, w.cost() * n);
+        int n = Math.min(Math.max(1, Math.min(64, times)), have / Math.max(1, cost));
+        if (n <= 0) return "That costs " + cost + " XP; you have " + have + ".";
+        XpBank.take(p, cost * n);
         for (int i = 0; i < n; i++) give(p, new ItemStack(w.item(), w.count()));
         p.level().playSound(null, p.blockPosition(), net.minecraft.sounds.SoundEvents.VILLAGER_YES, net.minecraft.sounds.SoundSource.NEUTRAL, 0.7f, 1f);
         return null;
@@ -220,16 +221,16 @@ public final class Market {
         if (m == null) { tell(p, "The Black Market Merchant is gone."); return; }
         List<CaughtCreature> stock = new ArrayList<>(((Holder) m).serantis$stock());
         if (index < 0 || index >= stock.size()) return;
-        int have = XpBank.points(p);
-        if (have < CREATURE_PRICE) { tell(p, "That costs " + CREATURE_PRICE + " XP; you have " + have + "."); return; }
+        int have = XpBank.points(p), cost = dev.serantis.battle.skills.Skills.price(p, CREATURE_PRICE);
+        if (have < cost) { tell(p, "That costs " + cost + " XP; you have " + have + "."); return; }
         CaughtCreature c = stock.remove(index);
-        XpBank.take(p, CREATURE_PRICE);
+        XpBank.take(p, cost);
         boolean added = Party.addAnywhere(p, c);
-        if (!added) { XpBank.give(p, CREATURE_PRICE); tell(p, "You have no room for another creature."); return; }
+        if (!added) { XpBank.give(p, cost); tell(p, "You have no room for another creature."); return; }
         ((Holder) m).serantis$setStock(stock);
         String name = Species.get(c.species()).map(sp -> sp.nameFor(c.influence())).orElse(c.species());
         p.sendSystemMessage(Component.literal("You bought a Level " + c.level() + " " + name + " from the Black Market for "
-                + CREATURE_PRICE + " XP. No questions asked.").withStyle(ChatFormatting.DARK_PURPLE));
+                + cost + " XP. No questions asked.").withStyle(ChatFormatting.DARK_PURPLE));
         if (stock.isEmpty()) {
             tell(p, "\"Pleasure doing business.\" The Black Market Merchant packs up and vanishes.");
             m.discard();
@@ -246,7 +247,7 @@ public final class Market {
         if (m == null) { VIEWING.remove(p.getUUID()); return; }
         JsonObject o = new JsonObject();
         o.addProperty("entity", id);
-        o.addProperty("price", CREATURE_PRICE);
+        o.addProperty("price", dev.serantis.battle.skills.Skills.price(p, CREATURE_PRICE));
         o.addProperty("xp", XpBank.points(p));
         JsonArray offers = new JsonArray();
         for (CaughtCreature c : ((Holder) m).serantis$stock()) offers.add(PartySync.describe(c));

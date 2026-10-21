@@ -31,7 +31,7 @@ public abstract class PartySyncMixin {
         int owned = dev.serantis.battle.skills.Skills.owned(player).size();
         c.addProperty("level", owned);
         c.addProperty("xp", dev.serantis.battle.skills.XpBank.points(player));
-        c.addProperty("xpNext", dev.serantis.battle.skills.Skills.cost(owned));
+        c.addProperty("xpNext", dev.serantis.battle.skills.Skills.nextCost(player));
         c.addProperty("points", 0);
     }
 

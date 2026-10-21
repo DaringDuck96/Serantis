@@ -32,6 +32,12 @@ public abstract class PartyMixin {
         ci.cancel();
     }
 
+    // Presence: levelling a creature with XP costs less (it still gets the full amount).
+    @org.spongepowered.asm.mixin.injection.Redirect(method = "feed", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/party/Party;addXp(Lnet/minecraft/world/entity/player/Player;I)V"))
+    private static void serantis$feedPrice(Player player, int amount) {
+        dev.ahrivaea.party.Party.addXp(player, amount < 0 ? -dev.serantis.battle.skills.Skills.price(player, -amount) : amount);
+    }
+
     private static void serantis$migrate(Player player) {
         XpBank.RAW.set(true);
         dev.serantis.battle.Achievements.NOT_GAINED.set(true);

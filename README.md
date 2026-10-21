@@ -165,7 +165,7 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 
 **Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. Your hearts and your battle HP are the same stat: in the world it shows as hearts, and in battle as HP at 10 HP per heart (10 hearts = 100 HP). Vitality raises it, and so does anything else that adds hearts. The old player levels and stat points are gone.
 
-**The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 7 branches of 6 skills, 42 in all:
+**The skill tree.** Open your own Base Core and press **Skills**. Your base must be Level 1 or higher. There are 8 branches of 6 skills, 48 in all:
 - **Order:** each skill needs the one above it, and each capstone (the last skill in a branch) also needs one skill from a neighbouring branch.
 - **Base level:** the first two skills in a branch need a Level 1 base, and the next four need Levels 2, 3, 4 and 5. Upgrading your base opens up the deeper skills.
 
@@ -178,8 +178,11 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 | **Swiftness** | Quickness I: +3 Speed | Stride I: +5% walking speed | Footwork I: +1 battle tile | Stride II: +5% walking speed | Footwork II: +1 battle tile | **Fleet:** +10% walking speed, +4 Speed *(also needs Labor III)* |
 | **Fortune** | Luck I: +3 Luck | Scavenger: 5% chance mobs you kill drop twice | Luck II: +4 Luck | Spoils: 5% chance a creature you beat in battle drops twice | Luck III: +5 Luck | **Treasure Sense:** rare creature drops (under 25%) twice as likely *(also needs Insight III)* |
 | **Industry** | Labor I: +8% mining/chopping speed | Labor II: +8% | Prospector: XP blocks give +1 XP | Labor III: +8% | Labor IV: +8% | **Tireless:** +10% mining speed, half the hunger for breaking blocks *(also needs Stride II)* |
+| **Presence** | Charm I: +3 Charisma, XP costs −2% | Haggler: XP costs −2% | Charm II: +4 Charisma | Silver Tongue: XP costs −3% | Charm III: +5 Charisma | **Smooth Talker:** +4 Charisma, XP costs −3% *(also needs Labor III)* |
 
-**Cost.** The first skill costs 150 XP, and every skill you learn makes the next one cost 15% more, whatever branch it's in. The first four take about 750 XP (a couple of hours of early play). The 10th costs 530, the 20th 2,135, the 30th 8,635 and the last 46,205. The whole tree costs about 353,255 XP. A fully trained player tops out around 55–60 in their best stats: strong, but still below a Level 20 legendary creature.
+**Presence** discounts add up to 10% off everything that costs XP: recruiting creatures, villager, merchant and Black Market purchases, levelling creatures with XP from the party screen, and the skill tree itself. Prices are shown already discounted. Charisma makes your Rally action in battle stronger. Anvils and enchanting cost levels rather than XP points, so they aren't included (Arcana's Attuned covers anvils).
+
+**Cost.** The first skill costs 150 XP, and every skill you learn makes the next one cost 12.6% more, whatever branch it's in. The first four take about 735 XP (a couple of hours of early play). The 10th costs 435, the 20th 1,430, the 30th 4,685 and the last 39,665. The whole tree costs about 353,275 XP before Presence discounts, the same as before Presence was added. A fully trained player tops out around 55–60 in their best stats: strong, but still below a Level 20 legendary creature.
 
 ### Naming creatures
 

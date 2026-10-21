@@ -21,6 +21,17 @@ public abstract class VillagersRolesMixin {
             cir.setReturnValue("This villager is a " + Villages.professionName(current) + " for life; it can't change professions.");
     }
 
+    // Presence: villager prices are discounted (shown and charged).
+    @org.spongepowered.asm.mixin.injection.Redirect(method = "buy", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/villager/Profession$Offer;cost()I"))
+    private static int serantis$buyPrice(dev.ahrivaea.villager.Profession.Offer offer, ServerPlayer player, CaughtCreature caught, int index, int times) {
+        return dev.serantis.battle.skills.Skills.price(player, offer.cost());
+    }
+
+    @org.spongepowered.asm.mixin.injection.Redirect(method = "view", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/villager/Profession$Offer;cost()I"))
+    private static int serantis$viewPrice(dev.ahrivaea.villager.Profession.Offer offer, ServerPlayer player, Villagers.Handle handle, CaughtCreature caught) {
+        return dev.serantis.battle.skills.Skills.price(player, offer.cost());
+    }
+
     // Merchants: each sells its own random handful of things.
     @Inject(method = "view", at = @At("RETURN"))
     private static void serantis$merchantView(ServerPlayer player, Villagers.Handle handle, CaughtCreature caught, CallbackInfoReturnable<com.google.gson.JsonObject> cir) {

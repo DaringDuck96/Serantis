@@ -114,6 +114,12 @@ public abstract class BattlesMixin {
         dev.serantis.battle.Villages.NEXT_GUARD.set(false);
     }
 
+    // Presence: recruiting costs less XP.
+    @Redirect(method = "recruit", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battle$Defeated;cost()I"))
+    private static int serantis$recruitPrice(Battle.Defeated d, ServerPlayer player, Battle battle, int index) {
+        return dev.serantis.battle.skills.Skills.price(player, d.cost());
+    }
+
     // Any weapon starts a battle, not just a sword.
     @Redirect(method = "lambda$init$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z"))
     private static boolean serantis$anyWeapon(net.minecraft.world.item.ItemStack stack, net.minecraft.tags.TagKey<?> tag) {

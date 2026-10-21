@@ -259,6 +259,12 @@ public abstract class BattleMixin implements BattleAccess {
         if (cir.getReturnValue() != null) MoveEngine.assignNewUnit((Battle) (Object) this, cir.getReturnValue());
     }
 
+    // Presence: the recruit list shows the discounted price.
+    @Redirect(method = "view", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battle$Defeated;cost()I"))
+    private int serantis$recruitPrice(Battle.Defeated d) {
+        return dev.serantis.battle.skills.Skills.price(((Battle) (Object) this).player(), d.cost());
+    }
+
     // Remember a knocked-out creature's moves so recruiting it keeps them.
     @Inject(method = "knockOut", at = @At("HEAD"))
     private void serantis$beforeKnockOut(Unit unit, CallbackInfo ci) { serantis$defeatedBefore = defeated.size(); }
