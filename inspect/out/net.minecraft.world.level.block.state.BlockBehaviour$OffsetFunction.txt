@@ -1,4 +1,0 @@
-Compiled from "BlockBehaviour.java"
-public interface net.minecraft.world.level.block.state.BlockBehaviour$OffsetFunction {
-  public abstract net.minecraft.world.phys.Vec3 evaluate(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos);
-}

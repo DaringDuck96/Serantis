@@ -1,8 +1,0 @@
-Compiled from "HorizontalDirectionalBlock.java"
-public abstract class net.minecraft.world.level.block.HorizontalDirectionalBlock extends net.minecraft.world.level.block.Block {
-  public static final net.minecraft.world.level.block.state.properties.EnumProperty<net.minecraft.core.Direction> FACING;
-  protected net.minecraft.world.level.block.HorizontalDirectionalBlock(net.minecraft.world.level.block.state.BlockBehaviour$Properties);
-  protected net.minecraft.world.level.block.state.BlockState rotate(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.Rotation);
-  protected net.minecraft.world.level.block.state.BlockState mirror(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.Mirror);
-  static {};
-}
