@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * The creatures mod's player character now comes from the skill tree: 50 in every stat plus what
+ * The creatures mod's player character now comes from the skill tree: 33 in every stat plus what
  * the player's nodes add. Its old levels and stat points are no longer used. In the character it
  * hands out, "level" is the number of nodes owned, "xp" carries the walking-speed bonus (in %) and
  * "points" the extra health (in half-hearts), which the walking speed and health below read back.

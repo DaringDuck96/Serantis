@@ -198,7 +198,7 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 
 **Defeat.** XP is never lost. You keep all of it when you lose a battle or die, and dying drops no XP orbs. Instead, everything you're wearing or holding (armour, weapon, shield, tools) loses half of its full durability. It's never destroyed outright and is left with at least 1 use. On a normal death your items still drop as usual.
 
-**Your stats.** Every player starts with 40 in every stat (HP, Attack, Defense, Speed, Magic, Luck, Charisma) and grows by learning skills. Your hearts and your battle HP are the same stat: in the world it shows as hearts, and in battle as HP at 10 HP per heart (10 hearts = 100 HP). Vitality raises it, and so does anything else that adds hearts. The old player levels and stat points are gone.
+**Your stats.** Every player starts with 33 in Attack, Defense, Speed, Magic, Luck and Charisma (about a Level 2 creature) and 100 battle HP (10 hearts), and grows by learning skills. Your hearts and your battle HP are the same stat: in the world it shows as hearts, and in battle as HP at 10 HP per heart (10 hearts = 100 HP). Vitality raises it, and so does anything else that adds hearts. The old player levels and stat points are gone.
 
 **The skill tree.** Open your own Base Core and press **Skills**. Branches sit side by side at a readable size; on smaller screens (or bigger GUI scales) they wrap into more rows and you scroll with the mouse wheel. Hover a skill for its details and click a glowing one to learn it. Your base must be Level 1 or higher. There are 8 branches of 6 skills, 48 in all:
 - **Order:** each skill needs the one above it, and each capstone (the last skill in a branch) also needs one skill from a neighbouring branch.
