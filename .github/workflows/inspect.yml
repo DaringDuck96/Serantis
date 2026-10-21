@@ -110,7 +110,7 @@ jobs:
           gh api -H "Accept: application/octet-stream" "$url" > "$RUNNER_TEMP/rel.zip"
           (cd "$RUNNER_TEMP" && unzip -qo rel.zip -d relx)
           cp "$RUNNER_TEMP"/relx/mods/*.jar "$S/mods/"
-          cp "$RUNNER_TEMP/fapi/fabric-api.jar" "$S/mods/"
+          ls "$S"/mods/fabric-api-*.jar >/dev/null 2>&1 || cp "$RUNNER_TEMP/fapi/fabric-api.jar" "$S/mods/"
           git fetch -q origin main; St="$RUNNER_TEMP/stubs"; mkdir -p "$St"; git archive FETCH_HEAD tools/compile-stubs | tar -x -C "$St"
           SC="$(mktemp -d)"; javac --release 25 -d "$SC" -sourcepath "$St/tools/compile-stubs" tools/smoke/src/serantis/smoke/SmokeInit.java
           rm -rf "$SC/net"; cp tools/smoke/fabric.mod.json "$SC/"; (cd "$SC" && jar cf "$S/mods/serantis-smoke.jar" .)
