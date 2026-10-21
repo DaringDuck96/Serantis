@@ -1,2 +1,2 @@
 # classes
-compile wip/trial2
+compile wip/six
