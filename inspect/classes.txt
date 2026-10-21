@@ -1,4 +1,7 @@
 # classes
-sig:net.minecraft.world.entity.Entity$RemovalReason
-sig:net.minecraft.world.entity.LivingEntity
-sig:net.minecraft.world.entity.TamableAnimal
+sig:net.minecraft.world.level.StructureManager
+sig:net.minecraft.world.level.levelgen.structure.StructureStart
+sig:net.minecraft.tags.StructureTags
+sig:net.minecraft.world.level.storage.LevelResource
+sig:net.minecraft.world.level.levelgen.structure.StructurePiece
+sig:net.minecraft.world.level.levelgen.structure.BoundingBox
