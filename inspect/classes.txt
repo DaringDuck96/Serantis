@@ -1,2 +1,2 @@
 # classes
-compile wip/collect
+compile wip/persist
