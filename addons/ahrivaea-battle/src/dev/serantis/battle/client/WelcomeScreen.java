@@ -19,7 +19,7 @@ public class WelcomeScreen extends Screen {
 
     /** {heading, paragraph}; a null heading is a plain paragraph. */
     private static final String[][] GUIDE = {
-            {null, "Pull up a block. This is Minecraft: the same world you know, with the same trees to punch and the same creepers to regret. "
+            {null, "Pull up a block. This is Minecraft: the same blocky world you know, with trees to punch, caves to explore and plenty of mobs to fight. "
                     + "But Serantis is alive with creatures, and they're waiting to meet you."},
             {"Pick your starter", "Your first friend is waiting. Choose a starter creature: it fights beside you, grows with you, "
                     + "and might just carry you through your first rough night."},
