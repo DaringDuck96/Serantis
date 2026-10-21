@@ -1,9 +1,11 @@
 {
   "values": [
-    "#minecraft:enchantable/weapon",
-    "#minecraft:enchantable/bow",
-    "#minecraft:enchantable/crossbow",
-    "#minecraft:enchantable/trident",
-    "#minecraft:enchantable/mace"
+    {"id": "#minecraft:enchantable/melee_weapon", "required": false},
+    {"id": "#minecraft:enchantable/sharp_weapon", "required": false},
+    {"id": "#minecraft:enchantable/weapon", "required": false},
+    {"id": "#minecraft:enchantable/bow", "required": false},
+    {"id": "#minecraft:enchantable/crossbow", "required": false},
+    {"id": "#minecraft:enchantable/trident", "required": false},
+    {"id": "#minecraft:enchantable/mace", "required": false}
   ]
 }
