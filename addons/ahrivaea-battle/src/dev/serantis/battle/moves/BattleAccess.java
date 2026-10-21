@@ -23,6 +23,10 @@ public interface BattleAccess {
     Map<Object, String> serantis$defeatedMoves();
     /** Temperaments of knocked-out units, the same way. */
     Map<Object, String> serantis$defeatedTemperaments();
+    /** Villager professions of knocked-out units, the same way (so a recruited villager keeps its profession). */
+    Map<Object, dev.ahrivaea.villager.VillagerJob> serantis$defeatedJobs();
+    /** Knocked-out Town Guards (they can't be recruited). */
+    java.util.Set<Object> serantis$defeatedGuards();
     /** Zones, pending attacks and forced movement (Stage 2). */
     Field serantis$field();
 }

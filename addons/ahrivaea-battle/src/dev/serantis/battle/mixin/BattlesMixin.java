@@ -71,6 +71,8 @@ public abstract class BattlesMixin {
             target = "Ldev/ahrivaea/party/Party;addAnywhere(Lnet/minecraft/world/entity/player/Player;Ldev/ahrivaea/party/CaughtCreature;)Z"))
     private static boolean serantis$recruit(Player player, CaughtCreature caught, ServerPlayer sp, Battle battle, int index) {
         if (index >= 0 && index < battle.defeated.size()) {
+            var job = ((BattleAccess) (Object) battle).serantis$defeatedJobs().get(battle.defeated.get(index));
+            if (job != null) caught = caught.withJob(job);              // a villager keeps its profession
             String moves = ((BattleAccess) (Object) battle).serantis$defeatedMoves().get(battle.defeated.get(index));
             if (moves != null) ((MovesHolder) (Object) caught).serantis$setMoves(moves);
             String temperament = ((BattleAccess) (Object) battle).serantis$defeatedTemperaments().get(battle.defeated.get(index));
@@ -83,9 +85,43 @@ public abstract class BattlesMixin {
         return added;
     }
 
+    // Attack a villager and 3-5 Town Guards come to defend it.
+    @Unique private static final ThreadLocal<Boolean> SERANTIS_GUARDED = ThreadLocal.withInitial(() -> false);
+
+    @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battles;reinforcements(ILnet/minecraft/util/RandomSource;)I"))
+    private static int serantis$guardCount(int level, net.minecraft.util.RandomSource random, ServerPlayer player, dev.ahrivaea.creature.CreatureEntity target) {
+        boolean village = dev.serantis.battle.Villages.defendedByGuards(target);
+        SERANTIS_GUARDED.set(village);
+        return village ? 3 + random.nextInt(3) : dev.ahrivaea.battle.Battles.reinforcements(level, random);
+    }
+
+    @Redirect(method = "start", at = @At(value = "INVOKE", target =
+            "Ldev/ahrivaea/party/RecruitRules;reinforcement(Lnet/minecraft/core/Holder;Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;I)Ljava/util/Optional;"))
+    private static java.util.Optional<dev.ahrivaea.creature.Species.LevelledPick> serantis$guard(net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> biome,
+            net.minecraft.world.level.Level level, net.minecraft.util.RandomSource random, dev.ahrivaea.creature.Species species, dev.ahrivaea.creature.Influence influence, int lvl) {
+        if (SERANTIS_GUARDED.get()) {
+            var guard = dev.serantis.battle.Villages.guardPick(lvl, random);
+            if (guard != null) { dev.serantis.battle.Villages.NEXT_GUARD.set(true); return java.util.Optional.of(guard); }
+        }
+        return dev.ahrivaea.party.RecruitRules.reinforcement(biome, level, random, species, influence, lvl);
+    }
+
+    @Inject(method = "start", at = @At("RETURN"))
+    private static void serantis$guardsArrive(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (SERANTIS_GUARDED.get() && cir.getReturnValue() != null)
+            ((BattleAccess) (Object) cir.getReturnValue()).serantis$say("Town Guards rush in to defend the village!");
+        SERANTIS_GUARDED.set(false);
+        dev.serantis.battle.Villages.NEXT_GUARD.set(false);
+    }
+
     // Black Market Merchants don't fight.
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (dev.serantis.battle.Villages.isGuard(entity)) {
+            player.sendSystemMessage(net.minecraft.network.chat.Component.literal("I wouldn't try that, punk..."));
+            cir.setReturnValue(null);
+            return;
+        }
         if (dev.serantis.battle.Market.isBlackMarket(entity)) {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The Black Market Merchant doesn't fight. Right-click to see what's for sale."));
             cir.setReturnValue(null);

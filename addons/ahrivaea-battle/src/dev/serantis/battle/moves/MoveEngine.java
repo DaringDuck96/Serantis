@@ -60,6 +60,18 @@ public final class MoveEngine {
 
     /** A new unit gets the creature's saved moves (party creatures) or three random ones. */
     public static void assignNewUnit(Battle b, Unit u) {
+        boolean guard = dev.serantis.battle.Villages.NEXT_GUARD.get();
+        if (guard && u.side == Unit.Side.ENEMY) {
+            dev.serantis.battle.Villages.NEXT_GUARD.set(false);
+            state(u).guard = true;
+            ((UnitAccess) (Object) u).serantis$setName("Town Guard");
+        }
+        assignNewUnitInner(b, u);
+        if (state(u).guard)
+            ((UnitAccess) (Object) u).serantis$setStats(dev.serantis.battle.Temperament.apply(dev.serantis.battle.Villages.GUARD_STATS, state(u).temperament, u.level));
+    }
+
+    private static void assignNewUnitInner(Battle b, Unit u) {
         state(u).size = u.isPlayer || u.influence == null ? 1 : Footprints.tiles(u.speciesId, u.influence.getSerializedName());
         if (state(u).size > 1) settle(b, u);
         if (u.isPlayer) return;

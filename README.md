@@ -196,6 +196,8 @@ Professions are the creatures mod's (Farmer, Fisherman, Gardener, Weaver, Hunter
 - **Innkeeper:** while one works at any base of yours, sleeping through the night refills your hearts.
 - **Noble:** creatures that spawn inside the base or within a chunk (16 blocks) of its border are Rare or rarer 35% of the time (normally 15%): 50% Common, 15% Uncommon, 22% Rare, 10% Super Rare, 3% Legendary.
 
+**Town Guards.** About one in five village villagers is a Town Guard standing watch ("Town Guard" over its head). They can't be fought, hurt or recruited: try it and you'll be told "I wouldn't try that, punk...". Attack any other villager and **3 to 5 Town Guards** join the battle against you, each a few levels above the villager (up to Level 20) and much tougher than a villager. Defeated guards can't be recruited.
+
 **Merchants** turn up in villages (and every wandering trader is one). Like a vanilla wandering trader, each merchant sells its own random handful (6 to 8) of useful things from a pool of about 50: ender pearls, name tags, saddles, diamonds, golden carrots, ingots, blaze rods, shulker shells, blue ice, sponges, spyglasses and so on, for XP. Recruit one and its stock is the same every time you open it.
 
 **Black Market Merchants** never live in villages. Any wild creature that spawns in the Overworld has a 0.05% chance to be a Black Market Merchant instead (nearby players hear whispers in chat). Each one carries 3 to 5 creatures that are Rare (70%), Super Rare (25%) or Legendary (5%), Level 10 to 20, and sells each for **350 XP**: right-click it to see what's for sale (the creature goes to your party, or your box if your party is full). It can't be fought, hurt or recruited, and it leaves after a day, or as soon as it sells out.

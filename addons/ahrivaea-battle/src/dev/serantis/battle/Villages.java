@@ -111,6 +111,43 @@ public final class Villages {
         return c.withJob(new VillagerJob(job.profession(), 0, p.ranks().getFirst().deed().value(player)));
     }
 
+    // ------------------------------------------------------------------ town guards
+
+    public static final String GUARD = "town_guard";
+    /** Share of village villagers that are Town Guards standing watch (they can't be fought). */
+    public static final double GUARD_SHARE = 0.2;
+    /** The next unit added to a battle is a Town Guard. */
+    public static final ThreadLocal<Boolean> NEXT_GUARD = ThreadLocal.withInitial(() -> false);
+    /** Town Guards are tougher than villagers (Level 20 values). */
+    public static final dev.ahrivaea.creature.Stats GUARD_STATS = new dev.ahrivaea.creature.Stats(75, 70, 75, 55, 40, 50, 60);
+
+    public static boolean isGuard(net.minecraft.world.entity.Entity e) {
+        if (!(e instanceof CreatureEntity c)) return false;
+        VillagerJob j = jobOf(c);
+        return j != null && GUARD.equals(j.profession());
+    }
+
+    /** A villager that will call the guards when attacked. */
+    public static boolean defendedByGuards(CreatureEntity e) {
+        if (e == null || !dev.ahrivaea.villager.Villagers.SPECIES.equals(e.getSpeciesId())) return false;
+        VillagerJob j = jobOf(e);
+        return j == null || !(GUARD.equals(j.profession()) || Market.BLACK_MARKET.equals(j.profession()));
+    }
+
+    /** A Town Guard joining a battle: a villager a few levels above the one it defends. */
+    public static dev.ahrivaea.creature.Species.LevelledPick guardPick(int level, RandomSource random) {
+        var sp = dev.ahrivaea.creature.Species.get(dev.ahrivaea.villager.Villagers.SPECIES).orElse(null);
+        return sp == null ? null : new dev.ahrivaea.creature.Species.LevelledPick(sp, dev.ahrivaea.creature.Influence.NONE,
+                Math.min(20, level + 3 + random.nextInt(5)));
+    }
+
+    /** A villager spawning in a village becomes a Town Guard standing watch. */
+    public static void makeGuard(CreatureEntity e) {
+        setJob(e, new VillagerJob(GUARD, 1, 0));
+        e.setCustomName(net.minecraft.network.chat.Component.literal("Town Guard"));
+        e.setCustomNameVisible(true);
+    }
+
     // ------------------------------------------------------------------ bases
 
     public static boolean has(BaseCoreBlockEntity core, String role) {

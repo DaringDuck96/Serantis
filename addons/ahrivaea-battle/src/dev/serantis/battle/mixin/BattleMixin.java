@@ -70,6 +70,23 @@ public abstract class BattleMixin implements BattleAccess {
         if (serantis$defeatedTemperaments == null) serantis$defeatedTemperaments = new IdentityHashMap<>();
         return serantis$defeatedTemperaments;
     }
+    @Unique private Map<Object, dev.ahrivaea.villager.VillagerJob> serantis$defeatedJobs;
+    @Unique private java.util.Set<Object> serantis$defeatedGuards;
+    @Override public Map<Object, dev.ahrivaea.villager.VillagerJob> serantis$defeatedJobs() {
+        if (serantis$defeatedJobs == null) serantis$defeatedJobs = new IdentityHashMap<>();
+        return serantis$defeatedJobs;
+    }
+    @Override public java.util.Set<Object> serantis$defeatedGuards() {
+        if (serantis$defeatedGuards == null) serantis$defeatedGuards = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+        return serantis$defeatedGuards;
+    }
+
+    // Town Guards can't be recruited.
+    @Inject(method = "whyNotRecruit", at = @At("HEAD"), cancellable = true)
+    private void serantis$noGuards(Battle.Defeated d, CallbackInfoReturnable<String> cir) {
+        if (serantis$defeatedGuards != null && serantis$defeatedGuards.contains(d)) cir.setReturnValue("Town Guards can't be recruited.");
+    }
+
     @Override public Map<Object, String> serantis$defeatedMoves() {
         if (serantis$defeatedMoves == null) serantis$defeatedMoves = new IdentityHashMap<>();
         return serantis$defeatedMoves;
@@ -253,6 +270,13 @@ public abstract class BattleMixin implements BattleAccess {
             if (moves != null) serantis$defeatedMoves().put(defeated.get(defeated.size() - 1), moves);
             String temperament = MoveEngine.state(unit).temperament;
             if (temperament != null) serantis$defeatedTemperaments().put(defeated.get(defeated.size() - 1), temperament);
+            if (MoveEngine.state(unit).guard) serantis$defeatedGuards().add(defeated.get(defeated.size() - 1));
+            Battle self = (Battle) (Object) this;
+            if (unit.entity != null && self.level != null
+                    && self.level.getEntity(unit.entity) instanceof dev.ahrivaea.creature.CreatureEntity ce) {
+                var job = dev.serantis.battle.Villages.jobOf(ce);
+                if (job != null) serantis$defeatedJobs().put(defeated.get(defeated.size() - 1), job);
+            }
         }
     }
 

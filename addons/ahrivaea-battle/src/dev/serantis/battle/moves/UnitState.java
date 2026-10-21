@@ -33,6 +33,8 @@ public final class UnitState {
     public int size = 1;        // tiles per side its body covers (see Body)
     /** Temperament and apples last applied to its stats. */
     public String statsKey;
+    /** A Town Guard that came to defend a villager (can't be recruited). */
+    public boolean guard;
     public String temperament;  // see Temperament
     public int bonusTiles;      // extra battle movement (the player's Swiftness nodes)
     public String lastMoveId;
