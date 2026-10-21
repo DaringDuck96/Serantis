@@ -1,0 +1,227 @@
+{
+ "sections": [
+  {
+   "title": "Battle gear",
+   "entries": [
+    {
+     "recipes": [
+      "data/serantis_battle/recipe/magic_staff.json"
+     ],
+     "note": "Right-click an enchanting table holding it to link one of three spells (25 XP). In battle it adds that spell to your moves."
+    },
+    {
+     "recipes": [
+      "data/serantis_battle/recipe/winged_boots.json"
+     ],
+     "note": "Wear them and double-tap jump to fly for 10 seconds; the fall after a flight never hurts. Touch the ground to recharge."
+    },
+    {
+     "recipes": [
+      "data/serantis_battle/recipe/teleporting_boots.json"
+     ],
+     "note": "Double-tap sneak to teleport about 10 blocks ahead. In battle: Flight."
+    },
+    {
+     "recipes": [
+      "data/serantis_battle/recipe/helm_of_linx.json"
+     ],
+     "note": "Phase Jump, Shape Lift, Waymark and High Jump (keys Z, X, C, V). Orichalcum comes from village bounties."
+    }
+   ]
+  },
+  {
+   "title": "Influence armour",
+   "entries": [
+    {
+     "recipes": [
+      "data/serantis_battle/recipe/fire_helmet.json",
+      "data/serantis_battle/recipe/fire_chestplate.json",
+      "data/serantis_battle/recipe/fire_leggings.json",
+      "data/serantis_battle/recipe/fire_boots.json",
+      "data/serantis_battle/recipe/frost_helmet.json",
+      "data/serantis_battle/recipe/frost_chestplate.json",
+      "data/serantis_battle/recipe/frost_leggings.json",
+      "data/serantis_battle/recipe/frost_boots.json",
+      "data/serantis_battle/recipe/storm_helmet.json",
+      "data/serantis_battle/recipe/storm_chestplate.json",
+      "data/serantis_battle/recipe/storm_leggings.json",
+      "data/serantis_battle/recipe/storm_boots.json",
+      "data/serantis_battle/recipe/earth_helmet.json",
+      "data/serantis_battle/recipe/earth_chestplate.json",
+      "data/serantis_battle/recipe/earth_leggings.json",
+      "data/serantis_battle/recipe/earth_boots.json",
+      "data/serantis_battle/recipe/water_helmet.json",
+      "data/serantis_battle/recipe/water_chestplate.json",
+      "data/serantis_battle/recipe/water_leggings.json",
+      "data/serantis_battle/recipe/water_boots.json",
+      "data/serantis_battle/recipe/nature_helmet.json",
+      "data/serantis_battle/recipe/nature_chestplate.json",
+      "data/serantis_battle/recipe/nature_leggings.json",
+      "data/serantis_battle/recipe/nature_boots.json",
+      "data/serantis_battle/recipe/void_helmet.json",
+      "data/serantis_battle/recipe/void_chestplate.json",
+      "data/serantis_battle/recipe/void_leggings.json",
+      "data/serantis_battle/recipe/void_boots.json",
+      "data/serantis_battle/recipe/fae_helmet.json",
+      "data/serantis_battle/recipe/fae_chestplate.json",
+      "data/serantis_battle/recipe/fae_leggings.json",
+      "data/serantis_battle/recipe/fae_boots.json",
+      "data/serantis_battle/recipe/darkness_helmet.json",
+      "data/serantis_battle/recipe/darkness_chestplate.json",
+      "data/serantis_battle/recipe/darkness_leggings.json",
+      "data/serantis_battle/recipe/darkness_boots.json",
+      "data/serantis_battle/recipe/arcane_helmet.json",
+      "data/serantis_battle/recipe/arcane_chestplate.json",
+      "data/serantis_battle/recipe/arcane_leggings.json",
+      "data/serantis_battle/recipe/arcane_boots.json",
+      "data/serantis_battle/recipe/radiant_helmet.json",
+      "data/serantis_battle/recipe/radiant_chestplate.json",
+      "data/serantis_battle/recipe/radiant_leggings.json",
+      "data/serantis_battle/recipe/radiant_boots.json"
+     ],
+     "note": "A set for each influence, as strong as diamond; each piece takes 6.25% off attacks of its influence. Shaped like diamond armour, with Orichalcum Ingots (from village bounties) and two of that influence's items. The picture cycles through them all."
+    }
+   ]
+  },
+  {
+   "title": "Creatures",
+   "entries": [
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/vessel.json"
+     ],
+     "note": "Use it on a wild creature to try to catch it straight into your party; a weakened creature is easier to catch."
+    },
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/swift_treat.json"
+     ],
+     "note": "Feed it to a creature you ride to make it faster (the first speed tier)."
+    },
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/golden_treat.json"
+     ],
+     "note": "The second speed tier for a creature you ride."
+    },
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/racing_treat.json"
+     ],
+     "note": "The top speed tier for a creature you ride."
+    }
+   ]
+  },
+  {
+   "title": "Horses",
+   "entries": [
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/swift_feed.json"
+     ],
+     "note": "Feed it to a horse, donkey or mule for the first speed tier."
+    },
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/golden_feed.json"
+     ],
+     "note": "The second speed tier for horses, donkeys and mules."
+    },
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/racing_feed.json"
+     ],
+     "note": "The top speed tier for horses, donkeys and mules."
+    }
+   ]
+  },
+  {
+   "title": "Your base",
+   "entries": [
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/mining_post.json"
+     ],
+     "note": "Put it in your base with a chest next to it: your miners dig out the chunk below."
+    },
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/creature_dynamo.json"
+     ],
+     "note": "Creatures working at your base power it, giving off a redstone signal."
+    }
+   ]
+  },
+  {
+   "title": "Stellar gear",
+   "entries": [
+    {
+     "recipes": [
+      "data/ahrivaea/recipe/stellar_sword_smithing.json",
+      "data/ahrivaea/recipe/stellar_pickaxe_smithing.json",
+      "data/ahrivaea/recipe/stellar_axe_smithing.json",
+      "data/ahrivaea/recipe/stellar_shovel_smithing.json",
+      "data/ahrivaea/recipe/stellar_hoe_smithing.json",
+      "data/ahrivaea/recipe/stellar_helmet_smithing.json",
+      "data/ahrivaea/recipe/stellar_chestplate_smithing.json",
+      "data/ahrivaea/recipe/stellar_leggings_smithing.json",
+      "data/ahrivaea/recipe/stellar_boots_smithing.json"
+     ],
+     "note": "At a smithing table: a Nether Star upgrades netherite gear to Stellar. The picture cycles through every piece."
+    }
+   ]
+  },
+  {
+   "title": "Dyed water",
+   "entries": [
+    {
+     "recipes": [
+      "data/serantis_dyed_water/recipe/white_water_bucket.json",
+      "data/serantis_dyed_water/recipe/light_gray_water_bucket.json",
+      "data/serantis_dyed_water/recipe/gray_water_bucket.json",
+      "data/serantis_dyed_water/recipe/black_water_bucket.json",
+      "data/serantis_dyed_water/recipe/brown_water_bucket.json",
+      "data/serantis_dyed_water/recipe/red_water_bucket.json",
+      "data/serantis_dyed_water/recipe/orange_water_bucket.json",
+      "data/serantis_dyed_water/recipe/yellow_water_bucket.json",
+      "data/serantis_dyed_water/recipe/lime_water_bucket.json",
+      "data/serantis_dyed_water/recipe/green_water_bucket.json",
+      "data/serantis_dyed_water/recipe/cyan_water_bucket.json",
+      "data/serantis_dyed_water/recipe/light_blue_water_bucket.json",
+      "data/serantis_dyed_water/recipe/blue_water_bucket.json",
+      "data/serantis_dyed_water/recipe/purple_water_bucket.json",
+      "data/serantis_dyed_water/recipe/magenta_water_bucket.json",
+      "data/serantis_dyed_water/recipe/pink_water_bucket.json"
+     ],
+     "note": "A water bucket and any dye: place it for coloured water. The picture cycles through the colours."
+    }
+   ]
+  }
+ ],
+ "other": [
+  [
+   "Orichalcum Ingots",
+   "Can't be found or crafted: village bounty boards pay them (right-click a bell)."
+  ],
+  [
+   "Backpacks",
+   "One each time one of your bases reaches Level 2."
+  ],
+  [
+   "Woodcutter",
+   "Logs and planks cut into stairs, slabs, doors, fences and more, more cheaply than crafting."
+  ],
+  [
+   "Enchantments",
+   "Tunneler (pickaxes), Bane and Infusion books for each influence come from the enchanting table, villagers and loot."
+  ],
+  [
+   "Weapon honing",
+   "A Smith (in villages or at your base) improves a weapon +1 to +5 for XP."
+  ],
+  [
+   "Lore books",
+   "2.5% chance from each creature you beat in battle; bounties sometimes pay one too."
+  ]
+ ]
+}

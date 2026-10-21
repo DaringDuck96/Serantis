@@ -75,6 +75,7 @@ public final class CoopBattles {
         boolean raid, noJoin, ended;
         ServerLevel home;
         Vec3 homePos = Vec3.ZERO;
+        net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> biome;
         long phaseSince = System.currentTimeMillis();
         Battle.Phase lastPhase;
         int lastTurn;
@@ -182,7 +183,7 @@ public final class CoopBattles {
 
     /** Battles.start, at its head: where the battle is (for who's close enough to join). */
     public static void starting(ServerPlayer owner) {
-        START_HOME.set(new Object[]{owner.level(), owner.position()});
+        START_HOME.set(new Object[]{owner.level(), owner.position(), owner.level().getBiome(owner.blockPosition())});
     }
 
     /** Battles.start, on return: ask the owner's group nearby whether they'd like to join. */
@@ -193,6 +194,8 @@ public final class CoopBattles {
         Info i = new Info();
         i.home = (ServerLevel) home[0];
         i.homePos = (Vec3) home[1];
+        @SuppressWarnings("unchecked") var biome = (net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>) home[2];
+        i.biome = biome;
         i.raid = dev.serantis.battle.GoblinRaids.STARTING.get() != null;
         i.noJoin = dev.serantis.battle.FigureVisit.FIGHTING.get();       // an Acolyte's trial is yours alone
         INFO.put(b, i);
@@ -271,6 +274,7 @@ public final class CoopBattles {
             p.teleportTo(b.level, at.getX() + 0.5, at.getY(), at.getZ() + 0.5, Set.of(), 180f, 30f, true);
         }
         List<Unit> added = new ArrayList<>();
+        int extra = 0;
         BattlesAccess.serantis$setSpawning(true);
         try {
             List<CaughtCreature> party = Party.get(p);
@@ -282,13 +286,13 @@ public final class CoopBattles {
                 i.slots.put(u.id, s);
                 added.add(u);
             }
-            if (!i.raid) addEnemy(b);
+            for (int n = 0; n < 1 + added.size(); n++) if (addEnemy(b, i)) extra++;   // one more foe for the ally and one per creature they brought
         } finally {
             BattlesAccess.serantis$setSpawning(false);
         }
         for (Unit u : b.units) BattlesAccess.serantis$placeEntity(b, u);
         say(b, p.getPlainTextName() + " joins the battle" + (added.isEmpty() ? "!" : " with " + added.size() + " creature" + (added.size() == 1 ? "" : "s") + "!")
-                + (i.raid ? "" : " Another enemy joins the fray."));
+                + (extra == 0 ? "" : extra == 1 ? " Another enemy joins the fray!" : " " + extra + " more enemies join the fray!"));
         Battles.send(b);
     }
 
@@ -313,26 +317,43 @@ public final class CoopBattles {
         return u;
     }
 
-    /** One more enemy for each ally: like one already on the field, a level or so lower. */
-    private static void addEnemy(Battle b) {
+    /**
+     * One more enemy to keep a co-op battle hard: what this battle would bring as reinforcements (a Master's team,
+     * the raid's goblins, or the creatures of the biome, Enraged and Mutated included), about as strong as the foes
+     * already on the field. Recruitable like any other (except a Master's team).
+     */
+    private static boolean addEnemy(Battle b, Info i) {
         List<Unit> foes = new ArrayList<>();
         for (Unit u : b.units) if (u.alive() && u.side == Unit.Side.ENEMY && !u.isPlayer && u.speciesId != null && !u.speciesId.isEmpty()) foes.add(u);
-        if (foes.isEmpty()) return;
+        if (foes.isEmpty()) return false;
         Unit like = foes.get(b.random.nextInt(foes.size()));
-        Species sp = Species.get(like.speciesId).orElse(null);
-        if (sp == null) return;
+        Species likeSpecies = Species.get(like.speciesId).orElse(null);
+        if (likeSpecies == null) return false;
+        Species sp = likeSpecies;
+        Influence inf = like.influence;
         int lvl = Math.max(1, like.level - b.random.nextInt(2));
+        Variant variant = Variant.NONE;
+        String master = ((BattleAccess) (Object) b).serantis$master();
+        Species.LevelledPick pick = null;
+        if (master != null) pick = dev.serantis.battle.Masters.teamPick(master, like.level, b.random);
+        else if (!i.raid && i.biome != null && i.home != null) {
+            pick = dev.ahrivaea.party.RecruitRules.reinforcement(i.biome, i.home, b.random, likeSpecies, like.influence, like.level).orElse(null);
+            variant = Variant.roll(i.home, b.random);
+        }
+        if (pick != null) { sp = pick.species(); inf = pick.influence(); lvl = pick.level(); }
         var acc = (BattleRaidAccess) (Object) b;
         int[] cell = acc.serantis$freeCellNear(like.x, like.z, Unit.Side.ENEMY);
-        Unit u = acc.serantis$addCreature(Unit.Side.ENEMY, sp, like.influence, Variant.NONE, lvl, -1f, -1, cell[0], cell[1]);
-        if (u == null) return;
+        Unit u = acc.serantis$addCreature(Unit.Side.ENEMY, sp, inf, variant, lvl, -1f, -1, cell[0], cell[1]);
+        if (u == null) return false;
         BlockPos at = b.cellPos(u);
-        CreatureEntity e = Ahrivaea.spawn(b.level, sp, like.influence, lvl, -1f, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        CreatureEntity e = Ahrivaea.spawn(b.level, sp, inf, lvl, -1f, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
         if (e != null) {
+            e.setVariant(variant);
             e.setNoAi(true);
             e.capSize(1.4f);
             u.entity = e.getUUID();
         }
+        return true;
     }
 
     // ------------------------------------------------------------------ spars

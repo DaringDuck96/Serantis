@@ -61,9 +61,9 @@ public class WelcomeScreen extends Screen {
     public void setParent(Screen parent) { this.parent = parent; }
     private final boolean first;
     private int tab;
-    private static final String[] TABS = {"Welcome", "Your Base"};
+    private static final String[] TABS = {"Welcome", "Your Base", "Recipes"};
     private static final String[] SUBTITLES = {"A world of creatures, towers and masters (and it's still Minecraft)",
-            "How creatures work at your base, and what to expect from them"};
+            "How creatures work at your base, and what to expect from them", "Everything you can craft that vanilla Minecraft doesn't have"};
     private final List<Object[]> lines = new ArrayList<>();      // {text, color, gapBefore}
     private int scroll, contentH, panelW, viewTop, viewBottom;
 
@@ -116,7 +116,7 @@ public class WelcomeScreen extends Screen {
             b.active = i != tab;
             addRenderableWidget(b);
         }
-        for (String[] part : tab == 1 ? BaseGuide.TEXT : GUIDE) {
+        for (String[] part : tab == 2 ? new String[0][] : tab == 1 ? BaseGuide.TEXT : GUIDE) {
             int gap = h == 0 ? 0 : 10;
             if (part[0] != null) { lines.add(new Object[]{part[0], HEAD, gap}); h += gap + 12; gap = 0; }
             boolean firstLine = true;
@@ -127,7 +127,7 @@ public class WelcomeScreen extends Screen {
                 firstLine = false;
             }
         }
-        contentH = h;
+        contentH = tab == 2 ? RecipeGuide.height() : h;
         scroll = Math.max(0, Math.min(scroll, Math.max(0, contentH - (viewBottom - viewTop))));
         addRenderableWidget(Button.builder(Component.literal(first ? "Let's go!" : "Done"), b -> onClose())
                 .bounds(width / 2 - 50, height - 28, 100, 20).build());
@@ -154,11 +154,12 @@ public class WelcomeScreen extends Screen {
         g.pose().pushMatrix();
         g.pose().translate(width / 2f, 10);
         g.pose().scale(1.5f, 1.5f);
-        g.centeredText(font, tab == 1 ? "Your Base and Its Workers" : "Welcome to Serantia!", 0, 0, GOLD);
+        g.centeredText(font, tab == 2 ? "Recipes" : tab == 1 ? "Your Base and Its Workers" : "Welcome to Serantia!", 0, 0, GOLD);
         g.pose().popMatrix();
         g.centeredText(font, SUBTITLES[tab], width / 2, 26, DIM);
 
         int x = (width - panelW) / 2 + 10, y = viewTop - scroll;
+        if (tab == 2) RecipeGuide.draw(g, font, x, y, panelW - 26, viewTop, viewBottom);
         for (Object[] line : lines) {
             y += (int) line[2];
             if (y >= viewTop - 2 && y + 9 <= viewBottom) g.text(font, (String) line[0], x, y, (int) line[1]);
