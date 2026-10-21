@@ -1,0 +1,8 @@
+Compiled from "SimpleMenuProvider.java"
+public final class net.minecraft.world.SimpleMenuProvider implements net.minecraft.world.MenuProvider {
+  private final net.minecraft.network.chat.Component title;
+  private final net.minecraft.world.inventory.MenuConstructor menuConstructor;
+  public net.minecraft.world.SimpleMenuProvider(net.minecraft.world.inventory.MenuConstructor, net.minecraft.network.chat.Component);
+  public net.minecraft.network.chat.Component getDisplayName();
+  public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int, net.minecraft.world.entity.player.Inventory, net.minecraft.world.entity.player.Player);
+}

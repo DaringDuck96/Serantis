@@ -1,0 +1,17 @@
+Compiled from "InputConstants.java"
+public final class com.mojang.blaze3d.platform.InputConstants$Key {
+  private final java.lang.String name;
+  private final com.mojang.blaze3d.platform.InputConstants$Type type;
+  private final int value;
+  private static final java.util.Map<java.lang.String, com.mojang.blaze3d.platform.InputConstants$Key> NAME_MAP;
+  private com.mojang.blaze3d.platform.InputConstants$Key(java.lang.String, com.mojang.blaze3d.platform.InputConstants$Type, int);
+  public com.mojang.blaze3d.platform.InputConstants$Type getType();
+  public int getValue();
+  public java.lang.String getName();
+  public net.minecraft.network.chat.Component getDisplayName();
+  public java.util.OptionalInt getNumericKeyValue();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+  static {};
+}

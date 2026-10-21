@@ -1,0 +1,20 @@
+Compiled from "InputConstants.java"
+public final class com.mojang.blaze3d.platform.InputConstants$Type extends java.lang.Enum<com.mojang.blaze3d.platform.InputConstants$Type> {
+  public static final com.mojang.blaze3d.platform.InputConstants$Type KEYBOARD;
+  public static final com.mojang.blaze3d.platform.InputConstants$Type MOUSE;
+  private static final java.lang.String KEY_KEYBOARD_UNKNOWN = "key.keyboard.unknown";
+  private final it.unimi.dsi.fastutil.ints.Int2ObjectMap<com.mojang.blaze3d.platform.InputConstants$Key> map;
+  private final java.lang.String defaultPrefix;
+  private final java.util.function.BiFunction<java.lang.Integer, java.lang.String, net.minecraft.network.chat.Component> displayTextSupplier;
+  private static final com.mojang.blaze3d.platform.InputConstants$Type[] $VALUES;
+  public static com.mojang.blaze3d.platform.InputConstants$Type[] values();
+  public static com.mojang.blaze3d.platform.InputConstants$Type valueOf(java.lang.String);
+  private static void addKey(com.mojang.blaze3d.platform.InputConstants$Type, java.lang.String, int);
+  private com.mojang.blaze3d.platform.InputConstants$Type(java.lang.String, java.util.function.BiFunction<java.lang.Integer, java.lang.String, net.minecraft.network.chat.Component>);
+  public com.mojang.blaze3d.platform.InputConstants$Key getOrCreate(int);
+  private static com.mojang.blaze3d.platform.InputConstants$Type[] $values();
+  private com.mojang.blaze3d.platform.InputConstants$Key lambda$getOrCreate$0(int);
+  private static net.minecraft.network.chat.Component lambda$static$1(java.lang.Integer, java.lang.String);
+  private static net.minecraft.network.chat.Component lambda$static$0(java.lang.Integer, java.lang.String);
+  static {};
+}

@@ -1,0 +1,3 @@
+Compiled from "InputConstants.java"
+public interface com.mojang.blaze3d.platform.InputConstants$Value extends java.lang.annotation.Annotation {
+}

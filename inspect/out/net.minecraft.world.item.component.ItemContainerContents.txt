@@ -1,0 +1,35 @@
+Compiled from "ItemContainerContents.java"
+public final class net.minecraft.world.item.component.ItemContainerContents implements net.minecraft.world.item.component.ContainerComponent<net.minecraft.world.item.component.ItemContainerContents>, net.minecraft.world.item.component.TooltipProvider {
+  private static final int NO_SLOT = -1;
+  public static final int MAX_SIZE = 256;
+  public static final net.minecraft.world.item.component.ItemContainerContents EMPTY;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.component.ItemContainerContents> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.world.item.component.ItemContainerContents> STREAM_CODEC;
+  private final java.util.List<java.util.Optional<net.minecraft.world.item.ItemStackTemplate>> items;
+  private final int hashCode;
+  private net.minecraft.world.item.component.ItemContainerContents(java.util.List<java.util.Optional<net.minecraft.world.item.ItemStackTemplate>>);
+  private static java.util.List<java.util.Optional<net.minecraft.world.item.ItemStackTemplate>> emptyContents(int);
+  private static net.minecraft.world.item.component.ItemContainerContents fromSlots(java.util.List<net.minecraft.world.item.component.ItemContainerContents$Slot>);
+  public static net.minecraft.world.item.component.ItemContainerContents fromItems(java.util.List<net.minecraft.world.item.ItemStack>);
+  private static int findLastNonEmptySlot(java.util.List<net.minecraft.world.item.ItemStack>);
+  private java.util.List<net.minecraft.world.item.component.ItemContainerContents$Slot> asSlots();
+  private net.minecraft.world.item.ItemStack createStackFromSlot(int);
+  public void copyInto(net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack>);
+  public net.minecraft.world.item.ItemStack copyOne();
+  public java.util.stream.Stream<net.minecraft.world.item.ItemStack> itemCopies();
+  private java.util.stream.Stream<net.minecraft.world.item.ItemStackTemplate> nonEmptyItemsStream();
+  public java.util.stream.Stream<net.minecraft.world.item.ItemStack> nonEmptyItemCopyStream();
+  public java.lang.Iterable<net.minecraft.world.item.ItemStackTemplate> nonEmptyItems();
+  public int size();
+  public net.minecraft.world.item.component.ItemContainerContents copyWithContents(java.util.stream.Stream<net.minecraft.world.item.ItemStack>);
+  public net.minecraft.world.item.component.ItemContainerContents$Mutable asMutable();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public void addToTooltip(net.minecraft.world.item.Item$TooltipContext, java.util.function.Consumer<net.minecraft.network.chat.Component>, net.minecraft.world.item.TooltipFlag, net.minecraft.core.component.DataComponentGetter);
+  public net.minecraft.world.item.component.ContainerComponent$Mutable asMutable();
+  public net.minecraft.world.item.component.ContainerComponent copyWithContents(java.util.stream.Stream);
+  private java.util.Iterator lambda$nonEmptyItems$0();
+  private static net.minecraft.world.item.ItemStack lambda$itemCopies$0(java.util.Optional);
+  private static java.util.List lambda$static$0(net.minecraft.world.item.component.ItemContainerContents);
+  static {};
+}

@@ -1,0 +1,21 @@
+Compiled from "ChestMenu.java"
+public class net.minecraft.world.inventory.ChestMenu extends net.minecraft.world.inventory.AbstractContainerMenu {
+  private final net.minecraft.world.Container container;
+  private final int containerRows;
+  private net.minecraft.world.inventory.ChestMenu(net.minecraft.world.inventory.MenuType<?>, int, net.minecraft.world.entity.player.Inventory, int);
+  public static net.minecraft.world.inventory.ChestMenu oneRow(int, net.minecraft.world.entity.player.Inventory);
+  public static net.minecraft.world.inventory.ChestMenu twoRows(int, net.minecraft.world.entity.player.Inventory);
+  public static net.minecraft.world.inventory.ChestMenu threeRows(int, net.minecraft.world.entity.player.Inventory);
+  public static net.minecraft.world.inventory.ChestMenu fourRows(int, net.minecraft.world.entity.player.Inventory);
+  public static net.minecraft.world.inventory.ChestMenu fiveRows(int, net.minecraft.world.entity.player.Inventory);
+  public static net.minecraft.world.inventory.ChestMenu sixRows(int, net.minecraft.world.entity.player.Inventory);
+  public static net.minecraft.world.inventory.ChestMenu threeRows(int, net.minecraft.world.entity.player.Inventory, net.minecraft.world.Container);
+  public static net.minecraft.world.inventory.ChestMenu sixRows(int, net.minecraft.world.entity.player.Inventory, net.minecraft.world.Container);
+  public net.minecraft.world.inventory.ChestMenu(net.minecraft.world.inventory.MenuType<?>, int, net.minecraft.world.entity.player.Inventory, net.minecraft.world.Container, int);
+  private void addChestGrid(net.minecraft.world.Container, int, int);
+  public boolean stillValid(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.item.ItemStack quickMoveStack(net.minecraft.world.entity.player.Player, int);
+  public void removed(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.Container getContainer();
+  public int getRowCount();
+}

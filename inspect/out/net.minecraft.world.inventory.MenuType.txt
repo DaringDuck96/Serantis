@@ -1,0 +1,37 @@
+Compiled from "MenuType.java"
+public class net.minecraft.world.inventory.MenuType<T extends net.minecraft.world.inventory.AbstractContainerMenu> implements net.minecraft.world.flag.FeatureElement {
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.ChestMenu> GENERIC_9x1;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.ChestMenu> GENERIC_9x2;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.ChestMenu> GENERIC_9x3;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.ChestMenu> GENERIC_9x4;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.ChestMenu> GENERIC_9x5;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.ChestMenu> GENERIC_9x6;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.DispenserMenu> GENERIC_3x3;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.CrafterMenu> CRAFTER_3x3;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.AnvilMenu> ANVIL;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.BeaconMenu> BEACON;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.BlastFurnaceMenu> BLAST_FURNACE;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.BrewingStandMenu> BREWING_STAND;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.CraftingMenu> CRAFTING;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.EnchantmentMenu> ENCHANTMENT;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.FurnaceMenu> FURNACE;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.GrindstoneMenu> GRINDSTONE;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.HopperMenu> HOPPER;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.LecternMenu> LECTERN;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.LoomMenu> LOOM;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.MerchantMenu> MERCHANT;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.ShulkerBoxMenu> SHULKER_BOX;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.SmithingMenu> SMITHING;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.SmokerMenu> SMOKER;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.CartographyTableMenu> CARTOGRAPHY_TABLE;
+  public static final net.minecraft.world.inventory.MenuType<net.minecraft.world.inventory.StonecutterMenu> STONECUTTER;
+  private final net.minecraft.world.flag.FeatureFlagSet requiredFeatures;
+  private final net.minecraft.world.inventory.MenuType$MenuSupplier<T> constructor;
+  private static <T extends net.minecraft.world.inventory.AbstractContainerMenu> net.minecraft.world.inventory.MenuType<T> register(java.lang.String, net.minecraft.world.inventory.MenuType$MenuSupplier<T>);
+  private static <T extends net.minecraft.world.inventory.AbstractContainerMenu> net.minecraft.world.inventory.MenuType<T> register(java.lang.String, net.minecraft.world.inventory.MenuType$MenuSupplier<T>, net.minecraft.world.flag.FeatureFlag...);
+  private net.minecraft.world.inventory.MenuType(net.minecraft.world.inventory.MenuType$MenuSupplier<T>, net.minecraft.world.flag.FeatureFlagSet);
+  public T create(int, net.minecraft.world.entity.player.Inventory);
+  public net.minecraft.world.flag.FeatureFlagSet requiredFeatures();
+  private static net.minecraft.world.inventory.LecternMenu lambda$static$0(int, net.minecraft.world.entity.player.Inventory);
+  static {};
+}

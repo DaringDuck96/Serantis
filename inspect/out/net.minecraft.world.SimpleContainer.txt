@@ -1,0 +1,30 @@
+Compiled from "SimpleContainer.java"
+public class net.minecraft.world.SimpleContainer implements net.minecraft.world.Container,net.minecraft.world.inventory.StackedContentsCompatible {
+  private final int size;
+  private final net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack> items;
+  public net.minecraft.world.SimpleContainer(int);
+  public net.minecraft.world.SimpleContainer(net.minecraft.world.item.ItemStack...);
+  public net.minecraft.world.item.ItemStack getItem(int);
+  public java.util.List<net.minecraft.world.item.ItemStack> removeAllItems();
+  public net.minecraft.world.item.ItemStack removeItem(int, int);
+  public net.minecraft.world.item.ItemStack removeItemType(net.minecraft.world.item.Item, int);
+  public net.minecraft.world.item.ItemStack addItem(net.minecraft.world.item.ItemStack);
+  public boolean canAddItem(net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.item.ItemStack removeItemNoUpdate(int);
+  public void setItem(int, net.minecraft.world.item.ItemStack);
+  public void setChanged();
+  public int getContainerSize();
+  public boolean isEmpty();
+  public boolean stillValid(net.minecraft.world.entity.player.Player);
+  public void clearContent();
+  public void fillStackedContents(net.minecraft.world.entity.player.StackedItemContents);
+  public java.lang.String toString();
+  private void moveItemToEmptySlots(net.minecraft.world.item.ItemStack);
+  private void moveItemToOccupiedSlotsWithSameType(net.minecraft.world.item.ItemStack);
+  private void moveItemsBetweenStacks(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  public void fromItemList(net.minecraft.world.level.storage.ValueInput$TypedInputList<net.minecraft.world.item.ItemStack>);
+  public void storeAsItemList(net.minecraft.world.level.storage.ValueOutput$TypedOutputList<net.minecraft.world.item.ItemStack>);
+  public net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack> getItems();
+  private static boolean lambda$toString$0(net.minecraft.world.item.ItemStack);
+  private static boolean lambda$removeAllItems$0(net.minecraft.world.item.ItemStack);
+}
