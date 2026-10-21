@@ -202,12 +202,13 @@ public final class Linx {
         Lift l = LIFTS.get(p.getUUID());
         if (shape != null && !shape.isEmpty()) {
             if (l != null && l.origin != null) putBack(p, l);
-            if ("stop".equals(shape)) { LIFTS.remove(p.getUUID()); say(p, "Shape Lift put away.", ChatFormatting.GRAY); return; }
+            if ("stop".equals(shape)) { LIFTS.remove(p.getUUID()); dev.ahrivaea.party.PartySync.sync(p); say(p, "Shape Lift put away.", ChatFormatting.GRAY); return; }
             Lift n = new Lift();
             n.shape = java.util.Arrays.asList(SHAPES).contains(shape) ? shape : "sphere";
             n.size = size <= 3 ? 3 : size <= 5 ? 5 : 7;
             n.any = any;
             LIFTS.put(p.getUUID(), n);
+            dev.ahrivaea.party.PartySync.sync(p);
             say(p, "Shape Lift (" + (n.any ? "placed blocks too" : "natural blocks only") + "): look at the blocks and press the key to lift.", ChatFormatting.AQUA);
             return;
         }
@@ -240,10 +241,13 @@ public final class Linx {
         int broke = place(p, l, centre);
         level.playSound(null, centre, SoundEvents.STONE_PLACE, SoundSource.PLAYERS, 1f, 0.8f);
         say(p, "Set down." + (broke > 0 ? " " + broke + " block" + (broke == 1 ? "" : "s") + " broke where something was already in the way." : ""), ChatFormatting.AQUA);
-        l.origin = null;
-        l.level = null;
-        l.offsets.clear();
-        l.states.clear();
+        LIFTS.remove(p.getUUID());                                  // done: the next use asks for a shape and size again
+        dev.ahrivaea.party.PartySync.sync(p);
+    }
+
+    /** "serantis_linx_lift" in the party state while a shape is picked (being aimed or carried). */
+    public static void describe(ServerPlayer p, com.google.gson.JsonObject state) {
+        if (LIFTS.containsKey(p.getUUID())) state.addProperty("serantis_linx_lift", true);
     }
 
     /** Inside the field of a battle being fought on the spot: those blocks stay put. */

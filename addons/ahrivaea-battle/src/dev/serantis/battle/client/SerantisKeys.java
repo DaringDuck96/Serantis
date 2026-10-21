@@ -37,7 +37,9 @@ public final class SerantisKeys {
         while (PHASE.consumeClick()) if (helm) send(1, sneak, null, 0);
         while (LIFT.consumeClick()) {
             if (!helm) continue;
-            if (sneak || !shapePicked) mc.gui.setScreen(new LinxShapeScreen());
+            var st = TradeClient.state();
+            boolean picked = st != null && st.has("serantis_linx_lift");   // a shape is being aimed or carried
+            if (sneak || !picked) mc.gui.setScreen(new LinxShapeScreen());   // after each set-down: pick the shape and size again
             else send(2, false, null, 0);
         }
         while (WAYMARK.consumeClick()) if (helm) send(3, sneak, null, 0);

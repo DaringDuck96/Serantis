@@ -48,7 +48,14 @@ public final class Equipment {
         var infused = WeaponEnchants.infusion(p, hand);                 // an infused weapon says so
         String name = hand.isEmpty() ? "Punch" : hand.getHoverName().getString() + (infused == null ? "" : " (" + infused.displayName() + ")");
         if (dev.serantis.battle.moves.MoveBook.isMoveName(name)) name += " (weapon)";   // a sword renamed "Pummel" is still just a sword
-        out.add(BattleMove.forWeapon(name, damage, ranged));
+        if (ranged) {
+            // A bow or crossbow shoots anything 1 to 6 tiles (crossbow 7) from where you end your move. Improvements
+            // and Sharpness add Power like they do for melee weapons.
+            int reach = hand.getItem() instanceof CrossbowItem ? 7 : 6;
+            int power = (int) Math.round(35 + 4 * Math.max(0, damage - 1));
+            out.add(new BattleMove(name, new dev.ahrivaea.battle.DamageCalc.Move(power, dev.ahrivaea.battle.DamageCalc.Category.PHYSICAL,
+                    dev.ahrivaea.creature.Influence.NONE, 0.85), 1, reach));
+        } else out.add(BattleMove.forWeapon(name, damage, ranged));
         out.addAll(Staffs.spellsInHand(p));
         return out;
     }
