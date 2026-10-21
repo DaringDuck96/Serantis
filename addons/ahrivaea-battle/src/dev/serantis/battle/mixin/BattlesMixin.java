@@ -88,6 +88,7 @@ public abstract class BattlesMixin {
         if (added) dev.serantis.battle.Naming.offer(sp, caught);
         if (added) dev.serantis.battle.Achievements.recruited(sp, caught.influence());
         if (added) dev.serantis.battle.TypeMastery.gained(sp, caught.influence());
+        if (added) dev.serantis.battle.Bounties.recruited(sp, caught);
         return added;
     }
 
@@ -217,6 +218,11 @@ public abstract class BattlesMixin {
                     case "serantis_riddle_fight" -> dev.serantis.battle.Riddles.done(player, true);
                     default -> dev.serantis.battle.Riddles.done(player, false);
                 }
+                cir.setReturnValue(null);
+                return;
+            }
+            if ("serantis_bounty".equals(kind)) {         // claim or hand in a bounty
+                dev.serantis.battle.Bounties.act(player, o.has("index") ? o.get("index").getAsInt() : -1);
                 cir.setReturnValue(null);
                 return;
             }

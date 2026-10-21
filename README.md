@@ -464,3 +464,9 @@ A Noble at your base adds its bonus on top (-20 Common, +12 Rare, +6 Super Rare,
 - **Infusions** (one level, one per weapon; about as rare as Fire Aspect): your weapon attack takes on an influence, with all its type matchups: super-effective against what that influence beats, resisted by what resists it. Emberbrand (Fire), Rimebite (Frost), Thunderstrike (Storm), Quakeborn (Earth), Tidecutter (Water), Thornlash (Nature), Voidrend (Void), Feytouch (Fae), Shadowbite (Darkness), Runeblade (Arcane), Sunforged (Radiant). The weapon's attack shows its influence in battle, e.g. "Diamond Sword (Fire)". Swap weapons mid-fight with Equip to pick the right one.
 
 A weapon can carry one Bane and one Infusion together.
+
+**The Journal.** A Journal button on the party screen opens four pages: **Next Steps** (hints for what to do now, from your first battles to the towers, the Masters, the Nether, the dex and the End, plus today's bounties), **Progress** (bars for the dex, Gym Master Stones, towers, base level and lore books), **Story** (every Acolyte scene you've seen, to read again) and **Lore** (the lore books you've found).
+
+**Bounty boards.** Right-click any bell (every village has one; sneak to ring it) to see today's three contracts. Each player gets their own three each Minecraft day, and a new day brings new ones: beat 4-8 creatures of an influence, win 3-6 battles, recruit something Rare or rarer, bring the board some goods (iron, bread, wheat, coal, logs...), beat a Creature Master, or repel a goblin raid. Claim a finished one at any bell for XP (more as your skill tree grows) and golden apples, with a 25% chance of a lore book or 12% of a Bane enchanted book.
+
+**Grandmasters.** Creature Masters keep turning up after you've earned all 5 of their stones, as Grandmasters: their team fights as if Level 25, and beating one pays double XP, 3 golden apples and an enchanted book (an Infusion of its influence, or a Bane II-III).

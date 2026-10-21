@@ -69,6 +69,11 @@ public abstract class MultiPlayerGameModeMixin {
                                     CallbackInfoReturnable<InteractionResult> cir) {
         var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level == null || player.isShiftKeyDown()) return;
+        if (level.getBlockState(hit.getBlockPos()).is(net.minecraft.world.level.block.Blocks.BELL)) {   // a bell: the bounty board (sneak to ring it)
+            if (hand == InteractionHand.MAIN_HAND) dev.serantis.battle.client.BountyScreen.open();
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
         if (!level.getBlockState(hit.getBlockPos()).is(net.minecraft.world.level.block.Blocks.ENCHANTING_TABLE)) return;
         boolean blank = false;
         for (var stack : java.util.List.of(player.getMainHandItem(), player.getOffhandItem()))

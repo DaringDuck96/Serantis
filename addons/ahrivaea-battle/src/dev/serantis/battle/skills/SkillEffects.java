@@ -61,6 +61,8 @@ public final class SkillEffects {
             if (lore != null) {
                 out.add(lore);
                 if (p != null) ((dev.serantis.battle.Achievements.Holder) p).serantis$addLoreBooks(1);
+                var content = lore.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);
+                if (p != null && content != null) ((dev.serantis.battle.Welcome.Holder) p).serantis$loreTitles().add(content.title().raw());
             }
             return out;
         } finally {

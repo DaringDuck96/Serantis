@@ -435,6 +435,7 @@ public final class GoblinRaids {
         clear(p);
         if (outcome == Battle.Outcome.WON) {
             p.sendSystemMessage(Component.literal("You fought off the goblin raid! Your base is safe.").withStyle(ChatFormatting.GREEN));
+            Bounties.raidRepelled(p);
             return;
         }
         int lose = lossXp(p, r);

@@ -168,6 +168,7 @@ public abstract class BattleMixin implements BattleAccess {
         if (outcome == Battle.Outcome.LOST && self.player() != null) dev.serantis.battle.Wear.defeat(self.player(), "You were defeated.");
         dev.serantis.battle.GoblinRaids.finished(self, outcome);
         dev.serantis.battle.FigureVisit.finished(self, outcome);
+        if (outcome == Battle.Outcome.WON) dev.serantis.battle.Bounties.battleWon(self.player(), self.defeated, serantis$master != null);
         if (outcome != Battle.Outcome.FLED) dev.serantis.battle.FigureVisit.battleOver(self.player());
     }
 

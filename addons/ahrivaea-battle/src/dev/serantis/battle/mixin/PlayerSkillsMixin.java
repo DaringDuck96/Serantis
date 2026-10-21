@@ -46,7 +46,11 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
     @Unique private boolean serantis$eternita;
     @Unique private boolean serantis$welcomed, serantis$welcomeSent, serantis$loreBook;
     @Unique private int serantis$battlesFought = -1, serantis$figureMet;
-    @Unique private String serantis$raid = "";
+    @Unique private String serantis$raid = "", serantis$bounty = "";
+    @Unique private final java.util.Set<String> serantis$loreTitles = new java.util.LinkedHashSet<>();
+    @Override public java.util.Set<String> serantis$loreTitles() { return serantis$loreTitles; }
+    @Override public String serantis$bounty() { return serantis$bounty; }
+    @Override public void serantis$setBounty(String saved) { serantis$bounty = saved == null ? "" : saved; }
     @Override public String serantis$raid() { return serantis$raid; }
     @Override public void serantis$setRaid(String saved) { serantis$raid = saved == null ? "" : saved; }
     @Override public int serantis$battlesFought() { return serantis$battlesFought; }
@@ -113,6 +117,8 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         out.putInt("SerantisBattlesFought", serantis$battlesFought);
         out.putInt("SerantisFigureMet", serantis$figureMet);
         out.putString("SerantisRaid", serantis$raid);
+        out.putString("SerantisBounty", serantis$bounty);
+        out.putString("SerantisLoreTitles", String.join("\n", serantis$loreTitles));
         if (serantis$playerClass != null) out.putString("SerantisClass", serantis$playerClass);
         if (!serantis$backpack.isEmpty()) out.store("SerantisBackpack", net.minecraft.world.item.ItemStack.OPTIONAL_CODEC, serantis$backpack);
         if (serantis$pendingTemperament != null) out.putString("SerantisStarterTemperament", serantis$pendingTemperament);
@@ -152,6 +158,9 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$battlesFought = in.getIntOr("SerantisBattlesFought", -1);
         serantis$figureMet = in.getIntOr("SerantisFigureMet", 0);
         serantis$raid = in.getStringOr("SerantisRaid", "");
+        serantis$bounty = in.getStringOr("SerantisBounty", "");
+        serantis$loreTitles.clear();
+        for (String t : in.getStringOr("SerantisLoreTitles", "").split("\n")) if (!t.isBlank()) serantis$loreTitles.add(t);
         serantis$backpack = in.read("SerantisBackpack", net.minecraft.world.item.ItemStack.OPTIONAL_CODEC).orElse(net.minecraft.world.item.ItemStack.EMPTY);
         String cls = in.getStringOr("SerantisClass", ""), pend = in.getStringOr("SerantisStarterTemperament", "");
         serantis$playerClass = cls.isEmpty() ? null : cls;

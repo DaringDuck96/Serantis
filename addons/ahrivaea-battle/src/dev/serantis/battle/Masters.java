@@ -167,8 +167,8 @@ public final class Masters {
         String name = influenceName(inf);
         p.sendSystemMessage(Component.literal("You beat the " + name + " Creature Master! Double XP for this battle.").withStyle(ChatFormatting.GOLD));
         int have = h.serantis$stones(inf);
-        if (have >= MAX_STONES) {
-            p.sendSystemMessage(Component.literal("You already have all " + MAX_STONES + " " + name + " Gym Master Stones.").withStyle(ChatFormatting.GRAY));
+        if (have >= MAX_STONES) {                       // a Grandmaster: an influence book and golden apples
+            grandmasterReward(p, inf);
             return;
         }
         h.serantis$setStones(inf, have + 1);
@@ -184,6 +184,25 @@ public final class Masters {
             server.getPlayerList().broadcastSystemMessage(Component.literal(p.getPlainTextName() + " has earned the Eternita Stone!")
                     .withStyle(ChatFormatting.LIGHT_PURPLE), false);
         }
+    }
+
+    /** A Master is a Grandmaster for a player who already has all 5 of its stones: far tougher, and it pays out. */
+    public static boolean grand(Player p, String inf) {
+        return p instanceof Holder h && inf != null && h.serantis$stones(inf) >= MAX_STONES;
+    }
+
+    private static void grandmasterReward(ServerPlayer p, String inf) {
+        String name = influenceName(inf);
+        var reg = p.level().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        net.minecraft.util.RandomSource r = p.getRandom();
+        String id = "none".equals(inf) || r.nextBoolean() ? "bane_" + INFLUENCES[r.nextInt(INFLUENCES.length)] : "infusion_" + inf;
+        int lvl = id.startsWith("bane_") ? 2 + r.nextInt(2) : 1;
+        var holder = reg.get(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENCHANTMENT,
+                net.minecraft.resources.Identifier.parse("serantis_battle:" + id)));
+        if (holder.isPresent())
+            give(p, net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(new net.minecraft.world.item.enchantment.EnchantmentInstance(holder.get(), lvl)));
+        give(p, new ItemStack(net.minecraft.world.item.Items.GOLDEN_APPLE, 3));
+        p.sendSystemMessage(Component.literal("You beat the " + name + " Grandmaster! It leaves you an enchanted book and 3 golden apples.").withStyle(ChatFormatting.LIGHT_PURPLE));
     }
 
     public static boolean allStones(Player p) {

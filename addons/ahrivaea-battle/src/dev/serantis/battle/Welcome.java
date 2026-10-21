@@ -25,6 +25,11 @@ public final class Welcome {
         /** A goblin raid waiting at (or being fought for) one of their bases ("": none). See GoblinRaids. */
         String serantis$raid();
         void serantis$setRaid(String saved);
+        /** Titles of the lore books they've found. */
+        java.util.Set<String> serantis$loreTitles();
+        /** Today's bounty board contracts (see Bounties). */
+        String serantis$bounty();
+        void serantis$setBounty(String saved);
     }
 
     private Welcome() {}

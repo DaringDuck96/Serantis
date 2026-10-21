@@ -169,12 +169,14 @@ public final class MoveEngine {
      */
     public static void masterBattle(Battle b, Entity master, String influence) {
         acc(b).serantis$setMaster(influence);
-        String name = dev.serantis.battle.Masters.influenceName(influence) + " Creature Master";
+        boolean grand = dev.serantis.battle.Masters.grand(b.player(), influence);   // all 5 stones already: a Grandmaster
+        String name = dev.serantis.battle.Masters.influenceName(influence) + (grand ? " Grandmaster" : " Creature Master");
         for (Unit u : b.units) {
             if (u.isPlayer || u.side != Unit.Side.ENEMY || u.stats == null) continue;
             boolean lead = master != null && master.getUUID().equals(u.entity);
             if (lead) ((UnitAccess) (Object) u).serantis$setName(name);
-            double f = lead ? dev.serantis.battle.Masters.STAT_BOOST_MASTER : dev.serantis.battle.Masters.STAT_BOOST_TEAM;
+            double f = (lead ? dev.serantis.battle.Masters.STAT_BOOST_MASTER : dev.serantis.battle.Masters.STAT_BOOST_TEAM)
+                    * (grand ? dev.serantis.battle.FigureVisit.LEVEL_25 : 1.0);
             var s = u.stats;
             ((UnitAccess) (Object) u).serantis$setStats(new dev.ahrivaea.creature.Stats((int) Math.round(s.hp() * f), (int) Math.round(s.attack() * f),
                     (int) Math.round(s.defense() * f), (int) Math.round(s.speed() * f), (int) Math.round(s.magic() * f),
@@ -191,7 +193,8 @@ public final class MoveEngine {
                 if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best));
             }
         }
-        acc(b).serantis$say("The " + name + " sends out its team! Its creatures can't be recruited, but winning pays double XP and a Gym Master Stone.");
+        acc(b).serantis$say(grand ? "The " + name + " sends out its team, stronger than ever! Winning pays double XP, an enchanted book and golden apples."
+                : "The " + name + " sends out its team! Its creatures can't be recruited, but winning pays double XP and a Gym Master Stone.");
     }
 
     /** The Mysterious Figure's trial (after the Eternita Stone): alone, level 20, and far stronger than anything wild. */
