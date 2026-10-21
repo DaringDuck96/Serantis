@@ -98,6 +98,31 @@ jobs:
             mkdir -p inspect/out/decomp && cp -r "$o"/. inspect/out/decomp/
           done
           find inspect/out/decomp -name '*.java' | head -100
+      - name: Boot a dedicated server with the latest release (lines "smoke")
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          grep -qE '^smoke' inspect/classes.txt || exit 0
+          set -x
+          mkdir -p inspect/out
+          S="$RUNNER_TEMP/server"; mkdir -p "$S/mods"
+          url="$(gh api repos/${{ github.repository }}/releases/latest --jq '.assets[0].url')"
+          gh api -H "Accept: application/octet-stream" "$url" > "$RUNNER_TEMP/rel.zip"
+          (cd "$RUNNER_TEMP" && unzip -qo rel.zip -d relx)
+          cp "$RUNNER_TEMP"/relx/mods/*.jar "$S/mods/"
+          cp "$RUNNER_TEMP/fapi/fabric-api.jar" "$S/mods/"
+          git fetch -q origin main; St="$RUNNER_TEMP/stubs"; mkdir -p "$St"; git archive FETCH_HEAD tools/compile-stubs | tar -x -C "$St"
+          SC="$(mktemp -d)"; javac --release 25 -d "$SC" -sourcepath "$St/tools/compile-stubs" tools/smoke/src/serantis/smoke/SmokeInit.java
+          rm -rf "$SC/net"; cp tools/smoke/fabric.mod.json "$SC/"; (cd "$SC" && jar cf "$S/mods/serantis-smoke.jar" .)
+          MCV="$(jq -r .id "$RUNNER_TEMP/version.json")"
+          LV="$(curl -sSf https://meta.fabricmc.net/v2/versions/loader/$MCV | jq -r '.[0].loader.version')"
+          IV="$(curl -sSf https://meta.fabricmc.net/v2/versions/installer | jq -r '.[0].version')"
+          curl -sSfL "https://meta.fabricmc.net/v2/versions/loader/$MCV/$LV/$IV/server/jar" -o "$S/server.jar"
+          cd "$S"; echo "eula=true" > eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:normal\nview-distance=4\nsimulation-distance=4\nspawn-protection=0\n' > server.properties
+          ( sleep 1; until grep -q 'Done (' logs/latest.log 2>/dev/null; do sleep 5; if ! pgrep -f server.jar >/dev/null; then break; fi; done; sleep 20; echo stop ) | timeout 900 java -Xmx3G -jar server.jar nogui > console.txt 2>&1 || true
+          cp console.txt "$GITHUB_WORKSPACE/inspect/out/smoke-console.txt"
+          grep -nE 'SMOKE|ERROR|Exception|Caused by|Mixin.*(fail|error)|InvalidInjection|InjectionError|Critical|Done \(' console.txt | head -300 > "$GITHUB_WORKSPACE/inspect/out/smoke-summary.txt" || true
       - name: Commit output
         run: |
           git config user.name "github-actions"
