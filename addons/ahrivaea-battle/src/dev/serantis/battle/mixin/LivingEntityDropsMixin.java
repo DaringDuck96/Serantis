@@ -28,6 +28,13 @@ public abstract class LivingEntityDropsMixin {
         try { dropFromLootTable(level, source, true); } finally { SERANTIS_AGAIN.set(false); }
     }
 
+    // Winged Boots: a fall after a flight doesn't hurt.
+    @Inject(method = "causeFallDamage", at = @At("HEAD"), cancellable = true)
+    private void serantis$wingedFall(double distance, float multiplier, DamageSource source,
+                                     org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if (dev.serantis.battle.WingedBoots.safeFall(this)) cir.setReturnValue(false);
+    }
+
     // Black Market Merchants can't be hurt.
     @org.spongepowered.asm.mixin.injection.Inject(method = "hurtServer", at = @org.spongepowered.asm.mixin.injection.At("HEAD"), cancellable = true)
     private void serantis$untouchable(net.minecraft.server.level.ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float amount,

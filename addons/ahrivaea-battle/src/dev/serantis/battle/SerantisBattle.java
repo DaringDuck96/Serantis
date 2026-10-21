@@ -9,5 +9,6 @@ public final class SerantisBattle implements ModInitializer {
         Masters.registerItems();
         Staffs.register();
         Backpacks.register();
+        WingedBoots.register();
     }
 }
