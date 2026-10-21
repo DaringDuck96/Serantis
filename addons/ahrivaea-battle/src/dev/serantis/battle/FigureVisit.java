@@ -165,6 +165,9 @@ public final class FigureVisit {
 
     /** Every tick, per player. */
     public static void tick(ServerPlayer p) {
+        if (p.tickCount % 20 == 3) synchronized (TRIALS) {                // a trial that ended without a result: forgotten, it'll play again
+            TRIALS.keySet().removeIf(b -> p.getUUID().equals(b.playerId) && Battles.of(p) != b && TRIAL_SCENE.remove(b) != null | true);
+        }
         Visit v = ACTIVE.get(p.getUUID());
         if (v == null) {
             if (p.tickCount % 20 != 13) return;
@@ -286,6 +289,7 @@ public final class FigureVisit {
     /** Set while the Mysterious Figure's battle is being started (the battle code reads it). */
     public static final ThreadLocal<Boolean> FIGHTING = ThreadLocal.withInitial(() -> false);
     private static final Map<dev.ahrivaea.battle.Battle, String> TRIALS = java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
+    private static final Map<dev.ahrivaea.battle.Battle, String> TRIAL_SCENE = java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
 
     public static boolean isTrial(dev.ahrivaea.battle.Battle b) { return b != null && TRIALS.containsKey(b); }
 
@@ -293,8 +297,7 @@ public final class FigureVisit {
     public static void fight(ServerPlayer p) {
         Visit v = ACTIVE.remove(p.getUUID());
         if (v == null) return;
-        Welcome.Holder h = (Welcome.Holder) p;
-        h.serantis$setFigureMet(h.serantis$figureMet() | scenes().getOrDefault(v.scene, 0));
+        // the scene only counts as done once the trial is won or lost: interrupted (logged out, crashed), it plays again
         ServerLevel level = (ServerLevel) p.level();
         Entity e = level.getEntity(v.figure);
         dev.ahrivaea.battle.Battle b = null;
@@ -304,6 +307,7 @@ public final class FigureVisit {
         }
         if (b == null) { if (e != null) e.discard(); PartySync.sync(p); return; }
         TRIALS.put(b, v.npc);
+        TRIAL_SCENE.put(b, v.scene);
         if ("last".equals(v.npc)) {
             p.removeEffect(net.minecraft.world.effect.MobEffects.DARKNESS);
             p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DARKNESS, 20 * 6, 0, false, false));
@@ -345,8 +349,13 @@ public final class FigureVisit {
     /** The trial ended. Win: the figure can be recruited. Lose: you keep the stone, but not the figure. */
     public static void finished(dev.ahrivaea.battle.Battle b, dev.ahrivaea.battle.Battle.Outcome outcome) {
         String npc = TRIALS.remove(b);
+        String scene = TRIAL_SCENE.remove(b);
         if (npc == null) return;
         clearWild(b);
+        if (b.player() != null && scene != null) {                      // resolved: the trial won't come back
+            Welcome.Holder h0 = (Welcome.Holder) b.player();
+            h0.serantis$setFigureMet(h0.serantis$figureMet() | scenes().getOrDefault(scene, 0));
+        }
         boolean won = outcome == dev.ahrivaea.battle.Battle.Outcome.WON;
         if (won) WON.put(b, npc);
         ServerPlayer p = b.player();

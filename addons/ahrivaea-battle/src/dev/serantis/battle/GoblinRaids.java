@@ -73,7 +73,8 @@ public final class GoblinRaids {
         long ends;
         boolean talking, fighting;
         ServerBossEvent bar;
-        int defenders;
+        int defenders, radius = 12;
+        boolean resume;             // the raid battle was interrupted (logged out, crashed): it starts again
         int tier() { int n = picks.size(); return n <= 4 ? 0 : n <= 6 ? 1 : n <= 8 ? 2 : 3; }
     }
 
@@ -111,10 +112,27 @@ public final class GoblinRaids {
         int count = 3 + random.nextInt(8);
         for (int i = 0; i < count; i++)
             r.picks.add(new Pick(SPECIES[random.nextInt(SPECIES.length)], band[0] + random.nextInt(band[1] - band[0] + 1)));
-        // They gather in a group at the edge of the base, facing the core.
+        r.radius = core.radius();
+        gather(level, r, random);
+        if (r.entities.isEmpty()) return 0;
+        r.ends = level.getServer().overworld().getGameTime() + WINDOW;
+        r.bar = new ServerBossEvent(UUID.randomUUID(), Component.literal("Goblin Raid"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+        r.bar.addPlayer(p);
+        BY_OWNER.put(owner, r);
+        save(p, r);
+        level.playSound(null, r.core, SoundEvents.RAID_HORN.value(), SoundSource.HOSTILE, 2f, 1f);
+        p.sendSystemMessage(Component.literal("Goblins are about to raid your base! " + r.picks.size() + " raiders (" + TIERS[r.tier()]
+                + "). Click one within 3 minutes to bargain, or the raid begins.").withStyle(ChatFormatting.RED));
+        PartySync.sync(p);
+        return r.picks.size();
+    }
+
+    /** The raiders gather in a group at the edge of the base, facing the core. */
+    private static void gather(ServerLevel level, Raid r, RandomSource random) {
         double angle = random.nextDouble() * Math.PI * 2;
-        int dist = Math.min(core.radius(), 12);
+        int dist = Math.min(Math.max(r.radius, 8), 12);
         double cx = r.core.getX() + 0.5 + Math.cos(angle) * dist, cz = r.core.getZ() + 0.5 + Math.sin(angle) * dist;
+        r.entities.clear();
         for (Pick pick : r.picks) {
             Species sp = Species.get(pick.species()).orElse(null);
             if (sp == null) continue;
@@ -132,16 +150,48 @@ public final class GoblinRaids {
             e.setYHeadRot(yaw);
             r.entities.add(e.getUUID());
         }
-        if (r.entities.isEmpty()) return 0;
-        r.ends = level.getServer().overworld().getGameTime() + WINDOW;
-        r.bar = new ServerBossEvent(UUID.randomUUID(), Component.literal("Goblin Raid"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
-        r.bar.addPlayer(p);
-        BY_OWNER.put(owner, r);
-        level.playSound(null, r.core, SoundEvents.RAID_HORN.value(), SoundSource.HOSTILE, 2f, 1f);
-        p.sendSystemMessage(Component.literal("Goblins are about to raid your base! " + r.picks.size() + " raiders (" + TIERS[r.tier()]
-                + "). Click one within 3 minutes to bargain, or the raid begins.").withStyle(ChatFormatting.RED));
-        PartySync.sync(p);
-        return r.picks.size();
+    }
+
+    // ------------------------------------------------------------------ saved on the player
+
+    /** dim|x,y,z|baseLevel|radius|ticksLeft|resume|species:level;... */
+    private static void save(ServerPlayer p, Raid r) {
+        long left = Math.max(0, r.ends - p.level().getServer().overworld().getGameTime());
+        StringBuilder sb = new StringBuilder();
+        for (Pick k : r.picks) { if (sb.length() > 0) sb.append(';'); sb.append(k.species()).append(':').append(k.level()); }
+        ((Welcome.Holder) p).serantis$setRaid(r.dim.identifier() + "|" + r.core.getX() + "," + r.core.getY() + "," + r.core.getZ() + "|" + r.baseLevel
+                + "|" + r.radius + "|" + left + "|" + (r.resume || r.fighting ? 1 : 0) + "|" + sb);
+    }
+
+    private static void clear(ServerPlayer p) { ((Welcome.Holder) p).serantis$setRaid(""); }
+
+    /** A raid saved on the player but not running (they logged back in, or its battle was interrupted): back it comes. */
+    private static Raid restore(ServerPlayer p) {
+        String s = ((Welcome.Holder) p).serantis$raid();
+        if (s == null || s.isEmpty()) return null;
+        try {
+            String[] f = s.split("\\|", -1);
+            Raid r = new Raid();
+            r.owner = p.getUUID();
+            r.dim = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DIMENSION, net.minecraft.resources.Identifier.parse(f[0]));
+            String[] c = f[1].split(",");
+            r.core = new BlockPos(Integer.parseInt(c[0]), Integer.parseInt(c[1]), Integer.parseInt(c[2]));
+            r.baseLevel = Integer.parseInt(f[2]);
+            r.radius = Integer.parseInt(f[3]);
+            long left = Long.parseLong(f[4]);
+            r.resume = "1".equals(f[5]);
+            for (String k : f[6].split(";")) { String[] kv = k.split(":"); r.picks.add(new Pick(kv[0], Integer.parseInt(kv[1]))); }
+            if (r.picks.isEmpty()) { clear(p); return null; }
+            r.ends = p.level().getServer().overworld().getGameTime() + (r.resume ? 0 : Math.max(20 * 30, left));
+            r.bar = new ServerBossEvent(UUID.randomUUID(), Component.literal("Goblin Raid"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+            BY_OWNER.put(r.owner, r);
+            p.sendSystemMessage(Component.literal(r.resume ? "The goblins are back to finish the raid on your base!"
+                    : "The goblins are still waiting at your base.").withStyle(ChatFormatting.RED));
+            return r;
+        } catch (RuntimeException e) {
+            clear(p);
+            return null;
+        }
     }
 
     private static Influence influenceOf(Species sp) {
@@ -193,6 +243,7 @@ public final class GoblinRaids {
         int cost = bribe(p, r);
         if (XpBank.points(p) < cost) return;
         if (cost > 0) XpBank.take(p, cost);
+        clear(p);
         p.sendSystemMessage(Component.literal("The goblins pocket " + cost + " XP and slink off into the night.").withStyle(ChatFormatting.YELLOW));
         end(p.level().getServer(), r);
         PartySync.sync(p);
@@ -209,8 +260,14 @@ public final class GoblinRaids {
 
     /** Every second, per player. */
     public static void tick(ServerPlayer p) {
+        // a raid battle that ended without a result (logged out, crashed): forget it, the saved raid comes back
+        synchronized (IN_BATTLE) {
+            IN_BATTLE.entrySet().removeIf(en -> en.getValue().owner.equals(p.getUUID()) && Battles.of(p) != en.getKey());
+        }
         Raid r = BY_OWNER.get(p.getUUID());
+        if (r == null && !inRaidBattle(p)) r = restore(p);
         if (r == null || r.fighting) return;
+        ensureRaiders(p, r);
         long now = p.level().getServer().overworld().getGameTime();
         long left = r.ends - now;
         if (r.bar != null) {
@@ -219,7 +276,25 @@ public final class GoblinRaids {
             long s = Math.max(0, left / 20);
             r.bar.setName(Component.literal("Goblin Raid (" + TIERS[r.tier()] + ") - " + (s / 60) + ":" + String.format("%02d", s % 60) + " to bargain"));
         }
+        if (p.tickCount % 100 == 7) save(p, r);           // the timer survives a restart
         if (left <= 0 && Battles.of(p) == null) fight(p, r);
+    }
+
+    private static boolean inRaidBattle(ServerPlayer p) {
+        synchronized (IN_BATTLE) {
+            for (Raid x : IN_BATTLE.values()) if (x.owner.equals(p.getUUID())) return true;
+        }
+        return false;
+    }
+
+    /** The raiders are back at the base whenever it's loaded and you're near (after a restart, say). */
+    private static void ensureRaiders(ServerPlayer p, Raid r) {
+        if (r.resume || p.level().dimension() != r.dim || p.blockPosition().distSqr(r.core) > 96 * 96) return;
+        ServerLevel level = (ServerLevel) p.level();
+        if (!level.isLoaded(r.core)) return;
+        for (UUID id : r.entities) if (level.getEntity(id) != null) return;
+        gather(level, r, level.getRandom());
+        PartySync.sync(p);
     }
 
     private static void removeRaiders(net.minecraft.server.MinecraftServer server, Raid r) {
@@ -284,10 +359,13 @@ public final class GoblinRaids {
             if (leader != null && leader.isAlive()) leader.discard();
             p.sendSystemMessage(Component.literal("The goblins lost their nerve and ran off.").withStyle(ChatFormatting.YELLOW));
             end(p.level().getServer(), r);
+            clear(p);
             PartySync.sync(p);
             return;
         }
         BY_OWNER.remove(r.owner);
+        r.resume = true;
+        save(p, r);                                        // interrupted, it starts again; won or lost, it's cleared
         IN_BATTLE.put(b, r);
         addDefenders(p, b, guards);
         ((dev.serantis.battle.moves.BattleAccess) (Object) b).serantis$say("Goblin raid! " + r.picks.size() + " raiders (" + TIERS[r.tier()] + ")"
@@ -354,6 +432,7 @@ public final class GoblinRaids {
         FigureVisit.clearWild(b);                         // the raid leader doesn't stay behind
         ServerPlayer p = b.player();
         if (p == null) return;
+        clear(p);
         if (outcome == Battle.Outcome.WON) {
             p.sendSystemMessage(Component.literal("You fought off the goblin raid! Your base is safe.").withStyle(ChatFormatting.GREEN));
             return;

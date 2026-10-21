@@ -22,6 +22,9 @@ public final class Welcome {
         /** Which Mysterious Figure scenes have played (2: the one after the 10th battle). */
         int serantis$figureMet();
         void serantis$setFigureMet(int n);
+        /** A goblin raid waiting at (or being fought for) one of their bases ("": none). See GoblinRaids. */
+        String serantis$raid();
+        void serantis$setRaid(String saved);
     }
 
     private Welcome() {}
