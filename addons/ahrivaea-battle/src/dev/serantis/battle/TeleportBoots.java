@@ -107,7 +107,7 @@ public final class TeleportBoots {
         return null;
     }
 
-    static boolean safe(ServerLevel level, BlockPos feet) {
+    public static boolean safe(ServerLevel level, BlockPos feet) {
         if (!level.isLoaded(feet) || !level.getWorldBorder().isWithinBounds(feet)) return false;
         BlockState f = level.getBlockState(feet), h = level.getBlockState(feet.above()), g = level.getBlockState(feet.below());
         if (!f.getCollisionShape(level, feet).isEmpty() || !h.getCollisionShape(level, feet.above()).isEmpty()) return false;
