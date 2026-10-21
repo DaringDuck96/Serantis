@@ -18,7 +18,7 @@ import java.util.Set;
  * How wild creatures move in the world.
  *
  * Flyers (every creature that flies): 60% take to the air when they appear and stay airborne,
- * cruising 4-14 blocks above the ground and swooping low around nearby players (so you can still
+ * cruising 4-40 blocks above the ground and swooping low around nearby players (so you can still
  * reach one with a sword to battle it). The rest stay on the ground as before.
  *
  * Swimmers: 80% stay beneath the surface. Bottom dwellers (crabs, octopuses, tortoises, nautilopers,
@@ -125,7 +125,9 @@ public final class Locomotion {
                 x = e.getX() + r.nextInt(33) - 16;
                 z = e.getZ() + r.nextInt(33) - 16;
                 if (!level.hasChunkAt(BlockPos.containing(x, e.getY(), z))) { x = e.getX(); z = e.getZ(); }
-                y = ground(level, Mth.floor(x), Mth.floor(z)) + 4 + r.nextDouble() * 10;
+                // anywhere from 4 to 40 blocks up, mostly in the lower half
+                double up = r.nextDouble();
+                y = ground(level, Mth.floor(x), Mth.floor(z)) + 4 + up * up * 36;
             }
             y = Math.min(y, level.getMaxY() - 2);
             h.serantis$setMoveTarget(new Vec3(x, y, z));

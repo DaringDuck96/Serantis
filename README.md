@@ -188,7 +188,7 @@ Right after you recruit a creature in battle, or pick your starter, a box pops u
 
 ### Flyers and swimmers in the wild
 
-- **Flyers** (every creature that flies): 60% take to the air when they appear and stay airborne, cruising 4 to 14 blocks above the ground. When a player is nearby they often swoop low around them, so you can still reach one with a sword to start a battle. The other 40% stay on the ground.
+- **Flyers** (every creature that flies): 60% take to the air when they appear and stay airborne, cruising anywhere from 4 to 40 blocks above the ground (more often in the lower half). When a player is nearby they often swoop low around them, so you can still reach one with a sword to start a battle. The other 40% stay on the ground.
 - **Swimmers:** 80% stay beneath the surface. Bottom dwellers (Crab, Giant Octopus, Tortoise, Nautiloper, Whirlpool Leech, Reef Spitter, Revenant, Sahuagin, River Zorling) sink and crawl along the sea floor or river bed; every other swimmer swims around underwater. Ducks always paddle on the surface. The other 20% float at the surface.
 - Tamed creatures, base workers, ridden or leashed creatures and creatures in battle move as usual. Creatures already in your world pick their way of moving the next time they're loaded.
 
