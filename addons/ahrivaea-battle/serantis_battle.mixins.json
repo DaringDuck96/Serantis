@@ -61,7 +61,8 @@
     "client.CreatureRendererVillagerMixin",
     "client.CoreBreakMixin",
     "client.ScreenAccessor",
-    "client.DialogueCameraMixin"
+    "client.DialogueCameraMixin",
+    "client.OptionsKeysMixin"
   ],
   "injectors": {
     "defaultRequire": 1

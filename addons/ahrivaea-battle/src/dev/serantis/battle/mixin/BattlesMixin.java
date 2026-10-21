@@ -221,6 +221,13 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_linx".equals(kind)) {           // a Helm of Linx key
+                dev.serantis.battle.Linx.use(player, o.has("ability") ? o.get("ability").getAsInt() : 0,
+                        o.has("sneak") && o.get("sneak").getAsBoolean(),
+                        o.has("shape") ? o.get("shape").getAsString() : null, o.has("size") ? o.get("size").getAsInt() : 5);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_bounty".equals(kind)) {         // claim or hand in a bounty
                 dev.serantis.battle.Bounties.act(player, o.has("index") ? o.get("index").getAsInt() : -1);
                 cir.setReturnValue(null);

@@ -133,5 +133,13 @@
   "enchantment.serantis_battle.infusion_arcane": "Runeblade",
   "enchantment.serantis_battle.bane_radiant": "Eclipse",
   "enchantment.serantis_battle.infusion_radiant": "Sunforged",
-  "item.serantis_battle.orichalcum_ingot": "Orichalcum Ingot"
+  "item.serantis_battle.orichalcum_ingot": "Orichalcum Ingot",
+  "item.serantis_battle.helm_of_linx": "Helm of Linx",
+  "key.category.serantis_battle.serantis": "Serantis",
+  "key.categories.serantis_battle.serantis": "Serantis",
+  "key.serantis_battle.backpack": "Open Backpack (sneak: take off)",
+  "key.serantis_battle.phase_jump": "Helm of Linx: Phase Jump (sneak: undo)",
+  "key.serantis_battle.shape_lift": "Helm of Linx: Shape Lift (sneak: menu)",
+  "key.serantis_battle.waymark": "Helm of Linx: Waymark (sneak: set)",
+  "key.serantis_battle.high_jump": "Helm of Linx: High Jump on/off"
 }

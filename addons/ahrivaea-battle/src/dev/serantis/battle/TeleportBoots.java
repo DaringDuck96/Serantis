@@ -96,7 +96,7 @@ public final class TeleportBoots {
     }
 
     /** The safest standing spot in this column or right next to it, within 3 blocks up or down (null: none). */
-    private static BlockPos safeNear(ServerLevel level, double x, double y, double z) {
+    static BlockPos safeNear(ServerLevel level, double x, double y, double z) {
         BlockPos base = BlockPos.containing(x, y, z);
         int[] dy = {0, 1, -1, 2, -2, 3, -3};
         for (int[] off : new int[][]{{0, 0}, {1, 0}, {-1, 0}, {0, 1}, {0, -1}})
@@ -107,7 +107,7 @@ public final class TeleportBoots {
         return null;
     }
 
-    private static boolean safe(ServerLevel level, BlockPos feet) {
+    static boolean safe(ServerLevel level, BlockPos feet) {
         if (!level.isLoaded(feet) || !level.getWorldBorder().isWithinBounds(feet)) return false;
         BlockState f = level.getBlockState(feet), h = level.getBlockState(feet.above()), g = level.getBlockState(feet.below());
         if (!f.getCollisionShape(level, feet).isEmpty() || !h.getCollisionShape(level, feet.above()).isEmpty()) return false;
