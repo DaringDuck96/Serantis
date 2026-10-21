@@ -74,9 +74,14 @@ public final class LoreBook {
     public static ItemStack book() { return book(TITLE, HEADING, "Serantia", TEXT); }
 
     /** A signed written book: a heading page, then the paragraphs laid out over as many pages as they need. */
-    public static ItemStack book(String title, String heading, String author, String[] paragraphs) {
+    public static ItemStack book(String title, String heading, String author, String[] paragraphs) { return book(title, heading, null, author, paragraphs); }
+
+    /** As above, with a line under the heading on the first page (in plain type). */
+    public static ItemStack book(String title, String heading, String subtitle, String author, String[] paragraphs) {
         List<Filterable<Component>> content = new ArrayList<>();
-        content.add(Filterable.passThrough(Component.literal("\n\n" + heading).withStyle(ChatFormatting.BOLD)));
+        var first = Component.literal("\n" + heading).withStyle(ChatFormatting.BOLD);
+        if (subtitle != null && !subtitle.isBlank()) first.append(Component.literal("\n\n" + subtitle).withStyle(st -> st.withBold(false)));
+        content.add(Filterable.passThrough(first));
         for (String p : pages(paragraphs)) content.add(Filterable.passThrough(Component.literal(p)));
         ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
         String shortTitle = title.length() > 32 ? title.substring(0, 31).trim() + "\u2026" : title;    // Minecraft's limit

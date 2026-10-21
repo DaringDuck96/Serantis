@@ -13,11 +13,12 @@ import java.util.List;
 
 /**
  * Lore books: every creature you beat in battle has a 1% chance to drop one, picked at random from
- * serantis_battle/lore_books.json (a list of {"title", "author", "text"}; blank lines in the text separate paragraphs).
+ * serantis_battle/lore_books.json (a list of {"title", "author", "text"}, optionally "heading" and "subtitle" for the
+ * first page; blank lines in the text separate paragraphs).
  */
 public final class LoreDrops {
     public static final float CHANCE = 0.01f;
-    private record Book(String title, String author, String[] paragraphs) {}
+    private record Book(String title, String heading, String subtitle, String author, String[] paragraphs) {}
     private static List<Book> books;
 
     private LoreDrops() {}
@@ -33,7 +34,10 @@ public final class LoreDrops {
                     String text = o.get("text").getAsString().replace("\r", "");
                     List<String> paras = new ArrayList<>();
                     for (String para : text.split("\n\\s*\n")) if (!para.isBlank()) paras.add(para.strip().replace("\n", " "));
-                    out.add(new Book(o.get("title").getAsString(), o.has("author") ? o.get("author").getAsString() : "Unknown", paras.toArray(new String[0])));
+                    String title = o.get("title").getAsString();
+                    out.add(new Book(title, o.has("heading") ? o.get("heading").getAsString() : title.toUpperCase(),
+                            o.has("subtitle") && !o.get("subtitle").isJsonNull() ? o.get("subtitle").getAsString() : null,
+                            o.has("author") ? o.get("author").getAsString() : "Unknown", paras.toArray(new String[0])));
                 }
             }
         } catch (Exception e) {
@@ -47,7 +51,7 @@ public final class LoreDrops {
         List<Book> all = books();
         if (all.isEmpty() || random.nextFloat() >= CHANCE) return null;
         Book b = all.get(random.nextInt(all.size()));
-        return LoreBook.book(b.title(), b.title().toUpperCase(), b.author(), b.paragraphs());
+        return LoreBook.book(b.title(), b.heading(), b.subtitle(), b.author(), b.paragraphs());
     }
 
     public static int count() { return books().size(); }
