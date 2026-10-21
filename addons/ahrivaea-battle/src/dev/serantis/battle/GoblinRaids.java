@@ -133,7 +133,7 @@ public final class GoblinRaids {
             r.entities.add(e.getUUID());
         }
         if (r.entities.isEmpty()) return 0;
-        r.ends = level.getGameTime() + WINDOW;
+        r.ends = level.getServer().overworld().getGameTime() + WINDOW;
         r.bar = new ServerBossEvent(UUID.randomUUID(), Component.literal("Goblin Raid"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         r.bar.addPlayer(p);
         BY_OWNER.put(owner, r);
@@ -271,7 +271,7 @@ public final class GoblinRaids {
         Species sp = Species.get(lead.species()).orElse(null);
         var look = p.getLookAngle();
         double x = p.getX() + look.x * 3, z = p.getZ() + look.z * 3;
-        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) Math.floor(x), (int) Math.floor(z));
+        double y = p.getY();
         CreatureEntity leader = sp == null ? null : Ahrivaea.spawn(level, sp, influenceOf(sp), lead.level(), -1f, x, y, z);
         Battle b = null;
         if (leader != null) {
@@ -306,11 +306,11 @@ public final class GoblinRaids {
             if (sp == null) continue;
             int[] cell = acc.serantis$freeCellNear(me.x, me.z, Unit.Side.PLAYER);
             if (cell == null) break;
-            Unit u = acc.serantis$addCreature(Unit.Side.PLAYER, sp, c.influence(), c.variant(), c.level(), c.health(), -1, cell[0], cell[1]);
+            Unit u = acc.serantis$addCreature(Unit.Side.PLAYER, sp, c.influence(), c.variant(), c.level(), -1f, -1, cell[0], cell[1]);
             if (u == null) continue;
             dev.serantis.battle.moves.MoveEngine.fromCaught(u, c);
             BlockPos at = b.cellPos(u);
-            CreatureEntity e = Ahrivaea.spawn(b.level, sp, c.influence(), c.level(), c.health(), at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+            CreatureEntity e = Ahrivaea.spawn(b.level, sp, c.influence(), c.level(), -1f, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
             if (e == null) continue;
             e.setVariant(c.variant());
             e.tame(p);
