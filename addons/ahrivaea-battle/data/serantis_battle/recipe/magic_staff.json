@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:stick",
+    "minecraft:stick",
+    "minecraft:stick",
+    "minecraft:ender_eye"
+  ],
+  "result": {
+    "id": "serantis_battle:magic_staff"
+  }
+}

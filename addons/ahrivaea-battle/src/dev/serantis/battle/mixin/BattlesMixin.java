@@ -174,6 +174,16 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if (kind.startsWith("serantis_staff_")) {    // linking a spell to a Magic Staff
+                switch (kind) {
+                    case "serantis_staff_open" -> dev.serantis.battle.Staffs.open(player, net.minecraft.core.BlockPos.containing(
+                            o.get("x").getAsInt(), o.get("y").getAsInt(), o.get("z").getAsInt()));
+                    case "serantis_staff_link" -> dev.serantis.battle.Staffs.link(player, o.has("index") ? o.get("index").getAsInt() : -1);
+                    default -> dev.serantis.battle.Staffs.close(player);
+                }
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_class_pick".equals(kind)) {
                 dev.serantis.battle.PlayerClass.pick(player, o.has("class") ? o.get("class").getAsString() : "",
                         o.has("extra") ? o.get("extra").getAsString() : null);

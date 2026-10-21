@@ -77,6 +77,12 @@ public final class MoveBook {
         return s != null && s.min == m.minRange() && s.max == m.maxRange() ? s : null;
     }
 
+    /** Every move in the catalog. */
+    public static java.util.Collection<MoveSpec> all() {
+        load();
+        return byId.values();
+    }
+
     public static boolean available() {
         load();
         return !byId.isEmpty();

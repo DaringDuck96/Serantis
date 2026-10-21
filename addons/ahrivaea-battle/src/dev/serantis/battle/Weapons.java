@@ -21,7 +21,7 @@ public final class Weapons {
         if (s == null || s.isEmpty()) return false;
         return s.has(DataComponents.WEAPON) || s.is(ItemTags.SWORDS) || s.is(ItemTags.AXES) || s.is(ItemTags.SPEARS)
                 || s.is(Items.MACE) || s.is(Items.TRIDENT) || s.getItem() instanceof BowItem || s.getItem() instanceof CrossbowItem
-                || Staffs.influenceOf(s) != null;
+                || Staffs.isStaff(s);
     }
 
     /** A player's arrow or trident hit this creature: start a battle (same rules as hitting it). */

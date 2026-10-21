@@ -32,7 +32,7 @@ public final class PlayerClass {
     public static final List<Kind> ALL = List.of(
             new Kind("knight", "Knight", "attack", "Starts with an Iron Chestplate and an Iron Sword."),
             new Kind("bulwark", "Bulwark", "defense", "Starts with a Shield and an Iron Mace."),
-            new Kind("wizard", "Wizard", "magic", "Starts with a Magic Staff of the influence you choose."),
+            new Kind("wizard", "Wizard", "magic", "Starts with a Magic Staff linked to a random spell of the influence you choose."),
             new Kind("journeyman", "Journeyman", "luck", "Starts with 2 Golden Apples."),
             new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter."));
 
@@ -71,7 +71,7 @@ public final class PlayerClass {
         switch (k.id()) {
             case "wizard" -> {
                 if (extra == null || !Staffs.STAFFS.containsKey(extra)) { tell(p, "Choose your staff's influence."); return; }
-                give(p, new ItemStack(Staffs.STAFFS.get(extra)));
+                give(p, Staffs.starter(extra, p.getRandom()));
             }
             case "performer" -> {
                 if (Temperament.of(extra) == null) { tell(p, "Choose your starter's temperament."); return; }

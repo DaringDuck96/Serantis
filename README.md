@@ -36,13 +36,13 @@ After the welcome guide, every player chooses a class, once (players already in 
 |---|---|---|
 | Knight | Attack | An Iron Chestplate and an Iron Sword |
 | Bulwark | Defense | A Shield and an Iron Mace (a mace) |
-| Wizard | Magic | A Magic Staff of the influence they choose |
+| Wizard | Magic | A Magic Staff linked to a random spell of the influence they choose |
 | Journeyman | Luck | 2 Golden Apples |
 | Performer | Charisma | Chooses their starter's temperament (if they already have a starter, the creature first in their party gets it) |
 
 The boost is +15 to the class's stat at first (players start at 50), 3 less for every skill learned on the skill tree, and never less than +3: a real edge for the first few fights that hardly shows after four or five skills.
 
-**Magic Staffs** come in all twelve influences. Hold one in battle and instead of swinging you cast a bolt of the staff's influence: magic damage (power 40, 90% accuracy) that uses your Magic stat, at 1 to 3 tiles. Hitting a creature with a staff starts a battle like any weapon. Give one by command with `/give @s serantis_battle:fire_staff`. (Placeholder art for now.)
+**Magic Staffs** are crafted from three sticks and an Eye of Ender (shapeless). A new staff has no spell: right-click an enchanting table while holding it and you're offered three spells at random from the Move Dex (hover one for the full explanation). Pick one and pay **25 XP** (less with Presence) and the staff is linked to that spell for good: it's renamed "Staff of <spell>", takes on the colour of the spell's influence, and its tooltip shows the spell. The offer on a staff stays the same until you pick (sneak-click the table to use it normally). A Wizard's first staff comes already linked to a random spell of the influence they chose. In battle, a linked staff in your main hand or off hand lets you cast its spell as well as your normal attack (two staffs, two spells); a staff swung in hand is a weak melee hit. Hitting a creature with a staff starts a battle like any weapon. `/give @s serantis_battle:magic_staff` gives a blank one. (Placeholder art for now.)
 
 ### Welcome guide
 
