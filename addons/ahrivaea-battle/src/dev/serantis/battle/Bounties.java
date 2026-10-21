@@ -20,7 +20,7 @@ import java.util.List;
  * Village bounty boards: right-click any bell to see today's three contracts (sneak to ring it).
  * Each player gets their own three each Minecraft day; a new day brings new ones. Kinds: beat creatures of an
  * influence, win battles, recruit something Rare or rarer, bring the board some items, beat a Creature Master,
- * repel a goblin raid. Finish one and claim it at a bell for XP and golden apples, sometimes a lore book or an
+ * repel a goblin raid. Finish one and claim it at a bell for XP, Orichalcum Ingots (the only way to get them) and golden apples, sometimes a saddle, a lore book or an
  * influence enchantment book.
  */
 public final class Bounties {
@@ -43,7 +43,7 @@ public final class Bounties {
 
     private Bounties() {}
 
-    private static long day(ServerPlayer p) { return p.level().getServer().overworld().getDayTime() / 24000L; }
+    private static long day(ServerPlayer p) { return p.level().getServer().overworld().getGameTime() / 24000L; }
 
     /** Today's contracts (made fresh on a new day). */
     public static List<Contract> today(ServerPlayer p) {
@@ -139,7 +139,7 @@ public final class Bounties {
             case "defeat" -> "Beat " + c.goal() + " " + Masters.influenceName(c.param()) + " creatures";
             case "win" -> "Win " + c.goal() + " battles";
             case "recruit" -> "Recruit a Rare (or rarer) creature";
-            case "deliver" -> "Bring " + c.goal() + " " + BuiltInRegistries.ITEM.getValue(Identifier.parse(c.param())).getName().getString();
+            case "deliver" -> "Bring " + c.goal() + " " + new net.minecraft.world.item.ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.parse(c.param()))).getHoverName().getString();
             case "master" -> "Beat a Creature Master";
             default -> "Repel a goblin raid on your base";
         };
@@ -148,6 +148,17 @@ public final class Bounties {
     private static int xp(ServerPlayer p, Contract c) {
         int base = switch (c.kind()) { case "master", "raid" -> 220; case "recruit" -> 150; case "defeat" -> 20 * c.goal(); case "win" -> 30 * c.goal(); default -> 80; };
         return (int) Math.round(base * (1 + dev.serantis.battle.skills.Skills.owned(p).size() / 24.0));   // grows with you
+    }
+
+    /** Orichalcum Ingots for a contract, by how hard it is: 3, 4 or 5. */
+    static int ingots(Contract c) {
+        return switch (c.kind()) {
+            case "master", "raid" -> 5;
+            case "recruit" -> 4;
+            case "defeat" -> c.goal() >= 7 ? 4 : 3;
+            case "win" -> c.goal() >= 5 ? 4 : 3;
+            default -> 3;
+        };
     }
 
     /** Hand in a delivery, or claim a finished contract. */
@@ -162,7 +173,7 @@ public final class Bounties {
             int need = c.goal() - c.progress(), have = 0;
             var inv = p.getInventory();
             for (int i = 0; i < inv.getContainerSize(); i++) if (inv.getItem(i).is(item)) have += inv.getItem(i).getCount();
-            if (have < need) { p.sendSystemMessage(Component.literal("You need " + need + " " + item.getName().getString() + " (you have " + have + ").").withStyle(ChatFormatting.YELLOW)); return; }
+            if (have < need) { p.sendSystemMessage(Component.literal("You need " + need + " " + new net.minecraft.world.item.ItemStack(item).getHoverName().getString() + " (you have " + have + ").").withStyle(ChatFormatting.YELLOW)); return; }
             int left = need;
             for (int i = 0; i < inv.getContainerSize() && left > 0; i++) {
                 ItemStack s = inv.getItem(i);
@@ -180,15 +191,18 @@ public final class Bounties {
         dev.serantis.battle.skills.XpBank.give(p, xp);
         int apples = "master".equals(c.kind()) || "raid".equals(c.kind()) ? 2 : 1;
         give(p, new ItemStack(Items.GOLDEN_APPLE, apples));
+        int ore = ingots(c);
+        give(p, new ItemStack(InfluenceArmor.ORICHALCUM, ore));
         String extra = "";
         RandomSource r = p.getRandom();
+        if (r.nextFloat() < 0.2f) { give(p, new ItemStack(Items.SADDLE)); extra += ", a saddle"; }
         if (r.nextFloat() < 0.25f) {
             ItemStack book = LoreDrops.roll(r, 1000f);
             if (book != null) {
                 var content = book.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);
                 if (content != null) ((Welcome.Holder) p).serantis$loreTitles().add(content.title().raw());
                 give(p, book);
-                extra = ", and a lore book";
+                extra += ", and a lore book";
             }
         } else if (r.nextFloat() < 0.12f) {
             var reg = p.level().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
@@ -196,10 +210,10 @@ public final class Bounties {
             var h = reg.get(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENCHANTMENT, Identifier.parse("serantis_battle:" + id)));
             if (h.isPresent()) {
                 give(p, net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(new net.minecraft.world.item.enchantment.EnchantmentInstance(h.get(), 1 + r.nextInt(2))));
-                extra = ", and an enchanted book";
+                extra += ", and an enchanted book";
             }
         }
-        p.sendSystemMessage(Component.literal("Bounty claimed: +" + xp + " XP, " + apples + " golden apple" + (apples > 1 ? "s" : "") + extra + ".").withStyle(ChatFormatting.GREEN));
+        p.sendSystemMessage(Component.literal("Bounty claimed: +" + xp + " XP, " + ore + " Orichalcum Ingots, " + apples + " golden apple" + (apples > 1 ? "s" : "") + extra + ".").withStyle(ChatFormatting.GREEN));
         PartySync.sync(p);
     }
 
@@ -219,11 +233,12 @@ public final class Bounties {
             o.addProperty("claimed", c.claimed());
             o.addProperty("deliver", "deliver".equals(c.kind()));
             o.addProperty("xp", xp(p, c));
+            o.addProperty("ingots", ingots(c));
             a.add(o);
         }
         JsonObject o = new JsonObject();
         o.add("contracts", a);
-        long t = p.level().getServer().overworld().getDayTime() % 24000L;
+        long t = p.level().getServer().overworld().getGameTime() % 24000L;
         o.addProperty("minutesLeft", (int) Math.ceil((24000L - t) / 1200.0));
         state.add("serantis_bounties", o);
     }

@@ -86,7 +86,7 @@ public class BountyScreen extends Screen {
             boolean claimed = c.get("claimed").getAsBoolean();
             int p = c.get("progress").getAsInt(), goal = c.get("goal").getAsInt();
             g.text(font, font.plainSubstrByWidth(c.get("text").getAsString(), W - 100), l, y, claimed ? DIM : TEXT);
-            String sub = (claimed ? "Done" : p + "/" + goal) + " · " + c.get("xp").getAsInt() + " XP + golden apples";
+            String sub = (claimed ? "Done" : p + "/" + goal) + " · " + c.get("xp").getAsInt() + " XP + " + c.get("ingots").getAsInt() + " Orichalcum";
             g.text(font, sub, l, y + 12, claimed ? DIM : p >= goal ? GREEN : DIM);
         }
     }

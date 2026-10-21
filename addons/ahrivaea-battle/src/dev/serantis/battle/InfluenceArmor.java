@@ -22,8 +22,8 @@ import java.util.Map;
 
 /**
  * A full set of armour for every influence: as strong as diamond, and each piece worn takes 6.25% off the damage
- * from attacks of its influence in battle (a full set: 25%). Crafted like diamond armour with two of the
- * diamonds swapped for something of the influence. Named like the influence's staff (Emberwrath, Rimespire...).
+ * from attacks of its influence in battle (a full set: 25%). Crafted like diamond armour, but of Orichalcum Ingots (from village bounties), with two of the
+ * ingots swapped for something of the influence. Named like the influence's staff (Emberwrath, Rimespire...).
  */
 public final class InfluenceArmor {
     public static final String[] PIECES = {"helmet", "chestplate", "leggings", "boots"};
@@ -43,7 +43,14 @@ public final class InfluenceArmor {
 
     private InfluenceArmor() {}
 
+    /** Orichalcum Ingot: never found in the world, only paid out by village bounties. Influence armour is made of it. */
+    public static Item ORICHALCUM;
+
     public static void register() {
+        ResourceKey<Item> ore = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:orichalcum_ingot"));
+        ORICHALCUM = Registry.register(BuiltInRegistries.ITEM, ore, new Item(new Item.Properties().setId(ore)
+                .component(DataComponents.LORE, new ItemLore(List.of(Component.literal("A reward from village bounty boards")
+                        .withStyle(st -> st.withItalic(false).withColor(ChatFormatting.GRAY)))))));
         for (String inf : NAMES.keySet())
             for (int i = 0; i < PIECES.length; i++) {
                 ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:" + inf + "_" + PIECES[i]));

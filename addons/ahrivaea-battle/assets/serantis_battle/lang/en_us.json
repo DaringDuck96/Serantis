@@ -132,5 +132,6 @@
   "enchantment.serantis_battle.bane_arcane": "Nullifying",
   "enchantment.serantis_battle.infusion_arcane": "Runeblade",
   "enchantment.serantis_battle.bane_radiant": "Eclipse",
-  "enchantment.serantis_battle.infusion_radiant": "Sunforged"
+  "enchantment.serantis_battle.infusion_radiant": "Sunforged",
+  "item.serantis_battle.orichalcum_ingot": "Orichalcum Ingot"
 }
