@@ -28,6 +28,9 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
     @Unique private String serantis$temperament;
     @Unique private String serantis$nickname;
     @Unique private String serantis$apples;
+    @Unique private String serantis$tutor;
+    @Override public String serantis$tutor() { return serantis$tutor; }
+    @Override public void serantis$setTutor(String offer) { serantis$tutor = offer; }
 
     @Override public String serantis$apples() { return serantis$apples; }
     @Override public void serantis$setApples(String apples) { serantis$apples = apples; }
@@ -70,5 +73,6 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
         if (next != null && serantis$temperament != null) ((MovesHolder) (Object) next).serantis$setTemperament(serantis$temperament);
         if (next != null && serantis$nickname != null) ((MovesHolder) (Object) next).serantis$setNickname(serantis$nickname);
         if (next != null && serantis$apples != null) ((MovesHolder) (Object) next).serantis$setApples(serantis$apples);
+        if (next != null && serantis$tutor != null) ((MovesHolder) (Object) next).serantis$setTutor(serantis$tutor);
     }
 }

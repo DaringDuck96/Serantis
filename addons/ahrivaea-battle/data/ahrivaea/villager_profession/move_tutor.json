@@ -1,0 +1,19 @@
+{
+ "name": "Move Tutor",
+ "description": "Teaches moves: while a Move Tutor works at your base, talk to it (right-click) to teach a party creature one of 3 new moves for 25 XP.",
+ "outfit": "librarian",
+ "icon": "minecraft:book",
+ "order": 23,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:battles_won",
+    "amount": 1,
+    "text": "Win a battle"
+   },
+   "sells": []
+  }
+ ]
+}

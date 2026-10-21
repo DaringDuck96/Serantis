@@ -38,11 +38,11 @@ public final class Villages {
     private static final String[] ROLES = {
             "farmer", "fisherman", "gardener", "weaver", "hunter", "librarian", "explorer", "smith", "netherwright",
             "carpenter", "engineer", "cook", "leatherworker", "mason", "jeweler", "voidwalker", "alchemist",
-            "bard", "innkeeper", "noble", "merchant"};
+            "bard", "innkeeper", "noble", "merchant", "move_tutor"};
     private static final int[] WEIGHTS = {
             10, 8, 8, 8, 8, 8, 6, 8, 4,
             8, 6, 8, 6, 10, 4, 3, 6,
-            5, 5, 3, 6};
+            5, 5, 3, 6, 4};
 
     private Villages() {}
 

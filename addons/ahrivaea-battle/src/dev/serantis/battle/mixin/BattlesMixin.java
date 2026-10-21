@@ -173,6 +173,18 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if (kind.startsWith("serantis_tutor_")) {     // the Move Tutor
+                int n = o.has("slot") ? o.get("slot").getAsInt() : -1;
+                switch (kind) {
+                    case "serantis_tutor_open" -> dev.serantis.battle.Tutor.open(player, o.has("entity") ? o.get("entity").getAsInt() : -1);
+                    case "serantis_tutor_pick" -> dev.serantis.battle.Tutor.pick(player, n);
+                    case "serantis_tutor_teach" -> dev.serantis.battle.Tutor.teach(player, n,
+                            o.has("offer") ? o.get("offer").getAsInt() : -1, o.has("replace") ? o.get("replace").getAsInt() : -1);
+                    default -> dev.serantis.battle.Tutor.close(player);
+                }
+                cir.setReturnValue(null);
+                return;
+            }
             if (kind.startsWith("serantis_wander_")) {    // the Wandering Trader's swaps
                 int entity = o.has("entity") ? o.get("entity").getAsInt() : -1;
                 switch (kind) {

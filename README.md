@@ -218,13 +218,15 @@ Professions are the creatures mod's (Farmer, Fisherman, Gardener, Weaver, Hunter
 
 **Merchants** turn up in villages. Like a vanilla wandering trader, each merchant sells its own random handful (6 to 8) of useful things from a pool of about 50: ender pearls, name tags, saddles, diamonds, golden carrots, ingots, blaze rods, shulker shells, blue ice, sponges, spyglasses and so on, for XP. Recruit one and its stock is the same every time you open it.
 
+**Move Tutors** live in villages like other villagers (recruit one by battling it). Put it to work at your base and right-click it to talk to it (sneak and right-click for the usual worker options). Pick a creature in your party and the Tutor offers 3 moves it could learn but doesn't know, at random (moves of its influence and universal moves). Choose one, choose which of its 3 moves to forget, and pay **25 XP** (less with Presence). The offer for each creature stays the same, however often you look, until it's been taught one of them; then talk to the Tutor again for 3 new ones. A creature always keeps at least one move that deals damage.
+
 **Wandering Traders** turn up in the wild, the way vanilla wandering traders do (every vanilla wandering trader becomes one), with "Wandering Trader" over their heads. Right-click one, pick a creature from your party and swap it: you get a random creature of the same level back, of any kind and rarity (the usual wild odds: 70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary). Each trader does 3 swaps, then moves on; otherwise it leaves after a day. It can't be fought, hurt or recruited.
 
 **Black Market Merchants** never live in villages. Any wild creature that spawns in the Overworld has a 0.05% chance to be a Black Market Merchant instead (nearby players hear whispers in chat). Each one carries 3 to 5 creatures that are Rare (70%), Super Rare (25%) or Legendary (5%), Level 10 to 20, and sells each for **350 XP**: right-click it to see what's for sale (the creature goes to your party, or your box if your party is full). It can't be fought, hurt or recruited, and it leaves after a day, or as soon as it sells out.
 
 The **Alchemist** still sells potions and brewing ingredients for XP, and its trade screen also turns a golden apple from your inventory into 20 XP.
 
-How often each profession turns up in a village: Farmer and Mason are the most common; Explorer, Engineer, Leatherworker and Alchemist a little less; Bard and Innkeeper uncommon; Netherwright and Jeweler rarer; Noble and Voidwalker the rarest.
+How often each profession turns up in a village: Farmer and Mason are the most common; Explorer, Engineer, Leatherworker and Alchemist a little less; Bard, Innkeeper and Move Tutor uncommon; Netherwright and Jeweler rarer; Noble and Voidwalker the rarest.
 
 ### Creature Masters
 

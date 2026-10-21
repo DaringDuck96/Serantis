@@ -26,6 +26,9 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Unique private String serantis$temperament;
     @Unique private String serantis$nickname;
     @Unique private String serantis$apples;
+    @Unique private String serantis$tutor;
+    @Override public String serantis$tutor() { return serantis$tutor; }
+    @Override public void serantis$setTutor(String offer) { serantis$tutor = offer; }
     @Unique private java.util.List<CaughtCreature> serantis$stock = java.util.List.of();
     @Unique private long serantis$leaveAt;
 
@@ -114,6 +117,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$temperament != null) out.putString("SerantisTemperament", serantis$temperament);
         if (serantis$nickname != null) out.putString("SerantisName", serantis$nickname);
         if (serantis$apples != null) out.putString("SerantisApples", serantis$apples);
+        if (serantis$tutor != null) out.putString("SerantisTutor", serantis$tutor);
         out.putInt("SerantisMoveMode", serantis$moveMode);
         if (serantis$leaveAt > 0) {
             out.putLong("SerantisLeaveAt", serantis$leaveAt);
@@ -132,6 +136,8 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (!nickname.isEmpty()) serantis$nickname = nickname;
         String apples = in.getStringOr("SerantisApples", "");
         if (!apples.isEmpty()) serantis$apples = apples;
+        String tutor = in.getStringOr("SerantisTutor", "");
+        if (!tutor.isEmpty()) serantis$tutor = tutor;
         serantis$leaveAt = in.getLongOr("SerantisLeaveAt", 0L);
         serantis$moveMode = (byte) in.getIntOr("SerantisMoveMode", dev.serantis.battle.Locomotion.UNSET);
         serantis$swaps = in.getIntOr("SerantisSwaps", 0);
@@ -145,6 +151,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (cir.getReturnValue() != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setTemperament(serantis$temperament());
         if (cir.getReturnValue() != null && serantis$nickname != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setNickname(serantis$nickname);
         if (cir.getReturnValue() != null && serantis$apples != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setApples(serantis$apples);
+        if (cir.getReturnValue() != null && serantis$tutor != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setTutor(serantis$tutor);
     }
 
     @Inject(method = "applyCaught", at = @At("HEAD"))
@@ -155,5 +162,6 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (temperament != null) serantis$temperament = temperament;
         serantis$nickname = ((MovesHolder) (Object) caught).serantis$nickname();
         serantis$apples = ((MovesHolder) (Object) caught).serantis$apples();
+        serantis$tutor = ((MovesHolder) (Object) caught).serantis$tutor();
     }
 }

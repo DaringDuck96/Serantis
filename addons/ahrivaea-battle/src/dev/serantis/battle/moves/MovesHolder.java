@@ -13,4 +13,7 @@ public interface MovesHolder {
     /** Golden apples eaten per stat, "hp,attack,defense,speed,magic,luck,charisma" (see Apples). */
     default String serantis$apples() { return null; }
     default void serantis$setApples(String apples) { }
+    /** The Move Tutor's standing offer for it (move ids), or null. */
+    default String serantis$tutor() { return null; }
+    default void serantis$setTutor(String offer) { }
 }
