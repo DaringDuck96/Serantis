@@ -15,7 +15,8 @@ import java.util.List;
 
 /**
  * The opening scene (see Intro on the server): you and the Mysterious Figure at spawn. It talks, you answer,
- * you choose your class and your starter when it asks, a roar sounds in the distance, it tells you to find
+ * you choose your class and your starter when it asks, a roar sounds in the distance, it gives you the Atlas of
+ * the Fallen Towers (see TowerAtlas) and tells you to rebuild
  * the towers, and vanishes as the screen goes dark. Then the welcome guide.
  */
 public class IntroScreen extends Screen {
@@ -39,7 +40,12 @@ public class IntroScreen extends Screen {
             new Step("C", new String[]{"Rebuild what?"}),
             new Step("F", new String[]{"Well… everything."}),
             new Step("ROAR", new String[0]),
-            new Step("F", new String[]{"I have to go. Find the towers. Save Serantia."}),
+            new Step("F", new String[]{"I have to go. But first… take this."}),
+            new Step("GIFT", new String[0]),
+            new Step("F", new String[]{"It marks every tower within ten thousand blocks of this place. Long ago they kept watch over Serantia. Now they lie in ruins."}),
+            new Step("C", new String[]{"What am I supposed to do with them?", "Why me?"}),
+            new Step("F", new String[]{"Rebuild them. Every tower raised brings Serantia closer to what it was. Start with the nearest one."}),
+            new Step("F", new String[]{"Find the towers. Save Serantia."}),
             new Step("VANISH", new String[0]));
 
     // where the scene is; kept while the class and starter screens are up
@@ -136,6 +142,12 @@ public class IntroScreen extends Screen {
             if (mc.player != null) mc.player.playSound(SoundEvents.ENDER_DRAGON_GROWL, 1.2f, 0.6f);
         }
         if (s != null && "VANISH".equals(s.kind())) DialogueCamera.wideShot();
+        if (s != null && "GIFT".equals(s.kind())) {                    // it hands you the Atlas of the Fallen Towers
+            DialogueCamera.wideShot();
+            TradeClient.send("serantis_tower_atlas", null, null);
+            var mc = Minecraft.getInstance();
+            if (mc.player != null) mc.player.playSound(SoundEvents.BOOK_PAGE_TURN, 1f, 0.9f);
+        }
         rebuildWidgets();
     }
 
@@ -181,6 +193,7 @@ public class IntroScreen extends Screen {
         if ("CLASS".equals(s.kind()) && classChosen()) go(step + 1);
         else if ("STARTER".equals(s.kind()) && hasStarter()) go(step + 1);
         else if ("ROAR".equals(s.kind()) && now - eventAt > 2600) go(step + 1);
+        else if ("GIFT".equals(s.kind()) && now - eventAt > 2400) go(step + 1);
         else if ("VANISH".equals(s.kind())) {
             long t = now - eventAt;
             if (t > 1000 && !finished) {                                // fully dark: it's gone
@@ -239,6 +252,7 @@ public class IntroScreen extends Screen {
         else if ("F".equals(s.kind())) { speaker = NAME; text = s.text()[0]; }
         else if ("C".equals(s.kind())) { g.text(font, "What do you say?", l, top + 8, DIM); return; }
         else if ("ROAR".equals(s.kind())) { g.text(font, "*A deafening roar echoes in the distance*", l, top + 22, DIM); return; }
+        else if ("GIFT".equals(s.kind())) { g.text(font, "*The figure presses a worn, leather-bound book into your hands*", l, top + 22, DIM); return; }
         else return;
         g.text(font, speaker, l, top + 8, answer != null ? YOU : GOLD);
         int n = Math.min(text.length(), visibleChars()), y = top + 22;

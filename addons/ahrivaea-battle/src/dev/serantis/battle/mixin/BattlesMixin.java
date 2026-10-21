@@ -379,6 +379,11 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_tower_atlas".equals(kind)) {      // the Mysterious Figure hands over the Atlas in the opening scene
+                if (dev.serantis.battle.Intro.active(player)) dev.serantis.battle.TowerAtlas.give(player);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_intro_done".equals(kind)) {     // the opening scene is over
                 dev.serantis.battle.Intro.done(player);
                 cir.setReturnValue(null);

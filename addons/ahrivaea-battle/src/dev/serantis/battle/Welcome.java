@@ -39,6 +39,7 @@ public final class Welcome {
         Holder h = (Holder) p;
         if (!h.serantis$loreBook() && p.tickCount >= 20) { h.serantis$setLoreBook(true); LoreBook.give(p); }
         Intro.tick(p);                                                             // the opening scene comes first
+        if (p.tickCount % 100 == 60 && !Intro.pending(p)) TowerAtlas.give(p);     // missed the scene (or here before it): the Atlas anyway
         if (h.serantis$welcomeSent() || p.tickCount < 40) return;
         if (h.serantis$welcomed() && PlayerClass.of(p) != null) return;          // nothing to show (guide read, class picked)
         h.serantis$setWelcomeSent(true);

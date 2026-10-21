@@ -46,7 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Helm of Linx (5 Orichalcum Ingots around a Nether Star): diamond-strong, and while it's worn, four abilities
- * on their own keys (Z, R, G, V by default; Controls > Serantis to change them):
+ * on their own keys (Z, R, H, V by default; Controls > Serantis to change them):
  * <ol>
  *   <li><b>Phase Jump</b>: with a ceiling within 10 blocks above your head, rise up through it and come out standing
  *   safely on top. Never through bedrock, never somewhere that would hurt. Sneak + the key within a minute: go back.</li>
@@ -92,7 +92,7 @@ public final class Linx {
                 .component(DataComponents.EQUIPPABLE, InfluenceArmor.look(net.minecraft.world.entity.EquipmentSlot.HEAD, "linx", net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_DIAMOND))
                 .component(DataComponents.LORE, new ItemLore(List.of(
                         line("Phase Jump, Shape Lift, Waymark, High Jump"),
-                        line("Keys in Controls > Serantis (Z, R, G, V)"))))));
+                        line("Keys in Controls > Serantis (Z, R, H, V)"))))));
     }
 
     private static Component line(String s) {
