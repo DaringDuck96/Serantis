@@ -1,2 +1,7 @@
-# classes 1792615722
-decompile:ahrivaea-*.jar dev/
+# classes 1792615787
+sig:net.minecraft.client.Minecraft
+sig:net.minecraft.client.Options
+sig:net.minecraft.client.gui.screens.Screen
+sig:net.minecraft.client.multiplayer.MultiPlayerGameMode
+sig:net.minecraft.client.renderer.block.FluidStateModelSet
+sig:net.minecraft.world.item.ItemStack
