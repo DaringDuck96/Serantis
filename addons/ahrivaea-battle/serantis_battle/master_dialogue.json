@@ -1,0 +1,242 @@
+{
+  "none": {
+    "title": "The Unbound Grandmaster",
+    "dialogues": [
+      {"lines": [["master", "No flame. No frost. No storm. Just a body, a will, and a lifetime of practice."], ["player", "You don't use any influence at all?"], ["master", "I never needed to. The basics, mastered, are a power of their own."]],
+       "challenge": "Then let's see your basics.", "accept": "Good. Stand ready, and don't blink.",
+       "decline": "Maybe another day.", "farewell": "The road will still be here. So will I."},
+      {"lines": [["master", "You stand like someone who has fought a hundred battles and learned from none of them."], ["player", "That's... a bit harsh."], ["master", "Harsh is how lessons stick. Shall I teach you one?"]],
+       "challenge": "Teach me, then.", "accept": "Lesson one: everything you think you know is about to be tested.",
+       "decline": "I'll pass on the lesson.", "farewell": "Pride is a heavy pack. Set it down sometime."},
+      {"lines": [["master", "Every Master you face hides behind a gift: fire, water, shadow."], ["master", "My team has no such shelter. We are simply very, very good."], ["player", "Simple doesn't sound so scary."]],
+       "challenge": "Prove it.", "accept": "Simple is not the same as easy. Begin!",
+       "decline": "I believe you. From over here.", "farewell": "Wise. Simplicity has humbled greater fighters than you."},
+      {"lines": [["master", "Breathe in. Breathe out. Do you feel that?"], ["player", "Feel what?"], ["master", "Nothing. That is the point. An empty mind is a sharp one."]],
+       "challenge": "My mind's sharp enough. Fight me.", "accept": "We shall see how long it stays that way.",
+       "decline": "I think I'll keep my thoughts, thanks.", "farewell": "Then go and fill your head. Come back when it's quiet."},
+      {"lines": [["master", "They call me Unbound because no influence holds me, and no Dragon Lord claims me."], ["master", "I answer only to discipline."], ["player", "And what does discipline say about me?"]],
+       "challenge": "Let's find out.", "accept": "It says you talk too much. Show me instead.",
+       "decline": "Don't answer that.", "farewell": "Discipline says you'll be back. It is rarely wrong."}
+    ]
+  },
+  "fire": {
+    "title": "The Ember Warlord",
+    "dialogues": [
+      {"lines": [["master", "You walk into my camp unannounced? Bold. Or stupid."], ["player", "I came to challenge you."], ["master", "Then you're both. I respect that."]],
+       "challenge": "Light it up, Warlord.", "accept": "HA! Burn bright, challenger. It won't last long!",
+       "decline": "On second thought...", "farewell": "Run, then. The fire always catches up."},
+      {"lines": [["master", "Do you smell that? Ash and iron. The scent of victory."], ["player", "Smells like something's on fire."], ["master", "Everything near me is on fire. You'll get used to it. Briefly."]],
+       "challenge": "I can take the heat.", "accept": "Everyone says that. Right before they melt.",
+       "decline": "I'll stay out of the kitchen.", "farewell": "Smart. Cowardly, but smart."},
+      {"lines": [["master", "I have burned through forty challengers this season."], ["master", "Their ashes taught me nothing. Will yours?"], ["player", "I'm not planning on becoming ashes."]],
+       "challenge": "I'll be the one you remember.", "accept": "Then make it a blaze worth remembering!",
+       "decline": "I'd rather not be number forty-one.", "farewell": "Forty-one can wait. The flames are patient. I am not."},
+      {"lines": [["master", "Fire doesn't ask permission. It doesn't hesitate. It takes."], ["player", "And when there's nothing left to burn?"], ["master", "Then it finds something new. Like you."]],
+       "challenge": "Try to take me, then.", "accept": "Gladly! Stoke the flames!",
+       "decline": "I'm not that flammable.", "farewell": "Everyone is flammable, challenger. Remember that."},
+      {"lines": [["master", "The Dragon Lord of Flame forged the first ember. I carry its spark."], ["player", "So you think you're untouchable?"], ["master", "I think you'll need more than courage to touch me."]],
+       "challenge": "Courage and a plan. Let's go.", "accept": "A plan! How adorable. Into the fire with you!",
+       "decline": "Fair point. I'll work on the plan.", "farewell": "Plan all you like. Fire still burns."}
+    ]
+  },
+  "frost": {
+    "title": "The Rime Harpoon Master",
+    "dialogues": [
+      {"lines": [["master", "Quiet. You'll scare the fish."], ["player", "There are no fish. This is solid ice."], ["master", "Then you'll scare me. That would be a first."]],
+       "challenge": "Let's see if I can.", "accept": "Hm. Bait taken. Brace yourself.",
+       "decline": "I'll leave you to your fishing.", "farewell": "The ice remembers footsteps. So do I."},
+      {"lines": [["master", "Patience is a blade of ice. It forms slowly, and it never forgives."], ["player", "I'm not very patient."], ["master", "I noticed. It is why you will lose."]],
+       "challenge": "Then let's get this over with fast.", "accept": "Fast. Slow. The cold comes for all.",
+       "decline": "I'll practice patience first.", "farewell": "Good. Practice where it's warm."},
+      {"lines": [["master", "I once waited nine days on a frozen lake for a single strike."], ["player", "Did you catch anything?"], ["master", "Everything I have ever aimed at. Shall I aim at you?"]],
+       "challenge": "Aim carefully.", "accept": "I always do. Do not move.",
+       "decline": "Please don't.", "farewell": "Then do not wander my waters again unprepared."},
+      {"lines": [["master", "Your breath fogs. Your fingers shake. You are already losing to the cold."], ["player", "I've been colder."], ["master", "No. You haven't."]],
+       "challenge": "Show me, then.", "accept": "As you wish. Winter begins.",
+       "decline": "...Maybe I haven't.", "farewell": "Come back with thicker boots, and thicker courage."},
+      {"lines": [["master", "The frost does not rage like fire. It does not roar like the storm."], ["master", "It simply waits until everything stops moving."], ["player", "I don't plan on stopping."]],
+       "challenge": "Try to freeze me.", "accept": "Everything stops eventually. Let us begin.",
+       "decline": "I'll keep moving, thanks.", "farewell": "Moving away. As expected."}
+    ]
+  },
+  "storm": {
+    "title": "The Thunderdrum Master",
+    "dialogues": [
+      {"lines": [["master", "BOOM! BOOM-BOOM! Do you hear it? The rhythm of the sky!"], ["player", "Hard to miss."], ["master", "Then dance with me, challenger! Let's see if you can keep the beat!"]],
+       "challenge": "Hit it!", "accept": "THAT'S THE SPIRIT! Thunder, on my count!",
+       "decline": "I've got two left feet.", "farewell": "Ha! Come back when you find your rhythm!"},
+      {"lines": [["master", "Every storm starts with a single drop. Then the drumbeat builds..."], ["master", "...and builds... and BUILDS!"], ["player", "Is this going somewhere?"]],
+       "challenge": "Get to the crescendo already.", "accept": "You want the crescendo? You GOT it!",
+       "decline": "I'll wait for the encore.", "farewell": "The storm always plays an encore. You'll hear it!"},
+      {"lines": [["master", "Lightning never strikes the same place twice. Do you know why?"], ["player", "Why?"], ["master", "Because the first strike is usually enough!"]],
+       "challenge": "Strike me if you can.", "accept": "Oh, I CAN. Lightning, LET'S GO!",
+       "decline": "I'll stand somewhere else.", "farewell": "Smart move. Stay away from tall trees!"},
+      {"lines": [["master", "The Dragon Lord of Storms speaks in thunder. I'm just its biggest fan."], ["player", "You're very loud for a fan."], ["master", "LOUDNESS IS DEVOTION!"]],
+       "challenge": "Then let's make some noise.", "accept": "NOW you're speaking my language!",
+       "decline": "My ears need a break.", "farewell": "Your loss! The show must go on!"},
+      {"lines": [["master", "My drums have shaken mountains, scattered armies, and woken the dead."], ["player", "Woken the dead?"], ["master", "They were VERY annoyed. Want to see what made them so mad?"]],
+       "challenge": "Show me.", "accept": "Brace yourself! This one goes to eleven!",
+       "decline": "Let the dead sleep.", "farewell": "Fine, fine. Quiet hours start... never!"}
+    ]
+  },
+  "earth": {
+    "title": "The Mountain Bearer",
+    "dialogues": [
+      {"lines": [["master", "...."], ["player", "Hello?"], ["master", "Sorry. I was listening to the stone. It says you are very small."]],
+       "challenge": "Small but stubborn. Fight me.", "accept": "Stubborn is good. Stone is stubborn too. Let us see who lasts.",
+       "decline": "I'll go be small somewhere else.", "farewell": "The mountain does not chase. It waits."},
+      {"lines": [["master", "I have carried this mountain on my back for a hundred years."], ["player", "Isn't it heavy?"], ["master", "Yes. Now imagine what my fists feel like."]],
+       "challenge": "I'd rather find out.", "accept": "Hmm. Brave pebble. Let us begin.",
+       "decline": "I'll just imagine it.", "farewell": "Imagining is safer. The mountain approves."},
+      {"lines": [["master", "Rivers bend. Trees fall. Storms pass."], ["master", "Stone remains."], ["player", "Stone can still be broken."]],
+       "challenge": "And I'm here to break it.", "accept": "Many have said this. Their tools are still stuck in my sides. Come.",
+       "decline": "Maybe not today, though.", "farewell": "Today. Tomorrow. Stone does not mind the difference."},
+      {"lines": [["master", "You walked a long way to stand before me."], ["player", "I did."], ["master", "Good. Strong legs. You will need them to run."]],
+       "challenge": "I'm not running.", "accept": "Then stand. Like a mountain. We will see.",
+       "decline": "Actually, I'll walk back.", "farewell": "Slowly. The path is rocky. Like me."},
+      {"lines": [["master", "The Dragon Lord of Earth shaped the first mountain. I am only its shadow."], ["player", "That's a big shadow."], ["master", "It is a big mountain."]],
+       "challenge": "Then I'll climb it.", "accept": "Climbers fall. Let us see how far.",
+       "decline": "I'm afraid of heights.", "farewell": "Then stay low, little one. The ground is kind."}
+    ]
+  },
+  "water": {
+    "title": "The Abyssal Anchor Champion",
+    "dialogues": [
+      {"lines": [["master", "Ahoy, landlubber! Come to test the depths, have ye?"], ["player", "Something like that."], ["master", "The sea's taken better sailors than you. But I'm feelin' generous."]],
+       "challenge": "Drop anchor, Champion.", "accept": "HAR! All hands, brace for impact!",
+       "decline": "I get seasick.", "farewell": "Then stay ashore, and mind the tide!"},
+      {"lines": [["master", "This anchor's been to the bottom of the deepest trench and back."], ["player", "Why carry it around?"], ["master", "To drag challengers down with it, of course!"]],
+       "challenge": "Try dragging me.", "accept": "Hold yer breath, friend. Here we go!",
+       "decline": "I'd rather stay afloat.", "farewell": "Floatin's for driftwood. Come back when ye've got some weight to ye."},
+      {"lines": [["master", "The tide comes in. The tide goes out. It never asks if ye're ready."], ["player", "And neither do you, I'm guessing."], ["master", "Now ye're learnin'!"]],
+       "challenge": "Bring the tide.", "accept": "Here she comes! Swim or sink!",
+       "decline": "I'll wait for low tide.", "farewell": "Low tide's when the sharks come out. Choose wisely."},
+      {"lines": [["master", "Do ye hear the whales singin'? They sing of the Dragon Lord of the Deep."], ["player", "What do they sing?"], ["master", "That the deep forgives nothin'. Shall we test the song?"]],
+       "challenge": "Let's test it.", "accept": "Then sing with me, challenger! Into the abyss!",
+       "decline": "I'll just listen.", "farewell": "Aye. The song's best heard from shore."},
+      {"lines": [["master", "I've wrestled krakens, outswum storms, and lost three boots to eels."], ["player", "Only three?"], ["master", "The eels are sore losers. Like you'll be!"]],
+       "challenge": "We'll see about that.", "accept": "Batten down the hatches!",
+       "decline": "I'll keep my boots, thanks.", "farewell": "Keep 'em dry, landlubber!"}
+    ]
+  },
+  "nature": {
+    "title": "The Thornbloom Kama Master",
+    "dialogues": [
+      {"lines": [["master", "Careful where you step. You're standing on my seedlings."], ["player", "Sorry! I didn't see them."], ["master", "No one ever does. That's why my thorns grow so sharp."]],
+       "challenge": "Let's see those thorns.", "accept": "Root and blade, then. Let the garden bloom!",
+       "decline": "I'll tiptoe away.", "farewell": "Mind the roses on your way out. They bite."},
+      {"lines": [["master", "A good gardener knows when to nurture... and when to cut."], ["player", "Which am I?"], ["master", "That depends on how you fight."]],
+       "challenge": "Then watch me grow.", "accept": "Bloom or wilt, challenger. The kama decides.",
+       "decline": "I'd rather not be pruned.", "farewell": "Then grow somewhere else, little sprout."},
+      {"lines": [["master", "Every weed believes it's a flower."], ["player", "And what do you do with weeds?"], ["master", "I trim them. Very, very neatly."]],
+       "challenge": "I'm no weed.", "accept": "We'll see what you are when the petals settle.",
+       "decline": "I'll stay out of your garden.", "farewell": "Wise. The vines remember trespassers."},
+      {"lines": [["master", "The Dragon Lord of the Wilds planted the first seed. Everything green answers to it."], ["master", "My team are its thorns."], ["player", "Then I'll be careful."]],
+       "challenge": "Careful, but not scared. Fight me.", "accept": "Lovely. The forest has been hungry.",
+       "decline": "Careful enough to leave.", "farewell": "The wild lets you go. This time."},
+      {"lines": [["master", "Spring grows. Summer blooms. Autumn harvests."], ["player", "And winter?"], ["master", "Winter is what happens to those who challenge me unprepared."]],
+       "challenge": "I'm prepared.", "accept": "Then it's harvest time!",
+       "decline": "I'll wait for spring.", "farewell": "Spring always comes. So will you."}
+    ]
+  },
+  "void": {
+    "title": "The Hollow Riftwalker",
+    "dialogues": [
+      {"lines": [["master", "You... are not supposed to be here. Neither am I."], ["player", "Where are you supposed to be?"], ["master", "Nowhere. It is very quiet there. Would you like to visit?"]],
+       "challenge": "Not to stay. But I'll fight you.", "accept": "Then step through. Mind the edges. They are sharp.",
+       "decline": "I'll stay somewhere.", "farewell": "Somewhere is so... crowded."},
+      {"lines": [["master", "I have seen the space between stars. It looked back."], ["player", "What did it say?"], ["master", "Nothing. It never says anything. That is what makes it so loud."]],
+       "challenge": "Let's make some noise of our own.", "accept": "The rift opens. Try not to fall in.",
+       "decline": "That's... unsettling. Bye.", "farewell": "Goodbye is only a word for 'see you in the dark.'"},
+      {"lines": [["master", "Hello. Goodbye. Hello again. Time is strange near me."], ["player", "We just met."], ["master", "Did we? I've already beaten you twice."]],
+       "challenge": "Then this'll be the third time. Or not.", "accept": "Third time. First time. It's all the same in the void.",
+       "decline": "Let's not make it a third.", "farewell": "Then I will see you yesterday."},
+      {"lines": [["master", "Before the Dragon Lords, there was nothing. I remember it."], ["player", "How could you?"], ["master", "Nothing is very hard to forget."]],
+       "challenge": "Show me what nothing can do.", "accept": "Everything. That's the secret. Come.",
+       "decline": "I'll stick with something.", "farewell": "Something always ends. Nothing never does."},
+      {"lines": [["master", "Your shadow is a little behind you. Did you notice?"], ["player", "...What?"], ["master", "Never mind. It will catch up. Shall we fight while we wait?"]],
+       "challenge": "Fine. Let's fight.", "accept": "Wonderful. Don't look behind you.",
+       "decline": "I'm going to go find my shadow.", "farewell": "Check under the bed. They like it there."}
+    ]
+  },
+  "fae": {
+    "title": "The Fey Blademaster",
+    "dialogues": [
+      {"lines": [["master", "Oh! A visitor! How delightful. Have you come to dance or to duel?"], ["player", "Is there a difference?"], ["master", "Not with me, darling."]],
+       "challenge": "Then let's dance.", "accept": "Marvelous! Do try to keep up!",
+       "decline": "I'll sit this one out.", "farewell": "Wallflowers are lovely too. In their way."},
+      {"lines": [["master", "Riddle me this: what has a blade, a grin, and has never lost a duel?"], ["player", "You, I'm guessing."], ["master", "Clever! You get one point. I get all the others."]],
+       "challenge": "Let's play for the rest.", "accept": "A wager! Oh, the glamour of it!",
+       "decline": "I'll quit while I'm ahead.", "farewell": "One point to you, then. Treasure it."},
+      {"lines": [["master", "Do you know the price of a fae bargain?"], ["player", "Usually something terrible."], ["master", "Only if you lose! And you would never lose. Would you?"]],
+       "challenge": "Deal. I won't lose.", "accept": "Sealed with a smile! Let the game begin!",
+       "decline": "No bargains today.", "farewell": "A pity. I had such a lovely price in mind."},
+      {"lines": [["master", "The Dragon Lord of the Fae dreamed the first starlight. I simply borrowed some."], ["player", "Borrowed?"], ["master", "I'll give it back. Eventually. Possibly."]],
+       "challenge": "Fight me for it.", "accept": "Ooh, a thief-catcher! How thrilling!",
+       "decline": "Not my starlight, not my problem.", "farewell": "Spoken like a true mortal. Toodle-oo!"},
+      {"lines": [["master", "Shh. Listen. The flowers are gossiping about you."], ["player", "What are they saying?"], ["master", "That you'll lose spectacularly. Shall we prove them right?"]],
+       "challenge": "Let's prove them wrong.", "accept": "Even better! The flowers adore a twist!",
+       "decline": "Tell the flowers I said hi.", "farewell": "They say hello back. And something rude."}
+    ]
+  },
+  "darkness": {
+    "title": "The Umbral Shinobi Master",
+    "dialogues": [
+      {"lines": [["master", "You found me. Few do."], ["player", "You weren't hiding very well."], ["master", "I wanted to be found. Now you cannot unfind me."]],
+       "challenge": "Then let's settle this.", "accept": "As you wish. The lights go out.",
+       "decline": "I'll pretend I didn't see you.", "farewell": "You won't see me leave, either."},
+      {"lines": [["master", "Every light casts a shadow. Every shadow is mine."], ["player", "Even mine?"], ["master", "Especially yours. It told me your weaknesses."]],
+       "challenge": "My shadow lies. Fight me.", "accept": "Shadows never lie. Begin.",
+       "decline": "I'll go stand in the sun.", "farewell": "The sun sets, challenger. Always."},
+      {"lines": [["master", "...."], ["player", "Are you going to say anything?"], ["master", "Words are noise. Noise gets you found. Found gets you beaten."]],
+       "challenge": "Then let's skip to the beating.", "accept": "Finally. Someone who understands.",
+       "decline": "I'll leave you to your silence.", "farewell": "...."},
+      {"lines": [["master", "The Dragon Lord of Night closes its eyes, and the world goes dark."], ["master", "I am what moves in that dark."], ["player", "I'm not afraid of the dark."]],
+       "challenge": "Bring the night.", "accept": "You will be. Blink, and it begins.",
+       "decline": "But I'm not stupid, either.", "farewell": "A rare combination. Keep it."},
+      {"lines": [["master", "I have watched you since you entered the clearing."], ["player", "That's creepy."], ["master", "That's training. Shall I show you what else I learned?"]],
+       "challenge": "Show me.", "accept": "Watch closely. You won't see it coming.",
+       "decline": "I've seen enough.", "farewell": "No. You haven't. But you will."}
+    ]
+  },
+  "arcane": {
+    "title": "The Thousand Blade Archon",
+    "dialogues": [
+      {"lines": [["master", "One thousand blades, each inscribed with a different rune. Would you like a demonstration?"], ["player", "Of all thousand?"], ["master", "Don't be absurd. Nine hundred should suffice."]],
+       "challenge": "Demonstrate.", "accept": "Excellent. Do take notes, if you survive.",
+       "decline": "I'll read the manual instead.", "farewell": "Chapter one: do not challenge the Archon unprepared."},
+      {"lines": [["master", "Magic is merely mathematics with a flair for drama."], ["player", "So what's the equation for beating you?"], ["master", "Unsolved. Many have attempted it. Care to try?"]],
+       "challenge": "I'll solve it.", "accept": "Show your work, challenger.",
+       "decline": "Math was never my thing.", "farewell": "Then study. The runes are patient teachers."},
+      {"lines": [["master", "I have studied every spell recorded since the Dragon Lords first spoke the world into being."], ["player", "That's a lot of reading."], ["master", "And yet I have found no record of anyone defeating me."]],
+       "challenge": "Then I'll write the first.", "accept": "Bold. Let us draft that chapter together.",
+       "decline": "I'll leave that page blank.", "farewell": "Blank pages are the saddest kind."},
+      {"lines": [["master", "Your aura is... untidy. Unfocused. Quite frankly, a mess."], ["player", "Thanks?"], ["master", "It wasn't a compliment. Allow me to correct it."]],
+       "challenge": "Correct me, then.", "accept": "Lesson begins. Pay attention.",
+       "decline": "I like my mess.", "farewell": "Chaos has its charms. Few of them, but some."},
+      {"lines": [["master", "Every rune on my blades is a word. Together, they write a sentence."], ["player", "What does it say?"], ["master", "'You have lost.' Let us see if it holds true."]],
+       "challenge": "Let's rewrite it.", "accept": "Ah, an editor. Very well. Begin!",
+       "decline": "I believe the sentence.", "farewell": "Grammar wins again."}
+    ]
+  },
+  "radiant": {
+    "title": "The Sunthrone Pharaoh",
+    "dialogues": [
+      {"lines": [["master", "Kneel, traveler. You stand before the throne of the sun."], ["player", "I don't kneel."], ["master", "Then you will burn standing. How dignified."]],
+       "challenge": "I came to challenge your throne.", "accept": "Then let the dawn judge you!",
+       "decline": "I'll just... back away slowly.", "farewell": "Retreat beneath my light. It suits you."},
+      {"lines": [["master", "My dynasty has ruled since the first sunrise. The Dragon Lord of Light crowned us."], ["player", "And you've never been dethroned?"], ["master", "Many have tried. The sun still rises on my reign."]],
+       "challenge": "Not for long.", "accept": "Presumptuous! I shall enjoy correcting you.",
+       "decline": "Long live the Pharaoh.", "farewell": "Indeed. Long and bright."},
+      {"lines": [["master", "Do you feel that warmth? That is my favor."], ["player", "It's very bright."], ["master", "Brilliance usually is. Few can stand in it for long."]],
+       "challenge": "I can stand it.", "accept": "Then shine, challenger, if you can.",
+       "decline": "I need some shade.", "farewell": "Shade is for the humble. Go, humble one."},
+      {"lines": [["master", "Scribes will write of this day. Will they write of your glory, or your defeat?"], ["player", "Glory, obviously."], ["master", "Then go ahead. Earn it. The sun is watching."]],
+       "challenge": "Let the scribes watch.", "accept": "Let it be written! Begin!",
+       "decline": "Maybe they can write about something else.", "farewell": "They will write that you left. Briefly."},
+      {"lines": [["master", "You cast a long shadow, traveler."], ["player", "That's because you're so bright."], ["master", "Flattery! How refreshing. It won't save you."]],
+       "challenge": "Then let's skip the flattery.", "accept": "As you wish. Sunfire, rise!",
+       "decline": "It was worth a try.", "farewell": "It was. Go in light."}
+    ]
+  }
+}

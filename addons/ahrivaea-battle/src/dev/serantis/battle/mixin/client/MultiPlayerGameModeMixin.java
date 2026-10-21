@@ -22,6 +22,13 @@ public abstract class MultiPlayerGameModeMixin {
             cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }
+        String master = dev.serantis.battle.Masters.influenceOf(target);
+        if (master != null && !player.isShiftKeyDown()) {           // talk to a Creature Master (see DialogueScreen)
+            if (hand == InteractionHand.MAIN_HAND && net.minecraft.client.Minecraft.getInstance().gui.screen() == null)
+                dev.serantis.battle.client.DialogueScreen.open(target, master);
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
         if (hand == InteractionHand.MAIN_HAND && dev.serantis.battle.Wanderer.isWanderer(target)) {
             dev.serantis.battle.client.WandererScreen.open(target.getId());
             cir.setReturnValue(InteractionResult.SUCCESS);

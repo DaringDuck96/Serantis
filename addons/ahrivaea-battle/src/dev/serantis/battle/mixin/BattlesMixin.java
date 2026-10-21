@@ -174,6 +174,14 @@ public abstract class BattlesMixin {
         try {
             com.google.gson.JsonObject o = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
             String kind = o.has("kind") ? o.get("kind").getAsString() : "";
+            if ("serantis_master_challenge".equals(kind)) {   // challenged a Creature Master from the conversation
+                var e = player.level().getEntity(o.has("entity") ? o.get("entity").getAsInt() : -1);
+                if (e instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Masters.isMaster(c) && c.isAlive()
+                        && player.distanceToSqr(c) < 12 * 12 && dev.ahrivaea.battle.Battles.of(player) == null)
+                    dev.ahrivaea.battle.Battles.start(player, c);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_backpack".equals(kind)) {        // B: open the worn backpack (sneaking: take it off)
                 if (o.has("off") && o.get("off").getAsBoolean()) dev.serantis.battle.Backpacks.takeOff(player);
                 else dev.serantis.battle.Backpacks.open(player);
