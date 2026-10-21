@@ -28,7 +28,7 @@ public final class RecipeGuide {
     static final int CARD_H = 74, HEAD_H = 18, OTHER_H = 24;
     private static final int GOLD = 0xFFF2C94C, TEXT = 0xFFE6E2D8, DIM = 0xFF9AA4B4, SLOT = 0xFF2A2638, SLOT_EDGE = 0xFF4A4460;
     private static final Map<String, Item> TAGS = Map.of("minecraft:logs", Items.OAK_LOG, "minecraft:planks", Items.OAK_PLANKS,
-            "minecraft:wool", Items.WHITE_WOOL, "minecraft:stone_crafting_materials", Items.COBBLESTONE, "minecraft:coals", Items.COAL);
+            "minecraft:stone_crafting_materials", Items.COBBLESTONE, "minecraft:coals", Items.COAL);
 
     /** One recipe, ready to draw. */
     record Recipe(String station, boolean shapeless, ItemStack[] grid, ItemStack result) {}
