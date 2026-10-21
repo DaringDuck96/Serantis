@@ -1,2 +1,2 @@
 # classes
-compile
+sig:net.minecraft.world.entity.Entity
