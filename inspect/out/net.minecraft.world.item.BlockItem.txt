@@ -1,0 +1,22 @@
+Compiled from "BlockItem.java"
+public class net.minecraft.world.item.BlockItem extends net.minecraft.world.item.Item {
+  private final net.minecraft.world.level.block.Block block;
+  public net.minecraft.world.item.BlockItem(net.minecraft.world.level.block.Block, net.minecraft.world.item.Item$Properties);
+  public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext);
+  public net.minecraft.world.InteractionResult place(net.minecraft.world.item.context.BlockPlaceContext);
+  protected net.minecraft.sounds.SoundEvent getPlaceSound(net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.world.item.context.BlockPlaceContext updatePlacementContext(net.minecraft.world.item.context.BlockPlaceContext);
+  private static void updateBlockEntityComponents(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.item.ItemStack);
+  protected net.minecraft.world.level.block.state.BlockState getPlacementState(net.minecraft.world.item.context.BlockPlaceContext);
+  private static net.minecraft.world.level.block.state.BlockState updateBlockStateFromTag(net.minecraft.core.BlockPos, net.minecraft.world.level.Level, net.minecraft.world.item.ItemStack, net.minecraft.world.level.block.state.BlockState);
+  protected boolean canPlace(net.minecraft.world.item.context.BlockPlaceContext, net.minecraft.world.level.block.state.BlockState);
+  protected boolean mustSurvive();
+  protected boolean placeBlock(net.minecraft.world.item.context.BlockPlaceContext, net.minecraft.world.level.block.state.BlockState);
+  public static boolean updateCustomBlockEntityTag(net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, net.minecraft.core.BlockPos, net.minecraft.world.item.ItemStack);
+  public boolean shouldPrintOpWarning(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.level.block.Block getBlock();
+  public void registerBlocks(java.util.Map<net.minecraft.world.level.block.Block, net.minecraft.world.item.Item>, net.minecraft.world.item.Item);
+  public boolean canFitInsideContainerItems();
+  public void onDestroyed(net.minecraft.world.entity.item.ItemEntity);
+  public static void setBlockEntityData(net.minecraft.world.item.ItemStack, net.minecraft.world.level.block.entity.BlockEntityType<?>, net.minecraft.world.level.storage.TagValueOutput);
+}

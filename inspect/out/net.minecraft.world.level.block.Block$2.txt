@@ -1,0 +1,5 @@
+Compiled from "Block.java"
+class net.minecraft.world.level.block.Block$2 extends it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap<net.minecraft.world.level.block.Block$ShapePairKey> {
+  net.minecraft.world.level.block.Block$2(int, float);
+  protected void rehash(int);
+}

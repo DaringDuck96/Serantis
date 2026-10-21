@@ -1,0 +1,12 @@
+Compiled from "BlockBehaviour.java"
+public final class net.minecraft.world.level.block.state.BlockBehaviour$OffsetType extends java.lang.Enum<net.minecraft.world.level.block.state.BlockBehaviour$OffsetType> {
+  public static final net.minecraft.world.level.block.state.BlockBehaviour$OffsetType NONE;
+  public static final net.minecraft.world.level.block.state.BlockBehaviour$OffsetType XZ;
+  public static final net.minecraft.world.level.block.state.BlockBehaviour$OffsetType XYZ;
+  private static final net.minecraft.world.level.block.state.BlockBehaviour$OffsetType[] $VALUES;
+  public static net.minecraft.world.level.block.state.BlockBehaviour$OffsetType[] values();
+  public static net.minecraft.world.level.block.state.BlockBehaviour$OffsetType valueOf(java.lang.String);
+  private net.minecraft.world.level.block.state.BlockBehaviour$OffsetType();
+  private static net.minecraft.world.level.block.state.BlockBehaviour$OffsetType[] $values();
+  static {};
+}

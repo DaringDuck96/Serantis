@@ -1,0 +1,5 @@
+Compiled from "BlockBehaviour.java"
+class net.minecraft.world.level.block.state.BlockBehaviour$1 {
+  static final int[] $SwitchMap$net$minecraft$world$level$pathfinder$PathComputationType;
+  static {};
+}
