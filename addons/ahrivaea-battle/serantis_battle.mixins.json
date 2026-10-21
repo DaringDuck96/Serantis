@@ -57,6 +57,8 @@
   "client": [
     "client.PartyScreenMixin",
     "client.AvatarArmorMixin",
+    "client.HudCutsceneMixin",
+    "client.NameTagCutsceneMixin",
     "client.LivingRendererInvoker",
     "client.BattleScreenMixin",
     "client.StarterScreenMixin",

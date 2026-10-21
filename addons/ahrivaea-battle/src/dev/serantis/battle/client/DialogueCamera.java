@@ -63,6 +63,13 @@ public final class DialogueCamera {
 
     public static boolean active() { return active; }
 
+    /** A conversation or cutscene is showing: the HUD and name tags are hidden (only the scene and the dialogue). */
+    public static boolean cutscene() {
+        var screen = Minecraft.getInstance().gui.screen();
+        return active || screen instanceof DialogueScreen || screen instanceof FigureScreen || screen instanceof IntroScreen
+                || screen instanceof HarbingerScreen || screen instanceof RiddleScreen;
+    }
+
     private static Vec3 face(Entity e) {
         return new Vec3(e.getX(), e.getY() + faceHeight, e.getZ());
     }

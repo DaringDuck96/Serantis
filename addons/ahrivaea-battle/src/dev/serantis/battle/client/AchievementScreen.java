@@ -112,6 +112,15 @@ public class AchievementScreen extends Screen {
         if (tip != null) g.setComponentTooltipForNextFrame(font, tip, mouseX, mouseY);
     }
 
+    /** Text drawn smaller than the normal font, so it stays inside its box. */
+    private void small(GuiGraphicsExtractor g, String text, float x, float y, int color, float scale) {
+        g.pose().pushMatrix();
+        g.pose().translate(x, y);
+        g.pose().scale(scale, scale);
+        g.text(font, text, 0, 0, color);
+        g.pose().popMatrix();
+    }
+
     private void row(GuiGraphicsExtractor g, JsonObject a, int i, int y) {
         JsonArray tiers = a.getAsJsonArray("tiers"), apples = a.getAsJsonArray("apples");
         int claimed = a.get("claimed").getAsInt(), n = tiers.size();
@@ -124,18 +133,18 @@ public class AchievementScreen extends Screen {
         JsonArray titles = a.has("titles") ? a.getAsJsonArray("titles") : null;
         String title = claimed > 0 && titles != null ? titles.get(Math.min(claimed, titles.size()) - 1).getAsString()
                 : a.get("name").getAsString();
-        g.text(font, font.plainSubstrByWidth(title, 186), 30, y + 1, done ? GOLD : claimed > 0 ? 0xFFFFFFFF : 0xFFB8BCC8);
+        small(g, font.plainSubstrByWidth(title, 220), 30, y + 2, done ? GOLD : claimed > 0 ? 0xFFFFFFFF : 0xFFB8BCC8, 0.85f);
 
         // progress toward the next tier
         long prev = claimed == 0 ? 0 : tiers.get(claimed - 1).getAsLong();
         long next = done ? tiers.get(n - 1).getAsLong() : tiers.get(claimed).getAsLong();
         float f = done ? 1f : Math.max(0f, Math.min(1f, (value - prev) / (float) Math.max(1, next - prev)));
-        int bx = 30, bw = 180, by = y + 13;
+        int bx = 30, bw = 180, by = y + 11;
         g.fill(bx, by, bx + bw, by + 6, 0xFF26262E);
         g.fillGradient(bx, by, bx + Math.round(bw * f), by + 6, done ? 0xFFF2C94C : 0xFF8FD16A, done ? 0xFFB8902C : 0xFF4E9A35);
         String count = done ? String.format("%,d %s · complete!", value, a.get("verb").getAsString())
                 : String.format("%,d / %,d %s", value, next, a.get("verb").getAsString());
-        g.text(font, font.plainSubstrByWidth(count, 200), 30, by + 8, 0xFF9AA4B4);
+        small(g, font.plainSubstrByWidth(count, 260), 30, by + 8, 0xFF9AA4B4, 0.7f);
 
         // the tiers: gold once earned, with what each pays
         int px = 222;
@@ -146,7 +155,8 @@ public class AchievementScreen extends Screen {
             g.outline(cx, y + 1, 20, 21, got ? GOLD : (k == claimed ? 0xFF8FD16A : 0xFF3A3D48));
             String num = a.has("badges") ? a.getAsJsonArray("badges").get(k).getAsString()
                     : a.has("badge") ? a.get("badge").getAsString() : "+" + apples.get(k).getAsInt();
-            g.text(font, num, cx + 10 - font.width(num) / 2, y + 7, got ? GOLD : 0xFFB0B4C0);
+            float ns = Math.min(0.75f, 17f / Math.max(1, font.width(num)));       // always fits inside its box
+            small(g, num, cx + 10 - font.width(num) * ns / 2f, y + 11 - 4.5f * ns, got ? GOLD : 0xFFB0B4C0, ns);
         }
         // hover a tier to see what it takes
         int lx = hoverX, ly = hoverY;
