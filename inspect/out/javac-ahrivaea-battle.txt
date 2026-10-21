@@ -1,0 +1,8 @@
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/Riddles.java:117: error: cannot find symbol
+        if (!e.getTags().contains(ASK_TAG) || !(e.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
+              ^
+  symbol:   method getTags()
+  location: variable e of type CreatureEntity
+Note: /home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/Locomotion.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 error
