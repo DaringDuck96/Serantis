@@ -81,7 +81,7 @@ public class WelcomeScreen extends Screen {
     /** Every client tick: shows the guide the first time a player joins. */
     public static void autoOpen() {
         Minecraft mc = Minecraft.getInstance();
-        if (shown || mc.player == null) return;
+        if (shown || mc.player == null || IntroScreen.running()) return;
         JsonObject s = TradeClient.state();
         if (s == null || !s.has("serantis_welcome")) return;
         Screen open = mc.gui.screen();

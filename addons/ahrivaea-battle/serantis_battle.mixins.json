@@ -49,6 +49,7 @@
     "client.BattleClientMixin",
     "client.BaseScreenMixin",
     "client.PartyClientAccessor",
+    "client.StarterAccess",
     "client.MultiPlayerGameModeMixin",
     "client.MinecraftTradeMixin",
     "client.VillagerScreenMixin",

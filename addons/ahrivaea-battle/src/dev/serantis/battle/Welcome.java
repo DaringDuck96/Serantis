@@ -24,6 +24,7 @@ public final class Welcome {
     public static void tick(ServerPlayer p) {
         Holder h = (Holder) p;
         if (!h.serantis$loreBook() && p.tickCount >= 20) { h.serantis$setLoreBook(true); LoreBook.give(p); }
+        Intro.tick(p);                                                             // the opening scene comes first
         if (h.serantis$welcomeSent() || p.tickCount < 40) return;
         if (h.serantis$welcomed() && PlayerClass.of(p) != null) return;          // nothing to show (guide read, class picked)
         h.serantis$setWelcomeSent(true);
@@ -38,6 +39,6 @@ public final class Welcome {
     }
 
     public static void describe(ServerPlayer p, JsonObject state) {
-        if (!((Holder) p).serantis$welcomed()) state.addProperty("serantis_welcome", true);
+        if (!((Holder) p).serantis$welcomed() && !Intro.pending(p)) state.addProperty("serantis_welcome", true);
     }
 }

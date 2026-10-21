@@ -13,6 +13,7 @@ public abstract class MinecraftTradeMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void serantis$trades(CallbackInfo ci) {
         TradeClient.tick();
+        dev.serantis.battle.client.IntroScreen.autoOpen();
         dev.serantis.battle.client.WelcomeScreen.autoOpen();
         dev.serantis.battle.client.ClassScreen.autoOpen();
         dev.serantis.battle.client.BackpackKey.tick();

@@ -18,6 +18,8 @@ public final class DialogueCamera {
     private static Vec3 pos;
     private static float yaw, pitch;
     private static long last, returnStart;
+    private static boolean wide;
+    private static Vec3 anchor;
 
     private DialogueCamera() {}
 
@@ -26,6 +28,8 @@ public final class DialogueCamera {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
         speaker = who;
+        anchor = null;
+        wide = false;
         faceHeight = face;
         onPlayer = false;
         active = true;
@@ -42,7 +46,10 @@ public final class DialogueCamera {
     }
 
     /** Who the shot is on: the speaker (false) or you (true). */
-    public static void focusPlayer(boolean player) { onPlayer = player; }
+    public static void focusPlayer(boolean player) { onPlayer = player; wide = false; }
+
+    /** A shot of both of you, side by side (and it holds, even if they vanish). */
+    public static void wideShot() { wide = true; }
 
     /** Ends the conversation: a quick glide back (or straight back, e.g. when a battle takes over the camera). */
     public static void end(boolean glide) {
@@ -61,9 +68,10 @@ public final class DialogueCamera {
     public static double[] frame(float partial) {
         Minecraft mc = Minecraft.getInstance();
         if (!active || mc.player == null) return null;
-        if (speaker == null || speaker.isRemoved()) { active = false; return null; }
+        if (speaker == null || (speaker.isRemoved() && (anchor == null || !wide))) { active = false; return null; }
         Vec3 me = mc.player.getEyePosition(partial);
-        Vec3 them = face(speaker);
+        if (!speaker.isRemoved()) anchor = face(speaker);
+        Vec3 them = anchor;
         Vec3 flat = new Vec3(me.x - them.x, 0, me.z - them.z);
         Vec3 dir = flat.lengthSqr() < 1.0E-4 ? new Vec3(0, 0, 1) : flat.normalize();      // from them towards you
         Vec3 side = new Vec3(-dir.z, 0, dir.x);
@@ -71,6 +79,11 @@ public final class DialogueCamera {
         if (returning) {
             targetPos = me;
             lookAt = me.add(mc.player.getViewVector(partial));
+        } else if (wide) {                                               // both of you, from the side
+            Vec3 mid = me.add(them).scale(0.5);
+            double apart = Math.sqrt(flat.lengthSqr());
+            targetPos = mid.add(side.scale(Math.max(3.5, apart * 1.6 + 1.5))).add(0, 0.6, 0);
+            lookAt = mid.subtract(0, 0.3, 0);
         } else if (onPlayer) {                                           // your close-up: just in front of your face
             targetPos = me.subtract(dir.scale(1.5)).add(side.scale(0.35)).add(0, 0.05, 0);
             lookAt = me;

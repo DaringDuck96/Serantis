@@ -164,6 +164,7 @@ public abstract class BattlesMixin {
     // Black Market Merchants don't fight.
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
+        if (dev.serantis.battle.Intro.isFigure(entity)) { cir.setReturnValue(null); return; }   // the Mysterious Figure doesn't fight
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
             dev.serantis.battle.GoblinRaids.open(player, entity);
             cir.setReturnValue(null);
@@ -250,6 +251,11 @@ public abstract class BattlesMixin {
             }
             if ("serantis_welcome_seen".equals(kind)) {
                 dev.serantis.battle.Welcome.seen(player);
+                cir.setReturnValue(null);
+                return;
+            }
+            if ("serantis_intro_done".equals(kind)) {     // the opening scene is over
+                dev.serantis.battle.Intro.done(player);
                 cir.setReturnValue(null);
                 return;
             }

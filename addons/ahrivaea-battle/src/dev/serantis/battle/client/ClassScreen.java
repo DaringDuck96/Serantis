@@ -32,7 +32,7 @@ public class ClassScreen extends Screen {
     /** Every client tick: once the welcome guide is out of the way, a player with no class picks one. */
     public static void autoOpen() {
         Minecraft mc = Minecraft.getInstance();
-        if (shown || mc.player == null) return;
+        if (shown || mc.player == null || IntroScreen.running()) return;
         JsonObject s = TradeClient.state();
         if (s == null || !s.has("serantis_class") || s.has("serantis_welcome")) return;
         if (s.getAsJsonObject("serantis_class").get("chosen").getAsBoolean()) { shown = true; return; }

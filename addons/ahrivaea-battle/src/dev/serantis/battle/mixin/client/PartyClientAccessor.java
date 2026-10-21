@@ -10,4 +10,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface PartyClientAccessor {
     @Accessor("state")
     static JsonObject serantis$state() { throw new AssertionError(); }
+
+    @Accessor("pendingStarter")
+    static JsonObject serantis$pendingStarter() { throw new AssertionError(); }
+
+    @Accessor("pendingStarter")
+    static void serantis$setPendingStarter(JsonObject offer) { throw new AssertionError(); }
 }
