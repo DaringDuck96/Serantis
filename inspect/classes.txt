@@ -1,2 +1,2 @@
 # classes
-compile wip/vtalk
+compile wip/harbinger
