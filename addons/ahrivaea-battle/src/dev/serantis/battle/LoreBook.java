@@ -71,7 +71,7 @@ public final class LoreBook {
         return pages;
     }
 
-    public static ItemStack book() { return book(TITLE, HEADING, "Serantia", TEXT); }
+    public static ItemStack book() { return book(TITLE, HEADING, "Krea, the All Seeing", TEXT); }
 
     /** A signed written book: a heading page, then the paragraphs laid out over as many pages as they need. */
     public static ItemStack book(String title, String heading, String author, String[] paragraphs) { return book(title, heading, null, author, paragraphs); }

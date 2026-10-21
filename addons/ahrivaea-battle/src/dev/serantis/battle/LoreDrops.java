@@ -37,7 +37,7 @@ public final class LoreDrops {
                     String title = o.get("title").getAsString();
                     out.add(new Book(title, o.has("heading") ? o.get("heading").getAsString() : title.toUpperCase(),
                             o.has("subtitle") && !o.get("subtitle").isJsonNull() ? o.get("subtitle").getAsString() : null,
-                            o.has("author") ? o.get("author").getAsString() : "Unknown", paras.toArray(new String[0])));
+                            o.has("author") ? o.get("author").getAsString() : "Krea, the All Seeing", paras.toArray(new String[0])));
                 }
             }
         } catch (Exception e) {
