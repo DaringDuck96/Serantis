@@ -1,3 +1,4 @@
 # classes
-sig:net.minecraft.world.item.component.WrittenBookContent
-sig:net.minecraft.server.network.Filterable
+sig:net.minecraft.world.entity.LivingEntity
+sig:net.minecraft.world.entity.Mob
+asset:assets/minecraft/sounds.json
