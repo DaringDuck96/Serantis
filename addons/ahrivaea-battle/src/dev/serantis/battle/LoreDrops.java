@@ -17,7 +17,7 @@ import java.util.List;
  * first page; blank lines in the text separate paragraphs).
  */
 public final class LoreDrops {
-    public static final float CHANCE = 0.01f;
+    public static final float CHANCE = 0.025f;
     private record Book(String title, String heading, String subtitle, String author, String[] paragraphs) {}
     private static List<Book> books;
 
