@@ -32,7 +32,7 @@ public abstract class WorkerBrainMixin {
         return dev.serantis.battle.PlayerClass.is(owner, "performer") ? dev.serantis.battle.PlayerClass.PERFORMER_WORK : 1.0;
     }
 
-    // A Bard working at the same base: everyone there works 25% faster.
+    // A Bard working at the same base: everyone there works 15% faster.
     private double serantis$bard() {
         if (core == null || !(self.level() instanceof net.minecraft.server.level.ServerLevel level)) return 1.0;
         var base = dev.ahrivaea.base.Bases.coreAt(level, core);

@@ -26,7 +26,7 @@ final class BaseGuide {
                     + "around near the core. Its status on the base screen tells you what it's up to, or why it's idle."},
             {"Work speed", "A Level 1 creature works at 50% speed, and it gets faster as it levels up, the more so the higher its "
                     + "Charisma: at Level 20 a typical creature works at about 150%, the most charming over 200%. A Bard working at the "
-                    + "base makes everyone there 25% faster. Speed shortens every task, and furnaces and brewing stands it tends run at "
+                    + "base makes everyone there 15% faster. Speed shortens every task, and furnaces and brewing stands it tends run at "
                     + "its speed. Walking pace doesn't change."},
 
             {"Farming", "Harvests ripe crops (wheat, carrots, potatoes, beetroot, nether wart, berries, cocoa, melons and pumpkins, sugar "
@@ -72,7 +72,7 @@ final class BaseGuide {
                     + "a minute, healing as it goes, then gets back to work. Your creatures are never lost unless you release them."},
 
             {"Villagers at your base", "Recruited villagers work too, and some professions help the whole base: a Bard makes every "
-                    + "worker 25% faster, an Innkeeper refills your hearts when you sleep through the night, a Noble makes creatures "
+                    + "worker 15% faster, an Innkeeper refills your hearts when you sleep through the night, a Noble makes creatures "
                     + "spawning in and around the base more often Rare or rarer, and a Move Tutor teaches your creatures new moves "
                     + "(right-click it)."},
             {null, "Tip: check the base screen now and then. Each worker's status says what it's doing, or exactly what it's waiting "

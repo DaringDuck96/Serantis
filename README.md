@@ -253,7 +253,7 @@ Villagers in villages now spawn at **Level 5** with their profession already set
 
 Professions are the creatures mod's (Farmer, Fisherman, Gardener, Weaver, Hunter, Librarian, Explorer, Smith, Netherwright, Carpenter, Engineer, Cook, Leatherworker, Mason, Jeweler, Voidwalker, Alchemist) plus three that work from your base. Assign them to a base as workers:
 
-- **Bard:** every creature working at that base works 25% faster.
+- **Bard:** every creature working at that base works 15% faster.
 - **Innkeeper:** while one works at any base of yours, sleeping through the night refills your hearts.
 - **Noble:** creatures that spawn inside the base or within a chunk (16 blocks) of its border are Rare or rarer 35% of the time (normally 15%): 50% Common, 15% Uncommon, 22% Rare, 10% Super Rare, 3% Legendary.
 

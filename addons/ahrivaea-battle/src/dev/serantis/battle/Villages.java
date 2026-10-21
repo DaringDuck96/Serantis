@@ -24,7 +24,7 @@ import java.util.UUID;
  * Every villager in a village (see Towns) spawns at Level 5 with its profession already set (so recruiting one
  * gets you that profession; it can't be retrained into another). Besides the creatures mod's
  * professions there are three that work from a base when assigned there as a worker:
- *  - Bard: every creature working at that base works 25% faster;
+ *  - Bard: every creature working at that base works 15% faster;
  *  - Innkeeper: sleeping through the night refills the base owner's hearts;
  *  - Noble: creatures that spawn in or within a chunk of that base are more often Rare or rarer.
  * The Alchemist also turns golden apples into XP (20 each).
@@ -32,7 +32,7 @@ import java.util.UUID;
 public final class Villages {
     public static final int SPAWN_LEVEL = 5;
     public static final int APPLE_XP = 20;
-    public static final double BARD_SPEED = 1.25;
+    public static final double BARD_SPEED = 1.15;
 
     /** Professions villagers spawn with, and how often (out of the total). */
     private static final String[] ROLES = {
