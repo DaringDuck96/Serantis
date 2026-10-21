@@ -1,4 +1,0 @@
-Compiled from "Options.java"
-class net.minecraft.client.Options$1 extends com.google.gson.reflect.TypeToken<java.util.List<java.lang.String>> {
-  net.minecraft.client.Options$1();
-}

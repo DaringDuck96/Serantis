@@ -1,5 +1,0 @@
-Compiled from "Minecraft.java"
-class net.minecraft.client.Minecraft$2 {
-  static final int[] $SwitchMap$net$minecraft$world$phys$HitResult$Type;
-  static {};
-}
