@@ -1,8 +1,0 @@
-Compiled from "AbstractFurnaceBlockEntity.java"
-class net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity$1 implements net.minecraft.world.inventory.ContainerData {
-  final net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity this$0;
-  net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity$1(net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity);
-  public int get(int);
-  public void set(int, int);
-  public int getCount();
-}
