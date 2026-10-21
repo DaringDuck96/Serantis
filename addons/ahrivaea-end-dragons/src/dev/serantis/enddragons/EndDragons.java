@@ -56,7 +56,7 @@ public final class EndDragons {
 
     private static void sound(ServerLevel level, double x, double y, double z, String id, float volume, float pitch) {
         var s = net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.getValue(net.minecraft.resources.Identifier.parse("minecraft:" + id));
-        if (s != null) level.playSound(null, x, y, z, s, net.minecraft.sounds.SoundSource.HOSTILE, volume, pitch);
+        if (s != null) level.playSound((net.minecraft.world.entity.player.Player) null, x, y, z, s, net.minecraft.sounds.SoundSource.HOSTILE, volume, pitch);
     }
 
     /** Every tick: rising dragons climb out of the ground. */
