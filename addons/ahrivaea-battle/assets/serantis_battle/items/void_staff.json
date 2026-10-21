@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "serantis_battle:item/void_staff",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -1
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -8759864
-      }
-    ]
+    "model": "serantis_battle:item/void_staff"
   }
 }

@@ -59,8 +59,9 @@ public class ClassScreen extends Screen {
         int oy = y + 68;
         if (picked != null && "wizard".equals(picked.id())) {               // the staff's influence
             int cw = (w - 16 - 5 * 3) / 6;
-            for (int i = 0; i < Masters.INFLUENCES.length; i++) {
-                String inf = Masters.INFLUENCES[i];
+            String[] staffs = java.util.Arrays.stream(Masters.INFLUENCES).filter(dev.serantis.battle.Staffs::hasStaff).toArray(String[]::new);
+            for (int i = 0; i < staffs.length; i++) {
+                String inf = staffs[i];
                 Button b = Button.builder(Component.literal(Masters.influenceName(inf)), btn -> { extra = inf; rebuildWidgets(); })
                         .bounds(l + 8 + (i % 6) * (cw + 3), oy + (i / 6) * 22, cw, 20).build();
                 b.active = !inf.equals(extra);

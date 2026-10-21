@@ -70,7 +70,7 @@ public final class PlayerClass {
         if (k == null) return;
         switch (k.id()) {
             case "wizard" -> {
-                if (extra == null || !Staffs.STAFFS.containsKey(extra)) { tell(p, "Choose your staff's influence."); return; }
+                if (!Staffs.hasStaff(extra)) { tell(p, "Choose your staff's influence."); return; }
                 give(p, Staffs.starter(extra, p.getRandom()));
             }
             case "performer" -> {

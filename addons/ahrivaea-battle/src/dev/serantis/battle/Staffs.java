@@ -38,7 +38,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Magic Staffs.
+ * Magic Staffs, one design per influence except Normal (Emberwrath, Rimespire, Thundercall, Stoneheart, Tidecaller,
+ * Thornbloom, Riftwalker, Moonpetal, Gloomreaver, Runeweaver, Dawnbringer).
  *
  * A Magic Staff is crafted from three sticks and an Eye of Ender. It has no spell yet: take it to an enchanting
  * table (right-click the table holding it) and you're offered three spells at random from the Move Dex; pick one
@@ -107,17 +108,21 @@ public final class Staffs {
         return stack;
     }
 
+    /** Spells a staff can hold: every move of the eleven influences that have staffs (not Normal or universal moves). */
     private static List<MoveSpec> spells() {
         List<MoveSpec> out = new ArrayList<>();
-        for (MoveSpec s : MoveBook.all()) if (s.enabled) out.add(s);
+        for (MoveSpec s : MoveBook.all())
+            if (s.enabled && !"none".equals(s.influence) && STAFFS.containsKey(s.influence)) out.add(s);
         return out;
     }
+
+    /** Influences with a staff of their own (all but Normal). */
+    public static boolean hasStaff(String inf) { return inf != null && !"none".equals(inf) && STAFFS.containsKey(inf); }
 
     /** A Wizard's first staff: linked to a random spell of the chosen influence. */
     public static ItemStack starter(String inf, RandomSource random) {
         List<MoveSpec> pool = new ArrayList<>();
         for (MoveSpec s : spells()) if (inf.equals(s.influence)) pool.add(s);
-        if (pool.isEmpty()) for (MoveSpec s : spells()) if ("universal".equals(s.influence)) pool.add(s);
         if (pool.isEmpty()) return new ItemStack(BLANK);
         return linked(pool.get(random.nextInt(pool.size())));
     }
