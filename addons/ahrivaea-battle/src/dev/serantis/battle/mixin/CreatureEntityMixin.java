@@ -21,12 +21,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CreatureEntity.class)
-public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.battle.Market.Holder, dev.serantis.battle.Locomotion.Holder {
+public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.battle.Market.Holder, dev.serantis.battle.Locomotion.Holder, dev.serantis.battle.Towns.Home {
     @Unique private String serantis$moves;
     @Unique private String serantis$temperament;
     @Unique private String serantis$nickname;
     @Unique private String serantis$apples;
     @Unique private String serantis$tutor;
+    @Unique private String serantis$home;
+    @Override public String serantis$home() { return serantis$home; }
+    @Override public void serantis$setHome(String key) { serantis$home = key; }
     @Override public String serantis$tutor() { return serantis$tutor; }
     @Override public void serantis$setTutor(String offer) { serantis$tutor = offer; }
     @Unique private java.util.List<CaughtCreature> serantis$stock = java.util.List.of();
@@ -129,6 +132,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$nickname != null) out.putString("SerantisName", serantis$nickname);
         if (serantis$apples != null) out.putString("SerantisApples", serantis$apples);
         if (serantis$tutor != null) out.putString("SerantisTutor", serantis$tutor);
+        if (serantis$home != null) out.putString("SerantisHome", serantis$home);
         out.putInt("SerantisMoveMode", serantis$moveMode);
         if (serantis$leaveAt > 0) {
             out.putLong("SerantisLeaveAt", serantis$leaveAt);
@@ -147,6 +151,8 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (!nickname.isEmpty()) serantis$nickname = nickname;
         String apples = in.getStringOr("SerantisApples", "");
         if (!apples.isEmpty()) serantis$apples = apples;
+        String home = in.getStringOr("SerantisHome", "");
+        if (!home.isEmpty()) serantis$home = home;
         String tutor = in.getStringOr("SerantisTutor", "");
         if (!tutor.isEmpty()) serantis$tutor = tutor;
         serantis$leaveAt = in.getLongOr("SerantisLeaveAt", 0L);

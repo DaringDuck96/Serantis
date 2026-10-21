@@ -21,7 +21,7 @@ import java.util.UUID;
 /**
  * Serantis villagers.
  *
- * Every villager in a village spawns at Level 5 with its profession already set (so recruiting one
+ * Every villager in a village (see Towns) spawns at Level 5 with its profession already set (so recruiting one
  * gets you that profession; it can't be retrained into another). Besides the creatures mod's
  * professions there are three that work from a base when assigned there as a worker:
  *  - Bard: every creature working at that base works 25% faster;

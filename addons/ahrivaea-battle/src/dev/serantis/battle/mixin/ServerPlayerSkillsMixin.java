@@ -57,5 +57,6 @@ public abstract class ServerPlayerSkillsMixin {
         if (self.tickCount % 100 == 37) dev.serantis.battle.Achievements.check(self);
         if (self.tickCount % 20 == 11) dev.serantis.battle.Welcome.tick(self);
         if (self.tickCount % 20 == 3) dev.serantis.battle.Companions.check(self);
+        if (self.tickCount % 100 == 61) dev.serantis.battle.Towns.check(self);
     }
 }

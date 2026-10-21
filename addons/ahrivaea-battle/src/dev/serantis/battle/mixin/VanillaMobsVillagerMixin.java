@@ -28,12 +28,18 @@ public abstract class VanillaMobsVillagerMixin {
     @Redirect(method = "replace", at = @At(value = "INVOKE", ordinal = 0, target =
             "Ldev/ahrivaea/Ahrivaea;spawn(Lnet/minecraft/server/level/ServerLevel;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;IFDDD)Ldev/ahrivaea/creature/CreatureEntity;"))
     private static CreatureEntity serantis$villager(ServerLevel level, Species species, Influence influence, int lvl, float health, double x, double y, double z) {
+        boolean trader = "wandering_trader".equals(SERANTIS_MOB.get());
+        // Villages get their own villagers and guards (see Towns), not the ones Minecraft puts there.
+        if (!trader && dev.serantis.battle.Towns.inVillage(level, BlockPos.containing(x, y, z))) return null;
         CreatureEntity e = Ahrivaea.spawn(level, species, influence, Villages.SPAWN_LEVEL, health, x, y, z);
-        if ("wandering_trader".equals(SERANTIS_MOB.get())) {            // wandering traders swap creatures
+        if (e == null) return null;
+        if (trader) {                                                  // wandering traders swap creatures
             dev.serantis.battle.Wanderer.make(level, e);
-        } else if (e != null && level.getRandom().nextDouble() < Villages.GUARD_SHARE) {
-            Villages.makeGuard(e);                                     // some stand watch as Town Guards
-        } else Villages.assign(e, level.getRandom());
+        } else {
+            if (level.getRandom().nextDouble() < Villages.GUARD_SHARE) Villages.makeGuard(e);
+            else Villages.assign(e, level.getRandom());
+            e.setPersistenceRequired();                                // villagers never despawn
+        }
         return e;
     }
 
