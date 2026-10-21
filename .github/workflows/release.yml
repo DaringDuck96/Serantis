@@ -65,6 +65,7 @@ jobs:
                 -cp "$CREATURES:$ORIGINALS$MC_CP" -sourcepath tools/compile-stubs $(find "$dir/src" -name '*.java') 2> "$RUNNER_TEMP/javac.txt"; then
                 # Surface compiler errors as annotations so they show on the run page.
                 grep -E "error:" "$RUNNER_TEMP/javac.txt" | head -10 | while read -r l; do echo "::error title=javac ($name)::$l"; done
+                grep -qE "error:" "$RUNNER_TEMP/javac.txt" || head -15 "$RUNNER_TEMP/javac.txt" | while read -r l; do echo "::error title=javac ($name)::$l"; done
                 cat "$RUNNER_TEMP/javac.txt"
                 exit 1
               fi
