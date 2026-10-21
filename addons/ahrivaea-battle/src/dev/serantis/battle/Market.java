@@ -153,7 +153,6 @@ public final class Market {
         CreatureEntity e = Ahrivaea.spawn(level, villager, Influence.NONE, 10, -1f, x, y, z);
         if (e == null) return null;
         Villages.setJob(e, new VillagerJob(BLACK_MARKET, 1, 0));
-        e.setInvulnerable(true);
         e.setPersistenceRequired();
         e.setCustomName(Component.literal("Black Market Merchant").withStyle(ChatFormatting.DARK_PURPLE));
         e.setCustomNameVisible(true);

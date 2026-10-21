@@ -27,4 +27,12 @@ public abstract class LivingEntityDropsMixin {
         SERANTIS_AGAIN.set(true);
         try { dropFromLootTable(level, source, true); } finally { SERANTIS_AGAIN.set(false); }
     }
+
+    // Black Market Merchants can't be hurt.
+    @org.spongepowered.asm.mixin.injection.Inject(method = "hurtServer", at = @org.spongepowered.asm.mixin.injection.At("HEAD"), cancellable = true)
+    private void serantis$untouchable(net.minecraft.server.level.ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float amount,
+                                      org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if (dev.serantis.battle.Market.isBlackMarket((LivingEntity) (Object) this)
+                && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) cir.setReturnValue(false);
+    }
 }
