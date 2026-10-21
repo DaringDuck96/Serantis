@@ -1,0 +1,19 @@
+{
+ "name": "Innkeeper",
+ "description": "Keeps a bed ready: while an Innkeeper works at any base of yours, sleeping through the night refills your hearts.",
+ "outfit": "butcher",
+ "icon": "minecraft:red_bed",
+ "order": 19,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:battles_won",
+    "amount": 1,
+    "text": "Win a battle"
+   },
+   "sells": []
+  }
+ ]
+}

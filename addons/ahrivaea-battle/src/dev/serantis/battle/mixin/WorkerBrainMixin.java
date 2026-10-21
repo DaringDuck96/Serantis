@@ -14,11 +14,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WorkerBrain.class)
 public abstract class WorkerBrainMixin {
     @Shadow @Final private CreatureEntity self;
+    @Shadow @Final private net.minecraft.core.BlockPos core;
 
     @Inject(method = "speed", at = @At("HEAD"), cancellable = true)
     private void serantis$speed(CallbackInfoReturnable<Double> cir) {
         if (self == null || self.getInfluence() == null) return;
         if (self.getSpecies().isPresent())         // getStats includes its temperament
-            cir.setReturnValue(Pace.workSpeed(self.getCreatureLevel(), self.getStats().charisma()));
+            cir.setReturnValue(Pace.workSpeed(self.getCreatureLevel(), self.getStats().charisma()) * serantis$bard());
+    }
+
+    // A Bard working at the same base: everyone there works 25% faster.
+    private double serantis$bard() {
+        if (core == null || !(self.level() instanceof net.minecraft.server.level.ServerLevel level)) return 1.0;
+        var base = dev.ahrivaea.base.Bases.coreAt(level, core);
+        return dev.serantis.battle.Villages.has(base, "bard") ? dev.serantis.battle.Villages.BARD_SPEED : 1.0;
     }
 }

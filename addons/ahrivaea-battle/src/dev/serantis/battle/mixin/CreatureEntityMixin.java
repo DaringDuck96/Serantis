@@ -66,6 +66,14 @@ public abstract class CreatureEntityMixin implements MovesHolder {
                 self.getSpeciesId(), self.getInfluence(), self.getCreatureLevel()));
     }
 
+    // Note where a creature spawns naturally (for Nobles: better odds near their base).
+    @Redirect(method = "finalizeSpawn", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/level/ServerLevelAccessor;getBiome(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;"))
+    private net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> serantis$spawnSpot(net.minecraft.world.level.ServerLevelAccessor level, net.minecraft.core.BlockPos pos) {
+        dev.serantis.battle.Villages.markSpawn(level.getLevel(), pos);
+        return level.getBiome(pos);
+    }
+
     // A creature's level is kept within 0-20 when it is set up (was 0-50).
     @ModifyConstant(method = "setup", constant = @Constant(intValue = 50))
     private int serantis$levelCap(int original) {

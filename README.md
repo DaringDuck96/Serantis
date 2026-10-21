@@ -186,6 +186,20 @@ That's 1,223 golden apples in all. Where the counts come from: blocks placed, bl
 Right after you recruit a creature in battle, or pick your starter, a box pops up to name it (up to 20 characters). **Keep** leaves it with its species name. A named creature shows its name over its head, in battle and on the party screen, where its temperament and species follow in brackets, e.g. "Sparky (Brave Scrap Goblin)". Names are saved with the creature and kept when it's sent out, boxed or levelled up.
 
 
+### Villagers
+
+Villagers in villages now spawn at **Level 5** with their profession already set, so recruiting one (by battle, like any creature) gets you that profession; in battle a villager shows it after its name, e.g. "Villager (Bard)". A villager keeps the profession it was born with: there's no changing it (villagers recruited before this update that were never trained can still be trained once). Each recruit starts on its first deed (toward Novice) from the moment you recruit it.
+
+Professions are the creatures mod's (Farmer, Fisherman, Gardener, Weaver, Hunter, Librarian, Explorer, Smith, Netherwright, Carpenter, Engineer, Cook, Leatherworker, Mason, Jeweler, Voidwalker, Alchemist) plus three that work from your base. Assign them to a base as workers:
+
+- **Bard:** every creature working at that base works 25% faster.
+- **Innkeeper:** while one works at any base of yours, sleeping through the night refills your hearts.
+- **Noble:** creatures that spawn inside the base or within a chunk (16 blocks) of its border are Rare or rarer 35% of the time (normally 15%): 50% Common, 15% Uncommon, 22% Rare, 10% Super Rare, 3% Legendary.
+
+The **Alchemist** still sells potions and brewing ingredients for XP, and its trade screen also turns a golden apple from your inventory into 20 XP.
+
+How often each profession turns up in a village: Farmer and Mason are the most common; Explorer, Engineer, Leatherworker and Alchemist a little less; Bard and Innkeeper uncommon; Netherwright and Jeweler rarer; Noble and Voidwalker the rarest.
+
 ### Trading creatures
 
 Right-click another player and choose **Send trade request**. They get a request to accept or decline (it expires after 60 seconds). If they accept, a trade screen opens for both of you: each picks one creature from their party, sees what the other is offering (level, influence, rarity, HP, movement and stats), and presses **Confirm trade**. When both have confirmed, the two creatures swap owners, keeping their level, moves, temperament, name and golden apples. Changing a pick means both have to confirm again, and either player can cancel at any time (closing the screen cancels too). You can't trade during a battle, and only creatures in your party can be traded.

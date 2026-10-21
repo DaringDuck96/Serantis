@@ -1,0 +1,19 @@
+{
+ "name": "Noble",
+ "description": "Draws rare company: while a Noble works at a base, creatures spawning in or within a chunk of it are more often Rare or rarer.",
+ "outfit": "cartographer",
+ "icon": "minecraft:gold_block",
+ "order": 20,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:battles_won",
+    "amount": 1,
+    "text": "Win a battle"
+   },
+   "sells": []
+  }
+ ]
+}

@@ -129,6 +129,8 @@ public final class MoveEngine {
             if (!(e instanceof CreatureEntity)) continue;
             MovesHolder h = (MovesHolder) (Object) e;
             setTemperament(u, h.serantis$temperament(), h.serantis$apples());
+            var job = dev.serantis.battle.Villages.jobOf((CreatureEntity) e);           // villagers show their profession
+            if (job != null) ((UnitAccess) (Object) u).serantis$setName(u.name + " (" + dev.serantis.battle.Villages.professionName(job.profession()) + ")");
             List<MoveSpec> saved = MoveBook.decode(h.serantis$moves());
             if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved));
             else h.serantis$setMoves(encodeUnit(u));

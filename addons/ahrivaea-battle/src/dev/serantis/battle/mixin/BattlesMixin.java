@@ -76,6 +76,7 @@ public abstract class BattlesMixin {
             String temperament = ((BattleAccess) (Object) battle).serantis$defeatedTemperaments().get(battle.defeated.get(index));
             if (temperament != null) ((MovesHolder) (Object) caught).serantis$setTemperament(temperament);
         }
+        caught = dev.serantis.battle.Villages.onRecruit(sp, caught);     // a villager starts its first deed now
         boolean added = Party.addAnywhere(player, caught);
         if (added) dev.serantis.battle.Naming.offer(sp, caught);
         if (added) dev.serantis.battle.Achievements.recruited(sp, caught.influence());

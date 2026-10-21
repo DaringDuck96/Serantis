@@ -1,0 +1,19 @@
+{
+ "name": "Bard",
+ "description": "Plays for your base: while a Bard works at a base, every creature working there works 25% faster.",
+ "outfit": "librarian",
+ "icon": "minecraft:note_block",
+ "order": 18,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:battles_won",
+    "amount": 1,
+    "text": "Win a battle"
+   },
+   "sells": []
+  }
+ ]
+}

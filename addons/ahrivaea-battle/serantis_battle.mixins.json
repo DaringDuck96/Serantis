@@ -28,7 +28,11 @@
     "ItemCombinerMenuAccessor",
     "AnvilMenuSkillsMixin",
     "FurnaceResultSlotMixin",
-    "BlockItemPlantedMixin"
+    "BlockItemPlantedMixin",
+    "VanillaMobsVillagerMixin",
+    "WildSpawnerNobleMixin",
+    "ServerLevelInnMixin",
+    "VillagersRolesMixin"
   ],
   "client": [
     "client.PartyScreenMixin",
@@ -38,7 +42,8 @@
     "client.BaseScreenMixin",
     "client.PartyClientAccessor",
     "client.MultiPlayerGameModeMixin",
-    "client.MinecraftTradeMixin"
+    "client.MinecraftTradeMixin",
+    "client.VillagerScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
