@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "serantis_battle:item/eternita_stone"
+    "model": "serantis_battle:block/eternita_stone"
   }
 }

@@ -45,7 +45,7 @@ public final class Achievements {
                     new String[]{"Beginner's Luck", "Getting the Hang of It", "Tactical Genius (Allegedly)", "Undefeated-ish", "Grid Lord", "Final Boss Energy"}),
             new Track("recruited", "Creatures Recruited", "creatures recruited", new long[]{5, 25, 100, 200, 300, 400}, SIX,
                     new String[]{"Making Friends", "Petting Zoo", "Animal Magnetism", "Creature Hoarder", "Noah Would Be Proud", "Zookeeper Supreme"}),
-            new Track("seen", "Creatures Seen", "creatures seen", new long[]{5, 25, 50, 150, 300, 434}, SIX,
+            new Track("seen", "Creatures Seen", "creatures seen", new long[]{5, 25, 50, 150, 300, Retired.FORMS}, SIX,
                     new String[]{"Wait, What Was That?", "Bird Watcher", "Taking Field Notes", "I've Seen Things", "Walking Encyclopedia", "Seen It All"}),
             new Track("smelted", "Items Smelted", "items smelted", new long[]{100, 1_000, 10_000, 100_000, 1_000_000}, FIVE,
                     new String[]{"Hot Stuff", "Cooking With Lava", "Total Smeltdown", "Industrial Revolution", "Forge of the Gods"}),

@@ -24,6 +24,10 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Serantis Towers** | Cheaper first towers (the Ember Spire takes 64 coal, the Timber Watch 64 logs and the Quarry Keep 128 cobblestone), and the first player to make an offering at a tower claims it for good: anyone can help rebuild it, but its Base Core, the extra Base Core and the land around it go to whoever claimed it. |
 | **Serantis Battle and Spawning** | Every creature's battle stats come from the Serantis stat sheet. Creatures max out at Level 20, start at half their Level 20 stats at Level 1 and grow in a straight line. Spawns roll their rarity first (70% Common, 15% Uncommon, 10% Rare, 4% Super Rare, 1% Legendary), can be any level from 1 to 20, and have a 1% chance of being Mutated. Creatures fight with 3 moves each from the Move Dex, and every wild enemy gets a random battle mentality. |
 
+### The Arcane Dragon
+
+The creatures mod's Arcane Dragon is retired: the Clockwork Dragon is the arcane dragon in Serantia. It never spawns, and Wandering Traders, Black Market Merchants and Creature Masters never hand it out, so the dex counts 433 creature forms to find.
+
 ### Welcome guide
 
 The first time a player joins, a welcome guide pops up (over the starter screen, which comes back after). It welcomes them to Serantia (the world's name; the pack and repository are called Serantis) and runs through what it's about: picking a starter, battling and recruiting creatures, collecting them, XP as the main currency, rebuilding towers, Creature Masters and their stones, achievements, winning the game with the Eternita Stone, and that it's still Minecraft, where building and creativity are as valid a way to play as any battle. Read it again any time from the **Guide** button on the party screen.
@@ -130,7 +134,7 @@ Milestones in twelve areas, plus a line for each influence, pay out golden apple
 | Blocks Placed | 100 Some Assembly Required · 1,000 Brick by Brick · 10,000 Not Just a Dirt Hut · 100,000 Zoning Violation · 1,000,000 Terraformer | 3 · 6 · 12 · 24 · 48 |
 | Battles Won | 1 Beginner's Luck · 10 Getting the Hang of It · 50 Tactical Genius (Allegedly) · 100 Undefeated-ish · 250 Grid Lord · 500 Final Boss Energy | 2 · 4 · 8 · 16 · 32 · 48 |
 | Creatures Recruited | 5 Making Friends · 25 Petting Zoo · 100 Animal Magnetism · 200 Creature Hoarder · 300 Noah Would Be Proud · 400 Zookeeper Supreme | 2 · 4 · 8 · 16 · 32 · 48 |
-| Creatures Seen | 5 Wait, What Was That? · 25 Bird Watcher · 50 Taking Field Notes · 150 I've Seen Things · 300 Walking Encyclopedia · 434 (every form) Seen It All | 2 · 4 · 8 · 16 · 32 · 48 |
+| Creatures Seen | 5 Wait, What Was That? · 25 Bird Watcher · 50 Taking Field Notes · 150 I've Seen Things · 300 Walking Encyclopedia · 433 (every form) Seen It All | 2 · 4 · 8 · 16 · 32 · 48 |
 | Items Smelted | 100 Hot Stuff · 1,000 Cooking With Lava · 10,000 Total Smeltdown · 100,000 Industrial Revolution · 1,000,000 Forge of the Gods | 3 · 6 · 12 · 24 · 48 |
 | Armor Crafted | 5 Suit Up · 10 Fashion Forward · 25 Runway Ready · 100 Tin Can Collector · 250 Walking Armory | 2 · 4 · 8 · 16 · 32 |
 | Seeds Planted | 100 Seeds of Doubt · 1,000 Green Thumb · 10,000 Down on the Farm · 100,000 Old MacDonald Had a Lot · 1,000,000 Feed the World | 3 · 6 · 12 · 24 · 48 |
@@ -241,6 +245,8 @@ Creature Masters are the gym leaders. They turn up fairly often: any wild creatu
 Hit it with a weapon to challenge it. It fights alongside 3 to 5 creatures of its influence, each 3 to 5 levels above or below its own and more often Rare or rarer than wild creatures. Its team is 25% stronger than wild creatures (the Master 40%), and each of them fights with the strongest of several move sets. None of them can be recruited. Beat the Master and it leaves; the battle pays **double XP** and gives you a **Gym Master Stone** of its influence. Lose or run, and it stays until its day is up.
 
 Each Gym Master Stone raises your **mastery** of that influence, up to 5 stones per influence (after 5, beating that influence's Masters still pays double XP but no more stones). Every stone gives creatures of that influence +3% spawn weight around you, up to +15%: they turn up a little more often in the biomes they already live in, and the rarity odds don't change.
+
+Gym Master Stones and the Eternita Stone are **trophies**: place one and it stands on the block as a gem on its pedestal, facing you (it glows faintly, and breaks back into the stone). The Normal stone is Wild Quartz, Fire the Ember Ruby, Frost the Rime Diamond, Storm the Storm Citrine, Earth the Stoneheart Topaz, Water the Tidal Aquamarine, Nature the Grove Emerald, Void the Void Amethyst, Fae the Fae Rose Heart, Darkness the Shadow Onyx, Arcane the Arcane Spellstone and Radiant the Sunstone; the Eternita Stone is the Prismatic Gem. The models are converted with `tools/convert_trophies.py`.
 
 Collect all 5 stones of all 12 influences (60 in all) and you get the rainbow **Eternita Stone**: wild creatures that spawn around you are Mutated 5 times in 100 instead of 1 in 100. It also earns the achievement "I Won! I Won the Game!".
 

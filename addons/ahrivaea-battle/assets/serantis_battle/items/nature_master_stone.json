@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "serantis_battle:item/nature_master_stone",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -11624643
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -1
-      }
-    ]
+    "model": "serantis_battle:block/nature_master_stone"
   }
 }

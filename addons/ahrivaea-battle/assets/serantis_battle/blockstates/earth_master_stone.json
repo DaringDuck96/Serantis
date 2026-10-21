@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "serantis_battle:block/earth_master_stone"
+    },
+    "facing=east": {
+      "model": "serantis_battle:block/earth_master_stone",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "serantis_battle:block/earth_master_stone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "serantis_battle:block/earth_master_stone",
+      "y": 270
+    }
+  }
+}

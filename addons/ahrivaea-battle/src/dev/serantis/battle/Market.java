@@ -175,7 +175,7 @@ public final class Market {
         for (Species sp : Species.all()) {
             if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id())) continue;
             for (Influence inf : sp.forms().keySet())
-                byRarity.computeIfAbsent(RecruitRules.rarity(sp, inf), k -> new ArrayList<>()).add(new Object[]{sp, inf});
+                if (!Retired.is(sp, inf)) byRarity.computeIfAbsent(RecruitRules.rarity(sp, inf), k -> new ArrayList<>()).add(new Object[]{sp, inf});
         }
         List<CaughtCreature> out = new ArrayList<>();
         int n = 3 + random.nextInt(3);

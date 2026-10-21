@@ -61,7 +61,7 @@ public final class Wanderer {
         for (Species sp : Species.all()) {
             if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id())) continue;
             for (Influence inf : sp.forms().keySet())
-                byRarity.computeIfAbsent(RecruitRules.rarity(sp, inf), k -> new ArrayList<>()).add(new Object[]{sp, inf});
+                if (!Retired.is(sp, inf)) byRarity.computeIfAbsent(RecruitRules.rarity(sp, inf), k -> new ArrayList<>()).add(new Object[]{sp, inf});
         }
         int roll = random.nextInt(100), tier = 0;
         for (int i = 0; i < SpawnOdds.PERCENT.length; i++) { if (roll < SpawnOdds.PERCENT[i]) { tier = i; break; } roll -= SpawnOdds.PERCENT[i]; }

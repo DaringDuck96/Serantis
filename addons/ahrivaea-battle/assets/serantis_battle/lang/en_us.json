@@ -11,5 +11,18 @@
   "item.serantis_battle.darkness_master_stone": "Darkness Gym Master Stone",
   "item.serantis_battle.arcane_master_stone": "Arcane Gym Master Stone",
   "item.serantis_battle.radiant_master_stone": "Radiant Gym Master Stone",
-  "item.serantis_battle.eternita_stone": "Eternita Stone"
+  "item.serantis_battle.eternita_stone": "Eternita Stone",
+  "block.serantis_battle.none_master_stone": "Normal Gym Master Stone",
+  "block.serantis_battle.fire_master_stone": "Fire Gym Master Stone",
+  "block.serantis_battle.frost_master_stone": "Frost Gym Master Stone",
+  "block.serantis_battle.storm_master_stone": "Storm Gym Master Stone",
+  "block.serantis_battle.earth_master_stone": "Earth Gym Master Stone",
+  "block.serantis_battle.water_master_stone": "Water Gym Master Stone",
+  "block.serantis_battle.nature_master_stone": "Nature Gym Master Stone",
+  "block.serantis_battle.void_master_stone": "Void Gym Master Stone",
+  "block.serantis_battle.fae_master_stone": "Fae Gym Master Stone",
+  "block.serantis_battle.darkness_master_stone": "Darkness Gym Master Stone",
+  "block.serantis_battle.arcane_master_stone": "Arcane Gym Master Stone",
+  "block.serantis_battle.radiant_master_stone": "Radiant Gym Master Stone",
+  "block.serantis_battle.eternita_stone": "Eternita Stone"
 }

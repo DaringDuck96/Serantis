@@ -69,14 +69,20 @@ public final class Masters {
 
     private static Identifier id(String path) { return Identifier.parse("serantis_battle:" + path); }
 
+    /** Gym Master Stones and the Eternita Stone are blocks: place one to show it off as a trophy. */
     public static void registerItems() {
-        for (String inf : INFLUENCES) {
-            ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id(inf + "_master_stone"));
-            STONES.put(inf, Registry.register(BuiltInRegistries.ITEM, key,
-                    new Item(new Item.Properties().stacksTo(16).rarity(Rarity.RARE).setId(key))));
-        }
-        ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id("eternita_stone"));
-        ETERNITA = Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).setId(key)));
+        for (String inf : INFLUENCES) STONES.put(inf, trophy(inf + "_master_stone", 16, Rarity.RARE));
+        ETERNITA = trophy("eternita_stone", 1, Rarity.EPIC);
+    }
+
+    private static Item trophy(String name, int stack, Rarity rarity) {
+        ResourceKey<net.minecraft.world.level.block.Block> blockKey = ResourceKey.create(Registries.BLOCK, id(name));
+        var block = Registry.register(BuiltInRegistries.BLOCK, blockKey, new TrophyBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
+                .setId(blockKey).strength(1.5f, 6f).sound(net.minecraft.world.level.block.SoundType.AMETHYST)
+                .lightLevel(state -> 5).noOcclusion()));
+        ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id(name));
+        return Registry.register(BuiltInRegistries.ITEM, key, new net.minecraft.world.item.BlockItem(block,
+                new Item.Properties().stacksTo(stack).rarity(rarity).setId(key)));
     }
 
     public static String influenceName(String inf) {
@@ -133,7 +139,7 @@ public final class Masters {
         if (influence == null) return null;
         Map<String, List<Species>> byRarity = new LinkedHashMap<>();
         for (Species sp : Species.all()) {
-            if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id()) || !sp.forms().containsKey(influence)) continue;
+            if (dev.ahrivaea.villager.Villagers.SPECIES.equals(sp.id()) || !sp.forms().containsKey(influence) || Retired.is(sp, influence)) continue;
             byRarity.computeIfAbsent(RecruitRules.rarity(sp, influence), k -> new ArrayList<>()).add(sp);
         }
         int roll = random.nextInt(100);

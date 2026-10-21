@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "serantis_battle:item/frost_master_stone",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -6630923
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -1
-      }
-    ]
+    "model": "serantis_battle:block/frost_master_stone"
   }
 }

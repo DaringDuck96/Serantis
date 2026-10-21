@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "serantis_battle:item/fire_master_stone",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -1812690
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -1
-      }
-    ]
+    "model": "serantis_battle:block/fire_master_stone"
   }
 }
