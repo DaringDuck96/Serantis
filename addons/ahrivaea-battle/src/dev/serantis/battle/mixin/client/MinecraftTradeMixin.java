@@ -15,6 +15,7 @@ public abstract class MinecraftTradeMixin {
         TradeClient.tick();
         dev.serantis.battle.client.IntroScreen.autoOpen();
         dev.serantis.battle.client.FigureScreen.autoOpen();
+        dev.serantis.battle.client.DialogueScreen.autoOpen();
         dev.serantis.battle.client.WelcomeScreen.autoOpen();
         dev.serantis.battle.client.ClassScreen.autoOpen();
         dev.serantis.battle.client.BackpackKey.tick();

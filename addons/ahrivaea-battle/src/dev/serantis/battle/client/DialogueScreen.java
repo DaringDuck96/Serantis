@@ -33,6 +33,9 @@ public class DialogueScreen extends Screen {
     private int index;
     private long shownAt;
     private boolean choosing, challenged, done;
+    private boolean villager;                                    // a villager's talk (see VillagerTalk), not a Master's
+    private static JsonObject villagers;
+    private static String lastTalk = "";
 
     private DialogueScreen(Entity master, String title, JsonObject convo) {
         super(Component.literal(title));
@@ -54,6 +57,40 @@ public class DialogueScreen extends Screen {
             }
         }
         return all;
+    }
+
+    /** The server says a villager wants a word before the fight: one of its profession's five conversations. */
+    public static void autoOpen() {
+        Minecraft mc = Minecraft.getInstance();
+        JsonObject s = TradeClient.state();
+        JsonObject t = s != null && s.has("serantis_villager_talk") ? s.getAsJsonObject("serantis_villager_talk") : null;
+        if (t == null) { lastTalk = ""; return; }
+        if (mc.player == null || mc.level == null || mc.gui.screen() != null || t.toString().equals(lastTalk)) return;
+        Entity e = mc.level.getEntity(t.get("entity").getAsInt());
+        if (e == null) return;
+        if (villagers == null) {
+            try (var in = DialogueScreen.class.getResourceAsStream("/serantis_battle/villager_dialogue.json")) {
+                villagers = in == null ? new JsonObject() : JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
+            } catch (Exception ex) {
+                villagers = new JsonObject();
+            }
+        }
+        String key = t.get("key").getAsString();
+        if (!villagers.has(key)) return;
+        lastTalk = t.toString();
+        JsonObject v = villagers.getAsJsonObject(key);
+        JsonArray convos = v.getAsJsonArray("dialogues");
+        JsonObject convo = convos.get(e.level().getRandom().nextInt(convos.size())).getAsJsonObject();
+        String look = VillagerLooks.look("none".equals(key) ? null : key);
+        float face = e.getBbHeight() * 0.85f;
+        try {
+            float h = dev.ahrivaea.client.GeoModels.height("villager", look == null ? "villager" : look);
+            if (h > face) face = h * 0.88f;
+        } catch (RuntimeException ignored) { }
+        DialogueCamera.start(e, face);
+        DialogueScreen screen = new DialogueScreen(e, v.get("title").getAsString(), convo);
+        screen.villager = true;
+        mc.gui.setScreen(screen);
     }
 
     /** Right-clicked a Creature Master of this influence: one of its five conversations, at random. */
@@ -115,6 +152,15 @@ public class DialogueScreen extends Screen {
     }
 
     private void finish() {
+        if (villager) {
+            JsonObject o = new JsonObject();
+            o.addProperty("kind", "serantis_villager_answer");
+            o.addProperty("fight", challenged);
+            dev.ahrivaea.client.battle.BattleClient.send(o);
+            DialogueCamera.end(!challenged);
+            Minecraft.getInstance().gui.setScreen(null);
+            return;
+        }
         if (challenged) {
             JsonObject o = new JsonObject();
             o.addProperty("kind", "serantis_master_challenge");
@@ -134,6 +180,12 @@ public class DialogueScreen extends Screen {
 
     @Override
     public void onClose() {
+        if (villager) {                                          // walked away: no fight
+            JsonObject o = new JsonObject();
+            o.addProperty("kind", "serantis_villager_answer");
+            o.addProperty("fight", false);
+            dev.ahrivaea.client.battle.BattleClient.send(o);
+        }
         DialogueCamera.end(true);
         Minecraft.getInstance().gui.setScreen(null);
     }

@@ -1,0 +1,2312 @@
+{
+ "none": {
+  "title": "Villager",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Oh! A visitor. Nobody visits. I mostly stand near the well and think about bread."
+     ],
+     [
+      "player",
+      "Just bread?"
+     ],
+     [
+      "master",
+      "Sometimes rolls. I contain multitudes."
+     ]
+    ],
+    "challenge": "Want to come think about bread at my base?",
+    "accept": "Only if I win! Or lose! I'm flexible!",
+    "decline": "Enjoy the well.",
+    "farewell": "It's a very good well."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "I don't have a job yet. I'm keeping my options open."
+     ],
+     [
+      "player",
+      "What could you do at a base?"
+     ],
+     [
+      "master",
+      "Carry things! Farm a bit! Look busy when you walk past!"
+     ]
+    ],
+    "challenge": "Prove it in a fight and you're hired.",
+    "accept": "Ooh, a job interview. With punching.",
+    "decline": "Keep those options open.",
+    "farewell": "They're very open. Wide open."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Can I tell you a secret? Zombies terrify me. They're just like us, but worse at conversation."
+     ],
+     [
+      "player",
+      "That's... fair."
+     ],
+     [
+      "master",
+      "They also never knock."
+     ]
+    ],
+    "challenge": "I'll protect you, if you can hold your own.",
+    "accept": "Deal! Hold my... well, nothing. Let's go.",
+    "decline": "Stay safe.",
+    "farewell": "Lock the door. Twice."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "If I could live anywhere, it'd be a flower forest. Bees, blossoms, no creepers sneaking up on you."
+     ],
+     [
+      "player",
+      "No creepers here either."
+     ],
+     [
+      "master",
+      "That's what they want you to think."
+     ]
+    ],
+    "challenge": "I know a base with flowers. Fight me for a spot?",
+    "accept": "For flowers? Absolutely.",
+    "decline": "Maybe someday.",
+    "farewell": "I'll keep dreaming of tulips."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "My grandmother said the world was made by twelve dragons, and that one day the First would wake again."
+     ],
+     [
+      "player",
+      "Do you believe her?"
+     ],
+     [
+      "master",
+      "She was right about the weather every single time. So... yes?"
+     ]
+    ],
+    "challenge": "Let's see if you've got some dragon fire in you.",
+    "accept": "My grandmother would be so proud. Or horrified.",
+    "decline": "Say hello to your grandmother.",
+    "farewell": "She'll want to know you were polite."
+   }
+  ]
+ },
+ "farmer": {
+  "title": "Farmer",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Up before the sun, wheat, carrots, potatoes, repeat. You'd think the chickens would say thank you."
+     ],
+     [
+      "player",
+      "Do they?"
+     ],
+     [
+      "master",
+      "They lay eggs at me. I choose to see it as gratitude."
+     ]
+    ],
+    "challenge": "Come farm for me. After a little fight.",
+    "accept": "Ha! I've wrestled pumpkins bigger than you.",
+    "decline": "Good luck with the chickens.",
+    "farewell": "They're plotting something, I swear."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At a base, I'd keep your fields planted and harvested. You'd never go hungry again."
+     ],
+     [
+      "player",
+      "Even the hard-to-grow stuff?"
+     ],
+     [
+      "master",
+      "Especially the hard stuff. Beetroot fears me."
+     ]
+    ],
+    "challenge": "Sounds perfect. Fight me for it?",
+    "accept": "Roll up your sleeves, then!",
+    "decline": "Maybe when I have more fields.",
+    "farewell": "Fields don't plant themselves!"
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "You know what keeps me up at night? Ravagers. Great big beasts trampling through the crops."
+     ],
+     [
+      "player",
+      "They're terrifying."
+     ],
+     [
+      "master",
+      "And they never even eat the wheat. Just ruin it. Rude."
+     ]
+    ],
+    "challenge": "I'll keep the ravagers off your fields.",
+    "accept": "Show me you can handle a ravager. Starting with me!",
+    "decline": "Stay safe out there.",
+    "farewell": "Keep an eye on the treeline."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Plains, plains, plains. Flat ground, good soil, sky as far as you can see."
+     ],
+     [
+      "player",
+      "Doesn't it get boring?"
+     ],
+     [
+      "master",
+      "Boring is just peaceful with a bad attitude."
+     ]
+    ],
+    "challenge": "My base has wide open fields.",
+    "accept": "Now you're speaking my language. Let's go!",
+    "decline": "Enjoy the view.",
+    "farewell": "It's the best one in Serantia."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "They say Mokele-mbembe spread the first forests and grass across the world. Every seed I plant is a little piece of its work."
+     ],
+     [
+      "player",
+      "You think about that while farming?"
+     ],
+     [
+      "master",
+      "Every row. Makes the back ache a little less."
+     ]
+    ],
+    "challenge": "Bring that thinking to my base.",
+    "accept": "Then let's settle it the old-fashioned way!",
+    "decline": "Keep planting.",
+    "farewell": "For Mokele-mbembe!"
+   }
+  ]
+ },
+ "fisherman": {
+  "title": "Fisherman",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Sat by this river since dawn. Caught two cod, one boot and a saddle."
+     ],
+     [
+      "player",
+      "A saddle?"
+     ],
+     [
+      "master",
+      "Don't ask me how. The river provides."
+     ]
+    ],
+    "challenge": "Fish for me instead. After we fight.",
+    "accept": "Reel me in, if you can!",
+    "decline": "Hope the river gives you something good.",
+    "farewell": "It usually gives boots."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Put me by some water at your base and I'll keep the fish coming. Treasure too, if the river's feeling generous."
+     ],
+     [
+      "player",
+      "Treasure?"
+     ],
+     [
+      "master",
+      "Enchanted books, name tags... once a whole bow!"
+     ]
+    ],
+    "challenge": "I need a fisherman. Let's do this.",
+    "accept": "Hook, line and sinker. Come on!",
+    "decline": "Not yet.",
+    "farewell": "The water will wait."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Drowned. Can't stand them. Something about a soggy fellow throwing tridents at you."
+     ],
+     [
+      "player",
+      "Fair enough."
+     ],
+     [
+      "master",
+      "And they always smell like old seaweed."
+     ]
+    ],
+    "challenge": "My base is drowned-free. Fight for a spot?",
+    "accept": "Then cast your line at me!",
+    "decline": "Watch the deep water.",
+    "farewell": "Never turn your back on a river."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Give me a warm ocean, coral reefs, turtles drifting by. That's paradise."
+     ],
+     [
+      "player",
+      "Not a cold one?"
+     ],
+     [
+      "master",
+      "I tried a frozen ocean once. My beard froze to my rod."
+     ]
+    ],
+    "challenge": "My base has a nice warm pond.",
+    "accept": "Warm water? Now you've got me. Let's fight!",
+    "decline": "Enjoy the coral.",
+    "farewell": "Wave at the turtles for me."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "My father said Gargouille filled the world's hollows with water, and the deep remembers everything the land forgets."
+     ],
+     [
+      "player",
+      "What does it remember?"
+     ],
+     [
+      "master",
+      "Sunken kingdoms. Old crowns. I've hooked a few things I put right back."
+     ]
+    ],
+    "challenge": "Come tell me more at my base.",
+    "accept": "Let's see if you're as strong as the tide!",
+    "decline": "Keep your secrets.",
+    "farewell": "The water certainly keeps its own."
+   }
+  ]
+ },
+ "hunter": {
+  "title": "Hunter",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Tracked a fox for two days. It stole my lunch, then my boot, then my dignity."
+     ],
+     [
+      "player",
+      "Did you catch it?"
+     ],
+     [
+      "master",
+      "We have an understanding now. It keeps the boot."
+     ]
+    ],
+    "challenge": "Hunt for me. After a duel.",
+    "accept": "Ha! You'll be quicker than the fox, I hope.",
+    "decline": "Good luck with the fox.",
+    "farewell": "It's watching. It's always watching."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'd keep bows strung, arrows fletched, and the best drops from every creature I come across."
+     ],
+     [
+      "player",
+      "Can you teach me?"
+     ],
+     [
+      "master",
+      "Rule one: never trust anything that rustles."
+     ]
+    ],
+    "challenge": "Rule two: fight me.",
+    "accept": "Rule two accepted! Draw!",
+    "decline": "Maybe later.",
+    "farewell": "I'll keep an arrow ready."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Everyone thinks hunters are fearless. Spiders. Big ones. Climbing walls. Nope."
+     ],
+     [
+      "player",
+      "You hunt monsters but fear spiders?"
+     ],
+     [
+      "master",
+      "They have eight legs. Eight! Nobody needs that many."
+     ]
+    ],
+    "challenge": "No spiders at my base. Promise.",
+    "accept": "I'll hold you to that. Let's go!",
+    "decline": "Watch the ceilings.",
+    "farewell": "...Why did you say that."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Old growth taiga. Tall spruce, cold air, wolves howling in the distance. That's home."
+     ],
+     [
+      "player",
+      "Wolves don't bother you?"
+     ],
+     [
+      "master",
+      "Wolves are fine. They don't have eight legs."
+     ]
+    ],
+    "challenge": "My base has spruce trees.",
+    "accept": "Then I'm already half sold. Fight me!",
+    "decline": "Enjoy the taiga.",
+    "farewell": "Mind the wolves. Pet them, though."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Hunters remember the old story: the Lindworm made the plain beasts, the deer and wolves and rabbits, and gave them freedom."
+     ],
+     [
+      "player",
+      "Freedom?"
+     ],
+     [
+      "master",
+      "To be just what they are. I respect that. I try to hunt the same way."
+     ]
+    ],
+    "challenge": "Hunt beside me, then.",
+    "accept": "Show me you've got the instincts!",
+    "decline": "Respect the wild.",
+    "farewell": "It'll respect you back. Mostly."
+   }
+  ]
+ },
+ "librarian": {
+  "title": "Librarian",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Shh! ... Oh, sorry. Force of habit. I shush the chickens too."
+     ],
+     [
+      "player",
+      "Do they listen?"
+     ],
+     [
+      "master",
+      "Never. Chickens have no respect for literature."
+     ]
+    ],
+    "challenge": "Read for me at my base. After a duel.",
+    "accept": "A duel! How thrillingly unscholarly. Very well!",
+    "decline": "Enjoy the quiet.",
+    "farewell": "Shh. Thank you."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Give me a desk at your base and I'll keep the shelves stocked: books, paper, even an enchanted volume or two."
+     ],
+     [
+      "player",
+      "You can enchant books?"
+     ],
+     [
+      "master",
+      "I can certainly lose them in a very organised way."
+     ]
+    ],
+    "challenge": "Organised loss sounds great. Fight me?",
+    "accept": "Footnotes at dawn!",
+    "decline": "Not yet.",
+    "farewell": "I'll mark your page."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "The Endermen. They pick up blocks. From my library. And never put them back."
+     ],
+     [
+      "player",
+      "Just the blocks?"
+     ],
+     [
+      "master",
+      "Last week it was a whole bookshelf. Overdue forever."
+     ]
+    ],
+    "challenge": "My base has no Endermen. Fight for a spot?",
+    "accept": "An Enderman-free library? Let's go!",
+    "decline": "Don't look them in the eye.",
+    "farewell": "Or the bookshelves."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "A snowy village, a crackling fire, a stack of books nobody else has read. Bliss."
+     ],
+     [
+      "player",
+      "Snowy? Isn't it cold?"
+     ],
+     [
+      "master",
+      "That's what the fire's for. And the books. Mostly the books."
+     ]
+    ],
+    "challenge": "I'll build you a cosy reading nook.",
+    "accept": "With a fireplace? Sold. En garde!",
+    "decline": "Stay warm.",
+    "farewell": "Read something good."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Our oldest records speak of the Age of Ashes, when kingdoms reached too far and the world burned for it."
+     ],
+     [
+      "player",
+      "Do the books say how it started?"
+     ],
+     [
+      "master",
+      "Every book says something different. That's what worries me."
+     ]
+    ],
+    "challenge": "Help me make sure it doesn't happen again.",
+    "accept": "Then let's begin with a lesson in combat!",
+    "decline": "Keep reading.",
+    "farewell": "Someone has to remember."
+   }
+  ]
+ },
+ "explorer": {
+  "title": "Explorer",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Just got back from the edge of the map. Turns out the map just... keeps going."
+     ],
+     [
+      "player",
+      "Where are you headed next?"
+     ],
+     [
+      "master",
+      "Wherever the compass doesn't point. It's always wrong anyway."
+     ]
+    ],
+    "challenge": "Explore from my base. After a fight.",
+    "accept": "Ha! I've fought sand storms. Bring it!",
+    "decline": "Safe travels.",
+    "farewell": "If you see my hat, it's mine."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'd keep maps and compasses on hand, plus all the odd keepsakes I bring home: discs, trims, sherds."
+     ],
+     [
+      "player",
+      "Sherds?"
+     ],
+     [
+      "master",
+      "Broken pottery. Very important. Don't ask why."
+     ]
+    ],
+    "challenge": "I'll take the pottery. Fight me?",
+    "accept": "For science! And pottery!",
+    "decline": "Not yet.",
+    "farewell": "The ruins will wait for us."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "I've crossed deserts and jungles, but the Warden? Down in the deep dark? Absolutely not."
+     ],
+     [
+      "player",
+      "You've seen it?"
+     ],
+     [
+      "master",
+      "I've heard it. That was plenty. My ears are still sorry."
+     ]
+    ],
+    "challenge": "No Wardens at my base. Fight for a room?",
+    "accept": "A safe bed after all this? Let's go!",
+    "decline": "Tiptoe in the deep dark.",
+    "farewell": "Seriously. Tiptoe."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Badlands! Red rock, gold in the hills, and sunsets that look like the sky's on fire."
+     ],
+     [
+      "player",
+      "Isn't it dangerous?"
+     ],
+     [
+      "master",
+      "That's what makes it beautiful."
+     ]
+    ],
+    "challenge": "My base has a lovely view too.",
+    "accept": "Let's see if you're worth the trip!",
+    "decline": "Enjoy the sunset.",
+    "farewell": "It never gets old."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "I've found ruins older than any kingdom: roads that lead nowhere, towers broken in half. The First Dragon's watchposts, some say."
+     ],
+     [
+      "player",
+      "Can they be rebuilt?"
+     ],
+     [
+      "master",
+      "If anyone could do it, it'd be someone crazy enough to try. Like you."
+     ]
+    ],
+    "challenge": "Then come help me rebuild them.",
+    "accept": "Prove you've got the guts first!",
+    "decline": "Maybe one day.",
+    "farewell": "The towers are waiting."
+   }
+  ]
+ },
+ "smith": {
+  "title": "Smith",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Hammer, anvil, sparks, burnt eyebrows. That's my morning."
+     ],
+     [
+      "player",
+      "Every morning?"
+     ],
+     [
+      "master",
+      "My eyebrows gave up years ago."
+     ]
+    ],
+    "challenge": "Forge for me. After a scrap.",
+    "accept": "A scrap! Now you're speaking my metal.",
+    "decline": "Watch the sparks.",
+    "farewell": "Too late. Never too late. Ow."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At a base I'd keep ores sorted and smelted, and turn out tools, weapons and armor. And I'll sharpen your blade, if you've got the XP."
+     ],
+     [
+      "player",
+      "How sharp?"
+     ],
+     [
+      "master",
+      "Plus five. Sharp enough to cut a cloud."
+     ]
+    ],
+    "challenge": "Sharpen me something now. Fight first.",
+    "accept": "Steel on steel! Come on!",
+    "decline": "Maybe later.",
+    "farewell": "Bring me something worth sharpening."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Silverfish. You mine one block and suddenly the whole wall is wriggling."
+     ],
+     [
+      "player",
+      "They're tiny though."
+     ],
+     [
+      "master",
+      "Tiny and LOTS. Size doesn't matter when it's everywhere."
+     ]
+    ],
+    "challenge": "My walls are silverfish-free.",
+    "accept": "Then I'm hammering my way in!",
+    "decline": "Mind the stone bricks.",
+    "farewell": "They're never just stone bricks."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Mountains. Iron in the cliffs, coal in the seams, snow on the peaks to cool my hammer."
+     ],
+     [
+      "player",
+      "Your hammer gets hot?"
+     ],
+     [
+      "master",
+      "Everything near me gets hot. It's a gift."
+     ]
+    ],
+    "challenge": "My base sits on good ore.",
+    "accept": "Then let's see who's harder: you or the iron!",
+    "decline": "Enjoy the peaks.",
+    "farewell": "Bring back some iron."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Fafnir laid the mineral veins we mine, they say. Every ingot I forge is a little piece of the world's bones."
+     ],
+     [
+      "player",
+      "That's poetic for a smith."
+     ],
+     [
+      "master",
+      "Fire and poetry aren't so different. Both make things glow."
+     ]
+    ],
+    "challenge": "Forge something great with me.",
+    "accept": "Then let's forge a fight first!",
+    "decline": "Keep hammering.",
+    "farewell": "The world's bones are in good hands."
+   }
+  ]
+ },
+ "mason": {
+  "title": "Mason",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Cut stone all day. Stacked it. Unstacked it. Stacked it again, but straighter."
+     ],
+     [
+      "player",
+      "Why straighter?"
+     ],
+     [
+      "master",
+      "Because the first stack offended me."
+     ]
+    ],
+    "challenge": "Build for me. After a fight.",
+    "accept": "Solid choice. Stand firm!",
+    "decline": "Keep stacking.",
+    "farewell": "Straight lines, friend. Always straight lines."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At a base I'd keep you in stone, bricks, terracotta, concrete, glass, even ice. Name a block, I've got a pile."
+     ],
+     [
+      "player",
+      "Any block?"
+     ],
+     [
+      "master",
+      "Any block. Except dirt. I have standards."
+     ]
+    ],
+    "challenge": "No dirt. Deal. Fight me?",
+    "accept": "Let's see if you're built to last!",
+    "decline": "Not yet.",
+    "farewell": "My mortar's always ready."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Creepers. Wait, no, there aren't any here. Then Ravagers. They knock down WALLS."
+     ],
+     [
+      "player",
+      "Your walls?"
+     ],
+     [
+      "master",
+      "Every wall is my wall, emotionally."
+     ]
+    ],
+    "challenge": "My walls are ravager-proof. Mostly.",
+    "accept": "Mostly? Let me fix that. After I fight you!",
+    "decline": "Guard your walls.",
+    "farewell": "Every one of them."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Stony shores. Grey stone, grey sea, grey sky. Perfectly balanced."
+     ],
+     [
+      "player",
+      "It sounds a bit grey."
+     ],
+     [
+      "master",
+      "Grey is the colour of reliability."
+     ]
+    ],
+    "challenge": "My base needs some reliable stone.",
+    "accept": "Then let's lay the first block: you!",
+    "decline": "Enjoy the grey.",
+    "farewell": "It's underrated."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "When the Age of Ashes ended, masons rebuilt what was left. My family's been patching up Serantia ever since."
+     ],
+     [
+      "player",
+      "That's a long time."
+     ],
+     [
+      "master",
+      "Ten thousand years of patches. The world's mostly mortar now."
+     ]
+    ],
+    "challenge": "Help me patch it up some more.",
+    "accept": "Then let's see if you're sturdy enough!",
+    "decline": "Keep patching.",
+    "farewell": "One stone at a time."
+   }
+  ]
+ },
+ "carpenter": {
+  "title": "Carpenter",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Measure twice, cut once. Then measure again, because I forgot what I cut."
+     ],
+     [
+      "player",
+      "Does that happen often?"
+     ],
+     [
+      "master",
+      "Only every single time."
+     ]
+    ],
+    "challenge": "Build with me. Fight first?",
+    "accept": "Sawdust and fisticuffs! Let's go!",
+    "decline": "Keep measuring.",
+    "farewell": "Thrice. Measure thrice."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Put me to work at your base and you'll never run short of logs, planks, doors, fences, anything made of wood."
+     ],
+     [
+      "player",
+      "Can you chop trees too?"
+     ],
+     [
+      "master",
+      "I prefer to think of it as giving trees a new career."
+     ]
+    ],
+    "challenge": "My trees need new careers. Fight me?",
+    "accept": "Timber! I mean, en garde!",
+    "decline": "Not yet.",
+    "farewell": "The trees will wait. They're good at that."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Termites. Do we have termites? I don't know. That's what scares me."
+     ],
+     [
+      "player",
+      "I've never seen any."
+     ],
+     [
+      "master",
+      "EXACTLY. They're hiding."
+     ]
+    ],
+    "challenge": "My base is termite-free. I think.",
+    "accept": "You think? I'll inspect it personally. After we fight!",
+    "decline": "Check your fences.",
+    "farewell": "And your floorboards."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Dark oak forests. Giant trees, mushroom shade, wood as far as the eye can see."
+     ],
+     [
+      "player",
+      "Isn't it gloomy?"
+     ],
+     [
+      "master",
+      "It's cosy. Gloomy is just cosy without a fireplace."
+     ]
+    ],
+    "challenge": "My base has a fireplace.",
+    "accept": "Fireplace AND wood? Let's go!",
+    "decline": "Enjoy the shade.",
+    "farewell": "Hug a tree for me."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Old stories say Mokele-mbembe raised the first forests, and every tree since is a cousin of those."
+     ],
+     [
+      "player",
+      "Do you feel bad chopping them?"
+     ],
+     [
+      "master",
+      "I always plant two for every one. Family is family."
+     ]
+    ],
+    "challenge": "Plant some at my base.",
+    "accept": "Two for one! But first, one fight!",
+    "decline": "Keep planting.",
+    "farewell": "For the cousins."
+   }
+  ]
+ },
+ "cook": {
+  "title": "Cook",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Breakfast, lunch, dinner, second dinner. Somebody's always hungry."
+     ],
+     [
+      "player",
+      "Who eats second dinner?"
+     ],
+     [
+      "master",
+      "Me. The chef must taste everything."
+     ]
+    ],
+    "challenge": "Cook for me. Fight first?",
+    "accept": "A fight before dinner works up an appetite!",
+    "decline": "Enjoy second dinner.",
+    "farewell": "And third, if you're lucky."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At a base I'd keep the kitchen running: cooked meat, cakes, pies, stews. You'll never fight hungry."
+     ],
+     [
+      "player",
+      "Cake?"
+     ],
+     [
+      "master",
+      "Every day is somebody's birthday, if you believe hard enough."
+     ]
+    ],
+    "challenge": "I believe. Fight me?",
+    "accept": "Then let's stir things up!",
+    "decline": "Not yet.",
+    "farewell": "The oven's always warm."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Phantoms. You stay up late baking one night and suddenly there's screeching from the sky."
+     ],
+     [
+      "player",
+      "They come when you don't sleep."
+     ],
+     [
+      "master",
+      "So now I bake in the morning. I'm terrible in the morning."
+     ]
+    ],
+    "challenge": "My base has a bed for you.",
+    "accept": "A bed AND a kitchen? Let's go!",
+    "decline": "Get some sleep.",
+    "farewell": "Doctor's orders. Chef's orders."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Savanna! Warm, sunny, perfect for drying herbs and roasting things over an open fire."
+     ],
+     [
+      "player",
+      "Do you cook outside?"
+     ],
+     [
+      "master",
+      "Cooking outside is just a kitchen with a better ceiling."
+     ]
+    ],
+    "challenge": "My base has a big sky too.",
+    "accept": "Then let's fire up the grill. Starting with you!",
+    "decline": "Enjoy the sun.",
+    "farewell": "Bring back some spices."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Y Ddraig Goch breathed the first flame into the world. Every fire I cook on owes it a little thanks."
+     ],
+     [
+      "player",
+      "Do you thank it?"
+     ],
+     [
+      "master",
+      "Every time something doesn't burn. So... rarely."
+     ]
+    ],
+    "challenge": "Bring that fire to my base.",
+    "accept": "Then let's turn up the heat!",
+    "decline": "Keep cooking.",
+    "farewell": "Thank the dragon for me."
+   }
+  ]
+ },
+ "leatherworker": {
+  "title": "Leatherworker",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Stitch, tan, stitch, tan. My fingers have more holes than my aprons."
+     ],
+     [
+      "player",
+      "Ouch."
+     ],
+     [
+      "master",
+      "Leather's tough. So am I. Mostly my fingers."
+     ]
+    ],
+    "challenge": "Stitch for me. Fight first?",
+    "accept": "Let's see if your hide's as tough as mine!",
+    "decline": "Mind the needle.",
+    "farewell": "It always finds my thumb."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Bring me to your base and I'll keep you in leather, armor, saddles, harnesses and leads. Mounts will love you."
+     ],
+     [
+      "player",
+      "Saddles for creatures too?"
+     ],
+     [
+      "master",
+      "If it has a back, I can make it a saddle."
+     ]
+    ],
+    "challenge": "Saddle up. After we fight.",
+    "accept": "Ha! Giddy up, then!",
+    "decline": "Not yet.",
+    "farewell": "Saddles don't stitch themselves."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Hoglins. Big snorting pig-monsters that charge at you for no reason."
+     ],
+     [
+      "player",
+      "They don't like you?"
+     ],
+     [
+      "master",
+      "I make leather. They think I'm... recruiting."
+     ]
+    ],
+    "challenge": "No hoglins at my base.",
+    "accept": "Then I'm already interested. Let's fight!",
+    "decline": "Steer clear of the Nether.",
+    "farewell": "Every pig in it holds a grudge."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Meadows. Cows grazing, horses running, flowers everywhere. A leatherworker's dream."
+     ],
+     [
+      "player",
+      "Isn't that a bit sad, for the cows?"
+     ],
+     [
+      "master",
+      "I give them names first. It's respectful."
+     ]
+    ],
+    "challenge": "I've got a meadow at my base.",
+    "accept": "Then lead me there. After a fight!",
+    "decline": "Enjoy the meadow.",
+    "farewell": "Say hi to the cows."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "The Lindworm gave us the plain beasts, the cows and horses, so we could live alongside them. My trade honours that gift."
+     ],
+     [
+      "player",
+      "Even the leather?"
+     ],
+     [
+      "master",
+      "Especially the leather. Nothing wasted, nothing forgotten."
+     ]
+    ],
+    "challenge": "Honour it at my base.",
+    "accept": "Then prove yourself worthy of the work!",
+    "decline": "Keep stitching.",
+    "farewell": "Nothing wasted."
+   }
+  ]
+ },
+ "gardener": {
+  "title": "Gardener",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Watered the roses, trimmed the hedges, talked to the tulips. They're very good listeners."
+     ],
+     [
+      "player",
+      "Do they talk back?"
+     ],
+     [
+      "master",
+      "Not yet. I'm patient."
+     ]
+    ],
+    "challenge": "Garden for me. Fight first?",
+    "accept": "Let's see if you've got a green thumb... and a strong fist!",
+    "decline": "Say hi to the tulips.",
+    "farewell": "They say hi back. Probably."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At a base I'll keep everything growing: saplings, flowers, moss, grass. Your crops will shoot up like they're late for something."
+     ],
+     [
+      "player",
+      "Faster crops?"
+     ],
+     [
+      "master",
+      "Faster everything. Plants just like me."
+     ]
+    ],
+    "challenge": "My plants need you. Fight?",
+    "accept": "Then let's grow some muscles!",
+    "decline": "Not yet.",
+    "farewell": "Your garden will miss me already."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Sheep. They eat EVERYTHING. I planted a whole flower bed and a sheep ate it in one afternoon."
+     ],
+     [
+      "player",
+      "Sheep aren't monsters."
+     ],
+     [
+      "master",
+      "Tell that to my peonies."
+     ]
+    ],
+    "challenge": "I'll keep the sheep away from you.",
+    "accept": "A sheep-free garden? I'm in. Fight me!",
+    "decline": "Guard your flowers.",
+    "farewell": "They're counting on me."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Cherry groves! Pink petals drifting down like snow. Best smell in the world."
+     ],
+     [
+      "player",
+      "Better than bread?"
+     ],
+     [
+      "master",
+      "Don't make me choose."
+     ]
+    ],
+    "challenge": "I'll plant cherry trees at my base.",
+    "accept": "Pink petals AND a fight? Let's go!",
+    "decline": "Enjoy the petals.",
+    "farewell": "They'll be falling for you."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "The Fairy Dragon, they say, made the enchanted groves where flowers glow and time moves strangely. I've found one. Once."
+     ],
+     [
+      "player",
+      "What was it like?"
+     ],
+     [
+      "master",
+      "I was there ten minutes. I came out a week later. My tomatoes were furious."
+     ]
+    ],
+    "challenge": "Help me find one again.",
+    "accept": "Prove you can handle the Fae first!",
+    "decline": "Watch the time.",
+    "farewell": "It watches you back."
+   }
+  ]
+ },
+ "weaver": {
+  "title": "Weaver",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Spun wool, dyed it blue, dyed it green, dyed myself purple by accident."
+     ],
+     [
+      "player",
+      "Is that why your hands are purple?"
+     ],
+     [
+      "master",
+      "It's a look. I'm making it a look."
+     ]
+    ],
+    "challenge": "Weave for me. After a fight?",
+    "accept": "Let's tangle, then!",
+    "decline": "Wash your hands.",
+    "farewell": "Never. It's a look."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'll keep wool, carpets, beds, banners and dyes coming. Everything warm and colourful."
+     ],
+     [
+      "player",
+      "Banners too?"
+     ],
+     [
+      "master",
+      "I'll make you a banner so grand the goblins will want to frame it."
+     ]
+    ],
+    "challenge": "Make me a banner. Fight first.",
+    "accept": "A battle banner, then! En garde!",
+    "decline": "Not yet.",
+    "farewell": "My loom will wait."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Moths! Do you have moths? Tell me you don't have moths."
+     ],
+     [
+      "player",
+      "I don't think so?"
+     ],
+     [
+      "master",
+      "Think isn't good enough with moths."
+     ]
+    ],
+    "challenge": "My base is moth-free. Fight for a loom?",
+    "accept": "Then let's go before the moths find out!",
+    "decline": "Guard your wool.",
+    "farewell": "With your life."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Snowy plains. Everyone needs a scarf. Business is booming."
+     ],
+     [
+      "player",
+      "Isn't it cold?"
+     ],
+     [
+      "master",
+      "Not if you're wearing six of my scarves."
+     ]
+    ],
+    "challenge": "My base could use some scarves.",
+    "accept": "Then I'll knit after I win!",
+    "decline": "Stay warm.",
+    "farewell": "Wear a scarf."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "The old weavers say Ladon wove magic through the world like thread, and if you pull the right one, everything changes."
+     ],
+     [
+      "player",
+      "Have you ever pulled one?"
+     ],
+     [
+      "master",
+      "I pulled one on my sleeve once. Unravelled the whole thing."
+     ]
+    ],
+    "challenge": "Let's pull some threads together.",
+    "accept": "Then let's start with a fight!",
+    "decline": "Careful with your sleeves.",
+    "farewell": "And the world's."
+   }
+  ]
+ },
+ "engineer": {
+  "title": "Engineer",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Built a machine that sorts my socks. Now I can't find any socks."
+     ],
+     [
+      "player",
+      "Where did they go?"
+     ],
+     [
+      "master",
+      "The machine has them. It won't say where."
+     ]
+    ],
+    "challenge": "Build for me. Fight first?",
+    "accept": "Let's test your mechanics!",
+    "decline": "Good luck with the socks.",
+    "farewell": "They're in there somewhere."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Give me a corner of your base and I'll keep the redstone humming, the rails laid and the minecarts rolling."
+     ],
+     [
+      "player",
+      "Can you automate my farm?"
+     ],
+     [
+      "master",
+      "I can automate your farm, your door and probably your breakfast."
+     ]
+    ],
+    "challenge": "Automate this: a fight.",
+    "accept": "Initiating combat protocol!",
+    "decline": "Not yet.",
+    "farewell": "My circuits are always open."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Lightning. One bolt in the wrong place and my whole contraption goes up in sparks."
+     ],
+     [
+      "player",
+      "Have you tried a lightning rod?"
+     ],
+     [
+      "master",
+      "I've tried six. The lightning finds them rude."
+     ]
+    ],
+    "challenge": "My base has plenty of lightning rods.",
+    "accept": "Then let's spark something!",
+    "decline": "Watch the sky.",
+    "farewell": "And the sockets."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Lush caves! Glow berries for lighting, clay for parts, and dripleaf for testing gravity."
+     ],
+     [
+      "player",
+      "Testing gravity?"
+     ],
+     [
+      "master",
+      "It still works. I checked. Several times."
+     ]
+    ],
+    "challenge": "My base has caves nearby.",
+    "accept": "Then let's run an experiment. On you!",
+    "decline": "Keep testing.",
+    "farewell": "Gravity's counting on you."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Piasa made the storms, they say. Lightning, wind, thunder. I just try to bottle a little of that power for redstone."
+     ],
+     [
+      "player",
+      "Does Piasa mind?"
+     ],
+     [
+      "master",
+      "Hard to say. My workshop gets struck a suspicious amount."
+     ]
+    ],
+    "challenge": "Bring that storm to my base.",
+    "accept": "Then let's make some thunder!",
+    "decline": "Stay grounded.",
+    "farewell": "Literally. Please."
+   }
+  ]
+ },
+ "alchemist": {
+  "title": "Alchemist",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Mixed two potions this morning. Turned my left ear green."
+     ],
+     [
+      "player",
+      "Just the left one?"
+     ],
+     [
+      "master",
+      "The right one's turning invisible. Very slowly."
+     ]
+    ],
+    "challenge": "Brew for me. Fight first?",
+    "accept": "An experiment in combat! How exciting!",
+    "decline": "Good luck with your ears.",
+    "farewell": "Both of them."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'll keep the brewing stands bubbling: healing, speed, strength, whatever you need."
+     ],
+     [
+      "player",
+      "Night vision?"
+     ],
+     [
+      "master",
+      "Night vision, water breathing, and one that makes you smell like flowers. Unintentionally."
+     ]
+    ],
+    "challenge": "I'll take the flowers. Fight me?",
+    "accept": "Shake well before fighting!",
+    "decline": "Not yet.",
+    "farewell": "My cauldron's always warm."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Witches. They're my competition. And they cheat. Throwing potions at people is not how you sell them."
+     ],
+     [
+      "player",
+      "You're scared of witches?"
+     ],
+     [
+      "master",
+      "I'm scared of their prices."
+     ]
+    ],
+    "challenge": "No witches at my base. Just you.",
+    "accept": "A monopoly! I love it. Fight me!",
+    "decline": "Watch the swamps.",
+    "farewell": "And your wallet."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Swamps! Slime, mushrooms, mysterious bubbles. Every ingredient a brewer could want."
+     ],
+     [
+      "player",
+      "And the smell?"
+     ],
+     [
+      "master",
+      "Character. Swamps have character."
+     ]
+    ],
+    "challenge": "My base has a swamp nearby.",
+    "accept": "Then let's stir things up!",
+    "decline": "Enjoy the bubbles.",
+    "farewell": "Don't drink them."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Ladon, the Dragon of Arcane, wrote the rules magic follows. Every potion I make bends one just a little."
+     ],
+     [
+      "player",
+      "Is that safe?"
+     ],
+     [
+      "master",
+      "Not even slightly. That's how you know it's working."
+     ]
+    ],
+    "challenge": "Bend some rules at my base.",
+    "accept": "Then let's bend some bones first! Gently!",
+    "decline": "Be careful.",
+    "farewell": "Never!"
+   }
+  ]
+ },
+ "jeweler": {
+  "title": "Jeweler",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Polished emeralds all morning. Then I polished the polishing cloth."
+     ],
+     [
+      "player",
+      "Why?"
+     ],
+     [
+      "master",
+      "It was looking dull. I couldn't bear it."
+     ]
+    ],
+    "challenge": "Shine for me. Fight first?",
+    "accept": "Let's see if you sparkle under pressure!",
+    "decline": "Keep polishing.",
+    "farewell": "Everything deserves to shine."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'll keep the rarest treasures: gems, amethyst, and if you're very lucky, beacons, totems and nether stars."
+     ],
+     [
+      "player",
+      "Nether stars?!"
+     ],
+     [
+      "master",
+      "I said very lucky."
+     ]
+    ],
+    "challenge": "I'm feeling lucky. Fight me.",
+    "accept": "A gem of a challenge! Let's go!",
+    "decline": "Not yet.",
+    "farewell": "Treasures can wait. Patiently."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Piglins. They see gold and lose their minds. And I wear a LOT of gold."
+     ],
+     [
+      "player",
+      "Maybe wear a little less?"
+     ],
+     [
+      "master",
+      "Absolutely not."
+     ]
+    ],
+    "challenge": "My base has no piglins.",
+    "accept": "Then I'm bringing ALL my gold. Fight me!",
+    "decline": "Hide the gold.",
+    "farewell": "Never."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Amethyst geodes deep underground. Purple crystals humming in the dark. It's like the world wears jewellery."
+     ],
+     [
+      "player",
+      "They hum?"
+     ],
+     [
+      "master",
+      "If you listen closely. I listen very closely."
+     ]
+    ],
+    "challenge": "I've got geodes near my base.",
+    "accept": "Then let's dig in. To a fight!",
+    "decline": "Keep listening.",
+    "farewell": "They have a lot to say."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "The Eternita Stone was cut from the First Dragon's own scales, they say. I'd give anything just to see it."
+     ],
+     [
+      "player",
+      "Just see it?"
+     ],
+     [
+      "master",
+      "See it, appraise it, faint a little. In that order."
+     ]
+    ],
+    "challenge": "Help me earn it.",
+    "accept": "Then prove you could hold it!",
+    "decline": "Maybe one day.",
+    "farewell": "Faint politely when you do."
+   }
+  ]
+ },
+ "netherwright": {
+  "title": "Netherwright",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Spent the morning in the Nether. Lost my eyebrows. Again."
+     ],
+     [
+      "player",
+      "Doesn't that hurt?"
+     ],
+     [
+      "master",
+      "Only my pride. And my eyebrows."
+     ]
+    ],
+    "challenge": "Work for me. After a fight.",
+    "accept": "Things are about to get heated!",
+    "decline": "Mind the lava.",
+    "farewell": "It minds you back."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'll stock everything from the Nether: blaze rods, quartz, glowstone, and netherite, if you dare."
+     ],
+     [
+      "player",
+      "Netherite?"
+     ],
+     [
+      "master",
+      "Hardest stuff there is. Except my stubbornness."
+     ]
+    ],
+    "challenge": "I dare. Fight me.",
+    "accept": "Then let's forge something!",
+    "decline": "Not yet.",
+    "farewell": "The Nether's not going anywhere."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Ghasts. Big floating crybabies that shoot fire. You'd think I'd be used to them."
+     ],
+     [
+      "player",
+      "You're not?"
+     ],
+     [
+      "master",
+      "Every time one screams, I scream back. It's a whole thing."
+     ]
+    ],
+    "challenge": "No ghasts at my base.",
+    "accept": "Quiet? I'll take it. Fight me!",
+    "decline": "Duck when they cry.",
+    "farewell": "Always duck."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Crimson forests. Red fungus, glowing vines, the hum of the world's molten heart. It's home."
+     ],
+     [
+      "player",
+      "It's terrifying."
+     ],
+     [
+      "master",
+      "Same thing, really."
+     ]
+    ],
+    "challenge": "My base is a bit cooler.",
+    "accept": "I'll survive. After I win!",
+    "decline": "Enjoy the warmth.",
+    "farewell": "Bring me back some fungus."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Y Ddraig Goch made the molten heart of the world, and the Nether is where it still beats loudest."
+     ],
+     [
+      "player",
+      "You can hear it?"
+     ],
+     [
+      "master",
+      "On quiet nights. It sounds angry. Or hungry. Hard to tell with dragons."
+     ]
+    ],
+    "challenge": "Let's find out together.",
+    "accept": "Then let's light the fire!",
+    "decline": "Keep listening.",
+    "farewell": "From a safe distance."
+   }
+  ]
+ },
+ "voidwalker": {
+  "title": "Voidwalker",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Walked to the edge of the world yesterday. Looked over. Nothing looked back."
+     ],
+     [
+      "player",
+      "That sounds unsettling."
+     ],
+     [
+      "master",
+      "It was. I loved it."
+     ]
+    ],
+    "challenge": "Walk with me. Fight first?",
+    "accept": "Let's see if you can handle the void!",
+    "decline": "Mind the edge.",
+    "farewell": "It doesn't mind you."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At a base I'll gather what the End offers: pearls, purpur, shulker shells, even elytra."
+     ],
+     [
+      "player",
+      "You can get elytra?"
+     ],
+     [
+      "master",
+      "I can get anything. Coming back is the hard part."
+     ]
+    ],
+    "challenge": "Come back to my base. Fight first.",
+    "accept": "Then let's warp right into it!",
+    "decline": "Not yet.",
+    "farewell": "The End will wait. It always does."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Shulkers. Little boxes that make you float. I hate floating. I'm a walker, it's in the name."
+     ],
+     [
+      "player",
+      "Fair point."
+     ],
+     [
+      "master",
+      "Voidfloater just doesn't have the same ring."
+     ]
+    ],
+    "challenge": "My base keeps your feet on the ground.",
+    "accept": "Grounded? I'm in. Fight me!",
+    "decline": "Keep walking.",
+    "farewell": "Never float."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "The outer End islands. Purple towers, chorus trees, silence that goes on forever."
+     ],
+     [
+      "player",
+      "Isn't it lonely?"
+     ],
+     [
+      "master",
+      "Lonely is just peaceful with fewer interruptions."
+     ]
+    ],
+    "challenge": "My base is pretty peaceful.",
+    "accept": "Then let's interrupt it, briefly!",
+    "decline": "Enjoy the silence.",
+    "farewell": "Shhh."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Ouroboros guards the spaces between things. Out past the End, reality gets thin. I've felt it."
+     ],
+     [
+      "player",
+      "What did it feel like?"
+     ],
+     [
+      "master",
+      "Like the world was holding its breath. Waiting for something to fall through."
+     ]
+    ],
+    "challenge": "Let's make sure nothing does.",
+    "accept": "Then prove you're ready for the void!",
+    "decline": "Stay safe out there.",
+    "farewell": "As safe as nothing can be."
+   }
+  ]
+ },
+ "bard": {
+  "title": "Bard",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Wrote a ballad about a chicken this morning. It's twelve verses. The chicken left after two."
+     ],
+     [
+      "player",
+      "Harsh critic."
+     ],
+     [
+      "master",
+      "Everyone's a critic."
+     ]
+    ],
+    "challenge": "Play for me. Fight first?",
+    "accept": "A battle hymn! Let's go!",
+    "decline": "Keep writing.",
+    "farewell": "Verse thirteen is the good one."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'll play while everyone works, and they'll all work faster. Music's magic, really."
+     ],
+     [
+      "player",
+      "How much faster?"
+     ],
+     [
+      "master",
+      "Fifteen percent! I'd go higher but the creatures start dancing instead."
+     ]
+    ],
+    "challenge": "Fifteen percent. Fight me.",
+    "accept": "Then let's make some noise!",
+    "decline": "Not yet.",
+    "farewell": "I'll keep tuning."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Allays. They steal my lute picks. They also hum along off-key."
+     ],
+     [
+      "player",
+      "Allays are lovely."
+     ],
+     [
+      "master",
+      "Allays are pitch thieves."
+     ]
+    ],
+    "challenge": "No allays at my base. Promise.",
+    "accept": "A captive audience? Let's fight!",
+    "decline": "Mind your picks.",
+    "farewell": "They're watching."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Flower forests! The bees keep the beat. I just add the melody."
+     ],
+     [
+      "player",
+      "Do the bees like your music?"
+     ],
+     [
+      "master",
+      "Nobody's been stung yet. That's a rave review."
+     ]
+    ],
+    "challenge": "My base has flowers and bees.",
+    "accept": "Then let's start the show!",
+    "decline": "Enjoy the bees.",
+    "farewell": "And the beat."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "I sing the old songs too: of the twelve Sovereigns, and the Council of Eternita, and the First Dragon's long sleep."
+     ],
+     [
+      "player",
+      "Sing one for me?"
+     ],
+     [
+      "master",
+      "♪ A thousand years asleep, a thousand years awake... ♪ The second verse is about you, if you're brave."
+     ]
+    ],
+    "challenge": "Let's write that verse.",
+    "accept": "Then let's give it a good fight scene!",
+    "decline": "Maybe later.",
+    "farewell": "I'll save you a rhyme."
+   }
+  ]
+ },
+ "innkeeper": {
+  "title": "Innkeeper",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Changed the sheets, swept the floors, kicked out a sleepwalking cow."
+     ],
+     [
+      "player",
+      "A cow?"
+     ],
+     [
+      "master",
+      "She checked in under a false name."
+     ]
+    ],
+    "challenge": "Keep a bed for me. Fight first?",
+    "accept": "Checking in for a fight? Very well!",
+    "decline": "Good luck with the cow.",
+    "farewell": "She'll be back."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I'll keep a bed ready. Sleep through the night and you'll wake with full hearts."
+     ],
+     [
+      "player",
+      "Breakfast included?"
+     ],
+     [
+      "master",
+      "Breakfast costs extra. Hearts are free."
+     ]
+    ],
+    "challenge": "I'll take the hearts. Fight me.",
+    "accept": "Let's see if you've earned a good night's rest!",
+    "decline": "Not yet.",
+    "farewell": "There's always a room for you."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Phantoms. Every guest who skips sleep brings them. Terrible for business."
+     ],
+     [
+      "player",
+      "Can't you warn them?"
+     ],
+     [
+      "master",
+      "I put up signs. Nobody reads signs."
+     ]
+    ],
+    "challenge": "My base follows the rules.",
+    "accept": "A well-rested base! Let's fight!",
+    "decline": "Get some sleep.",
+    "farewell": "Read the sign."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Snowy taiga. Long nights, warm fires, guests who never want to leave."
+     ],
+     [
+      "player",
+      "That's good for business?"
+     ],
+     [
+      "master",
+      "Until they forget to pay."
+     ]
+    ],
+    "challenge": "My base pays its bills.",
+    "accept": "Then I'll move in. After a fight!",
+    "decline": "Stay warm.",
+    "farewell": "The fire's always lit."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "The First Dragon sleeps a thousand years, then wakes a thousand. Imagine the bed you'd need for that."
+     ],
+     [
+      "player",
+      "Have you thought about it?"
+     ],
+     [
+      "master",
+      "Constantly. I've drawn plans. It's mostly pillows."
+     ]
+    ],
+    "challenge": "Build it at my base.",
+    "accept": "Then let's fight for the pillows!",
+    "decline": "Keep dreaming.",
+    "farewell": "Sweet dreams."
+   }
+  ]
+ },
+ "noble": {
+  "title": "Noble",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "My morning: tea, a portrait sitting, and pretending to listen to my advisors."
+     ],
+     [
+      "player",
+      "Just pretending?"
+     ],
+     [
+      "master",
+      "They talk so much. About so little."
+     ]
+    ],
+    "challenge": "Rule from my base. Fight first?",
+    "accept": "A duel! How delightfully old-fashioned!",
+    "decline": "Enjoy the tea.",
+    "farewell": "Pinkie out, always."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base my presence attracts... better company. Rare creatures come calling, as they should."
+     ],
+     [
+      "player",
+      "How does that work?"
+     ],
+     [
+      "master",
+      "Breeding, darling. Quality recognises quality."
+     ]
+    ],
+    "challenge": "I'd like some quality. Fight me.",
+    "accept": "Then let's see if you're worthy of my company!",
+    "decline": "Not yet.",
+    "farewell": "Do call ahead."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Pillagers. Dreadful manners. They never bow, and their crossbows are frightfully common."
+     ],
+     [
+      "player",
+      "That's what bothers you?"
+     ],
+     [
+      "master",
+      "The arrows are secondary."
+     ]
+    ],
+    "challenge": "My base has manners.",
+    "accept": "How refreshing! A duel, then!",
+    "decline": "Watch your posture.",
+    "farewell": "And your purse."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Mushroom fields! No monsters, charming mooshrooms, and absolutely nobody else. Exclusive."
+     ],
+     [
+      "player",
+      "Isn't it a bit empty?"
+     ],
+     [
+      "master",
+      "Empty is what exclusive looks like."
+     ]
+    ],
+    "challenge": "My base is very exclusive.",
+    "accept": "Then I insist on a duel at once!",
+    "decline": "Enjoy the exclusivity.",
+    "farewell": "Ta-ta."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "My family claims descent from the Age of Crowns, when kingdoms ruled from coast to coast. We still have the crown. Somewhat dented."
+     ],
+     [
+      "player",
+      "Dented?"
+     ],
+     [
+      "master",
+      "The Age of Ashes was very hard on headwear."
+     ]
+    ],
+    "challenge": "Help me build a new kingdom.",
+    "accept": "A new kingdom? I'm listening. En garde!",
+    "decline": "Keep the crown polished.",
+    "farewell": "What's left of it."
+   }
+  ]
+ },
+ "move_tutor": {
+  "title": "Move Tutor",
+  "dialogues": [
+   {
+    "lines": [
+     [
+      "master",
+      "Taught a creature to kick this morning. It kicked me. Lesson learned."
+     ],
+     [
+      "player",
+      "Who learned it?"
+     ],
+     [
+      "master",
+      "Both of us, really."
+     ]
+    ],
+    "challenge": "Teach at my base. Fight first?",
+    "accept": "A practical lesson! Let's go!",
+    "decline": "Watch your shins.",
+    "farewell": "They've suffered enough."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "At your base I can teach your creatures new moves, three at a time, for a little XP. Old dogs, new tricks."
+     ],
+     [
+      "player",
+      "Any creature?"
+     ],
+     [
+      "master",
+      "Any creature willing to listen. Which is fewer than you'd think."
+     ]
+    ],
+    "challenge": "Teach me something. Fight first.",
+    "accept": "Lesson one: dodge!",
+    "decline": "Not yet.",
+    "farewell": "Class is always in session."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Evokers. They summon fangs from the ground. Totally unteachable. Very rude students."
+     ],
+     [
+      "player",
+      "You tried to teach one?"
+     ],
+     [
+      "master",
+      "Once. It bit me. With the ground."
+     ]
+    ],
+    "challenge": "My base has well-behaved students.",
+    "accept": "Finally! Let's warm up. On you!",
+    "decline": "Avoid the fangs.",
+    "farewell": "And evokers in general."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Windswept hills! Wind in your hair, steep slopes, perfect for practising balance."
+     ],
+     [
+      "player",
+      "And falling?"
+     ],
+     [
+      "master",
+      "Falling is just balance practice with extra steps."
+     ]
+    ],
+    "challenge": "My base has hills to train on.",
+    "accept": "Then let's start training!",
+    "decline": "Enjoy the wind.",
+    "farewell": "Stay upright."
+   },
+   {
+    "lines": [
+     [
+      "master",
+      "Every move I teach comes from one of the twelve influences. Fire from Y Ddraig Goch, frost from the Hrimwyrm, and so on. I'm just the messenger."
+     ],
+     [
+      "player",
+      "Do the dragons mind?"
+     ],
+     [
+      "master",
+      "They haven't complained. Yet."
+     ]
+    ],
+    "challenge": "Teach me their secrets.",
+    "accept": "Then let's start with the basics: combat!",
+    "decline": "Keep teaching.",
+    "farewell": "I always do."
+   }
+  ]
+ }
+}

@@ -167,6 +167,7 @@ public abstract class BattlesMixin {
     @Inject(method = "start", at = @At("HEAD"), cancellable = true)
     private static void serantis$noBlackMarketBattles(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
         if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { cir.setReturnValue(null); return; }   // the Mysterious Figure doesn't fight
+        if (dev.serantis.battle.VillagerTalk.ask(player, entity)) { cir.setReturnValue(null); return; }   // a villager talks before it fights
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
             dev.serantis.battle.GoblinRaids.open(player, entity);
             cir.setReturnValue(null);
@@ -212,6 +213,11 @@ public abstract class BattlesMixin {
                     case "serantis_riddle_fight" -> dev.serantis.battle.Riddles.done(player, true);
                     default -> dev.serantis.battle.Riddles.done(player, false);
                 }
+                cir.setReturnValue(null);
+                return;
+            }
+            if ("serantis_villager_answer".equals(kind)) {   // a villager's conversation ended: fight it, or not
+                dev.serantis.battle.VillagerTalk.answer(player, o.has("fight") && o.get("fight").getAsBoolean());
                 cir.setReturnValue(null);
                 return;
             }
