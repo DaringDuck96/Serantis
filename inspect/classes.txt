@@ -1,2 +1,2 @@
-# 1792619210
-compile wip/mimic-noloot
+# 1792619297
+smoke
