@@ -97,7 +97,7 @@ public final class Backpacks {
                                     && bi.getBlock() instanceof net.minecraft.world.level.block.ShulkerBoxBlock;
                             if (!nested) continue;
                             setItem(i, ItemStack.EMPTY);
-                            if (!p.getInventory().add(s) && !s.isEmpty()) p.drop(s, false);
+                            if (!p.getInventory().add(s) && !s.isEmpty()) p.level().addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(p.level(), p.getX(), p.getY(), p.getZ(), s));
                             tell(p, "Backpacks and shulker boxes can't go inside a backpack.");
                         }
                     } finally {
