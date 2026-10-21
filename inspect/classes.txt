@@ -1,2 +1,2 @@
-# classes 1792617980
-compile wip/worker-climb
+# classes 1792618065
+smoke
