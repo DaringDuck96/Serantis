@@ -41,10 +41,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * Magic Staffs, one design per influence except Normal (Emberwrath, Rimespire, Thundercall, Stoneheart, Tidecaller,
  * Thornbloom, Riftwalker, Moonpetal, Gloomreaver, Runeweaver, Dawnbringer).
  *
- * A Magic Staff is crafted from three sticks and an Eye of Ender. It has no spell yet: take it to an enchanting
+ * A Wooden Staff is crafted from three sticks and an Eye of Ender. Until it has a spell it's just a wooden mace: take it to an enchanting
  * table (right-click the table holding it) and you're offered three spells at random from the Move Dex; pick one
- * and pay 25 XP (less with Presence) and the staff is linked to that spell for good, taking on its influence's
- * colour. (The offer stays the same until you pick.) A Wizard starts with a staff already linked to a random spell
+ * and pay 25 XP (less with Presence) and the staff is linked to that spell for good, becoming that influence's
+ * staff (a fire spell makes it an Emberwrath Staff). (The offer stays the same until you pick.) A Wizard starts with a staff already linked to a random spell
  * of the influence they chose.
  *
  * In battle, a linked staff in your main hand or off hand lets you cast its spell, as well as your normal attack.
@@ -58,13 +58,24 @@ public final class Staffs {
 
     private Staffs() {}
 
-    private static Item item(String name) {
+    private static Item item(String name, Item.Properties props) {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Identifier.parse("serantis_battle:" + name));
-        return Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).setId(key)));
+        return Registry.register(BuiltInRegistries.ITEM, key, new Item(props.setId(key)));
     }
 
+    private static Item item(String name) { return item(name, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)); }
+
     public static void register() {
-        BLANK = item("magic_staff");
+        // The Wooden Staff: until it's linked to a spell it's just a wooden mace (5 damage, slow swing, wears out like wood).
+        BLANK = item("magic_staff", new Item.Properties().durability(59).attributes(
+                net.minecraft.world.item.component.ItemAttributeModifiers.builder()
+                        .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                Item.BASE_ATTACK_DAMAGE_ID, 4.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
+                                net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+                        .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                Item.BASE_ATTACK_SPEED_ID, -3.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
+                                net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+                        .build()));
         for (String inf : Masters.INFLUENCES) STAFFS.put(inf, item(inf + "_staff"));
     }
 
@@ -100,7 +111,6 @@ public final class Staffs {
         CompoundTag tag = new CompoundTag();
         tag.putString(SPELL, spell.id);
         CustomData.set(DataComponents.CUSTOM_DATA, stack, tag);
-        stack.set(DataComponents.CUSTOM_NAME, Component.literal("Staff of " + spell.name).withStyle(ChatFormatting.AQUA));
         stack.set(DataComponents.LORE, new ItemLore(List.of(
                 Component.literal("Spell: " + spell.name + " (" + Masters.influenceName(inf) + ")").withStyle(ChatFormatting.GOLD),
                 Component.literal(MoveExplain.line(spell)).withStyle(ChatFormatting.GRAY),
@@ -200,7 +210,8 @@ public final class Staffs {
         p.setItemInHand(hand, linked(spell));
         LINKING.remove(p.getUUID());
         p.level().playSound(null, p.blockPosition(), net.minecraft.sounds.SoundEvents.ENCHANTMENT_TABLE_USE, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 1f);
-        p.sendSystemMessage(Component.literal("Your staff is now linked to " + spell.name + " for good. Hold it in either hand to cast it in battle. (-"
+        p.sendSystemMessage(Component.literal("Your Wooden Staff became " + p.getItemInHand(hand).getHoverName().getString()
+                + ", linked to " + spell.name + " for good. Hold it in either hand to cast it in battle. (-"
                 + cost + " XP)").withStyle(ChatFormatting.AQUA));
         PartySync.sync(p);
     }
