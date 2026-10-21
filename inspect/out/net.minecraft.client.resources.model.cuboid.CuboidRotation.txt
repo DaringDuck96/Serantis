@@ -1,0 +1,166 @@
+Compiled from "CuboidRotation.java"
+public final class net.minecraft.client.resources.model.cuboid.CuboidRotation extends java.lang.Record {
+  private final org.joml.Vector3fc origin;
+
+  private final net.minecraft.client.resources.model.cuboid.CuboidRotation$RotationValue value;
+
+  private final boolean rescale;
+
+  private final org.joml.Matrix4fc transform;
+
+  public net.minecraft.client.resources.model.cuboid.CuboidRotation(org.joml.Vector3fc, net.minecraft.client.resources.model.cuboid.CuboidRotation$RotationValue, boolean);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: iload_3
+         4: aload_2
+         5: iload_3
+         6: invokestatic  #25                 // Method computeTransform:(Lnet/minecraft/client/resources/model/cuboid/CuboidRotation$RotationValue;Z)Lorg/joml/Matrix4f;
+         9: invokespecial #29                 // Method "<init>":(Lorg/joml/Vector3fc;Lnet/minecraft/client/resources/model/cuboid/CuboidRotation$RotationValue;ZLorg/joml/Matrix4fc;)V
+        12: return
+
+  public net.minecraft.client.resources.model.cuboid.CuboidRotation(org.joml.Vector3fc, net.minecraft.client.resources.model.cuboid.CuboidRotation$RotationValue, boolean, org.joml.Matrix4fc);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field origin:Lorg/joml/Vector3fc;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field value:Lnet/minecraft/client/resources/model/cuboid/CuboidRotation$RotationValue;
+        14: aload_0
+        15: iload_3
+        16: putfield      #17                 // Field rescale:Z
+        19: aload_0
+        20: aload         4
+        22: putfield      #21                 // Field transform:Lorg/joml/Matrix4fc;
+        25: return
+
+  private static org.joml.Matrix4f computeTransform(net.minecraft.client.resources.model.cuboid.CuboidRotation$RotationValue, boolean);
+    Code:
+         0: aload_0
+         1: invokeinterface #32,  1           // InterfaceMethod net/minecraft/client/resources/model/cuboid/CuboidRotation$RotationValue.transformation:()Lorg/joml/Matrix4f;
+         6: astore_2
+         7: iload_1
+         8: ifeq          29
+        11: aload_2
+        12: invokestatic  #38                 // Method com/mojang/math/MatrixUtil.isIdentity:(Lorg/joml/Matrix4fc;)Z
+        15: ifne          29
+        18: aload_2
+        19: invokestatic  #44                 // Method computeRescale:(Lorg/joml/Matrix4fc;)Lorg/joml/Vector3fc;
+        22: astore_3
+        23: aload_2
+        24: aload_3
+        25: invokevirtual #48                 // Method org/joml/Matrix4f.scale:(Lorg/joml/Vector3fc;)Lorg/joml/Matrix4f;
+        28: pop
+        29: aload_2
+        30: areturn
+
+  private static org.joml.Vector3fc computeRescale(org.joml.Matrix4fc);
+    Code:
+         0: new           #54                 // class org/joml/Vector3f
+         3: dup
+         4: invokespecial #56                 // Method org/joml/Vector3f."<init>":()V
+         7: astore_1
+         8: aload_0
+         9: getstatic     #57                 // Field net/minecraft/core/Direction$Axis.X:Lnet/minecraft/core/Direction$Axis;
+        12: aload_1
+        13: invokestatic  #63                 // Method scaleFactorForAxis:(Lorg/joml/Matrix4fc;Lnet/minecraft/core/Direction$Axis;Lorg/joml/Vector3f;)F
+        16: fstore_2
+        17: aload_0
+        18: getstatic     #67                 // Field net/minecraft/core/Direction$Axis.Y:Lnet/minecraft/core/Direction$Axis;
+        21: aload_1
+        22: invokestatic  #63                 // Method scaleFactorForAxis:(Lorg/joml/Matrix4fc;Lnet/minecraft/core/Direction$Axis;Lorg/joml/Vector3f;)F
+        25: fstore_3
+        26: aload_0
+        27: getstatic     #70                 // Field net/minecraft/core/Direction$Axis.Z:Lnet/minecraft/core/Direction$Axis;
+        30: aload_1
+        31: invokestatic  #63                 // Method scaleFactorForAxis:(Lorg/joml/Matrix4fc;Lnet/minecraft/core/Direction$Axis;Lorg/joml/Vector3f;)F
+        34: fstore        4
+        36: aload_1
+        37: fload_2
+        38: fload_3
+        39: fload         4
+        41: invokevirtual #72                 // Method org/joml/Vector3f.set:(FFF)Lorg/joml/Vector3f;
+        44: areturn
+
+  private static float scaleFactorForAxis(org.joml.Matrix4fc, net.minecraft.core.Direction$Axis, org.joml.Vector3f);
+    Code:
+         0: aload_2
+         1: aload_1
+         2: invokevirtual #76                 // Method net/minecraft/core/Direction$Axis.getPositive:()Lnet/minecraft/core/Direction;
+         5: invokevirtual #80                 // Method net/minecraft/core/Direction.getUnitVec3f:()Lorg/joml/Vector3fc;
+         8: invokevirtual #86                 // Method org/joml/Vector3f.set:(Lorg/joml/Vector3fc;)Lorg/joml/Vector3f;
+        11: astore_3
+        12: aload_0
+        13: aload_3
+        14: invokeinterface #89,  2           // InterfaceMethod org/joml/Matrix4fc.transformDirection:(Lorg/joml/Vector3f;)Lorg/joml/Vector3f;
+        19: astore        4
+        21: aload         4
+        23: getfield      #95                 // Field org/joml/Vector3f.x:F
+        26: invokestatic  #99                 // Method org/joml/Math.abs:(F)F
+        29: fstore        5
+        31: aload         4
+        33: getfield      #105                // Field org/joml/Vector3f.y:F
+        36: invokestatic  #99                 // Method org/joml/Math.abs:(F)F
+        39: fstore        6
+        41: aload         4
+        43: getfield      #108                // Field org/joml/Vector3f.z:F
+        46: invokestatic  #99                 // Method org/joml/Math.abs:(F)F
+        49: fstore        7
+        51: fload         5
+        53: fload         6
+        55: invokestatic  #111                // Method org/joml/Math.max:(FF)F
+        58: fload         7
+        60: invokestatic  #111                // Method org/joml/Math.max:(FF)F
+        63: fstore        8
+        65: fconst_1
+        66: fload         8
+        68: fdiv
+        69: freturn
+
+  public final java.lang.String toString();
+    Code:
+         0: aload_0
+         1: invokedynamic #115,  0            // InvokeDynamic #0:toString:(Lnet/minecraft/client/resources/model/cuboid/CuboidRotation;)Ljava/lang/String;
+         6: areturn
+
+  public final int hashCode();
+    Code:
+         0: aload_0
+         1: invokedynamic #119,  0            // InvokeDynamic #0:hashCode:(Lnet/minecraft/client/resources/model/cuboid/CuboidRotation;)I
+         6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #123,  0            // InvokeDynamic #0:equals:(Lnet/minecraft/client/resources/model/cuboid/CuboidRotation;Ljava/lang/Object;)Z
+         7: ireturn
+
+  public org.joml.Vector3fc origin();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field origin:Lorg/joml/Vector3fc;
+         4: areturn
+
+  public net.minecraft.client.resources.model.cuboid.CuboidRotation$RotationValue value();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field value:Lnet/minecraft/client/resources/model/cuboid/CuboidRotation$RotationValue;
+         4: areturn
+
+  public boolean rescale();
+    Code:
+         0: aload_0
+         1: getfield      #17                 // Field rescale:Z
+         4: ireturn
+
+  public org.joml.Matrix4fc transform();
+    Code:
+         0: aload_0
+         1: getfield      #21                 // Field transform:Lorg/joml/Matrix4fc;
+         4: areturn
+}
