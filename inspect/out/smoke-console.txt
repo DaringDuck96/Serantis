@@ -1,0 +1,804 @@
+Downloading Minecraft server
+Installing Fabric Loader 0.20.1(26.3) on the server
+Downloading required files
+Downloading library org.ow2.asm:asm:9.10.1
+Downloading library org.ow2.asm:asm-analysis:9.10.1
+Downloading library org.ow2.asm:asm-commons:9.10.1
+Downloading library org.ow2.asm:asm-tree:9.10.1
+Downloading library org.ow2.asm:asm-util:9.10.1
+Downloading library net.fabricmc:sponge-mixin:0.17.5+mixin.0.8.7
+Downloading library net.fabricmc:fabric-loader:0.20.1
+Generating server launch JAR
+Unpacking 26.3/server-26.3.jar (versions:26.3) to versions/26.3/server-26.3.jar
+Unpacking at/yawk/lz4/lz4-java/1.10.1/lz4-java-1.10.1.jar (libraries:at.yawk.lz4:lz4-java:1.10.1) to libraries/at/yawk/lz4/lz4-java/1.10.1/lz4-java-1.10.1.jar
+Unpacking com/azure/azure-json/1.4.0/azure-json-1.4.0.jar (libraries:com.azure:azure-json:1.4.0) to libraries/com/azure/azure-json/1.4.0/azure-json-1.4.0.jar
+Unpacking com/github/oshi/oshi-core/6.9.0/oshi-core-6.9.0.jar (libraries:com.github.oshi:oshi-core:6.9.0) to libraries/com/github/oshi/oshi-core/6.9.0/oshi-core-6.9.0.jar
+Unpacking com/google/code/gson/gson/2.14.0/gson-2.14.0.jar (libraries:com.google.code.gson:gson:2.14.0) to libraries/com/google/code/gson/gson/2.14.0/gson-2.14.0.jar
+Unpacking com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar (libraries:com.google.guava:failureaccess:1.0.3) to libraries/com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar
+Unpacking com/google/guava/guava/33.6.0-jre/guava-33.6.0-jre.jar (libraries:com.google.guava:guava:33.6.0-jre) to libraries/com/google/guava/guava/33.6.0-jre/guava-33.6.0-jre.jar
+Unpacking com/microsoft/azure/msal4j/1.24.1/msal4j-1.24.1.jar (libraries:com.microsoft.azure:msal4j:1.24.1) to libraries/com/microsoft/azure/msal4j/1.24.1/msal4j-1.24.1.jar
+Unpacking com/mojang/authlib/10.0.77/authlib-10.0.77.jar (libraries:com.mojang:authlib:10.0.77) to libraries/com/mojang/authlib/10.0.77/authlib-10.0.77.jar
+Unpacking com/mojang/brigadier/1.3.11/brigadier-1.3.11.jar (libraries:com.mojang:brigadier:1.3.11) to libraries/com/mojang/brigadier/1.3.11/brigadier-1.3.11.jar
+Unpacking com/mojang/datafixerupper/10.0.21/datafixerupper-10.0.21.jar (libraries:com.mojang:datafixerupper:10.0.21) to libraries/com/mojang/datafixerupper/10.0.21/datafixerupper-10.0.21.jar
+Unpacking com/mojang/jtracy/1.14.38/jtracy-1.14.38.jar (libraries:com.mojang:jtracy:1.14.38) to libraries/com/mojang/jtracy/1.14.38/jtracy-1.14.38.jar
+Unpacking com/mojang/logging/1.7.12/logging-1.7.12.jar (libraries:com.mojang:logging:1.7.12) to libraries/com/mojang/logging/1.7.12/logging-1.7.12.jar
+Unpacking commons-io/commons-io/2.20.0/commons-io-2.20.0.jar (libraries:commons-io:commons-io:2.20.0) to libraries/commons-io/commons-io/2.20.0/commons-io-2.20.0.jar
+Unpacking io/netty/netty-buffer/4.2.16.Final/netty-buffer-4.2.16.Final.jar (libraries:io.netty:netty-buffer:4.2.16.Final) to libraries/io/netty/netty-buffer/4.2.16.Final/netty-buffer-4.2.16.Final.jar
+Unpacking io/netty/netty-codec-base/4.2.16.Final/netty-codec-base-4.2.16.Final.jar (libraries:io.netty:netty-codec-base:4.2.16.Final) to libraries/io/netty/netty-codec-base/4.2.16.Final/netty-codec-base-4.2.16.Final.jar
+Unpacking io/netty/netty-codec-compression/4.2.16.Final/netty-codec-compression-4.2.16.Final.jar (libraries:io.netty:netty-codec-compression:4.2.16.Final) to libraries/io/netty/netty-codec-compression/4.2.16.Final/netty-codec-compression-4.2.16.Final.jar
+Unpacking io/netty/netty-codec-http/4.2.16.Final/netty-codec-http-4.2.16.Final.jar (libraries:io.netty:netty-codec-http:4.2.16.Final) to libraries/io/netty/netty-codec-http/4.2.16.Final/netty-codec-http-4.2.16.Final.jar
+Unpacking io/netty/netty-common/4.2.16.Final/netty-common-4.2.16.Final.jar (libraries:io.netty:netty-common:4.2.16.Final) to libraries/io/netty/netty-common/4.2.16.Final/netty-common-4.2.16.Final.jar
+Unpacking io/netty/netty-handler/4.2.16.Final/netty-handler-4.2.16.Final.jar (libraries:io.netty:netty-handler:4.2.16.Final) to libraries/io/netty/netty-handler/4.2.16.Final/netty-handler-4.2.16.Final.jar
+Unpacking io/netty/netty-resolver/4.2.16.Final/netty-resolver-4.2.16.Final.jar (libraries:io.netty:netty-resolver:4.2.16.Final) to libraries/io/netty/netty-resolver/4.2.16.Final/netty-resolver-4.2.16.Final.jar
+Unpacking io/netty/netty-transport/4.2.16.Final/netty-transport-4.2.16.Final.jar (libraries:io.netty:netty-transport:4.2.16.Final) to libraries/io/netty/netty-transport/4.2.16.Final/netty-transport-4.2.16.Final.jar
+Unpacking io/netty/netty-transport-classes-epoll/4.2.16.Final/netty-transport-classes-epoll-4.2.16.Final.jar (libraries:io.netty:netty-transport-classes-epoll:4.2.16.Final) to libraries/io/netty/netty-transport-classes-epoll/4.2.16.Final/netty-transport-classes-epoll-4.2.16.Final.jar
+Unpacking io/netty/netty-transport-classes-kqueue/4.2.16.Final/netty-transport-classes-kqueue-4.2.16.Final.jar (libraries:io.netty:netty-transport-classes-kqueue:4.2.16.Final) to libraries/io/netty/netty-transport-classes-kqueue/4.2.16.Final/netty-transport-classes-kqueue-4.2.16.Final.jar
+Unpacking io/netty/netty-transport-native-epoll/4.2.16.Final/netty-transport-native-epoll-4.2.16.Final-linux-x86_64.jar (libraries:io.netty:netty-transport-native-epoll:4.2.16.Final:linux-x86_64) to libraries/io/netty/netty-transport-native-epoll/4.2.16.Final/netty-transport-native-epoll-4.2.16.Final-linux-x86_64.jar
+Unpacking io/netty/netty-transport-native-epoll/4.2.16.Final/netty-transport-native-epoll-4.2.16.Final-linux-aarch_64.jar (libraries:io.netty:netty-transport-native-epoll:4.2.16.Final:linux-aarch_64) to libraries/io/netty/netty-transport-native-epoll/4.2.16.Final/netty-transport-native-epoll-4.2.16.Final-linux-aarch_64.jar
+Unpacking io/netty/netty-transport-native-kqueue/4.2.16.Final/netty-transport-native-kqueue-4.2.16.Final-osx-x86_64.jar (libraries:io.netty:netty-transport-native-kqueue:4.2.16.Final:osx-x86_64) to libraries/io/netty/netty-transport-native-kqueue/4.2.16.Final/netty-transport-native-kqueue-4.2.16.Final-osx-x86_64.jar
+Unpacking io/netty/netty-transport-native-kqueue/4.2.16.Final/netty-transport-native-kqueue-4.2.16.Final-osx-aarch_64.jar (libraries:io.netty:netty-transport-native-kqueue:4.2.16.Final:osx-aarch_64) to libraries/io/netty/netty-transport-native-kqueue/4.2.16.Final/netty-transport-native-kqueue-4.2.16.Final-osx-aarch_64.jar
+Unpacking io/netty/netty-transport-native-unix-common/4.2.16.Final/netty-transport-native-unix-common-4.2.16.Final.jar (libraries:io.netty:netty-transport-native-unix-common:4.2.16.Final) to libraries/io/netty/netty-transport-native-unix-common/4.2.16.Final/netty-transport-native-unix-common-4.2.16.Final.jar
+Unpacking it/unimi/dsi/fastutil/8.5.18/fastutil-8.5.18.jar (libraries:it.unimi.dsi:fastutil:8.5.18) to libraries/it/unimi/dsi/fastutil/8.5.18/fastutil-8.5.18.jar
+Unpacking net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar (libraries:net.java.dev.jna:jna:5.17.0) to libraries/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar
+Unpacking net/java/dev/jna/jna-platform/5.17.0/jna-platform-5.17.0.jar (libraries:net.java.dev.jna:jna-platform:5.17.0) to libraries/net/java/dev/jna/jna-platform/5.17.0/jna-platform-5.17.0.jar
+Unpacking net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar (libraries:net.sf.jopt-simple:jopt-simple:5.0.4) to libraries/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar
+Unpacking org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0.jar (libraries:org.apache.commons:commons-lang3:3.20.0) to libraries/org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0.jar
+Unpacking org/apache/logging/log4j/log4j-api/2.26.0/log4j-api-2.26.0.jar (libraries:org.apache.logging.log4j:log4j-api:2.26.0) to libraries/org/apache/logging/log4j/log4j-api/2.26.0/log4j-api-2.26.0.jar
+Unpacking org/apache/logging/log4j/log4j-core/2.26.0/log4j-core-2.26.0.jar (libraries:org.apache.logging.log4j:log4j-core:2.26.0) to libraries/org/apache/logging/log4j/log4j-core/2.26.0/log4j-core-2.26.0.jar
+Unpacking org/apache/logging/log4j/log4j-slf4j2-impl/2.26.0/log4j-slf4j2-impl-2.26.0.jar (libraries:org.apache.logging.log4j:log4j-slf4j2-impl:2.26.0) to libraries/org/apache/logging/log4j/log4j-slf4j2-impl/2.26.0/log4j-slf4j2-impl-2.26.0.jar
+Unpacking org/joml/joml/1.10.9/joml-1.10.9.jar (libraries:org.joml:joml:1.10.9) to libraries/org/joml/joml/1.10.9/joml-1.10.9.jar
+Unpacking org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar (libraries:org.jspecify:jspecify:1.0.0) to libraries/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar
+Unpacking org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar (libraries:org.slf4j:slf4j-api:2.0.17) to libraries/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar
+Starting net.fabricmc.loader.impl.game.minecraft.BundlerClassPathCapture
+[20:28:00] [main/INFO]: Loading Minecraft 26.3 with Fabric Loader 0.20.1
+[20:28:00] [main/INFO]: Mappings not present!
+[20:28:00] [main/INFO]: Loading 60 mods:
+	- ahrivaea 0.1.0
+	- ahrivaea_batch3 0.12.0
+	- ahrivaea_guide 0.1.0
+	- ahrivaea_guilds 0.1.0
+	- ahrivaea_horses 0.1.0
+	- ahrivaea_lights 0.1.0
+	- ahrivaea_map 0.1.0
+	- ahrivaea_minecarts 0.1.0
+	- ahrivaea_stellar 0.1.0
+	- ahrivaea_towers 0.1.0
+	- ahrivaea_woodcutting 0.1.0
+	- fabric-api 0.164.0+26.3
+	   |-- fabric-advancement-api-v1 1.0.1+38c7a2d55d
+	   |-- fabric-api-base 2.0.6+fcdff87f5d
+	   |-- fabric-api-lookup-api-v1 2.0.24+3434d6d95d
+	   |-- fabric-biome-api-v1 20.1.0+c6aa69a85d
+	   |-- fabric-block-api-v1 3.1.0+0ae6f9115d
+	   |-- fabric-block-getter-api-v2 2.0.9+3434d6d95d
+	   |-- fabric-command-api-v2 3.1.2+fcdff87f5d
+	   |-- fabric-content-registries-v0 15.0.6+74ed1ea55d
+	   |-- fabric-convention-tags-v2 4.10.4+899e30535d
+	   |-- fabric-crash-report-info-v1 1.0.7+fcdff87f5d
+	   |-- fabric-creative-tab-api-v1 5.0.22+fcdff87f5d
+	   |-- fabric-data-attachment-api-v1 2.2.32+b9b88df45d
+	   |-- fabric-data-generation-api-v1 27.4.1+501c7ef55d
+	   |-- fabric-debug-api-v1 1.0.5+5af7744b5d
+	   |-- fabric-dimensions-v1 5.1.20+5af7744b5d
+	   |-- fabric-entity-events-v1 6.0.4+3434d6d95d
+	   |-- fabric-events-interaction-v0 5.3.8+b9b88df45d
+	   |-- fabric-game-rule-api-v1 4.0.10+3434d6d95d
+	   |-- fabric-item-api-v1 14.8.0+d1c0d72b5d
+	   |-- fabric-lifecycle-events-v1 4.1.9+ffef5f675d
+	   |-- fabric-loot-api-v3 4.0.9+4068fd645d
+	   |-- fabric-menu-api-v1 2.0.29+ed66f0a35d
+	   |-- fabric-message-api-v1 7.0.10+3434d6d95d
+	   |-- fabric-networking-api-v1 6.3.10+5c1fee4d5d
+	   |-- fabric-object-builder-api-v1 24.1.11+e2f63d3e5d
+	   |-- fabric-particles-v1 5.0.26+3434d6d95d
+	   |-- fabric-permission-api-v1 1.0.8+fcdff87f5d
+	   |-- fabric-recipe-api-v1 10.0.10+b9b88df45d
+	   |-- fabric-registry-sync-v0 8.0.3+1ca9f6365d
+	   |-- fabric-rendering-fluids-v1 6.0.6+3434d6d95d
+	   |-- fabric-resource-conditions-api-v1 6.2.0+0d124ae85d
+	   |-- fabric-resource-loader-v0 3.3.27+4fc5413f5d
+	   |-- fabric-resource-loader-v1 3.1.0+5af7744b5d
+	   |-- fabric-serialization-api-v1 2.0.7+74ed1ea55d
+	   |-- fabric-tag-api-v1 2.1.11+fcdff87f5d
+	   |-- fabric-transfer-api-v1 8.0.25+fcdff87f5d
+	   \-- fabric-transitive-access-wideners-v1 8.1.17+e2f63d3e5d
+	- fabricloader 0.20.1
+	   \-- mixinextras 0.5.5
+	- java 25
+	- minecraft 26.3
+	- serantis_battle 0.103.0
+	- serantis_dyed_water 0.1.0
+	- serantis_end_dragons 0.3.0
+	- serantis_grinding 0.1.0
+	- serantis_smoke 1.0.0
+	- serantis_starters 0.1.0
+	- serantis_towers 0.1.0
+[20:28:00] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/work/_temp/server/libraries/net/fabricmc/sponge-mixin/0.17.5+mixin.0.8.7/sponge-mixin-0.17.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[20:28:01] [main/INFO]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/home/runner/work/_temp/server/libraries/org/joml/joml/1.10.9/joml-1.10.9.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[20:28:08] [main/INFO]: Ahrivaea loaded
+[20:28:08] [main/INFO]: Ahrivaea Guilds loaded
+[20:28:08] [main/INFO]: Ahrivaea Swift Horses loaded
+[20:28:08] [main/INFO]: Ahrivaea Handheld Lights loaded
+[20:28:08] [main/INFO]: Ahrivaea Map loaded
+[20:28:08] [main/INFO]: Ahrivaea Fast Minecarts loaded: top speed 30.0 blocks/sec
+[20:28:08] [main/INFO]: Ahrivaea Stellar Gear loaded
+[20:28:08] [main/INFO]: Ahrivaea Tower Challenges loaded
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTransformRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.item.enchantment.Enchantment$Builder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.network.Connection
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeMap
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.network.config.SynchronizeRegistriesTask
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$3
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection$1BlockCounter
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.network.protocol.configuration.ServerboundSelectKnownPacks
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.players.PlayerList
+[20:28:08] [main/INFO]: Force-loading class dev.ahrivaea.base.WorkerBrain
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$2
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.tags.BlockItemTagAppender
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.BrewingRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.registries.RegistriesDatapackGenerator
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.Swim
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.network.ServerLoginPacketListenerImpl
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.commands.execution.CommandQueueEntry
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.level.ServerLevel$EntityCallbacks
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootTable$Builder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider$1
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.resources.RegistryDataLoader
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.gametest.framework.GameTestServer
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.core.RegistrySynchronization
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.locale.Language
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.CompoundContainer
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.tags.TagAppender$1
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.network.PacketEncoder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.SimpleCookingRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.SpecialRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand$1
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.ReloadableServerRegistries
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.Resource
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.ShapedRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkHolder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.commands.CommandSourceStack
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkMap
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.core.component.DataComponentInitializers$1
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.network.PacketDecoder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueOutput
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.storage.ValueInput
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.ShapelessRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.CustomCraftingRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.item.enchantment.EnchantmentHelper
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.GiveGiftToHero
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$TagSet$2
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.loot.BlockLootSubProvider
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.tags.TagFile
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.core.RegistryAccess$ImmutableRegistryAccess
+[20:28:08] [main/INFO]: Force-loading class net.fabricmc.fabric.impl.attachment.GlobalAttachmentsImpl
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.resources.ResourceManagerRegistryLoadTask
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleReloadInstance
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.registries.RegistryPatchGenerator
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkMap$TrackedEntity
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.HashCache$ProviderCache
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.biome.Climate$Sampler
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.pathfinder.PathfindingContext
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.packs.repository.PackRepository
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.entity.PersistentEntitySectionManager
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.ServerFunctionLibrary
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.data.BlockDataAccessor
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTrimRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.resources.FileToIdConverter
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueInput
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.SingleItemRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.PlayerAdvancements
+[20:28:08] [main/INFO]: Force-loading class dev.ahrivaea.battle.Unit
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.packs.repository.Pack
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.tags.TagLoader
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.data.EntityDataAccessor
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.network.ServerHandshakePacketListenerImpl
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.advancements.Advancement$Builder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.DebugConfigCommand
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.pathfinder.WalkNodeEvaluator
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool$Builder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.TransmuteRecipeBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.dedicated.DedicatedServer
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.ImposterProtoChunk
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.tags.TagAppender
+[20:28:08] [main/INFO]: Force-loading class dev.ahrivaea.battle.Battle
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.commands.Commands
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeAccess
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.DataPackCommand
+[20:28:08] [main/INFO]: Force-loading class dev.ahrivaea.battle.DamageCalc
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.network.protocol.BundlePacket
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.storage.SavedDataStorage
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.HelpCommand
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.util.ParticleUtils
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeManager
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.levelgen.RandomState
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.tags.TagEntry
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.ReloadableServerResources
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.tags.TagsProvider
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.levelgen.WorldDimensions
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.level.ServerEntity
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.tags.TagBuilder
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.network.protocol.login.ServerboundCustomQueryAnswerPacket
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.util.debug.ServerDebugSubscribers
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.MultiPackResourceManager
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.storage.SerializableChunkData
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeOutput
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.dedicated.ServerWatchdog
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.advancements.packs.VanillaAdventureAdvancements
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.commands.execution.tasks.BuildContexts
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.WorkAtComposter
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.HashCache
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.data.recipes.BrewingProvider
+[20:28:08] [main/INFO]: Force-loading class dev.ahrivaea.creature.Drops
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.network.PlayerChunkSender
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.resources.RegistryLoadTask$PendingRegistration
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.commands.EnchantCommand
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.dedicated.DedicatedServerProperties
+[20:28:08] [main/INFO]: Force-loading class net.minecraft.server.level.ServerPlayerGameMode
+[20:28:09] [main/INFO]: Force-loading class net.minecraft.server.WorldLoader
+[20:28:09] [main/INFO]: Force-loading class com.mojang.brigadier.context.ContextChain
+[20:28:09] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.status.ChunkStatusTasks
+[20:28:09] [main/INFO]: Force-loading class net.minecraft.network.codec.IdDispatchCodec
+[20:28:09] [main/INFO]: Force-loading class net.minecraft.data.DataProvider
+[20:28:09] [main/INFO]: Force-loading class net.minecraft.data.loot.EntityLootSubProvider
+[20:28:09] [main/INFO]: Force-loading class net.minecraft.network.protocol.login.ClientboundCustomQueryPacket
+[20:28:09] [main/INFO]: [STDOUT]: SMOKE: mixin audit finished
+[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
+[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
+[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
+[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
+[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
+[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
+[20:28:09] [main/INFO]: Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[20:28:09] [Worker-Main-2/ERROR]: Registry loading errors:
+> Errors in registry minecraft:enchantment:
+>> Errors in element serantis_battle:bane_arcane:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_arcane from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_darkness:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_darkness from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_earth:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_earth from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_fae:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_fae from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_fire:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_fire from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_frost:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_frost from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_nature:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_nature from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_none:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_none from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_radiant:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_radiant from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_storm:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_storm from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_void:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_void from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:bane_water:
+java.lang.IllegalStateException: Failed to parse serantis_battle:bane_water from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_arcane:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_arcane from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_darkness:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_darkness from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_earth:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_earth from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_fae:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_fae from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_fire:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_fire from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_frost:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_frost from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_nature:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_nature from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_radiant:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_radiant from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_storm:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_storm from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_void:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_void from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+>> Errors in element serantis_battle:infusion_water:
+java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_water from pack serantis_battle
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:111)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$loadFromResource$17(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement(ResourceManagerRegistryLoadTask.java:550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.mixinextras$bridge$wrapOperation$zzi000$fabric-advancement-api-v1$modifyAdvancement$19(ResourceManagerRegistryLoadTask.java)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.wrapOperation$zhn000$fabric-loot-api-v3$modifyLootTable(ResourceManagerRegistryLoadTask.java:1550)
+	at knot//net.minecraft.resources.ResourceManagerRegistryLoadTask.lambda$load$2(ResourceManagerRegistryLoadTask.java:46)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$Container.applyOperation(ParallelMapTransform.java:89)
+	at knot//net.minecraft.util.thread.ParallelMapTransform$BatchedTaskSplitter.lambda$createTask$0(ParallelMapTransform.java:213)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1817)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+	at knot//com.mojang.serialization.DataResult$Error.getOrThrow(DataResult.java:287)
+	at knot//com.mojang.serialization.DataResult.getOrThrow(DataResult.java:81)
+	at knot//net.minecraft.resources.RegistryLoadTask$PendingRegistration.loadFromResource(RegistryLoadTask.java:109)
+	... 13 more
+> Errors in registry minecraft:root:
+>> Errors in element minecraft:enchantment:
+java.lang.IllegalStateException: Unbound values in registry ResourceKey[minecraft:root / minecraft:enchantment]: [serantis_battle:bane_arcane, serantis_battle:bane_darkness, serantis_battle:bane_earth, serantis_battle:bane_fae, serantis_battle:bane_fire, serantis_battle:bane_frost, serantis_battle:bane_nature, serantis_battle:bane_none, serantis_battle:bane_radiant, serantis_battle:bane_storm, serantis_battle:bane_void, serantis_battle:bane_water, serantis_battle:infusion_arcane, serantis_battle:infusion_darkness, serantis_battle:infusion_earth, serantis_battle:infusion_fae, serantis_battle:infusion_fire, serantis_battle:infusion_frost, serantis_battle:infusion_nature, serantis_battle:infusion_radiant, serantis_battle:infusion_storm, serantis_battle:infusion_void, serantis_battle:infusion_water]
+	at knot//net.minecraft.core.MappedRegistry.freeze(MappedRegistry.java:300)
+	at knot//net.minecraft.resources.RegistryLoadTask.freezeRegistry(RegistryLoadTask.java:83)
+	at knot//net.minecraft.resources.RegistryDataLoader.lambda$load$3(RegistryDataLoader.java:261)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:196)
+	at java.base/java.util.AbstractList$RandomAccessSpliterator.forEachRemaining(AbstractList.java:722)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:635)
+	at java.base/java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:291)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:652)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:658)
+	at java.base/java.util.stream.ReferencePipeline.toList(ReferencePipeline.java:663)
+	at knot//net.minecraft.resources.RegistryDataLoader.lambda$load$2(RegistryDataLoader.java:261)
+	at knot//net.minecraft.resources.RegistryDataLoader.mdd9950a$fabric-registry-sync-v0$lambda$thenApplyAsync$1$1(RegistryDataLoader.java:565)
+	at java.base/jdk.internal.vm.ScopedValueContainer.callWithoutScope(ScopedValueContainer.java:162)
+	at java.base/jdk.internal.vm.ScopedValueContainer.call(ScopedValueContainer.java:147)
+	at java.base/java.lang.ScopedValue$Carrier.call(ScopedValue.java:419)
+	at knot//net.minecraft.resources.RegistryDataLoader.mdd9950a$fabric-registry-sync-v0$lambda$thenApplyAsync$0$0(RegistryDataLoader.java:565)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:667)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:504)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+
+[20:28:10] [main/WARN]: Failed to load datapacks, can't proceed with server load. You can either fix your datapacks or reset to vanilla with --safeMode
+java.util.concurrent.ExecutionException: net.minecraft.ReportedException: Registry Loading
+	at java.base/java.util.concurrent.CompletableFuture.wrapInExecutionException(CompletableFuture.java:345)
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:440)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2094)
+	at knot//net.minecraft.server.Main.main(Main.java:198)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotServer.main(KnotServer.java:23)
+	at net.fabricmc.loader.impl.launch.server.FabricServerLauncher.main(FabricServerLauncher.java:69)
+	at net.fabricmc.installer.ServerLauncher.main(ServerLauncher.java:69)
+Caused by: net.minecraft.ReportedException: Registry Loading
+	at knot//net.minecraft.resources.RegistryDataLoader.createReportWithBriefInfo(RegistryDataLoader.java:329)
+	at knot//net.minecraft.resources.RegistryDataLoader.logErrors(RegistryDataLoader.java:294)
+	at knot//net.minecraft.resources.RegistryDataLoader.lambda$load$2(RegistryDataLoader.java:263)
+	at knot//net.minecraft.resources.RegistryDataLoader.mdd9950a$fabric-registry-sync-v0$lambda$thenApplyAsync$1$1(RegistryDataLoader.java:565)
+	at java.base/jdk.internal.vm.ScopedValueContainer.callWithoutScope(ScopedValueContainer.java:162)
+	at java.base/jdk.internal.vm.ScopedValueContainer.call(ScopedValueContainer.java:147)
+	at java.base/java.lang.ScopedValue$Carrier.call(ScopedValue.java:419)
+	at knot//net.minecraft.resources.RegistryDataLoader.mdd9950a$fabric-registry-sync-v0$lambda$thenApplyAsync$0$0(RegistryDataLoader.java:565)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:667)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:504)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:511)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1450)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:2019)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.lang.IllegalStateException: Failed to load registries due to errors
+	at knot//net.minecraft.resources.RegistryDataLoader.createReportWithBriefInfo(RegistryDataLoader.java:313)
+	... 13 more

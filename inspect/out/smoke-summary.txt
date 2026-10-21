@@ -1,0 +1,59 @@
+255:[20:28:09] [main/INFO]: [STDOUT]: SMOKE: mixin audit finished
+256:[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
+257:[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
+258:[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
+259:[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
+260:[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
+261:[20:28:09] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
+263:[20:28:09] [Worker-Main-2/ERROR]: Registry loading errors:
+266:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_arcane from pack serantis_battle
+281:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+287:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_darkness from pack serantis_battle
+302:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+308:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_earth from pack serantis_battle
+323:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+329:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_fae from pack serantis_battle
+344:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+350:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_fire from pack serantis_battle
+365:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+371:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_frost from pack serantis_battle
+386:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+392:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_nature from pack serantis_battle
+407:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+413:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_none from pack serantis_battle
+428:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+434:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_radiant from pack serantis_battle
+449:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+455:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_storm from pack serantis_battle
+470:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+476:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_void from pack serantis_battle
+491:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+497:java.lang.IllegalStateException: Failed to parse serantis_battle:bane_water from pack serantis_battle
+512:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+518:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_arcane from pack serantis_battle
+533:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+539:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_darkness from pack serantis_battle
+554:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+560:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_earth from pack serantis_battle
+575:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+581:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_fae from pack serantis_battle
+596:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+602:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_fire from pack serantis_battle
+617:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+623:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_frost from pack serantis_battle
+638:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+644:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_nature from pack serantis_battle
+659:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+665:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_radiant from pack serantis_battle
+680:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+686:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_storm from pack serantis_battle
+701:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+707:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_void from pack serantis_battle
+722:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+728:java.lang.IllegalStateException: Failed to parse serantis_battle:infusion_water from pack serantis_battle
+743:Caused by: java.lang.IllegalStateException: Missing tag: 'minecraft:enchantable/sword' in 'minecraft:item'
+750:java.lang.IllegalStateException: Unbound values in registry ResourceKey[minecraft:root / minecraft:enchantment]: [serantis_battle:bane_arcane, serantis_battle:bane_darkness, serantis_battle:bane_earth, serantis_battle:bane_fae, serantis_battle:bane_fire, serantis_battle:bane_frost, serantis_battle:bane_nature, serantis_battle:bane_none, serantis_battle:bane_radiant, serantis_battle:bane_storm, serantis_battle:bane_void, serantis_battle:bane_water, serantis_battle:infusion_arcane, serantis_battle:infusion_darkness, serantis_battle:infusion_earth, serantis_battle:infusion_fae, serantis_battle:infusion_fire, serantis_battle:infusion_frost, serantis_battle:infusion_nature, serantis_battle:infusion_radiant, serantis_battle:infusion_storm, serantis_battle:infusion_void, serantis_battle:infusion_water]
+777:java.util.concurrent.ExecutionException: net.minecraft.ReportedException: Registry Loading
+778:	at java.base/java.util.concurrent.CompletableFuture.wrapInExecutionException(CompletableFuture.java:345)
+787:Caused by: net.minecraft.ReportedException: Registry Loading
+802:Caused by: java.lang.IllegalStateException: Failed to load registries due to errors
