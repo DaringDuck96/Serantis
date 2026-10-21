@@ -181,4 +181,31 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         serantis$apples = ((MovesHolder) (Object) caught).serantis$apples();
         serantis$tutor = ((MovesHolder) (Object) caught).serantis$tutor();
     }
+
+    // ---- sounds (see CreatureSounds): borrowed from Minecraft's mobs to suit each creature; humanoids stay quiet
+    protected net.minecraft.sounds.SoundEvent getAmbientSound() {
+        return dev.serantis.battle.CreatureSounds.ambient((CreatureEntity) (Object) this);
+    }
+
+    protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
+        CreatureEntity self = (CreatureEntity) (Object) this;
+        if (dev.serantis.battle.CreatureSounds.silent(self)) return null;
+        net.minecraft.sounds.SoundEvent s = dev.serantis.battle.CreatureSounds.hurt(self);
+        return s != null ? s : net.minecraft.sounds.SoundEvents.GENERIC_HURT;
+    }
+
+    protected net.minecraft.sounds.SoundEvent getDeathSound() {
+        CreatureEntity self = (CreatureEntity) (Object) this;
+        if (dev.serantis.battle.CreatureSounds.silent(self)) return null;
+        net.minecraft.sounds.SoundEvent s = dev.serantis.battle.CreatureSounds.death(self);
+        return s != null ? s : net.minecraft.sounds.SoundEvents.GENERIC_DEATH;
+    }
+
+    public float getVoicePitch() {
+        CreatureEntity self = (CreatureEntity) (Object) this;
+        var r = self.getRandom();
+        return dev.serantis.battle.CreatureSounds.pitch(self) * ((r.nextFloat() - r.nextFloat()) * 0.15f + 1f);
+    }
+
+    public int getAmbientSoundInterval() { return 240; }     // now and then, not constantly
 }
