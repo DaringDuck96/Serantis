@@ -232,6 +232,7 @@ public final class Achievements {
             }
             h.serantis$setClaimed(t.id(), claimed);
         }
+        if (TypeMastery.check(p)) any = true;
         if (any) {
             p.level().playSound(null, p.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.2f);
             PartySync.sync(p);
@@ -286,6 +287,7 @@ public final class Achievements {
             }
             out.add(o);
         }
+        TypeMastery.describe(p, out);
         state.add("serantis_achievements", out);
         state.addProperty("serantis_apples_earned", earned);
         state.addProperty("serantis_apples_total", total);

@@ -1,6 +1,9 @@
 """Convert the Gym Master Stone trophy models (Blockbench "bedrock_block" .bbmodel) into Java block models.
 
-Usage:  python3 tools/convert_trophies.py <battle add-on folder> <zip or folder of trophy_*.bbmodel>
+Usage:  python3 tools/convert_trophies.py <battle add-on folder> <zip or folder of trophy_*.bbmodel> [...]
+
+Gym Master Stone gems (trophy_<gem>_trophy.bbmodel) become <influence>_master_stone / eternita_stone; Type Mastery
+cups (trophy_<name>_champion_cup.bbmodel, in a zip named ..._<influence>_N.zip) become <influence>_mastery_trophy.
 
 Writes, inside <add-on>/assets/serantis_battle/: models/block/<id>.json, textures/block/<id>.png,
 blockstates/<id>.json (facing the player who placed it) and items/<id>.json; and the block's loot table
@@ -25,14 +28,20 @@ DISPLAY = {
 
 def r(x): x = round(float(x), 4); return 0 if x == 0 else x
 
-def block_id(name):
+INFLUENCES = ["none", "fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "arcane", "radiant"]
+
+def block_id(path, influence):
+    base = os.path.basename(path)[len("trophy_"):-len(".bbmodel")]
+    if "champion" in base:
+        if influence not in INFLUENCES: raise SystemExit(f"Which influence is {path}? (name the zip ..._<influence>_N.zip)")
+        return influence + "_mastery_trophy"
+    name = base[:-len("_trophy")]
     if name == "prismatic_gem": return "eternita_stone"
     return IDS[name] + "_master_stone"
 
-def convert(addon, path):
+def convert(addon, path, influence=None):
     bb = json.load(open(path))
-    name = os.path.basename(path)[len("trophy_"):-len("_trophy.bbmodel")]
-    bid = block_id(name)
+    bid = block_id(path, influence)
     res = bb["resolution"]["width"]
     k = 16.0 / res
     elements = []
@@ -72,7 +81,10 @@ def convert(addon, path):
     print(f"{bid:22} {len(elements):3} elements  {top / 16:.2f} blocks tall")
 
 if __name__ == "__main__":
-    src = sys.argv[2]
-    if src.endswith(".zip"):
-        work = tempfile.mkdtemp(); zipfile.ZipFile(src).extractall(work); src = work
-    for p in sorted(glob.glob(os.path.join(src, "**/trophy_*.bbmodel"), recursive=True)): convert(sys.argv[1], p)
+    import re
+    for src in sys.argv[2:]:
+        m = re.search(r"_(" + "|".join(INFLUENCES) + r")(?:_\d+)?(?:\.zip)?/?$", src)
+        influence = m.group(1) if m else None
+        if src.endswith(".zip"):
+            work = tempfile.mkdtemp(); zipfile.ZipFile(src).extractall(work); src = work
+        for p in sorted(glob.glob(os.path.join(src, "**/trophy_*.bbmodel"), recursive=True)): convert(sys.argv[1], p, influence)

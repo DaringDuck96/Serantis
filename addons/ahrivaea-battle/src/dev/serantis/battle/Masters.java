@@ -73,9 +73,10 @@ public final class Masters {
     public static void registerItems() {
         for (String inf : INFLUENCES) STONES.put(inf, trophy(inf + "_master_stone", 16, Rarity.RARE));
         ETERNITA = trophy("eternita_stone", 1, Rarity.EPIC);
+        for (String inf : INFLUENCES) TypeMastery.TROPHIES.put(inf, trophy(inf + "_mastery_trophy", 64, Rarity.UNCOMMON));
     }
 
-    private static Item trophy(String name, int stack, Rarity rarity) {
+    static Item trophy(String name, int stack, Rarity rarity) {
         ResourceKey<net.minecraft.world.level.block.Block> blockKey = ResourceKey.create(Registries.BLOCK, id(name));
         var block = Registry.register(BuiltInRegistries.BLOCK, blockKey, new TrophyBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
                 .setId(blockKey).strength(1.5f, 6f).sound(net.minecraft.world.level.block.SoundType.AMETHYST)
