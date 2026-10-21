@@ -229,6 +229,10 @@ Hit a wild creature with any weapon to battle it: a sword, axe, spear, mace, tri
 - **Shields:** a shield in your off hand gives you **+20 Defense** in battle (players start at 50), for as long as it's there.
 - **Changing gear:** on your turn, after choosing where to move, pick **Equip** (under Wait) to put a weapon, shield or staff from your inventory into a hand, or to empty a hand. It takes the place of your attack that turn. Shields always go in the off hand; staffs can go in either. Your attack, your staff spells and your Defense change straight away.
 
+### Creature sounds
+
+Creatures make sounds borrowed from Minecraft's own mobs to suit their bodies: wolves and hounds growl, birds chirp or screech, dragons roar, big beasts grunt, sea monsters groan, spirits whisper, horrors rumble, golems clank, fairies chime, trees creak, and so on. Humanoid people (magi, knights, goblins, giants, villagers...) sound like villagers. Pitch follows size: small creatures sound higher, big ones deeper. Idle sounds come now and then (about every 12 seconds). Each creature's kind is in `addons/ahrivaea-battle/serantis_battle/creature_sounds.tsv` (one line per creature; the kinds and the sounds they use are in `CreatureSounds.java`; use `silent` for none).
+
 ### Riding
 
 While you ride a creature, your crosshair passes through the creature you're sitting on, so you can place and break blocks and hit or shoot other creatures to start a battle without getting off.
