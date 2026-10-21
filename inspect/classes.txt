@@ -1,3 +1,2 @@
 # classes
-compile wip/harbinger
-# 2
+compile wip/armor
