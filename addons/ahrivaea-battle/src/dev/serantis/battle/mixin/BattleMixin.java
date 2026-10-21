@@ -273,6 +273,19 @@ public abstract class BattleMixin implements BattleAccess {
     @Inject(method = "view", at = @At("RETURN"))
     private void serantis$afterView(UUID viewer, CallbackInfoReturnable<JsonObject> cir) { MoveEngine.decorate((Battle) (Object) this, cir.getReturnValue()); }
 
+    // Villagers (Creature Masters and Town Guards included) are never Enraged or Mutated.
+    @Redirect(method = "addCreature(Ldev/ahrivaea/battle/Unit$Side;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;Ldev/ahrivaea/creature/Variant;IFIII)Ldev/ahrivaea/battle/Unit;",
+            at = @At(value = "INVOKE", target = "Ldev/ahrivaea/creature/Variant;prefix()Ljava/lang/String;"))
+    private String serantis$plainVillagerName(Variant variant, Unit.Side side, Species species, Influence influence, Variant v,
+                                             int level, float hp, int x, int z, int slot) {
+        return dev.ahrivaea.villager.Villagers.SPECIES.equals(species.id()) ? "" : variant.prefix();
+    }
+
+    @Redirect(method = "*", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/creature/CreatureEntity;getVariant()Ldev/ahrivaea/creature/Variant;"), require = 0)
+    private Variant serantis$plainVillagerDefeated(dev.ahrivaea.creature.CreatureEntity e) {
+        return dev.ahrivaea.villager.Villagers.SPECIES.equals(e.getSpeciesId()) ? Variant.NONE : e.getVariant();
+    }
+
     // ---- move sets
     @Inject(method = "addCreature(Ldev/ahrivaea/battle/Unit$Side;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;Ldev/ahrivaea/creature/Variant;IFIII)Ldev/ahrivaea/battle/Unit;",
             at = @At("RETURN"))

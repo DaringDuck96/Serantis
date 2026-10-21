@@ -13,7 +13,9 @@ public final class VillagerLooks {
             Map.entry("farmer", "farmer"), Map.entry("fisherman", "fisherman"), Map.entry("hunter", "fletcher"),
             Map.entry("librarian", "librarian"), Map.entry("explorer", "cartographer"), Map.entry("smith", "armorer"),
             Map.entry("leatherworker", "leatherworker"), Map.entry("mason", "mason"), Map.entry("jeweler", "nitwit"),
-            Map.entry("voidwalker", "cleric"),
+            Map.entry("voidwalker", "cleric"), Map.entry("gardener", "shepherd"), Map.entry("weaver", "shepherd"),
+            Map.entry("netherwright", "weaponsmith"), Map.entry("carpenter", "toolsmith"), Map.entry("engineer", "toolsmith"),
+            Map.entry("cook", "butcher"),
             // Serantis's own
             Map.entry("alchemist", "alchemist"), Map.entry("bard", "bard"), Map.entry("innkeeper", "innkeeper"),
             Map.entry("noble", "noble"), Map.entry("merchant", "merchant"), Map.entry("move_tutor", "move_tutor"),
@@ -25,6 +27,7 @@ public final class VillagerLooks {
     /** The model for this profession (null or empty: no profession), or null to keep the default look. */
     public static String look(String profession) {
         if (profession == null || profession.isEmpty()) return "villager";
+        if (profession.startsWith("creature_master:")) return "master_" + profession.substring("creature_master:".length());
         return LOOKS.get(profession);
     }
 }

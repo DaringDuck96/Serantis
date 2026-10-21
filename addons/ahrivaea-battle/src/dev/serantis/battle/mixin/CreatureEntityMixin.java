@@ -43,7 +43,17 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Inject(method = "tick", at = @At("HEAD"))
     private void serantis$marketTick(CallbackInfo ci) {
         if (serantis$leaveAt > 0) dev.serantis.battle.Market.tick((CreatureEntity) (Object) this);
-        if (!((CreatureEntity) (Object) this).level().isClientSide()) dev.serantis.battle.Locomotion.tick((CreatureEntity) (Object) this);
+        CreatureEntity self = (CreatureEntity) (Object) this;
+        if (!self.level().isClientSide()) {
+            dev.serantis.battle.Locomotion.tick(self);
+            if (self.getVariant() != dev.ahrivaea.creature.Variant.NONE && dev.ahrivaea.villager.Villagers.SPECIES.equals(self.getSpeciesId()))
+                self.setVariant(dev.ahrivaea.creature.Variant.NONE);     // villagers and Creature Masters are never Enraged or Mutated
+        }
+    }
+
+    @org.spongepowered.asm.mixin.injection.ModifyVariable(method = "setVariant", at = @At("HEAD"), argsOnly = true)
+    private dev.ahrivaea.creature.Variant serantis$plainVillagers(dev.ahrivaea.creature.Variant v) {
+        return dev.ahrivaea.villager.Villagers.SPECIES.equals(((CreatureEntity) (Object) this).getSpeciesId()) ? dev.ahrivaea.creature.Variant.NONE : v;
     }
 
     // How it moves in the wild (see Locomotion): flying, diving, crawling the bottom.

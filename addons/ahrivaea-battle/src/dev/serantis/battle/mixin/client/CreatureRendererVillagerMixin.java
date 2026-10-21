@@ -23,10 +23,8 @@ public abstract class CreatureRendererVillagerMixin {
         if (look == null) return;
         var geo = GeoModels.model("villager", look);
         if (geo == null) return;
-        String variant = entity.getVariant().getSerializedName();
         state.geo = geo;
-        state.texture = Identifier.parse("ahrivaea:textures/entity/creature/villager/" + look
-                + ("none".equals(variant) || variant.isEmpty() ? "" : "_" + variant) + ".png");
+        state.texture = Identifier.parse("ahrivaea:textures/entity/creature/villager/" + look + ".png");   // never Enraged or Mutated
         state.villager = false;                              // no vanilla skin and outfit on top
         state.outfit = "";
     }
