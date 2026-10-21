@@ -1,2 +1,4 @@
 # classes
-compile wip/shadows
+sig:net.minecraft.world.entity.Entity
+sig:net.minecraft.server.level.ServerLevel
+sig:net.minecraft.server.level.ServerPlayer
