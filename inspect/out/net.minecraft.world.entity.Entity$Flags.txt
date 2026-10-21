@@ -1,0 +1,3 @@
+Compiled from "Entity.java"
+public interface net.minecraft.world.entity.Entity$Flags extends java.lang.annotation.Annotation {
+}

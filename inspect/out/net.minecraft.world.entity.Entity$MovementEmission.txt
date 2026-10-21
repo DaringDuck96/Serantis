@@ -1,0 +1,18 @@
+Compiled from "Entity.java"
+public final class net.minecraft.world.entity.Entity$MovementEmission extends java.lang.Enum<net.minecraft.world.entity.Entity$MovementEmission> {
+  public static final net.minecraft.world.entity.Entity$MovementEmission NONE;
+  public static final net.minecraft.world.entity.Entity$MovementEmission SOUNDS;
+  public static final net.minecraft.world.entity.Entity$MovementEmission EVENTS;
+  public static final net.minecraft.world.entity.Entity$MovementEmission ALL;
+  private final boolean sounds;
+  private final boolean events;
+  private static final net.minecraft.world.entity.Entity$MovementEmission[] $VALUES;
+  public static net.minecraft.world.entity.Entity$MovementEmission[] values();
+  public static net.minecraft.world.entity.Entity$MovementEmission valueOf(java.lang.String);
+  private net.minecraft.world.entity.Entity$MovementEmission(boolean, boolean);
+  public boolean emitsAnything();
+  public boolean emitsEvents();
+  public boolean emitsSounds();
+  private static net.minecraft.world.entity.Entity$MovementEmission[] $values();
+  static {};
+}
