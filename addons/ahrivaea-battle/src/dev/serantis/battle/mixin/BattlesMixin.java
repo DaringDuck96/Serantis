@@ -538,7 +538,7 @@ public abstract class BattlesMixin {
                 || dev.serantis.battle.GoblinRaids.raidSize() > 0 || dev.serantis.battle.Masters.isMaster(entity) || dev.serantis.battle.Harbinger.is(entity) || dev.serantis.battle.FalseHydra.is(entity) || dev.serantis.battle.Riddles.isRiddleDragon(entity)
                 || dev.serantis.battle.Intro.isFigure(entity)) return;
         int me = dev.ahrivaea.character.PlayerCharacter.get(player).level();
-        if (dev.serantis.battle.LevelBand.above(me) >= 5) return;      // the window is fully open from level 8
+        if (dev.serantis.battle.LevelBand.above(me) >= 5) return;      // the window is fully open from level 7
         int cap = Math.max(1, dev.serantis.battle.LevelBand.hi(me));
         var sp = entity.getSpecies().orElse(null);
         if (sp != null && entity.getCreatureLevel() > cap) entity.setup(sp, entity.getInfluence(), cap, -1f);
