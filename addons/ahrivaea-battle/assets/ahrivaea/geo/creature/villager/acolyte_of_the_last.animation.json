@@ -7,35 +7,35 @@
    "bones": {
     "leg_left": {
      "rotation": [
-      "24*math.sin(query.life_time*1*288+0)",
+      "0",
       "0",
       "0"
      ]
     },
     "leg_right": {
      "rotation": [
-      "24*math.sin(query.life_time*1*288+180)",
+      "0",
       "0",
       "0"
      ]
     },
     "body": {
      "rotation": [
-      "2.5*math.sin(query.life_time*1*144+0)",
+      "1*math.sin(query.life_time*72)",
       "0",
       "0"
      ]
     },
     "arm_left": {
      "rotation": [
-      "20*math.sin(query.life_time*1*288+180)",
+      "2*math.sin(query.life_time*72+180)",
       "0",
       "0"
      ]
     },
     "arm_right": {
      "rotation": [
-      "7*math.sin(query.life_time*1*288+0)",
+      "2*math.sin(query.life_time*72)",
       "0",
       "0"
      ]
@@ -43,13 +43,13 @@
     "head": {
      "rotation": [
       "0",
-      "-(10*math.sin(query.life_time*1*90+57.296))",
+      "-(3*math.sin(query.life_time*36+57.296))",
       "0"
      ]
     },
     "hood_tail": {
      "rotation": [
-      "5*math.sin(query.life_time*1*144+0)",
+      "2*math.sin(query.life_time*72)",
       "0",
       "0"
      ]
@@ -58,26 +58,26 @@
      "rotation": [
       "0",
       "0",
-      "-(-5*math.sin(query.life_time*1*90+0))"
+      "-(-5*math.sin(query.life_time*1*54+0))"
      ]
     },
     "wing_cloak_r": {
      "rotation": [
       "0",
       "0",
-      "-(5*math.sin(query.life_time*1*90+180))"
+      "-(5*math.sin(query.life_time*1*54+180))"
      ]
     },
     "broken_chain": {
      "rotation": [
-      "10*math.sin(query.life_time*1*180+0)",
+      "10*math.sin(query.life_time*1*72+0)",
       "0",
       "0"
      ]
     },
     "broken_chain_2": {
      "rotation": [
-      "10*math.sin(query.life_time*1*180+57.296)",
+      "10*math.sin(query.life_time*1*72+57.296)",
       "0",
       "0"
      ]

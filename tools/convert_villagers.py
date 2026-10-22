@@ -21,6 +21,20 @@ MASTERS = {"unbound_grandmaster", "ember_warlord", "rime_harpoon_master", "thund
 # Story characters: saved under the look the add-on gives them.
 RENAME = {"acolyte_of_the_first_dragon": "mysterious_figure", "acolyte_of_the_last_dragon": "acolyte_of_the_last"}
 
+# The Acolytes' idle came as a walk cycle (legs and arms swinging): it looked like twitching in their scenes.
+CALM = {"leg_left": ["0", "0", "0"], "leg_right": ["0", "0", "0"],
+        "body": ["1*math.sin(query.life_time*72)", "0", "0"],
+        "arm_left": ["2*math.sin(query.life_time*72+180)", "0", "0"], "arm_right": ["2*math.sin(query.life_time*72)", "0", "0"],
+        "head": ["0", "-(3*math.sin(query.life_time*36+57.296))", "0"], "hood_tail": ["2*math.sin(query.life_time*72)", "0", "0"]}
+
+def calm(anim):
+    bones = anim.get("animations", {}).get("idle", {}).get("bones", {})
+    for b, rot in CALM.items():
+        if b in bones: bones[b]["rotation"] = rot
+    for b in ("wing_cloak_l", "wing_cloak_r", "chained_tome", "broken_chain", "broken_chain_2"):
+        if b in bones and "rotation" in bones[b]:
+            bones[b]["rotation"] = [x.replace("*126", "*54").replace("*90", "*54").replace("*180", "*72") for x in bones[b]["rotation"]]
+
 def convert(addon, src):
     work = tempfile.mkdtemp()
     if src.endswith(".zip"):
@@ -41,6 +55,7 @@ def convert(addon, src):
     geo = geometry(base, "geometry.villager_" + look)
     geo["minecraft:geometry"][0]["description"]["ahrivaea:real_size"] = True
     anim = animations(base)
+    if look in RENAME.values(): calm(anim)                       # the Acolytes stand still while they talk
     gdir = os.path.join(addon, "assets/ahrivaea/geo/creature/villager"); os.makedirs(gdir, exist_ok=True)
     tdir = os.path.join(addon, "assets/ahrivaea/textures/entity/creature/villager"); os.makedirs(tdir, exist_ok=True)
     json.dump(geo, open(os.path.join(gdir, f"{look}.geo.json"), "w"), indent=1)
