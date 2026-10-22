@@ -1,2 +1,2 @@
-# 1792671737
-smoke
+# 1792672191
+compile wip/gm-crystal
