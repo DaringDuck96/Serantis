@@ -69,7 +69,7 @@ public final class Riddles {
     /** The dragon asks this player its riddle (three answers: the right one and two others, shuffled). */
     public static void ask(ServerPlayer p, CreatureEntity dragon) {
         JsonObject r = riddle(dragon.getSpeciesId());
-        if (r == null || dev.ahrivaea.battle.Battles.of(p) != null) return;
+        if (r == null || dev.ahrivaea.battle.Battles.of(p) != null || !DragonParties.allowed(dragon, p.getUUID())) return;
         Session old = ASKING.get(p.getUUID());
         if (old != null && old.entity() == dragon.getId()) return;          // already being asked
         String answer = r.get("answer").getAsString();
@@ -109,8 +109,18 @@ public final class Riddles {
         if (s == null || !fight || s.wrong() >= 0) return;
         Entity e = p.level().getEntity(s.entity());
         if (e instanceof CreatureEntity dragon && dragon.isAlive() && p.distanceToSqr(dragon) < 48 * 48 && dev.ahrivaea.battle.Battles.of(p) == null
-                && !dev.ahrivaea.battle.Battles.inBattle(dragon))
-            dev.ahrivaea.battle.Battles.start(p, dragon);
+                && !dev.ahrivaea.battle.Battles.inBattle(dragon)) {
+            var b = dev.ahrivaea.battle.Battles.start(p, dragon);
+            if (b == null) return;
+            var g = dev.serantis.battle.coop.Groups.of(p);                  // the whole group near the dragon fights it together
+            if (g != null) for (UUID m : g.members()) {
+                ServerPlayer q = p.level().getServer().getPlayerList().getPlayer(m);
+                if (q == null || q == p || q.level() != p.level() || q.distanceToSqr(p) > 48 * 48) continue;
+                if (ASKING.remove(q.getUUID()) != null) PartySync.sync(q);
+                dev.serantis.battle.coop.Groups.forget(q);
+                dev.serantis.battle.coop.CoopBattles.join(q, p.getUUID());
+            }
+        }
     }
 
     /** A dragon that has just risen asks everyone near it. */
@@ -128,8 +138,9 @@ public final class Riddles {
         }
         if (!e.entityTags().contains(ASK_TAG) || !(e.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
         e.removeTag(ASK_TAG);
-        for (ServerPlayer p : level.players())
-            if (p.distanceToSqr(e) < 48 * 48 && !p.isSpectator()) ask(p, e);
+        for (var en : DragonParties.share(level, e).entrySet())         // players not in one group each get their own dragon
+            for (ServerPlayer p : en.getValue())
+                if (p.distanceToSqr(en.getKey()) < 48 * 48) ask(p, en.getKey());
     }
 
     /** "serantis_riddle" in the party state while a dragon is asking this player. */
