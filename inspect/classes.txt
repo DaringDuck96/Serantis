@@ -1,2 +1,3 @@
-# 1792675554
-sig:net.minecraft.world.entity.Entity
+# 1792676712
+compile wip/false-hydra-summon
+smoke
