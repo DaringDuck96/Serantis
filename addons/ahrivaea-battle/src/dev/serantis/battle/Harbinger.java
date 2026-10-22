@@ -65,7 +65,8 @@ public final class Harbinger {
         Species sp = Species.get(SPECIES).orElse(null);
         if (sp == null) return;
         Influence inf = sp.formOrDefault(Influence.DARKNESS);
-        CreatureEntity e = Ahrivaea.spawn(p.level(), sp, inf, 20, -1f, p.x(), p.y() - DEPTH, p.z());
+        int lvl = 16 + p.level().getRandom().nextInt(3);                     // always Level 16-18
+        CreatureEntity e = Ahrivaea.spawn(p.level(), sp, inf, lvl, -1f, p.x(), p.y() - DEPTH, p.z());
         if (e == null) return;
         e.setNoAi(true);
         e.setNoGravity(true);

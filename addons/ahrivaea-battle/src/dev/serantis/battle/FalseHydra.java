@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * The False Hydra is summoned exactly like the Wither: a T of four soul sand or soul soil blocks with three wither
- * skeleton skulls on top. The blocks vanish and the False Hydra (Legendary, Arcane, Level 20) appears in place of
+ * skeleton skulls on top. The blocks vanish and the False Hydra (Legendary, Arcane, Level 15-20) appears in place of
  * the Wither, as an ordinary wild creature to battle and recruit.
  */
 public final class FalseHydra {
@@ -44,6 +44,7 @@ public final class FalseHydra {
         Species sp = Species.get(SPECIES).orElse(null);
         if (sp == null) return;
         for (Pending p : todo)
-            Ahrivaea.spawn(p.level(), sp, sp.formOrDefault(Influence.ARCANE), 20, -1f, p.x(), p.y(), p.z());
+            Ahrivaea.spawn(p.level(), sp, sp.formOrDefault(Influence.ARCANE), 15 + p.level().getRandom().nextInt(6), -1f,   // Level 15-20
+                    p.x(), p.y(), p.z());
     }
 }

@@ -61,6 +61,8 @@ public final class SkillEffects {
             String inf = influence == null ? null : influence.getSerializedName();   // a beaten mage: 30% its influence's staff
             if (dev.serantis.battle.Staffs.isMage(species) && dev.serantis.battle.Staffs.hasStaff(inf) && random.nextFloat() < dev.serantis.battle.Staffs.MAGE_DROP)
                 out.add(dev.serantis.battle.Staffs.starter(inf, random));
+            if ("mimic".equals(species.id()) && random.nextFloat() < 0.05f)   // a beaten Mimic: 5% a wither skeleton skull
+                out.add(new ItemStack(net.minecraft.world.item.Items.WITHER_SKELETON_SKULL));
             ItemStack lore = dev.serantis.battle.LoreDrops.roll(random, journeyman ? dev.serantis.battle.PlayerClass.JOURNEYMAN_LORE : 1f);          // 2.5%: a lore book
             if (lore != null) {
                 out.add(lore);

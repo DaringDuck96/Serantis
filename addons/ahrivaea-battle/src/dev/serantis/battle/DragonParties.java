@@ -80,7 +80,7 @@ public final class DragonParties {
                 if (species == null) continue;
                 double a = n * 2.1;
                 mine = dev.ahrivaea.Ahrivaea.spawn(level, species, species.formOrDefault(dev.ahrivaea.creature.Influence.NONE),
-                        dragon.getCreatureLevel(), -1f, dragon.getX() + Math.cos(a) * 4, dragon.getY(), dragon.getZ() + Math.sin(a) * 4);
+                        20, -1f, dragon.getX() + Math.cos(a) * 4, dragon.getY(), dragon.getZ() + Math.sin(a) * 4);
                 if (mine == null) continue;
             }
             claim(mine, party);
