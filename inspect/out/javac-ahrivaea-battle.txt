@@ -1,8 +1,3 @@
-/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/client/BaseLooksClient.java:51: error: cannot find symbol
-        if (changed && mc.level != null) mc.levelRenderer.invalidateCompiledGeometry(mc.level, mc.options, mc.gameRenderer.getMainCamera(), mc.getBlockColors());
-                                                                                                                          ^
-  symbol:   method getMainCamera()
-  location: variable gameRenderer of type GameRenderer
 Note: Some input files use or override a deprecated API.
 Note: Recompile with -Xlint:deprecation for details.
-1 error
+OK
