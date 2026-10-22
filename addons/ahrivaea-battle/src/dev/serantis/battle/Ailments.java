@@ -30,7 +30,9 @@ import java.util.UUID;
  *
  * You (a vanilla effect, so a bucket of milk cures it as usual):
  *   Poison, Bleeding: Hunger.   Burning, Doom: Weakness.   Frozen, Slowed: Slowness.   Immobilized: Slowness II.
- *   Stunned, Asleep: Mining Fatigue.   Confused: Nausea (15 seconds).   Frightened: Darkness (15 seconds).
+ *   Stunned, Asleep: Mining Fatigue.
+ *   Confused: your movement keys are switched (forward is back, left is right). Frightened: you see half as far.
+ *   (These two are done on your screen, see client/PlayerAilments; milk cures them too, and so does dying.)
  *
  * Your creatures (one ailment each, shown on the party screen, "Name - Poisoned"):
  *   Poison, Bleeding, Burning, Doom: it slowly loses HP (1% of its max every 5 seconds), but never below half its max.
@@ -41,7 +43,9 @@ import java.util.UUID;
  */
 public final class Ailments {
     public static final long MILLIS = 3 * 60 * 1000L;
-    private static final int TICKS = 3 * 60 * 20, SHORT = 15 * 20;
+    private static final int TICKS = 3 * 60 * 20;
+    /** Players left confused or frightened: "status@until" (the client switches the keys or halves the view). */
+    private static final java.util.Map<UUID, String> PLAYERS = new java.util.concurrent.ConcurrentHashMap<>();
 
     private Ailments() {}
 
@@ -77,8 +81,6 @@ public final class Ailments {
             case "freeze", "slowed" -> e = MobEffects.SLOWNESS;
             case "immobilized" -> { e = MobEffects.SLOWNESS; amp = 1; }
             case "stun", "sleep" -> e = MobEffects.MINING_FATIGUE;
-            case "confused" -> { e = MobEffects.NAUSEA; t = SHORT; }
-            case "frightened" -> { e = MobEffects.DARKNESS; t = SHORT; }
             default -> { return null; }
         }
         return new MobEffectInstance(e, t, amp);
@@ -98,7 +100,10 @@ public final class Ailments {
 
     public static String status(Object creature) {
         if (!(creature instanceof MovesHolder h) || h.serantis$ailment() == null) return null;
-        String a = h.serantis$ailment();
+        return status(h.serantis$ailment());
+    }
+
+    private static String status(String a) {
         int at = a.indexOf('@');
         if (at < 0) return null;
         try {
@@ -148,6 +153,15 @@ public final class Ailments {
             if (s == null) continue;
             if (u.isPlayer) {
                 ServerPlayer p = dev.serantis.battle.coop.CoopBattles.playerOf(b, u);
+                if (p != null && ("confused".equals(s) || "frightened".equals(s))) {   // the client does these (see playerAilment)
+                    PLAYERS.put(p.getUUID(), s + "@" + (System.currentTimeMillis() + MILLIS));
+                    p.sendSystemMessage(Component.literal("confused".equals(s)
+                            ? "You're still confused after the battle: your movement keys are switched around for 3 minutes. A bucket of milk will sort you out."
+                            : "You're still shaken after the battle: you can only see half as far for 3 minutes. A bucket of milk will sort you out.")
+                            .withStyle(ChatFormatting.GRAY));
+                    PartySync.sync(p);
+                    continue;
+                }
                 MobEffectInstance fx = playerEffect(s);
                 if (p != null && fx != null) {
                     p.addEffect(fx);
@@ -188,6 +202,12 @@ public final class Ailments {
 
     /** Every 5 seconds, per player. */
     public static void tick(ServerPlayer p) {
+        String mine = PLAYERS.get(p.getUUID());
+        if (mine != null && status(mine) == null) {
+            PLAYERS.remove(p.getUUID());
+            p.sendSystemMessage(Component.literal("You're feeling yourself again.").withStyle(ChatFormatting.GREEN));
+            PartySync.sync(p);
+        }
         List<CaughtCreature> party = Party.get(p);
         boolean sync = false;
         for (int i = 0; i < party.size(); i++) {
@@ -244,6 +264,17 @@ public final class Ailments {
         if (creature instanceof MovesHolder h) h.serantis$setAilment(null);
         if (creature instanceof CreatureEntity e) e.removeEffect(MobEffects.SLOWNESS);
         return name + " is no longer " + label(s).toLowerCase() + ".";
+    }
+
+    /** Milk (or anything else that clears your effects), or dying: confusion and fright are gone too. */
+    public static void clearPlayer(ServerPlayer p) {
+        if (PLAYERS.remove(p.getUUID()) != null) PartySync.sync(p);
+    }
+
+    /** "serantis_player_ailment" in the party state: "confused" or "frightened" while it lasts. */
+    public static void describe(ServerPlayer p, com.google.gson.JsonObject state) {
+        String s = PLAYERS.get(p.getUUID());
+        if (s != null && (s = status(s)) != null) state.addProperty("serantis_player_ailment", s);
     }
 
     /** Party screen: " - Poisoned" after the name while an ailment lingers. */

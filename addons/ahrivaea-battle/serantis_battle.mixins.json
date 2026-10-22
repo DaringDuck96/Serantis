@@ -56,7 +56,8 @@
     "WildChestMixin",
     "WildChestBreakMixin",
     "BaseCoreAccess",
-    "WorkerBrainAccess"
+    "WorkerBrainAccess",
+    "PlayerAilmentMilkMixin"
   ],
   "client": [
     "client.PartyScreenMixin",
@@ -88,7 +89,9 @@
     "client.DialogueCameraMixin",
     "client.OptionsKeysMixin",
     "client.BattleCameraMixin",
-    "client.ItemTipsMixin"
+    "client.ItemTipsMixin",
+    "client.ConfusedInputMixin",
+    "client.FrightenedViewMixin"
   ],
   "injectors": {
     "defaultRequire": 1

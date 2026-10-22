@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ServerPlayerSkillsMixin {
     @Inject(method = "restoreFrom", at = @At("RETURN"))
     private void serantis$keepSkills(ServerPlayer old, boolean keepEverything, CallbackInfo ci) {
+        if (!keepEverything) dev.serantis.battle.Ailments.clearPlayer((ServerPlayer) (Object) this);   // died: confusion and fright are gone
         var mine = ((SkillHolder) (Object) this).serantis$skills();
         mine.clear();
         mine.addAll(((SkillHolder) (Object) old).serantis$skills());
