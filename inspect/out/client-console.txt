@@ -1,0 +1,5 @@
+error: unexpected argument '--work-dir' found
+
+Usage: portablemc --main-dir <PATH> <COMMAND>
+
+For more information, try '--help'.
