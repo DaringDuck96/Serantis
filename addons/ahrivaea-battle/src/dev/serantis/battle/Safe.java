@@ -13,6 +13,14 @@ public final class Safe {
 
     private Safe() {}
 
+    /** An error that escaped a whole tick of something (a creature, a Base Core, the battles): log it, keep the server up. */
+    public static void caught(String what, Throwable t) {
+        if (t instanceof VirtualMachineError && !(t instanceof StackOverflowError)) throw (VirtualMachineError) t;
+        int n = SEEN.merge(what, 1, Integer::sum);
+        if (n == 1) LOG.error("Serantis: {} failed (it was skipped, the server keeps running)", what, t);
+        else if (n % 200 == 0) LOG.error("Serantis: {} has failed {} times: {}", what, n, t.toString());
+    }
+
     public static void run(String what, Runnable job) {
         try {
             job.run();

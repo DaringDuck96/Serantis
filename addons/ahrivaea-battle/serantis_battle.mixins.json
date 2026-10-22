@@ -65,7 +65,11 @@
     "BasesRoundMixin",
     "BaseOverlapMixin",
     "BaseCorePlaceMixin",
-    "ChallengesInvoker"
+    "ChallengesInvoker",
+    "SafeCreatureTickMixin",
+    "SafeBaseTickMixin",
+    "SafeBattlesTickMixin",
+    "SafeBasesHandleMixin"
   ],
   "client": [
     "client.PartyScreenMixin",
