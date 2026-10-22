@@ -59,7 +59,8 @@
     "WorkerBrainAccess",
     "PlayerAilmentMilkMixin",
     "MilkBucketMixin",
-    "MobGoalsAccess"
+    "MobGoalsAccess",
+    "HayToggleMixin"
   ],
   "client": [
     "client.PartyScreenMixin",
