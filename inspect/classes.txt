@@ -1,3 +1,4 @@
-# 1792681837
-compile wip/milk-cure
-smoke
+# 1792682141
+sig:net.minecraft.world.entity.ai.goal.TemptGoal
+sig:net.minecraft.world.level.chunk.LevelChunkSection
+sig:net.minecraft.world.level.chunk.ChunkAccess
