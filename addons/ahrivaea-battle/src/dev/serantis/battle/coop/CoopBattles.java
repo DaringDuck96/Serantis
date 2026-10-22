@@ -854,6 +854,7 @@ public final class CoopBattles {
             if (u == null || slot < 0 || slot >= party.size()) continue;
             CaughtCreature saved = party.get(slot).withHealth((float) Math.max(1, u.hp));
             if (u.hp <= 0) saved = dev.serantis.battle.Knockout.knockedOut(saved, p);   // fell: knocked out for 5 minutes
+            else saved = dev.serantis.battle.Ailments.linger(saved, u, p);              // a status it was left with lingers
             Party.set(p, slot, saved);
         }
     }

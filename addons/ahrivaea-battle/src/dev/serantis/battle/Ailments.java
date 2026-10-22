@@ -36,7 +36,8 @@ import java.util.UUID;
  *   Poison, Bleeding, Burning, Doom: it slowly loses HP (1% of its max every 5 seconds), but never below half its max.
  *   Anything else: it's sluggish while it's out with you (slow to follow, slow to ride).
  *   Feeding it a bucket of milk or a honey bottle (right-click it in your inventory) cures it.
- * Nothing carries into the next battle.
+ * The same goes for a co-op ally's creatures, and for enemies still standing when you flee or lose (a wild creature
+ * keeps it while it roams, and if you recruit it, it comes with it). Nothing carries into the next battle.
  */
 public final class Ailments {
     public static final long MILLIS = 3 * 60 * 1000L;
@@ -131,6 +132,13 @@ public final class Ailments {
     /** A battle's results were saved to the owner's party: what's left of the statuses lingers. */
     public static void afterBattle(Battle b, ServerPlayer owner) {
         if (owner == null || dev.serantis.battle.coop.CoopBattles.isSpar(b)) return;   // a friendly spar leaves nothing behind
+        for (Unit u : b.units) {                                        // enemies still standing (you fled or lost) keep theirs too
+            if (u.side == Unit.Side.PLAYER || u.hp <= 0 || u.entity == null) continue;
+            String s = leftover(u);
+            if (s == null) continue;
+            for (var level : owner.level().getServer().getAllLevels())
+                if (level.getEntity(u.entity) instanceof CreatureEntity e) { set(e, s); break; }
+        }
         List<CaughtCreature> party = Party.get(owner);
         var out = ((dev.serantis.battle.mixin.BattleRaidAccess) (Object) b).serantis$outCreatures();
         boolean any = false;
@@ -149,7 +157,7 @@ public final class Ailments {
                 continue;
             }
             UUID ctl = dev.serantis.battle.coop.CoopBattles.controllerId(b, u);
-            if (ctl != null && !ctl.equals(owner.getUUID())) continue;      // an ally's creature: theirs to deal with
+            if (ctl != null && !ctl.equals(owner.getUUID())) continue;      // an ally's creature: saved with their party (CoopBattles, linger())
             CaughtCreature c = null;
             if (u.partySlot >= 0 && u.partySlot < party.size()) c = party.get(u.partySlot);
             int o = -2 - u.partySlot;
@@ -164,6 +172,16 @@ public final class Ailments {
             any = true;
         }
         if (any) PartySync.sync(owner);
+    }
+
+    /** A co-op ally's creature saved back to their party (CoopBattles): it keeps what it was left with. */
+    public static CaughtCreature linger(CaughtCreature c, Unit u, ServerPlayer p) {
+        String s = leftover(u);
+        if (s == null || Knockout.is(c)) return c;
+        set(c, s);
+        p.sendSystemMessage(Component.literal(name(c) + " is still " + label(s).toLowerCase() + ": for 3 minutes " + what(s)
+                + ". Feed it milk or a honey bottle to cure it.").withStyle(ChatFormatting.GRAY));
+        return c;
     }
 
     // ------------------------------------------------------------------ over time
@@ -192,11 +210,12 @@ public final class Ailments {
             Party.set(p, i, next);
             sync = true;
         }
-        for (CreatureEntity e : p.level().getEntitiesOfClass(CreatureEntity.class, p.getBoundingBox().inflate(64), x -> x.isTame() && x.isOwnedBy(p))) {
+        for (CreatureEntity e : p.level().getEntitiesOfClass(CreatureEntity.class, p.getBoundingBox().inflate(64),
+                x -> ((MovesHolder) (Object) x).serantis$ailment() != null && (!x.isTame() || x.isOwnedBy(p)))) {   // yours, or wild ones (each wild one ticked by every player near it: fine, the floor still holds)
             if (dev.ahrivaea.battle.Battles.inBattle(e)) continue;
             if (expired(e)) {
                 ((MovesHolder) (Object) e).serantis$setAilment(null);
-                p.sendSystemMessage(Component.literal(e.displayName() + " is feeling itself again.").withStyle(ChatFormatting.GREEN));
+                if (e.isTame()) p.sendSystemMessage(Component.literal(e.displayName() + " is feeling itself again.").withStyle(ChatFormatting.GREEN));
                 sync = true;
                 continue;
             }
