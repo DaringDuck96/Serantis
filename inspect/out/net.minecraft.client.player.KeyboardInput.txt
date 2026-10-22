@@ -1,0 +1,7 @@
+Compiled from "KeyboardInput.java"
+public class net.minecraft.client.player.KeyboardInput extends net.minecraft.client.player.ClientInput {
+  private final net.minecraft.client.Options options;
+  public net.minecraft.client.player.KeyboardInput(net.minecraft.client.Options);
+  private static float calculateImpulse(boolean, boolean);
+  public void tick();
+}

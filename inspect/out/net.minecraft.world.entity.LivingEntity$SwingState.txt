@@ -1,0 +1,13 @@
+Compiled from "LivingEntity.java"
+public class net.minecraft.world.entity.LivingEntity$SwingState {
+  private net.minecraft.world.entity.LivingEntity$SwingDescription currentSwing;
+  private int ticks;
+  private float oldAnimation;
+  private float animation;
+  public net.minecraft.world.entity.LivingEntity$SwingState();
+  public boolean startIfAble(net.minecraft.world.InteractionHand, net.minecraft.world.item.component.SwingAnimation, int);
+  private void start(net.minecraft.world.InteractionHand, net.minecraft.world.item.component.SwingAnimation, int);
+  public void tick();
+  public float getAnimation(float);
+  public boolean isSwinging();
+}
