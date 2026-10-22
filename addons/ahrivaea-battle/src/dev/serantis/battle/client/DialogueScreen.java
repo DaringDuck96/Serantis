@@ -36,6 +36,7 @@ public class DialogueScreen extends Screen {
     private boolean villager;                                    // a villager's talk (see VillagerTalk), not a Master's
     private static JsonObject villagers;
     private static String lastTalk = "";
+    private int warnLevel = -1;                                  // a new player's level, for the "villagers are tough" warning
 
     private DialogueScreen(Entity master, String title, JsonObject convo) {
         super(Component.literal(title));
@@ -90,6 +91,7 @@ public class DialogueScreen extends Screen {
         DialogueCamera.start(e, face);
         DialogueScreen screen = new DialogueScreen(e, v.get("title").getAsString(), convo);
         screen.villager = true;
+        if (t.has("warn")) screen.warnLevel = t.get("warn").getAsInt();
         mc.gui.setScreen(screen);
     }
 
@@ -204,6 +206,13 @@ public class DialogueScreen extends Screen {
         int top = height - 78, l = Math.max(12, width / 2 - 200), w = Math.min(400, width - 24);
         if (choosing) {
             g.text(font, "What do you say?", l, top + 10, DIM);
+            if (villager && warnLevel >= 0) {
+                String w = "⚠ Villagers are tough, and town guards may join in. Best fought from player level 5 (you're level " + warnLevel + ": learn skills at your Base Core).";
+                var rows = wrap(w, w(l));
+                int y = top - 6 - 11 * rows.size();                     // just above the dialogue bar
+                g.fill(l - 4, y - 3, l + w(l) + 4, top - 3, 0xC0200808);
+                for (String row : rows) { g.text(font, row, l, y, 0xFFFF7A6A); y += 11; }
+            }
             return;
         }
         String[] line = lines.get(index);
@@ -220,6 +229,8 @@ public class DialogueScreen extends Screen {
         if (n >= text.length() && (System.currentTimeMillis() / 500) % 2 == 0)
             g.text(font, "▼ click to continue", l + w - font.width("▼ click to continue"), height - 14, DIM);
     }
+
+    private int w(int l) { return Math.min(400, width - 24); }
 
     private List<String> wrap(String text, int w) {
         List<String> out = new ArrayList<>();

@@ -22,6 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class VillagerTalk {
     private static JsonObject all;
+    /** Below this player level, a villager's conversation warns that villagers are tough. */
+    public static final int WARN_BELOW = 5;
     /** Who's talking to which villager (entity id). */
     private static final Map<UUID, Integer> TALKING = new ConcurrentHashMap<>();
     /** Set while a battle the player chose from the conversation is starting. */
@@ -88,6 +90,8 @@ public final class VillagerTalk {
         JsonObject o = new JsonObject();
         o.addProperty("entity", id);
         o.addProperty("key", k);
+        int me = dev.ahrivaea.character.PlayerCharacter.get(p).level();   // player level = skills learned
+        if (me < WARN_BELOW) o.addProperty("warn", me);
         state.add("serantis_villager_talk", o);
     }
 }
