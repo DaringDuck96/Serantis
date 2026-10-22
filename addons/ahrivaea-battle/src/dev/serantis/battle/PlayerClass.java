@@ -23,17 +23,24 @@ import java.util.List;
  *  - Wizard: Magic boost; starts with a Magic Staff of the influence they choose.
  *  - Journeyman: Luck boost; starts with 2 Golden Apples.
  *  - Performer: Charisma boost; picks the temperament (nature) of their starter.
+ *  - Tradesman: no boost; crafts anywhere (a 3x3 crafting grid on a key, see openCrafting).
  * The boost is a flat +5 to that stat, for good.
  */
 public final class PlayerClass {
-    public record Kind(String id, String name, String stat, String perk) {}
+    public record Kind(String id, String name, String stat, String perk) {
+        /** Whether the class boosts a stat (the Tradesman doesn't). */
+        public boolean boosts() { return !"none".equals(stat); }
+        /** "+5 Attack, for good" or "No stat boost". */
+        public String boostText() { return boosts() ? "+" + START_BOOST + " " + Temperament.label(stat) + ", for good" : "No stat boost"; }
+    }
 
     public static final List<Kind> ALL = List.of(
             new Kind("knight", "Knight", "attack", "Starts with an Iron Chestplate and an Iron Sword."),
             new Kind("bulwark", "Bulwark", "defense", "Starts with a Shield and an Iron Mace."),
             new Kind("wizard", "Wizard", "magic", "Starts with a Magic Staff linked to a random spell of the influence you choose."),
             new Kind("journeyman", "Journeyman", "luck", "Starts with 2 Golden Apples. Lucky Finds: beaten creatures drop their loot twice 10% more often, and lore books drop twice as often."),
-            new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter. Showstopper: rallies are twice as strong, and workers at your bases work 5% faster."));
+            new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter. Showstopper: rallies are twice as strong, and workers at your bases work 5% faster."),
+            new Kind("tradesman", "Tradesman", "none", "Crafts anywhere: press K (Controls > Serantis) to open a crafting grid, no crafting table needed."));
 
     /** Journeyman: extra chance a beaten creature drops its loot twice, and the lore book chance multiplier. */
     public static final float JOURNEYMAN_DOUBLE_LOOT = 0.10f, JOURNEYMAN_LORE = 2f;
@@ -97,8 +104,7 @@ public final class PlayerClass {
             default -> { }
         }
         h.serantis$setPlayerClass(k.id());
-        p.sendSystemMessage(Component.literal("You are a " + k.name() + "! +" + START_BOOST + " " + Temperament.label(k.stat())
-                + ", for good. " + k.perk()).withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.literal("You are a " + k.name() + "! " + (k.boosts() ? k.boostText() + ". " : "") + k.perk()).withStyle(ChatFormatting.GOLD));
         PartySync.sync(p);
     }
 
@@ -131,6 +137,15 @@ public final class PlayerClass {
 
     private static void tell(ServerPlayer p, String msg) { p.sendSystemMessage(Component.literal(msg)); }
 
+    /** Tradesman: a crafting table's 3x3 grid, wherever they are. */
+    public static void openCrafting(ServerPlayer p) {
+        if (!is(p, "tradesman") || p.isSpectator() || dev.ahrivaea.battle.Battles.of(p) != null) return;
+        var access = net.minecraft.world.inventory.ContainerLevelAccess.create(p.level(), p.blockPosition());
+        p.openMenu(new net.minecraft.world.SimpleMenuProvider((id, inv, who) -> new net.minecraft.world.inventory.CraftingMenu(id, inv, access) {
+            @Override public boolean stillValid(Player player) { return player.isAlive(); }     // no table to stand by
+        }, Component.translatable("container.crafting")));
+    }
+
     /** "serantis_class" in the party state: the class, or that one still needs picking. */
     public static void describe(ServerPlayer p, JsonObject state) {
         Kind k = of(p);
@@ -138,7 +153,7 @@ public final class PlayerClass {
         o.addProperty("chosen", k != null);
         if (k != null) {
             o.addProperty("name", k.name());
-            o.addProperty("stat", Temperament.label(k.stat()));
+            if (k.boosts()) o.addProperty("stat", Temperament.label(k.stat()));
             o.addProperty("boost", boost(p, k.stat(), dev.serantis.battle.skills.Skills.owned(p).size()));
         }
         state.add("serantis_class", o);

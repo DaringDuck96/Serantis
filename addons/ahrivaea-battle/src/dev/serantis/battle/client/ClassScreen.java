@@ -49,12 +49,12 @@ public class ClassScreen extends Screen {
     @Override
     protected void init() {
         int w = panelW(), l = (width - w) / 2, y = 44;
-        int bw = (w - 16 - 4 * 4) / 5;
+        int n = PlayerClass.ALL.size(), bw = (w - 16 - 4 * (n - 1)) / n;
         for (int i = 0; i < PlayerClass.ALL.size(); i++) {
             PlayerClass.Kind k = PlayerClass.ALL.get(i);
             Button b = Button.builder(Component.literal(k.name()), btn -> { picked = k; extra = null; rebuildWidgets(); })
                     .bounds(l + 8 + i * (bw + 4), y, bw, 20)
-                    .tooltip(Tooltip.create(Component.literal(Temperament.label(k.stat()) + " boost. " + k.perk()))).build();
+                    .tooltip(Tooltip.create(Component.literal((k.boosts() ? Temperament.label(k.stat()) + " boost. " : "No stat boost. ") + k.perk()))).build();
             b.active = picked != k;
             addRenderableWidget(b);
         }
@@ -112,8 +112,7 @@ public class ClassScreen extends Screen {
         g.pose().popMatrix();
         g.centeredText(font, "How do you want to take on Serantia? You choose once.", width / 2, 26, DIM);
         if (picked == null) { g.text(font, "Hover a class to see what it brings.", l, 72, TEXT); return; }
-        g.text(font, picked.name() + ": +" + PlayerClass.START_BOOST + " " + Temperament.label(picked.stat())
-                + ", for good.", l, 70, TEXT);
+        g.text(font, picked.name() + ": " + picked.boostText() + ".", l, 70, TEXT);
         int py = 82;
         for (String line : wrap(picked.perk(), panelW() - 16)) { g.text(font, line, l, py, TEXT); py += 10; }
         if ("wizard".equals(picked.id())) g.text(font, "Your staff's influence:", l, 112, GOLD);

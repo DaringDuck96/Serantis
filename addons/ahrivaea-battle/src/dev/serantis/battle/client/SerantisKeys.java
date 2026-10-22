@@ -15,7 +15,8 @@ public final class SerantisKeys {
     public static final KeyMapping LIFT = new KeyMapping("key.serantis_battle.shape_lift", InputConstants.KEY_R, CATEGORY);   // X and C are vanilla's toolbar keys
     public static final KeyMapping WAYMARK = new KeyMapping("key.serantis_battle.waymark_home", InputConstants.KEY_H, CATEGORY);   // G is the guide
     public static final KeyMapping HIGH_JUMP = new KeyMapping("key.serantis_battle.high_jump", InputConstants.KEY_V, CATEGORY);
-    public static final KeyMapping[] ALL = {BACKPACK, PHASE, LIFT, WAYMARK, HIGH_JUMP};
+    public static final KeyMapping CRAFT = new KeyMapping("key.serantis_battle.craft", InputConstants.KEY_K, CATEGORY);   // Tradesman
+    public static final KeyMapping[] ALL = {BACKPACK, PHASE, LIFT, WAYMARK, HIGH_JUMP, CRAFT};
 
     /** Whether a shape has been picked from the Shape Lift menu (plain X then lifts/sets down rather than opening it). */
     static boolean shapePicked;
@@ -30,6 +31,11 @@ public final class SerantisKeys {
             JsonObject o = new JsonObject();
             o.addProperty("kind", "serantis_backpack");
             o.addProperty("off", sneak);
+            dev.ahrivaea.client.battle.BattleClient.send(o);
+        }
+        while (CRAFT.consumeClick()) {                                 // Tradesman: crafting without a table
+            JsonObject o = new JsonObject();
+            o.addProperty("kind", "serantis_craft");
             dev.ahrivaea.client.battle.BattleClient.send(o);
         }
         boolean helm = mc.player.getItemBySlot(EquipmentSlot.HEAD).is(dev.serantis.battle.Linx.HELM);
