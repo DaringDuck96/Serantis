@@ -1,8 +1,0 @@
-Compiled from "Input.java"
-class net.minecraft.world.entity.player.Input$1 implements net.minecraft.network.codec.StreamCodec<net.minecraft.network.FriendlyByteBuf, net.minecraft.world.entity.player.Input> {
-  net.minecraft.world.entity.player.Input$1();
-  public void encode(net.minecraft.network.FriendlyByteBuf, net.minecraft.world.entity.player.Input);
-  public net.minecraft.world.entity.player.Input decode(net.minecraft.network.FriendlyByteBuf);
-  public void encode(java.lang.Object, java.lang.Object);
-  public java.lang.Object decode(java.lang.Object);
-}

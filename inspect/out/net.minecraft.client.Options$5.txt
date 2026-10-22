@@ -1,7 +1,0 @@
-Compiled from "Options.java"
-class net.minecraft.client.Options$5 {
-  static final int[] $SwitchMap$net$minecraft$client$InactivityFpsLimit;
-  static final int[] $SwitchMap$net$minecraft$client$PrioritizeChunkUpdates;
-  static final int[] $SwitchMap$net$minecraft$client$TextureFilteringMethod;
-  static {};
-}
