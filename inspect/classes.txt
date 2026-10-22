@@ -1,3 +1,2 @@
-# 1792634275
-sig:net.minecraft.client.renderer.entity.state.AvatarRenderState
-sig:net.minecraft.client.renderer.entity.state.EntityRenderState
+# 1792634342
+compile wip/backpack-model
