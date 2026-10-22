@@ -1,6 +1,0 @@
-Compiled from "ChatScreen.java"
-class net.minecraft.client.gui.screens.ChatScreen$1 extends net.minecraft.client.gui.components.EditBox {
-  final net.minecraft.client.gui.screens.ChatScreen this$0;
-  net.minecraft.client.gui.screens.ChatScreen$1(net.minecraft.client.gui.screens.ChatScreen, net.minecraft.client.gui.Font, int, int, int, int, net.minecraft.network.chat.Component);
-  protected net.minecraft.network.chat.MutableComponent createNarrationMessage();
-}
