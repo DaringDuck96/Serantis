@@ -64,7 +64,14 @@ public abstract class WorkerBrainMixin {
     @Shadow private void finish(dev.ahrivaea.base.BaseCoreBlockEntity be, int wait) { }
 
     @org.spongepowered.asm.mixin.Unique private boolean serantis$hopped;
-    @org.spongepowered.asm.mixin.Unique private final java.util.List<net.minecraft.core.BlockPos> serantis$setAside = new java.util.ArrayList<>();
+    // Made on first use: a field initialiser here isn't always run for every worker (a null list crashed the server).
+    @org.spongepowered.asm.mixin.Unique private java.util.List<net.minecraft.core.BlockPos> serantis$setAsideList;
+
+    @org.spongepowered.asm.mixin.Unique
+    private java.util.List<net.minecraft.core.BlockPos> serantis$setAside() {
+        if (serantis$setAsideList == null) serantis$setAsideList = new java.util.ArrayList<>();
+        return serantis$setAsideList;
+    }
     @org.spongepowered.asm.mixin.Unique private static final java.util.UUID SERANTIS_SET_ASIDE = new java.util.UUID(0x5e7a, 0x51de);
     /** Per base core: target -> {set aside until (game time), strikes}. Shared by all its workers. */
     @org.spongepowered.asm.mixin.Unique private static final java.util.Map<net.minecraft.core.BlockPos, java.util.Map<net.minecraft.core.BlockPos, long[]>> SERANTIS_ASIDE = new java.util.concurrent.ConcurrentHashMap<>();
@@ -179,20 +186,20 @@ public abstract class WorkerBrainMixin {
         long now = level.getGameTime();
         var claimed = ((BaseCoreAccess) (Object) be).serantis$claimed();
         claimed.entrySet().removeIf(e -> !SERANTIS_SET_ASIDE.equals(e.getValue()) && be.workerFor(e.getValue()) == null);   // claims of workers that are gone
-        serantis$setAside.clear();
+        serantis$setAside().clear();
         var aside = serantis$aside(core);
         aside.entrySet().removeIf(e -> e.getValue()[0] < now - 20L * 60 * 60);   // forgotten after an hour of not failing
         for (var e : aside.entrySet())
-            if (e.getValue()[0] >= now && !claimed.containsKey(e.getKey())) { claimed.put(e.getKey(), SERANTIS_SET_ASIDE); serantis$setAside.add(e.getKey()); }
+            if (e.getValue()[0] >= now && !claimed.containsKey(e.getKey())) { claimed.put(e.getKey(), SERANTIS_SET_ASIDE); serantis$setAside().add(e.getKey()); }
         for (net.minecraft.core.BlockPos p : ((BaseCoreAccess) (Object) be).serantis$growables())   // nothing to tend underwater
-            if (!level.getFluidState(p).isEmpty() && !claimed.containsKey(p)) { claimed.put(p, SERANTIS_SET_ASIDE); serantis$setAside.add(p); }
+            if (!level.getFluidState(p).isEmpty() && !claimed.containsKey(p)) { claimed.put(p, SERANTIS_SET_ASIDE); serantis$setAside().add(p); }
     }
 
     @Inject(method = "plan", at = @At("RETURN"))
     private void serantis$restoreClaims(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, CallbackInfoReturnable<?> cir) {
         var claimed = ((BaseCoreAccess) (Object) be).serantis$claimed();
-        for (net.minecraft.core.BlockPos p : serantis$setAside) claimed.remove(p, SERANTIS_SET_ASIDE);
-        serantis$setAside.clear();
+        for (net.minecraft.core.BlockPos p : serantis$setAside()) claimed.remove(p, SERANTIS_SET_ASIDE);
+        serantis$setAside().clear();
     }
 
     // Knocked out defending the base (see GoblinRaids.finished): it rests until its time is up (saved on the creature,

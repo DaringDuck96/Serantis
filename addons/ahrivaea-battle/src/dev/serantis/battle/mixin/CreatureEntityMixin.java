@@ -35,7 +35,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Unique private java.util.List<CaughtCreature> serantis$stock = java.util.List.of();
     @Unique private long serantis$leaveAt;
 
-    @Override public java.util.List<CaughtCreature> serantis$stock() { return serantis$stock; }
+    @Override public java.util.List<CaughtCreature> serantis$stock() { return serantis$stock == null ? java.util.List.of() : serantis$stock; }
     @Override public void serantis$setStock(java.util.List<CaughtCreature> stock) { serantis$stock = java.util.List.copyOf(stock); }
     @Override public long serantis$leaveAt() { return serantis$leaveAt; }
     @Unique private int serantis$swaps;
@@ -163,7 +163,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$leaveAt > 0) {
             out.putLong("SerantisLeaveAt", serantis$leaveAt);
             out.putInt("SerantisSwaps", serantis$swaps);
-            out.store("SerantisStock", CaughtCreature.CODEC.listOf(), serantis$stock);
+            out.store("SerantisStock", CaughtCreature.CODEC.listOf(), serantis$stock());
         }
     }
 
