@@ -1,4 +1,3 @@
-# 1792682141
-sig:net.minecraft.world.entity.ai.goal.TemptGoal
-sig:net.minecraft.world.level.chunk.LevelChunkSection
-sig:net.minecraft.world.level.chunk.ChunkAccess
+# 1792682233
+compile wip/hay-bales
+smoke
