@@ -207,10 +207,10 @@ public class DialogueScreen extends Screen {
         if (choosing) {
             g.text(font, "What do you say?", l, top + 10, DIM);
             if (villager && warnLevel >= 0) {
-                String w = "⚠ Villagers are tough, and town guards may join in. Best fought from player level 5 (you're level " + warnLevel + ": learn skills at your Base Core).";
-                var rows = wrap(w, w(l));
+                String warn = "⚠ Villagers are tough, and town guards may join in. Best fought from player level 5 (you're level " + warnLevel + ": learn skills at your Base Core).";
+                var rows = wrap(warn, w);
                 int y = top - 6 - 11 * rows.size();                     // just above the dialogue bar
-                g.fill(l - 4, y - 3, l + w(l) + 4, top - 3, 0xC0200808);
+                g.fill(l - 4, y - 3, l + w + 4, top - 3, 0xC0200808);
                 for (String row : rows) { g.text(font, row, l, y, 0xFFFF7A6A); y += 11; }
             }
             return;
@@ -229,8 +229,6 @@ public class DialogueScreen extends Screen {
         if (n >= text.length() && (System.currentTimeMillis() / 500) % 2 == 0)
             g.text(font, "▼ click to continue", l + w - font.width("▼ click to continue"), height - 14, DIM);
     }
-
-    private int w(int l) { return Math.min(400, width - 24); }
 
     private List<String> wrap(String text, int w) {
         List<String> out = new ArrayList<>();
