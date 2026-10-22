@@ -1,3 +1,18 @@
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/FalseHydra.java:75: error: cannot find symbol
+        e.setInvulnerable(true);
+         ^
+  symbol:   method setInvulnerable(boolean)
+  location: variable e of type CreatureEntity
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/FalseHydra.java:96: error: cannot find symbol
+                e.setInvulnerable(false);
+                 ^
+  symbol:   method setInvulnerable(boolean)
+  location: variable e of type CreatureEntity
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/FalseHydra.java:132: error: cannot find symbol
+                c.setInvulnerable(false);
+                 ^
+  symbol:   method setInvulnerable(boolean)
+  location: variable c of type CreatureEntity
 Note: /home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/Locomotion.java uses or overrides a deprecated API.
 Note: Recompile with -Xlint:deprecation for details.
-OK
+3 errors
