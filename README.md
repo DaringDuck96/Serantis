@@ -314,7 +314,7 @@ Collect all 5 stones of all 12 influences (60 in all) and you get the rainbow **
 
 ### Backpacks
 
-A **Backpack** is a reward: the base's owner gets one every time one of their bases reaches Level 2. They can't be crafted. Right-click one to strap it on: it leaves your inventory and you wear it. Press **B** to open it: 36 more slots, as many as your inventory. Sneak and press **B** to take it off; it goes back in your inventory with everything still inside (each backpack keeps its own contents, so spares can be handed to friends). You can wear one at a time. A worn backpack is never lost, not even when you die. (The B key isn't rebindable yet.)
+A **Backpack** is a reward: the base's owner gets one every time one of their bases reaches Level 2. They can't be crafted. Right-click one to strap it on: it leaves your inventory and you wear it. Press **B** to open it: 36 more slots, as many as your inventory. Sneak and press **B** to take it off; it goes back in your inventory with everything still inside (each backpack keeps its own contents, so spares can be handed to friends). You can wear one at a time. A worn backpack is never lost, not even when you die. (The B key isn't rebindable yet.) A worn backpack shows on your back, for you and everyone around you.
 
 ### Taking down a base
 

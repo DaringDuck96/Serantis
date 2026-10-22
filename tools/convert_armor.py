@@ -3,7 +3,8 @@
 Usage:  python3 tools/convert_armor.py <battle add-on folder> <zip or folder> [...]
 
 Also takes single boots (<name>_hoverboots.bbmodel: the Winged Boots, <name>_tpboots.bbmodel: the Teleporting Boots),
-saved as winged_boots / teleporting_boots, and the Helm of Linx (<name>_linxhelm.bbmodel), saved as linx_helmet.
+saved as winged_boots / teleporting_boots, the Helm of Linx (<name>_linxhelm.bbmodel), saved as linx_helmet, and the
+worn backpack (<name>_backpack.bbmodel), saved as backpack_worn.
 Each armour input holds one <name>_epic_armor.bbmodel with bones head, body, rightArm, leftArm, rightLeg, leftLeg; the name
 says its influence (see NAMES). The suit is cut into the four pieces you can wear:
   helmet      the head bone
@@ -26,6 +27,8 @@ NAMES = {"infernal_warplate": "fire", "glacial_aegis": "frost", "tempest_regalia
 BOOTS = {"_hoverboots": "winged", "_tpboots": "teleporting"}
 # Single helmets (every cube is the helmet piece).
 HELMS = {"_linxhelm": "linx"}
+# The worn backpack (every cube, on the body): saved as backpack_worn.
+PACKS = {"_backpack": "backpack"}
 WAIST, ANKLE = 12.0, 5.0      # Blockbench y: below the waist is leggings, below the ankle is boots
 
 def piece_of(bone, e):
@@ -45,6 +48,7 @@ def convert(addon, src):
         helm = next((v for k, v in HELMS.items() if base.endswith(k)), None)
         if boots: inf, name, pieces = boots, base, ("boots",)
         elif helm: inf, name, pieces, boots = helm, base, ("helmet",), True
+        elif any(base.endswith(k) for k in PACKS): inf, name, pieces, boots = next(v for k, v in PACKS.items() if base.endswith(k)), base, ("worn",), True
         elif base.endswith("_epic_armor"): name = base[:-len("_epic_armor")]; inf = NAMES[name]; pieces = ("helmet", "chestplate", "leggings", "boots")
         else: continue
         bb = json.load(open(path))

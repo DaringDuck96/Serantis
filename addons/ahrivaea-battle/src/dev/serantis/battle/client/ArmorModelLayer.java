@@ -44,17 +44,34 @@ public final class ArmorModelLayer extends RenderLayer<AvatarRenderState, Player
         draw(state.chestEquipment, poseStack, collector, light, state);
         draw(state.legsEquipment, poseStack, collector, light, state);
         draw(state.feetEquipment, poseStack, collector, light, state);
+        if (wearsBackpack(state.id)) draw("backpack_worn", "backpack", false, poseStack, collector, light, state);
+    }
+
+    /** Is this player wearing a backpack? (The server lists who is: "serantis_backpacks", see Backpacks.) */
+    private static boolean wearsBackpack(int entityId) {
+        var st = TradeClient.state();
+        var level = net.minecraft.client.Minecraft.getInstance().level;
+        if (st == null || level == null || !st.has("serantis_backpacks")) return false;
+        var e = level.getEntity(entityId);
+        if (e == null) return false;
+        String id = e.getUUID().toString();
+        for (var el : st.getAsJsonArray("serantis_backpacks")) if (id.equals(el.getAsString())) return true;
+        return false;
     }
 
     private void draw(ItemStack stack, PoseStack poseStack, SubmitNodeCollector collector, int light, AvatarRenderState state) {
         String name = InfluenceArmor.modelOf(stack);
         if (name == null) return;
+        draw(name, InfluenceArmor.textureOf(name), stack.hasFoil(), poseStack, collector, light, state);
+    }
+
+    private void draw(String name, String texture, boolean foil, PoseStack poseStack, SubmitNodeCollector collector, int light, AvatarRenderState state) {
         var geo = GeoModels.model("serantis_armor", name);
         if (geo == null) return;
         if (pieces.size() > 64) pieces.clear();                         // models were reloaded
         Piece piece = pieces.computeIfAbsent(geo.root(), r -> new Piece(r, pose));
-        Identifier tex = Identifier.parse("serantis_battle:textures/entity/armor/" + InfluenceArmor.textureOf(name) + ".png");
-        collector.submitModel(piece, state, poseStack, stack.hasFoil() ? RenderTypes.armorCutoutNoCullGlint(tex) : RenderTypes.armorCutoutNoCull(tex),
+        Identifier tex = Identifier.parse("serantis_battle:textures/entity/armor/" + texture + ".png");
+        collector.submitModel(piece, state, poseStack, foil ? RenderTypes.armorCutoutNoCullGlint(tex) : RenderTypes.armorCutoutNoCull(tex),
                 light, OverlayTexture.NO_OVERLAY, 0);
     }
 

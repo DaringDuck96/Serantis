@@ -73,6 +73,7 @@ public final class Backpacks {
         p.setItemInHand(hand, ItemStack.EMPTY);
         p.level().playSound(null, p.blockPosition(), SoundEvents.ARMOR_EQUIP_LEATHER.value(), SoundSource.PLAYERS, 1f, 1f);
         tell(p, "Backpack on. Press B to open it (sneak and press B to take it off).");
+        syncAll(p);
     }
 
     /** Pressed B: open the worn backpack. */
@@ -128,6 +129,20 @@ public final class Backpacks {
         ItemStack copy = pack.copy();
         if (!p.getInventory().add(copy) && !copy.isEmpty()) p.level().addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(p.level(), p.getX(), p.getY(), p.getZ(), copy));
         tell(p, "Backpack off. Right-click it to put it back on.");
+        syncAll(p);
+    }
+
+    /** Everyone online is told who's wearing a backpack (so it's drawn on their back: client/ArmorModelLayer). */
+    public static void syncAll(ServerPlayer p) {
+        for (ServerPlayer q : p.level().getServer().getPlayerList().getPlayers()) dev.ahrivaea.party.PartySync.sync(q);
+    }
+
+    /** "serantis_backpacks" in the party state: the UUIDs of the players online wearing a backpack. */
+    public static void describe(ServerPlayer p, com.google.gson.JsonObject state) {
+        com.google.gson.JsonArray a = new com.google.gson.JsonArray();
+        for (ServerPlayer q : p.level().getServer().getPlayerList().getPlayers())
+            if (!((Holder) q).serantis$backpack().isEmpty()) a.add(q.getUUID().toString());
+        state.add("serantis_backpacks", a);
     }
 
     /** A base just reached Level 2: its owner earns a backpack. */
