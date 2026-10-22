@@ -33,9 +33,9 @@ public abstract class HarbingerMixin {
 
     @Inject(method = "lambda$init$2", at = @At("HEAD"))
     private static void serantis$tick(MinecraftServer server, CallbackInfo ci) {
-        dev.serantis.battle.Harbinger.tick();
-        dev.serantis.battle.FalseHydra.tick();
-        dev.serantis.battle.HayBales.tick(server);
-        dev.serantis.battle.DragonParties.tick();
+        dev.serantis.battle.Safe.run("Harbinger.tick", () -> dev.serantis.battle.Harbinger.tick());
+        dev.serantis.battle.Safe.run("FalseHydra.tick", () -> dev.serantis.battle.FalseHydra.tick());
+        dev.serantis.battle.Safe.run("HayBales.tick", () -> dev.serantis.battle.HayBales.tick(server));
+        dev.serantis.battle.Safe.run("DragonParties.tick", () -> dev.serantis.battle.DragonParties.tick());
     }
 }

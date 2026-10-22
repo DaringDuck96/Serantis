@@ -71,26 +71,26 @@ public abstract class ServerPlayerSkillsMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void serantis$achievements(CallbackInfo ci) {
         ServerPlayer self = (ServerPlayer) (Object) this;
-        dev.serantis.battle.WorldScope.check(self.level().getServer());   // a different world in the same run: forget the last one's state
+        dev.serantis.battle.Safe.run("WorldScope.check for " + self.getPlainTextName(), () -> dev.serantis.battle.WorldScope.check(self.level().getServer()));   // a different world in the same run: forget the last one's state
         if (self.tickCount % 20 == 5)       // note the biome the player is standing in
-            ((dev.serantis.battle.Achievements.Holder) self).serantis$biomes().add(self.level().getBiome(self.blockPosition()).getRegisteredName());
-        if (self.tickCount % 100 == 37) dev.serantis.battle.Achievements.check(self);
-        if (self.tickCount % 20 == 11) dev.serantis.battle.Welcome.tick(self);
-        if (self.tickCount % 20 == 3) dev.serantis.battle.Companions.check(self);
-        if (self.tickCount % 100 == 61) dev.serantis.battle.Towns.check(self);
-        dev.serantis.battle.WingedBoots.tick(self);
-        dev.serantis.battle.TeleportBoots.tick(self);
-        dev.serantis.battle.Linx.tick(self);
-        dev.serantis.battle.coop.CoopBattles.tick(self);
-        if (self.tickCount % 200 == 17) dev.serantis.battle.coop.Groups.seen(self);
-        dev.serantis.battle.FigureVisit.tick(self);
-        dev.serantis.battle.BaseCredit.ride(self);
-        if (self.tickCount % 20 == 7) dev.serantis.battle.GoblinRaids.tick(self);
-        if (self.tickCount % 20 == 9) dev.serantis.battle.Harbinger.check(self);
-        if (self.tickCount % 100 == 83) dev.serantis.battle.GoblinRaids.sweep(self);
-        if (self.tickCount % 100 == 47) dev.serantis.battle.WildChests.tick(self);
-        if (self.tickCount % 40 == 23) dev.serantis.battle.BloodMoon.tick(self);
-        if (self.tickCount % 100 == 71) dev.serantis.battle.Knockout.tick(self);
-        if (self.tickCount % 100 == 73) dev.serantis.battle.Ailments.tick(self);
+            dev.serantis.battle.Safe.run("biome note", () -> ((dev.serantis.battle.Achievements.Holder) self).serantis$biomes().add(self.level().getBiome(self.blockPosition()).getRegisteredName()));
+        if (self.tickCount % 100 == 37) dev.serantis.battle.Safe.run("Achievements.check for " + self.getPlainTextName(), () -> dev.serantis.battle.Achievements.check(self));
+        if (self.tickCount % 20 == 11) dev.serantis.battle.Safe.run("Welcome.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.Welcome.tick(self));
+        if (self.tickCount % 20 == 3) dev.serantis.battle.Safe.run("Companions.check for " + self.getPlainTextName(), () -> dev.serantis.battle.Companions.check(self));
+        if (self.tickCount % 100 == 61) dev.serantis.battle.Safe.run("Towns.check for " + self.getPlainTextName(), () -> dev.serantis.battle.Towns.check(self));
+        dev.serantis.battle.Safe.run("WingedBoots.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.WingedBoots.tick(self));
+        dev.serantis.battle.Safe.run("TeleportBoots.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.TeleportBoots.tick(self));
+        dev.serantis.battle.Safe.run("Linx.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.Linx.tick(self));
+        dev.serantis.battle.Safe.run("coop.CoopBattles.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.coop.CoopBattles.tick(self));
+        if (self.tickCount % 200 == 17) dev.serantis.battle.Safe.run("coop.Groups.seen for " + self.getPlainTextName(), () -> dev.serantis.battle.coop.Groups.seen(self));
+        dev.serantis.battle.Safe.run("FigureVisit.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.FigureVisit.tick(self));
+        dev.serantis.battle.Safe.run("BaseCredit.ride for " + self.getPlainTextName(), () -> dev.serantis.battle.BaseCredit.ride(self));
+        if (self.tickCount % 20 == 7) dev.serantis.battle.Safe.run("GoblinRaids.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.GoblinRaids.tick(self));
+        if (self.tickCount % 20 == 9) dev.serantis.battle.Safe.run("Harbinger.check for " + self.getPlainTextName(), () -> dev.serantis.battle.Harbinger.check(self));
+        if (self.tickCount % 100 == 83) dev.serantis.battle.Safe.run("GoblinRaids.sweep for " + self.getPlainTextName(), () -> dev.serantis.battle.GoblinRaids.sweep(self));
+        if (self.tickCount % 100 == 47) dev.serantis.battle.Safe.run("WildChests.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.WildChests.tick(self));
+        if (self.tickCount % 40 == 23) dev.serantis.battle.Safe.run("BloodMoon.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.BloodMoon.tick(self));
+        if (self.tickCount % 100 == 71) dev.serantis.battle.Safe.run("Knockout.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.Knockout.tick(self));
+        if (self.tickCount % 100 == 73) dev.serantis.battle.Safe.run("Ailments.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.Ailments.tick(self));
     }
 }

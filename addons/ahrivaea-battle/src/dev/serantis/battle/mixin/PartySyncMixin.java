@@ -22,30 +22,30 @@ public abstract class PartySyncMixin {
     @Inject(method = "view", at = @At("RETURN"))
     private static void serantis$you(net.minecraft.server.level.ServerPlayer player, CallbackInfoReturnable<JsonObject> cir) {
         JsonObject o = cir.getReturnValue();
-        if (o != null) dev.serantis.battle.Trades.describe(player, o);
-        if (o != null) dev.serantis.battle.Achievements.describe(player, o);
-        if (o != null) dev.serantis.battle.Market.describe(player, o);
-        if (o != null) dev.serantis.battle.Wanderer.describe(player, o);
-        if (o != null) dev.serantis.battle.Tutor.describe(player, o);
-        if (o != null) dev.serantis.battle.Honing.describe(player, o);
-        if (o != null) dev.serantis.battle.GoblinRaids.describe(player, o);
-        if (o != null) dev.serantis.battle.Intro.describe(player, o);
-        if (o != null) dev.serantis.battle.FigureVisit.describe(player, o);
-        if (o != null) dev.serantis.battle.VillagerTalk.describe(player, o);
-        if (o != null) dev.serantis.battle.Harbinger.describe(player, o);
-        if (o != null) dev.serantis.battle.Bounties.describe(player, o);
-        if (o != null) dev.serantis.battle.Journal.describe(player, o);
-        if (o != null) dev.serantis.battle.coop.Groups.describe(player, o);
-        if (o != null) dev.serantis.battle.Welcome.describe(player, o);
-        if (o != null) dev.serantis.battle.PlayerClass.describe(player, o);
-        if (o != null) dev.serantis.battle.Staffs.describe(player, o);
-        if (o != null) dev.serantis.battle.Riddles.describe(player, o);
-        if (o != null) dev.serantis.battle.Linx.describe(player, o);
-        if (o != null) dev.serantis.battle.Backpacks.describe(player, o);
-        if (o != null) dev.serantis.battle.Masters.describeGift(player, o);
-        if (o != null) dev.serantis.battle.Ailments.describe(player, o);
-        if (o != null) dev.serantis.battle.BaseLooks.describe(player, o);
-        if (o != null) dev.serantis.battle.PublicMarks.describe(player, o);
+        if (o != null) dev.serantis.battle.Safe.run("Trades.describe", () -> dev.serantis.battle.Trades.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Achievements.describe", () -> dev.serantis.battle.Achievements.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Market.describe", () -> dev.serantis.battle.Market.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Wanderer.describe", () -> dev.serantis.battle.Wanderer.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Tutor.describe", () -> dev.serantis.battle.Tutor.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Honing.describe", () -> dev.serantis.battle.Honing.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("GoblinRaids.describe", () -> dev.serantis.battle.GoblinRaids.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Intro.describe", () -> dev.serantis.battle.Intro.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("FigureVisit.describe", () -> dev.serantis.battle.FigureVisit.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("VillagerTalk.describe", () -> dev.serantis.battle.VillagerTalk.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Harbinger.describe", () -> dev.serantis.battle.Harbinger.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Bounties.describe", () -> dev.serantis.battle.Bounties.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Journal.describe", () -> dev.serantis.battle.Journal.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("coop.Groups.describe", () -> dev.serantis.battle.coop.Groups.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Welcome.describe", () -> dev.serantis.battle.Welcome.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("PlayerClass.describe", () -> dev.serantis.battle.PlayerClass.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Staffs.describe", () -> dev.serantis.battle.Staffs.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Riddles.describe", () -> dev.serantis.battle.Riddles.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Linx.describe", () -> dev.serantis.battle.Linx.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Backpacks.describe", () -> dev.serantis.battle.Backpacks.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Masters.describeGift", () -> dev.serantis.battle.Masters.describeGift(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("Ailments.describe", () -> dev.serantis.battle.Ailments.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("BaseLooks.describe", () -> dev.serantis.battle.BaseLooks.describe(player, o));
+        if (o != null) dev.serantis.battle.Safe.run("PublicMarks.describe", () -> dev.serantis.battle.PublicMarks.describe(player, o));
         if (o != null && o.has("out") && o.get("out").isJsonArray())        // creatures out with you: a knocked-out one shows 0 HP too
             for (var el : o.getAsJsonArray("out"))
                 if (el.isJsonObject() && el.getAsJsonObject().has("serantis_ko")) el.getAsJsonObject().addProperty("hp", 0);
