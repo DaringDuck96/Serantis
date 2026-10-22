@@ -1,3 +1,6 @@
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/client/DialogueScreen.java:210: error: variable w is already defined in method extractRenderState(GuiGraphicsExtractor,int,int,float)
+                String w = "⚠ Villagers are tough, and town guards may join in. Best fought from player level 5 (you're level " + warnLevel + ": learn skills at your Base Core).";
+                       ^
 Note: /home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/Locomotion.java uses or overrides a deprecated API.
 Note: Recompile with -Xlint:deprecation for details.
-OK
+1 error
