@@ -211,7 +211,7 @@ public final class Field {
                 continue;
             }
             if ("charge".equals(p.kind)) {
-                if (!p.target.alive() || !p.move.reaches(Body.gap(p.user, p.target))) {
+                if (!p.target.alive() || !p.move.reaches(Body.range(p.user, p.target))) {
                     acc.serantis$say(p.user.name + "'s " + p.spec.name + " has nothing to hit.");
                     continue;
                 }

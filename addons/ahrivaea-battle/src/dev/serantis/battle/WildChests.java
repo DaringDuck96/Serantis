@@ -49,7 +49,7 @@ import java.util.List;
  * starting a battle. A Mimic was never a real chest, so it holds no loot: all you get is what the Mimic drops.
  */
 public final class WildChests {
-    public static final double MIMIC_CHANCE = 0.60, RARE_CHANCE = 0.08;
+    public static final double MIMIC_CHANCE = 0.15, RARE_CHANCE = 0.08;
     public static final int PER_PLAYER = 5, MAX_CHESTS = 80, MIN_DIST = 24, MAX_DIST = 96, SPACING = 12;
 
     private static final String[] TABLES = {

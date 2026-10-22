@@ -152,7 +152,7 @@ public abstract class BattleScreenMixin {
 
     /** Distance from the selected creature (at the tile it's moving to) to a target, body to body. */
     private int serantis$gap(JsonObject actor, JsonObject target) {
-        return Body.gap(destX, destZ, serantis$size(actor), target.get("x").getAsInt(), target.get("z").getAsInt(), serantis$size(target));
+        return Body.range(destX, destZ, serantis$size(actor), target.get("x").getAsInt(), target.get("z").getAsInt(), serantis$size(target));   // diagonals count straight-line
     }
 
     private Body.Ctx serantis$ctx(JsonObject unit) {
@@ -365,6 +365,27 @@ public abstract class BattleScreenMixin {
             f.set(this, target);
         } catch (ReflectiveOperationException e) {
             // can't happen with this battle screen
+        }
+    }
+
+    // The result screen: each recruit says how many of that creature you already have.
+    @Inject(method = "rebuild", at = @At("RETURN"))
+    private void serantis$ownedCounts(CallbackInfo ci) {
+        JsonObject st = state();
+        if (st == null || !st.has("result")) return;
+        var rec = st.getAsJsonObject("result").has("recruits") ? st.getAsJsonObject("result").getAsJsonArray("recruits") : null;
+        if (rec == null) return;
+        net.minecraft.client.gui.screens.Screen self = (net.minecraft.client.gui.screens.Screen) (Object) this;
+        int i = 0;
+        for (var c : self.children()) {
+            if (!(c instanceof net.minecraft.client.gui.components.Button b) || i >= rec.size()) continue;
+            String text = b.getMessage().getString();
+            JsonObject d = rec.get(i).getAsJsonObject();
+            if (!text.startsWith("Recruit ") && !(d.has("name") && text.startsWith(d.get("name").getAsString() + " Lv."))) continue;
+            i++;
+            if (!d.has("serantis_owned")) continue;
+            int n = d.get("serantis_owned").getAsInt();
+            b.setMessage(net.minecraft.network.chat.Component.literal(text + "  · " + (n == 0 ? "new!" : "you have " + n)));
         }
     }
 

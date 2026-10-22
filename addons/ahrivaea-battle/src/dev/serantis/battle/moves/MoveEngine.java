@@ -40,7 +40,7 @@ public final class MoveEngine {
 
     public static UnitState state(Unit u) { return ((UnitAccess) (Object) u).serantis$state(); }
     private static BattleAccess acc(Battle b) { return (BattleAccess) (Object) b; }
-    private static int dist(Unit a, Unit b) { return Body.gap(a, b); }
+    private static int dist(Unit a, Unit b) { return Body.range(a, b); }   // attack reach (diagonals count straight-line, see Body.range)
     private static int scaled(int sheetAmount, Unit source) { return Math.max(1, (int) Math.round(sheetAmount * K * Stats.levelScale(source.level))); }
     private static Unit.Side other(Unit.Side s) { return s == Unit.Side.PLAYER ? Unit.Side.ENEMY : Unit.Side.PLAYER; }
     private static String s(JsonObject o, String k) { return MoveSpec.str(o, k); }
@@ -427,7 +427,7 @@ public final class MoveEngine {
                     case "higher" -> !a.flies() && Body.height(b, a) - Body.height(b, t) >= 1 ? pct : 0;
                     case "water_target" -> t.influence == dev.ahrivaea.creature.Influence.WATER ? pct : 0;
                     case "raining" -> b.level.getServer().overworld().isRaining() ? pct : 0;
-                    case "far" -> pct * Math.max(0, Math.min(3, Body.gap(a, t) - 3));
+                    case "far" -> pct * Math.max(0, Math.min(3, Body.range(a, t) - 3));
                     default -> 0;
                 };
                 bonus += (int) Math.round(basePower * share / 100.0);
@@ -480,7 +480,7 @@ public final class MoveEngine {
         for (int k = 1; k <= Math.max(n, reach); k++) {
             int cx = a.x + (int) Math.round((double) dx * k / n);
             int cz = a.z + (int) Math.round((double) dz * k / n);
-            if (Pathing.distance(a.x, a.z, cx, cz) > reach) break;
+            if (Body.range(a.x, a.z, 1, cx, cz, 1) > reach) break;
             cells.add(new int[]{cx, cz});
         }
         return cells;
@@ -837,7 +837,7 @@ public final class MoveEngine {
                 mj.addProperty("power", dev.serantis.battle.WeaponStyles.isWeaponMove(u.moves.get(n)) ? u.moves.get(n).move().power() : spec.sheetPower);   // a weapon: this player's own
                 if (spec.hits > 1) mj.addProperty("name", spec.name + " x" + spec.hits);
                 if (spec.text != null) mj.addProperty("info", spec.text);
-                mj.addProperty("serantis_line", MoveExplain.line(spec));
+                mj.addProperty("serantis_line", MoveExplain.line(spec, u.moves.get(n).minRange(), u.moves.get(n).maxRange()));   // its real reach at its level
                 mj.addProperty("serantis_influence", spec.influence == null ? "none" : spec.influence);
                 mj.addProperty("serantis_explain", MoveExplain.explain(spec));
             }

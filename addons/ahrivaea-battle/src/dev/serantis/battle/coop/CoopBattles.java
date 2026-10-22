@@ -754,6 +754,7 @@ public final class CoopBattles {
             dj.addProperty("rarity", d.rarity());
             String why = b.whyNotRecruit(d);
             if (why != null) dj.addProperty("why", why);
+            dj.addProperty("serantis_owned", dev.serantis.battle.Owned.count(p, d.species(), d.influence()));
             out.add(dj);
         }
         return out;
