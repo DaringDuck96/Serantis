@@ -1,2 +1,2 @@
-# 1792631360
-compile wip/blood-moon
+# 1792631448
+smoke
