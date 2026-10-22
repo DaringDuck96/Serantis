@@ -38,6 +38,22 @@ public final class Fx {
 
     public static void wiggle(Battle b, Unit u) { flash(b, u, ATTACK); }
 
+    /** Sounds waiting for a battle's walks to finish, so they're heard when the hit shows (see BattleWalk). */
+    private static final java.util.Map<Battle, java.util.List<Runnable>> QUEUED = java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
+
+    private static void play(Battle b, Runnable sound) {
+        if (dev.serantis.battle.BattleWalk.busy(b)) {
+            synchronized (QUEUED) { QUEUED.computeIfAbsent(b, k -> new java.util.ArrayList<>()).add(sound); }
+        } else sound.run();
+    }
+
+    /** BattleWalk: a battle's walks are done and its update goes out now, so do its sounds. */
+    public static void flush(Battle b) {
+        java.util.List<Runnable> todo;
+        synchronized (QUEUED) { todo = QUEUED.remove(b); }
+        if (todo != null) for (Runnable r : todo) r.run();
+    }
+
     /** A hit lands (or misses): a sound for the move's influence at the target, heard by everyone at the arena. */
     public static void hitSound(Battle b, Unit target, dev.ahrivaea.creature.Influence inf, boolean struck, boolean crit) {
         if (b == null || target == null) return;
@@ -60,14 +76,17 @@ public final class Fx {
             default -> net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_STRONG;
         };
         float vol = "darkness".equals(inf == null ? "" : inf.getSerializedName()) || "storm".equals(inf == null ? "" : inf.getSerializedName()) ? 0.45f : 0.9f;
-        b.level.playSound(null, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, s, net.minecraft.sounds.SoundSource.PLAYERS, vol, pitch);
-        if (crit) b.level.playSound(null, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_CRIT, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 1f);
+        final net.minecraft.sounds.SoundEvent sound = s;
+        play(b, () -> {
+            b.level.playSound(null, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, sound, net.minecraft.sounds.SoundSource.PLAYERS, vol, pitch);
+            if (crit) b.level.playSound(null, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_CRIT, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 1f);
+        });
     }
 
     /** A unit is knocked out: a heavy thud. */
     public static void koSound(Battle b, Unit u) {
         if (b == null || u == null) return;
         net.minecraft.core.BlockPos at = b.cellPos(u);
-        b.level.playSound(null, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_KNOCKBACK, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.6f);
+        play(b, () -> b.level.playSound(null, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_KNOCKBACK, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 0.6f));
     }
 }

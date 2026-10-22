@@ -95,10 +95,38 @@ public final class BaseLooksClient {
         return k == null || k.nether() == null ? null : k.nether().ground().defaultBlockState();
     }
 
-    /** The colours this spot takes (kind 0 grass, 1 leaves, 2 dry leaves, 3 water), or -1 for its own. */
-    public static int color(BlockPos pos, int kind) {
-        Look k = look(pos);
-        if (k == null) return -1;
+    /** Colours fade between a base's look and the land around it over BLEND blocks either side of its edge. */
+    public static final int BLEND = 6;
+
+    /**
+     * The colour this spot is drawn with (kind 0 grass, 1 leaves, 2 dry leaves, 3 water), or -1 to leave it alone. Near
+     * the edge of a base with a look it's a mix of the look's colour and the natural one (natural: what the game would use).
+     */
+    public static int blended(BlockPos pos, int kind, java.util.function.IntSupplier natural) {
+        List<Look> l = looks;
+        if (l.isEmpty()) return -1;
+        Look best = null;
+        double bestW = 0;
+        for (Look k : l) {
+            double dx = pos.getX() - k.cx(), dz = pos.getZ() - k.cz();
+            double d = Math.sqrt(dx * dx + dz * dz);
+            double w = Math.max(0, Math.min(1, (k.r() + 0.5 + BLEND - d) / (2.0 * BLEND)));
+            if (w > bestW) { bestW = w; best = k; }
+        }
+        if (best == null) return -1;
+        int mine = color(best, pos, kind);
+        if (bestW >= 1) return mine;
+        return mix(natural.getAsInt(), mine, bestW);
+    }
+
+    private static int mix(int a, int b, double t) {
+        int r = (int) Math.round(((a >> 16) & 255) * (1 - t) + ((b >> 16) & 255) * t);
+        int g = (int) Math.round(((a >> 8) & 255) * (1 - t) + ((b >> 8) & 255) * t);
+        int bl = (int) Math.round((a & 255) * (1 - t) + (b & 255) * t);
+        return (a & 0xFF000000) | (r << 16) | (g << 8) | bl;
+    }
+
+    private static int color(Look k, BlockPos pos, int kind) {
         if (k.nether() != null) return switch (kind) { case 0 -> k.nether().grass(); case 3 -> k.nether().water(); default -> k.nether().foliage(); };
         return switch (kind) {
             case 0 -> k.biome().getGrassColor(pos.getX(), pos.getZ());

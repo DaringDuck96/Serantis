@@ -110,7 +110,7 @@ public final class BattleWalk {
             Walk w = en.getValue();
             Entity e = w.battle.level.getEntity(en.getKey());
             if (e == null) e = server.getPlayerList().getPlayer(en.getKey());
-            if (e == null || w.battle.phase == Battle.Phase.OVER) { it.remove(); STARTS.remove(en.getKey()); continue; }
+            if (e == null || w.battle.phase == Battle.Phase.OVER) { it.remove(); STARTS.remove(en.getKey()); dev.serantis.battle.fx.Fx.flush(w.battle); continue; }
             Vec3 start = STARTS.getOrDefault(en.getKey(), e.position());
             w.tick++;
             Vec3 now = w.at(start);
@@ -124,13 +124,16 @@ public final class BattleWalk {
                 }
                 e.setPos(now.x, now.y, now.z);
             }
-            if (w.done()) { it.remove(); STARTS.remove(en.getKey()); }
+            if (w.done()) { it.remove(); STARTS.remove(en.getKey()); if (w.battle.phase == Battle.Phase.OVER || !busy(w.battle)) dev.serantis.battle.fx.Fx.flush(w.battle); }
         }
         List<Battle> ready = new ArrayList<>();
         synchronized (PENDING) {
             for (Battle b : PENDING.keySet()) if (!busy(b)) ready.add(b);
             for (Battle b : ready) PENDING.remove(b);
         }
-        for (Battle b : ready) dev.ahrivaea.battle.Battles.send(b);
+        for (Battle b : ready) {
+            dev.serantis.battle.fx.Fx.flush(b);                         // its hit sounds, now that the hit shows
+            dev.ahrivaea.battle.Battles.send(b);
+        }
     }
 }

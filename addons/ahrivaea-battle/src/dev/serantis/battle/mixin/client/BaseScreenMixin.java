@@ -48,6 +48,16 @@ public abstract class BaseScreenMixin extends Screen {
         addRenderableWidget(b);
     }
 
+    // The size line under the title: bases are round, so how far across (see BaseShape), not a square of chunks.
+    @org.spongepowered.asm.mixin.injection.ModifyArg(method = "extractRenderState", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;centeredText(Lnet/minecraft/client/gui/Font;Ljava/lang/String;III)V"), index = 1)
+    private String serantis$roundSize(String text) {
+        JsonObject st = ((BaseScreen) (Object) this).state();
+        if (text == null || !text.startsWith("Base (level ") || st == null || !st.has("radius") || !st.has("level")) return text;
+        int r = st.get("radius").getAsInt();
+        return "Base (level " + st.get("level").getAsInt() + ": round, " + (2 * r) + " blocks across)";
+    }
+
     @Redirect(method = "lambda$register$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
     private static void serantis$keepTree(Gui gui, Screen screen) {
         if (gui.screen() instanceof SkillTreeScreen tree && screen instanceof BaseScreen base) { tree.setParent(base); return; }

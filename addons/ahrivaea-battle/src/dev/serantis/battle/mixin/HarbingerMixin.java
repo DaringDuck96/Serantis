@@ -36,5 +36,6 @@ public abstract class HarbingerMixin {
         dev.serantis.battle.Harbinger.tick();
         dev.serantis.battle.FalseHydra.tick();
         dev.serantis.battle.HayBales.tick(server);
+        dev.serantis.battle.DragonParties.tick();
     }
 }

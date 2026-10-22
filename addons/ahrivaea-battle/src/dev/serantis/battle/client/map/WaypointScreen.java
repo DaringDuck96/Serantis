@@ -4,29 +4,41 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-/** Naming (and colouring) a marked place on the map, or changing or removing one. */
+/**
+ * Naming (and colouring) a marked place on the map, or changing or removing one. Private markers are yours alone;
+ * public ones everyone on the server sees (see Waypoints, PublicMarks). Someone else's public marker can only be looked at.
+ */
 public class WaypointScreen extends Screen {
     private final Screen parent;
     private final Waypoints.Mark mark;          // null: a new one
     private final int x, z;
     private int color;
+    private boolean pub;
     private EditBox box;
 
     public WaypointScreen(Screen parent, int x, int z, Waypoints.Mark mark) {
-        super(Component.literal(mark == null ? "Mark this place" : "Edit marker"));
+        super(Component.literal(mark == null ? "Mark this place" : !mark.mine ? "Public marker by " + mark.by : "Edit marker"));
         this.parent = parent;
         this.mark = mark;
         this.x = mark == null ? x : mark.x;
         this.z = mark == null ? z : mark.z;
         this.color = mark == null ? Waypoints.COLORS[0] : mark.color;
+        this.pub = mark != null && mark.pub;
     }
+
+    private boolean readOnly() { return mark != null && !mark.mine; }
 
     @Override
     protected void init() {
         int cx = width / 2, cy = height / 2;
+        if (readOnly()) {
+            addRenderableWidget(Button.builder(Component.literal("Close"), b -> onClose()).bounds(cx - 40, cy + 22, 80, 20).build());
+            return;
+        }
         String old = box == null ? (mark == null ? "" : mark.name) : box.getValue();
         box = new EditBox(font, cx - 100, cy - 30, 200, 20, Component.literal("Name"));
         box.setMaxLength(32);
@@ -40,19 +52,34 @@ public class WaypointScreen extends Screen {
                     .bounds(cx - 100 + i * 25, cy - 4, 23, 18).build();
             addRenderableWidget(b);
         }
+        addRenderableWidget(Button.builder(Component.literal(pub ? "Public" : "Private"), b -> { pub = !pub; rebuildWidgets(); })
+                .tooltip(Tooltip.create(Component.literal(pub ? "Everyone on the server sees this marker. Click to make it yours alone."
+                        : "Only you see this marker. Click to share it with everyone on the server.")))
+                .bounds(cx + 104, cy - 30, 60, 20).build());
         int bw = mark == null ? 98 : 64;
         addRenderableWidget(Button.builder(Component.literal("Save"), b -> save()).bounds(cx - 100, cy + 22, bw, 20).build());
-        if (mark != null) addRenderableWidget(Button.builder(Component.literal("Delete"), b -> { Waypoints.remove(mark); onClose(); })
+        if (mark != null) addRenderableWidget(Button.builder(Component.literal("Delete"), b -> { delete(mark); onClose(); })
                 .bounds(cx - 100 + bw + 4, cy + 22, bw, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Cancel"), b -> onClose())
                 .bounds(cx + 100 - bw, cy + 22, bw, 20).build());
     }
 
+    private static void delete(Waypoints.Mark m) {
+        if (m.pub) Waypoints.sendPublic("delete", m, m.name, m.x, m.z, m.color);
+        else Waypoints.remove(m);
+    }
+
     private void save() {
         String name = box.getValue().trim();
         if (name.isEmpty()) name = "Marker";
-        if (mark == null) Waypoints.add(name, x, z, color);
-        else { mark.name = name; mark.color = color; Waypoints.changed(); }
+        if (mark != null && mark.pub == pub) {                          // the same kind: change it where it is
+            if (pub) Waypoints.sendPublic("edit", mark, name, x, z, color);
+            else { mark.name = name; mark.color = color; Waypoints.changed(); }
+        } else {                                                        // new, or moved between private and public
+            if (mark != null) delete(mark);
+            if (pub) Waypoints.sendPublic("add", null, name, x, z, color);
+            else Waypoints.add(name, x, z, color);
+        }
         onClose();
     }
 
@@ -63,6 +90,7 @@ public class WaypointScreen extends Screen {
     public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partial) {
         super.extractRenderState(g, mouseX, mouseY, partial);
         g.centeredText(font, getTitle().getString() + "  (x " + x + ", z " + z + ")", width / 2, height / 2 - 46, 0xFFF2C94C);
+        if (readOnly()) g.centeredText(font, mark.name, width / 2, height / 2 - 20, 0xFF000000 | mark.color);
     }
 
     @Override

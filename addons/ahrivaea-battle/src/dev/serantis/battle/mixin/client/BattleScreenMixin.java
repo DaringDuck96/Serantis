@@ -334,6 +334,72 @@ public abstract class BattleScreenMixin {
     // ---- changing gear: an "Equip" choice under Wait on your own turn (it takes your attack). See Equipment.
     @Shadow private void reset() { }
 
+    // ---- Potion or Milk: the creatures mod's Item button heals with a potion ("Potion"); a Milk button beside it cures
+    // statuses with a bucket of milk (sent as the item action with move 1, see Ailments).
+    @org.spongepowered.asm.mixin.Unique private static boolean serantis$milk;
+    @Shadow private void rebuild() { }
+
+    @Inject(method = "sendAction", at = @At("HEAD"), cancellable = true)
+    private void serantis$sendMilk(String kind, int target, CallbackInfo ci) {
+        if (!"item".equals(kind) || !serantis$milk) return;
+        serantis$milk = false;
+        JsonObject a = new JsonObject();
+        a.addProperty("kind", "item");
+        a.addProperty("unit", selected);
+        a.addProperty("x", destX);
+        a.addProperty("z", destZ);
+        a.addProperty("move", 1);
+        a.addProperty("target", target);
+        dev.ahrivaea.client.battle.BattleClient.send(a);
+        reset();
+        rebuild();
+        ci.cancel();
+    }
+
+    @org.spongepowered.asm.mixin.Unique
+    private void serantis$targetStep() {
+        try {
+            java.lang.reflect.Field f = BattleScreen.class.getDeclaredField("step");
+            f.setAccessible(true);
+            @SuppressWarnings({"unchecked", "rawtypes"}) Object target = Enum.valueOf((Class) f.getType(), "TARGET");
+            f.set(this, target);
+        } catch (ReflectiveOperationException e) {
+            // can't happen with this battle screen
+        }
+    }
+
+    @Inject(method = "rebuild", at = @At("RETURN"))
+    private void serantis$milkButton(CallbackInfo ci) {
+        net.minecraft.client.gui.screens.Screen self = (net.minecraft.client.gui.screens.Screen) (Object) this;
+        net.minecraft.client.gui.components.Button item = null;
+        for (var c : self.children())
+            if (c instanceof net.minecraft.client.gui.components.Button b && "Item".equals(b.getMessage().getString())) item = b;
+        if (item == null) return;                                      // not choosing an action: keep a pending Milk choice
+        serantis$milk = false;
+        item.setMessage(net.minecraft.network.chat.Component.literal("Potion"));
+        item.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.literal(
+                "Heal yourself or a creature next to you with a healing potion.")));
+        int w = item.getWidth() / 2;
+        item.setWidth(w);
+        var mc = net.minecraft.client.Minecraft.getInstance();
+        boolean has = false;
+        if (mc.player != null)
+            for (int i = 0; i < mc.player.getInventory().getContainerSize(); i++)
+                if (mc.player.getInventory().getItem(i).is(net.minecraft.world.item.Items.MILK_BUCKET)) { has = true; break; }
+        var milk = net.minecraft.client.gui.components.Button.builder(net.minecraft.network.chat.Component.literal("Milk"), btn -> {
+                    pending = -2;
+                    serantis$targetStep();
+                    rebuild();
+                    serantis$milk = true;
+                })
+                .tooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.literal(has
+                        ? "Cure every status on yourself or a creature next to you with a bucket of milk (the bucket is used up)."
+                        : "You have no bucket of milk.")))
+                .bounds(item.getX() + w, item.getY(), w, item.getHeight()).build();
+        milk.active = has;
+        ((ScreenAccessor) self).serantis$add(milk);
+    }
+
     @Inject(method = "rebuild", at = @At("RETURN"))
     private void serantis$equipButton(CallbackInfo ci) {
         net.minecraft.client.gui.screens.Screen self = (net.minecraft.client.gui.screens.Screen) (Object) this;

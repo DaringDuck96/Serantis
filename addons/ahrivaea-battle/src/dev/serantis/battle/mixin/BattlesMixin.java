@@ -349,6 +349,11 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_mark".equals(kind)) {             // a public map marker added, changed or removed
+                dev.serantis.battle.PublicMarks.handle(player, o);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_base_look".equals(kind)) {        // the base screen's Look picker
                 if (o.has("x") && o.has("y") && o.has("z"))
                     dev.serantis.battle.BaseLooks.set(player, new net.minecraft.core.BlockPos(o.get("x").getAsInt(), o.get("y").getAsInt(), o.get("z").getAsInt()),

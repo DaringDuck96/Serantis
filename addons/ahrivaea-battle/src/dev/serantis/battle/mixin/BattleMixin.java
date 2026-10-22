@@ -140,14 +140,26 @@ public abstract class BattleMixin implements BattleAccess {
 
     // A bucket of milk cures statuses in battle (see Ailments): the Item action on a unit with a status uses milk if
     // you have some (the bucket is used up), otherwise a healing potion as before.
+    // The battle screen's Milk action is the Item action with move 1 (Potion is move 0).
+    @Inject(method = "act", at = @At("HEAD"))
+    private void serantis$whichItem(Battle.Action action, CallbackInfoReturnable<String> cir) {
+        dev.serantis.battle.Ailments.WANT_MILK.set("item".equals(action.kind()) && action.move() == 1);
+    }
+
+    @Inject(method = "act", at = @At("RETURN"))
+    private void serantis$whichItemDone(Battle.Action action, CallbackInfoReturnable<String> cir) {
+        dev.serantis.battle.Ailments.WANT_MILK.set(false);
+    }
+
     @Inject(method = "itemCheck", at = @At("HEAD"), cancellable = true)
     private void serantis$milkCheck(Unit u, Unit target, CallbackInfoReturnable<String> cir) {
-        if (dev.serantis.battle.Ailments.milkFor((Battle) (Object) this, u, target) != null) cir.setReturnValue(null);
+        if (!dev.serantis.battle.Ailments.WANT_MILK.get()) return;      // a potion, as before
+        cir.setReturnValue(dev.serantis.battle.Ailments.milkProblem((Battle) (Object) this, u, target));
     }
 
     @Inject(method = "useItem", at = @At("HEAD"), cancellable = true)
     private void serantis$milk(Unit u, Unit target, CallbackInfo ci) {
-        if (dev.serantis.battle.Ailments.useMilk((Battle) (Object) this, u, target)) ci.cancel();
+        if (dev.serantis.battle.Ailments.WANT_MILK.get() && dev.serantis.battle.Ailments.useMilk((Battle) (Object) this, u, target)) ci.cancel();
     }
 
     // Potions come from whoever is acting (an ally uses their own).

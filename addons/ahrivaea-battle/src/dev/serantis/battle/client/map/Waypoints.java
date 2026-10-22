@@ -15,9 +15,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Places you've marked on the map (right-click the full map, M): a name, a colour and a spot, per world (or server)
- * and dimension. They're yours alone, saved on your computer next to the map's tiles
- * (ahrivaea_map/<world>/serantis_waypoints.json), and shown on the full map and the minimap.
+ * Places marked on the map (right-click the full map, M): a name, a colour and a spot, per world (or server) and
+ * dimension. Private ones are yours alone, saved on your computer next to the map's tiles
+ * (ahrivaea_map/<world>/serantis_waypoints.json). Public ones are kept by the server (PublicMarks) and everyone sees
+ * them; only whoever made one can change it. Both show on the full map and the minimap.
  */
 public final class Waypoints {
     public static final int[] COLORS = {0xFFE04848, 0xFFF0962E, 0xFFF2D94C, 0xFF6BD16A, 0xFF4CD9E0, 0xFF4C7AF2, 0xFFB36BF2, 0xFFF0F0F0};
@@ -25,6 +26,9 @@ public final class Waypoints {
     public static final class Mark {
         public String name, dim;
         public int x, z, color;
+        /** A public marker (from the server): its id, who made it, and whether that's you. */
+        public boolean pub, mine = true;
+        public String id, by;
     }
 
     private static String loadedFor;
@@ -97,7 +101,40 @@ public final class Waypoints {
         if (mc.level == null) return out;
         String dim = mc.level.dimension().identifier().toString();
         for (Mark m : MARKS) if (m.dim.equals(dim)) out.add(m);
+        var st = dev.serantis.battle.client.TradeClient.state();
+        if (st != null && st.has("serantis_public_marks"))
+            for (var el : st.getAsJsonArray("serantis_public_marks")) {
+                JsonObject o = el.getAsJsonObject();
+                if (!dim.equals(o.get("dim").getAsString())) continue;
+                Mark m = new Mark();
+                m.pub = true;
+                m.id = o.get("id").getAsString();
+                m.name = o.get("name").getAsString();
+                m.dim = dim;
+                m.x = o.get("x").getAsInt();
+                m.z = o.get("z").getAsInt();
+                m.color = o.get("color").getAsInt();
+                m.by = o.get("by").getAsString();
+                m.mine = o.get("mine").getAsBoolean();
+                out.add(m);
+            }
         return out;
+    }
+
+    /** A public marker added, changed ("edit") or removed ("delete") on the server. */
+    public static void sendPublic(String op, Mark m, String name, int x, int z, int color) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return;
+        JsonObject o = new JsonObject();
+        o.addProperty("kind", "serantis_mark");
+        o.addProperty("op", op);
+        if (m != null && m.id != null) o.addProperty("id", m.id);
+        o.addProperty("name", name);
+        o.addProperty("dim", mc.level.dimension().identifier().toString());
+        o.addProperty("x", x);
+        o.addProperty("z", z);
+        o.addProperty("color", color);
+        dev.ahrivaea.client.battle.BattleClient.send(o);
     }
 
     public static Mark add(String name, int x, int z, int color) {

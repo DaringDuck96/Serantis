@@ -62,7 +62,9 @@
     "MobGoalsAccess",
     "HayToggleMixin",
     "BaseAreaMixin",
-    "BasesRoundMixin"
+    "BasesRoundMixin",
+    "BaseOverlapMixin",
+    "BaseCorePlaceMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

@@ -38,8 +38,8 @@ import java.util.UUID;
  *   Poison, Bleeding, Burning, Doom: it slowly loses HP (1% of its max every 5 seconds), but never below half its max.
  *   Anything else: it's sluggish while it's out with you (slow to follow, slow to ride).
  *   Feeding it a bucket of milk (right-click it in your inventory) cures it. The bucket is used up.
- * In battle, the Item action on a unit with a status (you, or a creature next to you) uses a bucket of milk if you have
- * one: every status on it is cured and the bucket is used up. Drinking milk never gives the bucket back.
+ * In battle, the Milk action (beside Potion) on you or a creature next to you cures every status on it and uses up a
+ * bucket of milk; Potion heals as before. Drinking milk never gives the bucket back.
  * The same goes for a co-op ally's creatures, and for enemies still standing when you flee or lose (a wild creature
  * keeps it while it roams, and if you recruit it, it comes with it). Nothing carries into the next battle.
  */
@@ -48,6 +48,8 @@ public final class Ailments {
     private static final int TICKS = 3 * 60 * 20;
     /** Players left confused or frightened: "status@until" (the client switches the keys or halves the view). */
     private static final java.util.Map<UUID, String> PLAYERS = new java.util.concurrent.ConcurrentHashMap<>();
+    /** When each creature in the world last lost HP to a lingering status (so several players near it don't add up). */
+    private static final java.util.Map<UUID, Long> LAST_DRIP = new java.util.concurrent.ConcurrentHashMap<>();
 
     private Ailments() {}
 
@@ -238,6 +240,7 @@ public final class Ailments {
             if (dev.ahrivaea.battle.Battles.inBattle(e)) continue;
             if (expired(e)) {
                 ((MovesHolder) (Object) e).serantis$setAilment(null);
+                LAST_DRIP.remove(e.getUUID());
                 if (e.isTame()) p.sendSystemMessage(Component.literal(e.displayName() + " is feeling itself again.").withStyle(ChatFormatting.GREEN));
                 sync = true;
                 continue;
@@ -245,6 +248,10 @@ public final class Ailments {
             String s = status(e);
             if (s == null || Knockout.is(e)) continue;
             if (hurts(s)) {
+                Long last = LAST_DRIP.get(e.getUUID());                  // once every 5 seconds, however many players are near it
+                long now = System.currentTimeMillis();
+                if (last != null && now - last < 4500) continue;
+                LAST_DRIP.put(e.getUUID(), now);
                 float floor = e.getMaxHealth() / 2f;
                 if (e.getHealth() > floor) e.setHealth(Math.max(floor, e.getHealth() - Math.max(1, Math.round(e.getMaxHealth() * 0.01f))));
             } else {
@@ -266,6 +273,18 @@ public final class Ailments {
         UnitState st = MoveEngine.state(t);
         if (st != null) for (UnitState.Effect e : st.effects) if ("status".equals(e.kind) && label(e.key) != null) return true;
         return false;
+    }
+
+    /** The battle screen asked for milk (the Milk action), not a potion. */
+    public static final ThreadLocal<Boolean> WANT_MILK = ThreadLocal.withInitial(() -> false);
+
+    /** Why milk can't be used on this unit now, or null if it can. */
+    public static String milkProblem(Battle b, Unit u, Unit target) {
+        if (milkFor(b, u, target) != null) return null;
+        if (target == null || !target.alive() || target.side != u.side) return "Give milk to yourself or a creature of yours next to you.";
+        if (target != u && dev.serantis.battle.moves.Body.distance(b, u.x, u.z, target.x, target.z) > 1) return "Give milk to yourself or a creature of yours next to you.";
+        if (!hasStatus(target)) return target.name + " has no status to cure.";
+        return "You have no bucket of milk.";
     }
 
     /** The milk the acting player would use on this unit (it has a status, is them or next to them), or null. */
