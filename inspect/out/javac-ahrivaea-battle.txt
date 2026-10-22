@@ -1,3 +1,28 @@
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/NameSigns.java:71: error: cannot find symbol
+                    read(out, sign.getFrontText().getMessages(false), p);
+                                  ^
+  symbol:   method getFrontText()
+  location: variable sign of type SignBlockEntity
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/NameSigns.java:72: error: cannot find symbol
+                    read(out, sign.getBackText().getMessages(false), p);
+                                  ^
+  symbol:   method getBackText()
+  location: variable sign of type SignBlockEntity
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/NameSigns.java:89: error: cannot find symbol
+        for (BlockPos p : found) if (best == null || c.distanceToSqr(p.getCenter()) < c.distanceToSqr(best.getCenter())) best = p;
+                                                                      ^
+  symbol:   method getCenter()
+  location: variable p of type BlockPos
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/NameSigns.java:89: error: cannot find symbol
+        for (BlockPos p : found) if (best == null || c.distanceToSqr(p.getCenter()) < c.distanceToSqr(best.getCenter())) best = p;
+                                                                                                          ^
+  symbol:   method getCenter()
+  location: variable best of type BlockPos
+/home/runner/work/_temp/main/addons/ahrivaea-battle/src/dev/serantis/battle/NameSigns.java:98: error: cannot find symbol
+        double d = Math.sqrt(c.distanceToSqr(sign.getCenter()));
+                                                 ^
+  symbol:   method getCenter()
+  location: variable sign of type BlockPos
 Note: Some input files use or override a deprecated API.
 Note: Recompile with -Xlint:deprecation for details.
-OK
+5 errors
