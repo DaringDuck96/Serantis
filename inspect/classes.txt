@@ -1,3 +1,6 @@
-# 1792711284
-smoke
-clientsmoke
+# 1792711526
+sig:net.minecraft.world.entity.player.Player
+sig:net.minecraft.world.entity.LivingEntity
+net.minecraft.world.item.component.PiercingWeapon
+sig:net.minecraft.world.item.component.KineticWeapon
+sig:net.minecraft.server.level.ServerPlayer
