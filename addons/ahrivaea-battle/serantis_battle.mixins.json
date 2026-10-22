@@ -58,7 +58,8 @@
     "BaseCoreAccess",
     "WorkerBrainAccess",
     "PlayerAilmentMilkMixin",
-    "MilkBucketMixin"
+    "MilkBucketMixin",
+    "MobGoalsAccess"
   ],
   "client": [
     "client.PartyScreenMixin",

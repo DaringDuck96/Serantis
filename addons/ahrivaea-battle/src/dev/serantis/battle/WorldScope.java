@@ -24,6 +24,7 @@ public final class WorldScope {
             {"dev.serantis.battle.FalseHydra", "PENDING"},
             {"dev.serantis.battle.Honing", "TALKING"},
             {"dev.serantis.battle.Ailments", "PLAYERS"},
+            {"dev.serantis.battle.HayBales", "HAY"},
             {"dev.serantis.battle.Linx", "LIFTS", "UNDO"},
             {"dev.serantis.battle.Market", "VIEWING"},
             {"dev.serantis.battle.Naming", "WAITING"},

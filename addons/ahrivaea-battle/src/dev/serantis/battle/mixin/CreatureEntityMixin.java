@@ -205,6 +205,14 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (cir.getReturnValue() != null && serantis$ailment != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setAilment(serantis$ailment);
     }
 
+    // Farm animals follow the food they like (see Leading).
+    @Inject(method = "registerGoals", at = @At("RETURN"))
+    private void serantis$tempt(CallbackInfo ci) {
+        CreatureEntity self = (CreatureEntity) (Object) this;
+        ((MobGoalsAccess) (Object) this).serantis$goals().addGoal(4,
+                new net.minecraft.world.entity.ai.goal.TemptGoal(self, 1.1, s -> dev.serantis.battle.Leading.tempts(self, s), false));
+    }
+
     // Knocked out (see Knockout): food doesn't heal it yet.
     @Inject(method = "eat", at = @At("HEAD"), cancellable = true)
     private void serantis$koEat(net.minecraft.world.entity.player.Player player, net.minecraft.world.item.ItemStack food,

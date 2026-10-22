@@ -35,5 +35,6 @@ public abstract class HarbingerMixin {
     private static void serantis$tick(MinecraftServer server, CallbackInfo ci) {
         dev.serantis.battle.Harbinger.tick();
         dev.serantis.battle.FalseHydra.tick();
+        dev.serantis.battle.HayBales.tick(server);
     }
 }

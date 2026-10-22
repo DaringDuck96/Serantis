@@ -323,6 +323,11 @@ Collect all 5 stones of all 12 influences (60 in all) and you get the rainbow **
 
 A **Backpack** is a reward: the base's owner gets one every time one of their bases reaches Level 2. They can't be crafted. Right-click one to strap it on: it leaves your inventory and you wear it. Press **B** to open it: 36 more slots, as many as your inventory. Sneak and press **B** to take it off; it goes back in your inventory with everything still inside (each backpack keeps its own contents, so spares can be handed to friends). You can wear one at a time. A worn backpack is never lost, not even when you die. (The B key isn't rebindable yet.) A worn backpack shows on your back, for you and everyone around you.
 
+### Hay bales: farm animals at your base
+Place a hay bale anywhere in your base's area and farm animals start turning up beside it: cows, sheep, goats and chickens (wild, Level 1-5, so they're easy to battle for meat, or to recruit). This is its own system, apart from the ordinary wild spawns: every minute there's a 50% chance one arrives, until 6 of them are in the base. More hay bales don't bring more. They don't wander off or despawn when you leave, and once you've battled one, another can come.
+
+**Leading animals.** Hold the food they like and animals follow you, wild or yours (never in battle): cows, sheep and goats follow wheat; chickens, wheat seeds; pigs, carrots or potatoes; horses, carrots.
+
 ### Taking down a base
 
 Hitting a Base Core asks first: creatures can't be recovered from a destroyed core, so if you say yes, every creature working at that base is sent back to your party (or box) before the core breaks and drops. Only the core's owner can take a base down. "No, keep it" leaves everything as it was.
