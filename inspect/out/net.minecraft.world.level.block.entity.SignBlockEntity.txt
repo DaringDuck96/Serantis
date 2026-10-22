@@ -1,0 +1,48 @@
+Compiled from "SignBlockEntity.java"
+public class net.minecraft.world.level.block.entity.SignBlockEntity extends net.minecraft.world.level.block.entity.BlockEntity {
+  private static final org.slf4j.Logger LOGGER;
+  private static final int MAX_TEXT_LINE_WIDTH = 90;
+  private static final int TEXT_LINE_HEIGHT = 10;
+  private static final boolean DEFAULT_IS_WAXED = false;
+  private static final boolean DEFAULT_ALLOW_OP_FEATURES = false;
+  private static final net.minecraft.network.chat.Component CLICK_ACTIONS_DISABLED;
+  private java.util.UUID playerWhoMayEdit;
+  private net.minecraft.world.level.block.entity.SignText frontText;
+  private net.minecraft.world.level.block.entity.SignText backText;
+  private boolean isWaxed;
+  private boolean allowOpFeatures;
+  public net.minecraft.world.level.block.entity.SignBlockEntity(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.world.level.block.entity.SignBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<? extends net.minecraft.world.level.block.entity.SignBlockEntity>, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.world.level.block.entity.SignTextSlot getSlotPlayerIsFacing(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.level.block.entity.SignText getText(net.minecraft.world.level.block.entity.SignTextSlot);
+  public int getTextLineHeight();
+  public int getMaxTextLineWidth();
+  protected void saveAdditional(net.minecraft.world.level.storage.ValueOutput);
+  protected void loadAdditional(net.minecraft.world.level.storage.ValueInput);
+  private net.minecraft.world.level.block.entity.SignText resolveLines(net.minecraft.world.level.block.entity.SignText);
+  private net.minecraft.network.chat.Component resolveLine(net.minecraft.network.chat.Component);
+  public void updateSignText(net.minecraft.world.entity.player.Player, net.minecraft.world.level.block.entity.SignTextSlot, java.util.List<net.minecraft.server.network.FilteredText>);
+  public boolean updateText(java.util.function.UnaryOperator<net.minecraft.world.level.block.entity.SignText>, net.minecraft.world.level.block.entity.SignTextSlot);
+  private static net.minecraft.world.level.block.entity.SignText updateMessages(java.util.List<net.minecraft.server.network.FilteredText>, net.minecraft.world.level.block.entity.SignText, boolean);
+  public void setText(net.minecraft.world.level.block.entity.SignText, net.minecraft.world.level.block.entity.SignTextSlot);
+  public boolean canExecuteClickCommands(net.minecraft.world.level.block.entity.SignTextSlot, net.minecraft.world.entity.player.Player);
+  public boolean executeClickCommandsIfPresent(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.player.Player, net.minecraft.core.BlockPos, net.minecraft.world.level.block.entity.SignTextSlot);
+  private static net.minecraft.commands.CommandSourceStack createCommandSourceStack(net.minecraft.world.entity.player.Player, net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+  public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket();
+  public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup$Provider);
+  public void setAllowedPlayerEditor(java.util.UUID);
+  public java.util.UUID getPlayerWhoMayEdit();
+  private void markUpdated();
+  public boolean isWaxed();
+  public boolean setWaxed(boolean);
+  public boolean playerIsTooFarAwayToEdit(java.util.UUID);
+  public static void tick(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.SignBlockEntity);
+  private void clearInvalidPlayerWhoMayEdit(net.minecraft.world.level.block.entity.SignBlockEntity, net.minecraft.world.level.Level, java.util.UUID);
+  public net.minecraft.sounds.SoundEvent getSignInteractionFailedSoundEvent();
+  protected void applyImplicitComponents(net.minecraft.core.component.DataComponentGetter);
+  protected void collectImplicitComponents(net.minecraft.core.component.DataComponentMap$Builder);
+  public void removeComponentsFromTag(net.minecraft.world.level.storage.ValueOutput);
+  public net.minecraft.network.protocol.Packet getUpdatePacket();
+  private static net.minecraft.world.level.block.entity.SignText lambda$updateSignText$0(java.util.List, net.minecraft.world.entity.player.Player, net.minecraft.world.level.block.entity.SignText);
+  static {};
+}

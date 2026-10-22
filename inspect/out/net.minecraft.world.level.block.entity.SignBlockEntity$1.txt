@@ -1,0 +1,5 @@
+Compiled from "SignBlockEntity.java"
+class net.minecraft.world.level.block.entity.SignBlockEntity$1 {
+  static final int[] $SwitchMap$net$minecraft$world$level$block$entity$SignTextSlot;
+  static {};
+}
