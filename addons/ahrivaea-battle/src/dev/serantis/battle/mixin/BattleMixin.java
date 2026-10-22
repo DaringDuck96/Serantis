@@ -418,6 +418,7 @@ public abstract class BattleMixin implements BattleAccess {
     private void serantis$afterView(UUID viewer, CallbackInfoReturnable<JsonObject> cir) {
         MoveEngine.decorate((Battle) (Object) this, cir.getReturnValue());
         dev.serantis.battle.coop.CoopBattles.view((Battle) (Object) this, viewer, cir.getReturnValue());
+        dev.serantis.battle.Owned.annotate((Battle) (Object) this, viewer, cir.getReturnValue());   // how many of each you already have
         Battle self = (Battle) (Object) this;                          // a player's very first battle: the screen walks them through it
         var vp = viewer == null || self.level == null ? null : self.level.getServer().getPlayerList().getPlayer(viewer);
         if (vp != null && ((dev.serantis.battle.Welcome.Holder) vp).serantis$battlesFought() == 0 && !dev.serantis.battle.coop.CoopBattles.isSpar(self))

@@ -83,7 +83,7 @@ public final class EnemyBrain {
                     MoveSpec s = MoveBook.of(m);
                     if (s == null || MoveEngine.blockedRepeat(b, u, s)) continue;
                     for (Unit t : s.support() || "any".equals(s.target) ? friends : List.<Unit>of()) {
-                        int d = Body.gap(cx, cz, n, t.x, t.z, Body.size(t));
+                        int d = Body.range(cx, cz, n, t.x, t.z, Body.size(t));
                         if (!("self".equals(s.target) ? t == u : m.reaches(d) || (t == u && "self_or_ally".equals(s.target)))) continue;
                         if ("ally".equals(s.target) && t == u) continue;
                         double v = supportValue(b, u, t, s, foes);
@@ -97,7 +97,7 @@ public final class EnemyBrain {
 
             for (Unit t : foes) {
                 if (focusReachable && t != focus) continue;      // locked on while the focus is in reach
-                int d = Body.gap(cx, cz, n, t.x, t.z, Body.size(t));
+                int d = Body.range(cx, cz, n, t.x, t.z, Body.size(t));
                 for (BattleMove m : u.moves) {
                     if (!m.reaches(d)) continue;
                     MoveSpec s = MoveBook.of(m);
@@ -243,9 +243,9 @@ public final class EnemyBrain {
         for (Unit o : b.units) {
             if (!o.alive() || o.side == u.side) continue;
             int d = switch (s.shape) {
-                case "self_radius" -> Body.gap(u, o);
+                case "self_radius" -> Body.range(u, o);
                 case "square" -> Body.squareGap(t.x, t.z, Body.size(t), o.x, o.z, Body.size(o));
-                default -> Body.gap(t, o);
+                default -> Body.range(t, o);
             };
             if (d <= Math.max(1, s.radius)) n++;
         }

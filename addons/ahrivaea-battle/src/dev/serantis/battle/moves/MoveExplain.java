@@ -29,15 +29,18 @@ public final class MoveExplain {
     private static String pct(double c) { return Math.round(c * 100) + "%"; }
 
     /** One short line: kind, influence, reach, hit chance and power. */
-    public static String line(MoveSpec s) {
+    public static String line(MoveSpec s) { return line(s, s.min, s.max); }
+
+    /** The summary line with the reach this creature actually has (ranged reach grows with level, see MoveBook.reach). */
+    public static String line(MoveSpec s, int min, int max) {
         List<String> parts = new ArrayList<>();
         boolean support = s.support();
         parts.add(support ? "Support" : s.magic() ? "Magic" : "ranged".equals(s.category) ? "Physical (shot)" : "Physical");
         parts.add("universal".equals(s.influence) ? "any creature" : "none".equals(s.influence) ? "Normal" : title(s.influence));
         if ("self".equals(s.target)) parts.add("on itself");
         else if ("self_radius".equals(s.shape)) parts.add("around itself");
-        else if (s.max <= 1) parts.add("melee, next to it");
-        else parts.add("ranged, " + (s.min == s.max ? tiles(s.max) : s.min + "–" + s.max + " tiles"));
+        else if (max <= 1) parts.add("melee, next to it");
+        else parts.add("ranged, " + (min == max ? tiles(max) : min + "–" + max + " tiles") + " (diagonals count straight-line)");
         if (!support && !"self".equals(s.target))
             parts.add(pct(s.accuracy) + " base hit");
         if (s.sheetPower > 0) parts.add("Power " + s.sheetPower + (s.hits > 1 ? " ×" + s.hits : ""));

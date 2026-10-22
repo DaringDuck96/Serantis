@@ -90,6 +90,21 @@ public final class Body {
      * Distance between two points the creatures mod asks about. When they are the corners of living
      * units, it's the distance between their bodies; otherwise between the tiles.
      */
+    /**
+     * Attack reach between two bodies. Straight lines count tile by tile; diagonals count as the straight-line distance,
+     * rounded (3 across and 3 down is 4, not 6), so ranged attacks reach about as far diagonally as straight. A tile
+     * touching only at a corner counts as 2, so melee (reach 1) still needs a side-by-side neighbour.
+     */
+    public static int range(int ax, int az, int an, int bx, int bz, int bn) {
+        int dx = Math.max(0, Math.max(bx - (ax + an - 1), ax - (bx + bn - 1)));
+        int dz = Math.max(0, Math.max(bz - (az + an - 1), az - (bz + bn - 1)));
+        if (dx == 0 || dz == 0) return dx + dz;
+        if (dx == 1 && dz == 1) return 2;
+        return (int) Math.round(Math.sqrt(dx * dx + dz * dz));
+    }
+
+    public static int range(Unit a, Unit b) { return range(a.x, a.z, size(a), b.x, b.z, size(b)); }
+
     public static int distance(Battle b, int x1, int z1, int x2, int z2) {
         Unit a = null, c = null;
         for (Unit u : b.units) {
@@ -97,7 +112,7 @@ public final class Body {
             if (a == null && u.x == x1 && u.z == z1) a = u;
             if (c == null && u.x == x2 && u.z == z2) c = u;
         }
-        return gap(x1, z1, size(a), x2, z2, size(c));
+        return range(x1, z1, size(a), x2, z2, size(c));
     }
 
     /** Height of the highest tile under a unit. */
