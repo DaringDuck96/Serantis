@@ -46,7 +46,7 @@ public final class Feeding {
         ItemStack result = s.finishUsingItem(p.level(), p);
         if (result != s) {
             if (s.isEmpty()) p.getInventory().setItem(slot, result);
-            else if (!result.isEmpty() && !p.getInventory().add(result)) p.drop(result, false);
+            else if (!result.isEmpty()) Healing.giveBack(p, result);
         }
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.5f, 1f);
         say(p, "You had the " + what + ".");
