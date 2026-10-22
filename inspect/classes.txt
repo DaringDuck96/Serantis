@@ -1,3 +1,5 @@
-# 1792705757
-compile hotfix/worker-setaside
+# 1792706078
+compile feature/version-check
 smoke
+sig:net.minecraft.client.gui.screens.ChatScreen
+sig:net.minecraft.client.MouseHandler
