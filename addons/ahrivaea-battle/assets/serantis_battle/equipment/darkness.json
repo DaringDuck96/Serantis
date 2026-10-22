@@ -1,3 +1,14 @@
 {
-  "layers": {}
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "serantis_battle:blank"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "serantis_battle:blank"
+      }
+    ]
+  }
 }

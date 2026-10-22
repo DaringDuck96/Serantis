@@ -67,7 +67,7 @@ def convert(addon, src):
         tdir = os.path.join(addon, "assets/serantis_battle/textures/entity/armor"); os.makedirs(tdir, exist_ok=True)
         open(os.path.join(tdir, inf + ".png"), "wb").write(base64.b64decode(bb["textures"][0]["source"].split(",", 1)[1]))
         edir = os.path.join(addon, "assets/serantis_battle/equipment"); os.makedirs(edir, exist_ok=True)
-        json.dump({"layers": {}}, open(os.path.join(edir, inf + ".json"), "w"), indent=2)
+        json.dump({"layers": {"humanoid": [{"texture": "serantis_battle:blank"}], "humanoid_leggings": [{"texture": "serantis_battle:blank"}]}}, open(os.path.join(edir, inf + ".json"), "w"), indent=2)   # a see-through vanilla layer (an empty one fails to load)
         print(f"{inf:9} {name:18} " + "  ".join(f"{p}={n}" for p, n in counts.items()))
 
 if __name__ == "__main__":
