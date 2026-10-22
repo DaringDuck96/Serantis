@@ -21,10 +21,11 @@ public class WelcomeScreen extends Screen {
     private static final String[][] GUIDE = {
             {null, "Pull up a block. This is Minecraft: the same blocky world you know, with trees to punch, caves to explore and plenty of mobs to fight. "
                     + "But Serantia is alive with creatures, and they're waiting to meet you."},
-            {"Choose your class", "Knight (Attack), Bulwark (Defense), Wizard (Magic), Journeyman (Luck) or Performer (Charisma). "
+            {"Choose your class", "Knight (Attack), Bulwark (Defense), Wizard (Magic), Journeyman (Luck), Performer (Charisma) or Tradesman. "
                     + "Your class gives its stat a boost that matters most early on, plus a head start: Knights get an iron chestplate and "
                     + "sword, Bulwarks a shield and an iron mace, Wizards a Magic Staff with a spell of their chosen influence, Journeymen two golden "
-                    + "apples, and Performers choose their starter's temperament. You choose once."},
+                    + "apples, and Performers choose their starter's temperament. Tradesmen get no boost, but can craft anywhere: press K for a "
+                    + "crafting grid, no table needed. You choose once."},
             {"Pick your starter", "Your first friend is waiting. Choose a starter creature: it fights beside you, grows with you, "
                     + "and might just carry you through your first rough night."},
             {"Battle and recruit", "Wild creatures roam every biome. Hit one with any weapon (sword, axe, bow, trident, whatever's handy) "
@@ -43,8 +44,8 @@ public class WelcomeScreen extends Screen {
             {"Collect the stones", "Every Gym Master Stone raises your mastery of its influence, so its creatures turn up around you a little "
                     + "more often. You can hold up to 5 of each. Display them proudly."},
             {"Chase achievements", "Place blocks, win battles, plant seeds, walk ridiculous distances, die embarrassingly... nearly everything "
-                    + "earns achievements, and achievements pay out in golden apples. Feed those to your creatures to make them stronger. "
-                    + "Check your log any time from the party screen."},
+                    + "earns achievements, and achievements pay out in golden apples: claim them from your log on the party screen whenever "
+                    + "you have room. Feed those to your creatures to make them stronger."},
             {"Win the game (technically)", "Gather all 5 stones of all 12 influences, 60 in all, and they fuse into the rainbow Eternita Stone. "
                     + "Mutated creatures become five times as common around you, and you've officially won the game. "
                     + "Nothing ends. You just get to say you won."},
@@ -111,10 +112,11 @@ public class WelcomeScreen extends Screen {
         viewBottom = height - 34;
         lines.clear();
         int h = 0;
+        int tw = Math.min(90, (width - 16) / TABS.length - 4);           // narrow windows: narrower tabs
         for (int i = 0; i < TABS.length; i++) {
             final int t = i;
             Button b = Button.builder(Component.literal(TABS[i]), btn -> { tab = t; scroll = 0; rebuildWidgets(); })
-                    .bounds(width / 2 - TABS.length * 47 + i * 94, 38, 90, 18).build();
+                    .bounds(width / 2 - TABS.length * (tw + 4) / 2 + i * (tw + 4), 38, tw, 18).build();
             b.active = i != tab;
             addRenderableWidget(b);
         }
@@ -129,7 +131,7 @@ public class WelcomeScreen extends Screen {
                 firstLine = false;
             }
         }
-        contentH = tab == 2 ? RecipeGuide.height() : h;
+        contentH = tab == 2 ? RecipeGuide.height(font, panelW - 26) : h;
         scroll = Math.max(0, Math.min(scroll, Math.max(0, contentH - (viewBottom - viewTop))));
         addRenderableWidget(Button.builder(Component.literal(first ? "Let's go!" : "Done"), b -> onClose())
                 .bounds(width / 2 - 50, height - 28, 100, 20).build());
@@ -158,7 +160,16 @@ public class WelcomeScreen extends Screen {
         g.pose().scale(1.5f, 1.5f);
         g.centeredText(font, tab == 2 ? "Recipes" : tab == 1 ? "Your Base and Its Workers" : "Welcome to Serantia!", 0, 0, GOLD);
         g.pose().popMatrix();
-        g.centeredText(font, SUBTITLES[tab], width / 2, 26, DIM);
+        String sub = SUBTITLES[tab];
+        if (font.width(sub) <= width - 12) g.centeredText(font, sub, width / 2, 26, DIM);
+        else {                                                  // a narrow window: shrink the subtitle to fit
+            float k = (width - 12) / (float) font.width(sub);
+            g.pose().pushMatrix();
+            g.pose().translate(width / 2f, 26 + (1 - k) * 4);
+            g.pose().scale(k, k);
+            g.centeredText(font, sub, 0, 0, DIM);
+            g.pose().popMatrix();
+        }
 
         int x = (width - panelW) / 2 + 10, y = viewTop - scroll;
         if (tab == 2) RecipeGuide.draw(g, font, x, y, panelW - 26, viewTop, viewBottom);

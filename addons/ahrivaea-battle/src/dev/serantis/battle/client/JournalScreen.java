@@ -65,6 +65,7 @@ public class JournalScreen extends Screen {
             for (var el : scenes()) {
                 JsonObject s = el.getAsJsonObject();
                 if ((met & s.get("bit").getAsInt()) == 0) continue;
+                if (y + n * 22 + 20 > height - 34) break;                  // no room for more (a very small window)
                 String id = s.get("id").getAsString();
                 String who = "last".equals(s.has("npc") ? s.get("npc").getAsString() : "first") ? j.get("lastName").getAsString() : j.get("firstName").getAsString();
                 String first = s.getAsJsonArray("lines").isEmpty() ? id : s.getAsJsonArray("lines").get(0).getAsJsonArray().get(1).getAsString();
@@ -91,15 +92,19 @@ public class JournalScreen extends Screen {
         JsonObject j = journal();
         if (j == null) { g.centeredText(font, "...", width / 2, 70, DIM); return; }
         int l = left(), w = panelW(), y = 58;
+        List<Object[]> lines = new ArrayList<>();                       // {text, colour, gap before}: drawn scrolled below
         switch (tab) {
             case 0 -> {
-                g.text(font, "What to do next", l, y, GOLD); y += 14;
+                lines.add(new Object[]{"What to do next", GOLD, 0});
+                int gap = 3;
                 for (var el : j.getAsJsonArray("next")) {
-                    for (String row : wrap("• " + el.getAsString(), w)) { g.text(font, row, l, y, TEXT); y += 11; }
-                    y += 5;
+                    for (String row : wrap("• " + el.getAsString(), w - 8)) { lines.add(new Object[]{row, TEXT, gap}); gap = 0; }
+                    gap = 5;
                 }
-                y += 6;
-                g.text(font, "Bounties today: " + j.get("bounties").getAsString() + " claimed. Right-click a village bell to see them.", l, y, DIM);
+                gap = 11;
+                for (String row : wrap("Bounties today: " + j.get("bounties").getAsString() + " claimed. Right-click a village bell to see them.", w - 8)) {
+                    lines.add(new Object[]{row, DIM, gap}); gap = 0;
+                }
             }
             case 1 -> {
                 y = bar(g, l, y, w, "Creature Dex", j.get("dex").getAsInt(), j.get("dexTotal").getAsInt());
@@ -111,9 +116,9 @@ public class JournalScreen extends Screen {
             }
             case 2 -> {
                 if (reading == null) {
-                    g.text(font, j.get("intro").getAsBoolean() ? "" : "Your story hasn't begun yet.", l, y - 2, DIM);
-                    if (j.get("met").getAsInt() == 0 && j.get("intro").getAsBoolean())
-                        g.text(font, "You woke at spawn beside a Mysterious Figure. \"Find the towers. Save Serantia.\"", l, y, DIM);
+                    String say = !j.get("intro").getAsBoolean() ? "Your story hasn't begun yet."
+                            : j.get("met").getAsInt() == 0 ? "You woke at spawn beside a Mysterious Figure. \"Find the towers. Save Serantia.\"" : null;
+                    if (say != null) for (String row : wrap(say, w)) { g.text(font, row, l, y, DIM); y += 11; }
                     return;
                 }
                 for (var el : scenes()) {
@@ -124,21 +129,62 @@ public class JournalScreen extends Screen {
                         for (var r : arr) {
                             String kind = r.getAsJsonArray().get(0).getAsString(), text = r.getAsJsonArray().get(1).getAsString().replace("{name}", who).replace("Mysterious Figure", who);
                             String line = "action".equals(kind) ? text : who + ": " + text;
-                            for (String row : wrap(line, w)) { g.text(font, row, l, y, "action".equals(kind) ? DIM : PURPLE); y += 11; }
-                            y += 3;
+                            int gap = lines.isEmpty() ? 0 : 3;
+                            for (String row : wrap(line, w - 8)) { lines.add(new Object[]{row, "action".equals(kind) ? DIM : PURPLE, gap}); gap = 0; }
                         }
                 }
             }
             default -> {
                 JsonArray t = j.getAsJsonArray("loreTitles");
-                g.text(font, "Lore books found: " + t.size() + " of " + j.get("loreTotal").getAsInt() + " (they drop from beaten creatures)", l, y, GOLD); y += 14;
-                for (var el : t) { g.text(font, "• " + el.getAsString(), l, y, TEXT); y += 11; if (y > height - 40) break; }
+                int gap = 0;
+                for (String row : wrap("Lore books found: " + t.size() + " of " + j.get("loreTotal").getAsInt() + " (they drop from beaten creatures)", w - 8)) {
+                    lines.add(new Object[]{row, GOLD, gap}); gap = 0;
+                }
+                gap = 4;
+                for (var el : t) {
+                    for (String row : wrap("• " + el.getAsString(), w - 8)) { lines.add(new Object[]{row, TEXT, gap}); gap = 0; }
+                    gap = 1;
+                }
             }
+        }
+        drawScrolled(g, lines, l, w);
+    }
+
+    // A page longer than the screen scrolls with the mouse wheel (with a bar on the right); rows are only drawn whole.
+    private int contentH;
+
+    private int viewTop() { return 58; }
+    private int viewBottom() { return height - 34; }
+
+    private void drawScrolled(GuiGraphicsExtractor g, List<Object[]> lines, int l, int w) {
+        int h = 0;
+        for (Object[] line : lines) h += (int) line[2] + 11;
+        contentH = h;
+        int max = Math.max(0, contentH - (viewBottom() - viewTop()));
+        scroll = Math.max(0, Math.min(scroll, max));
+        int y = viewTop() - scroll;
+        for (Object[] line : lines) {
+            y += (int) line[2];
+            if (y >= viewTop() - 1 && y + 9 <= viewBottom()) g.text(font, (String) line[0], l, y, (int) line[1]);
+            y += 11;
+        }
+        if (max > 0) {
+            int track = viewBottom() - viewTop(), bar = Math.max(16, track * track / (contentH + 1));
+            int bx = l + w - 3, by = viewTop() + (int) ((track - bar) * (scroll / (double) max));
+            g.fill(bx, viewTop(), bx + 3, viewBottom(), 0x40FFFFFF);
+            g.fill(bx, by, bx + 3, by + bar, 0xC0F2C94C);
         }
     }
 
+    @Override
+    public boolean mouseScrolled(double x, double y, double dx, double dy) {
+        int max = Math.max(0, contentH - (viewBottom() - viewTop()));
+        scroll = Math.max(0, Math.min(max, scroll - (int) Math.round(dy * 22)));
+        return true;
+    }
+
     private int bar(GuiGraphicsExtractor g, int l, int y, int w, String label, int have, int total) {
-        g.text(font, label + ": " + have + "/" + total, l, y, TEXT);
+        g.text(font, font.plainSubstrByWidth(label + ": " + have + "/" + total, w), l, y, TEXT);
         int bw = w, filled = (int) Math.round(bw * Math.min(1.0, have / (double) Math.max(1, total)));
         g.fill(l, y + 11, l + bw, y + 15, 0xFF2A2420);
         g.fill(l, y + 11, l + filled, y + 15, have >= total ? 0xFF7CD67C : GOLD);

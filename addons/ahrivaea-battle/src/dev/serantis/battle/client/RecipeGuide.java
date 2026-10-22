@@ -130,12 +130,31 @@ public final class RecipeGuide {
         return i == null || i == Items.AIR ? Items.BARRIER : i;
     }
 
-    /** How tall the page is. */
-    static int height() {
+    /** The text beside a card's grid, wrapped to the column. */
+    private static List<String> cardText(Font font, Recipe r, String note, int w) {
+        int tw = w - 96;
+        List<String> out = new ArrayList<>();
+        out.addAll(wrap(font, r.station(), tw));
+        out.addAll(wrap(font, "Needs: " + needs(r), tw));
+        out.addAll(wrap(font, note, tw));
+        return out;
+    }
+
+    /** A card is tall enough for its grid and all of its text. */
+    private static int cardH(Font font, Entry e, int w) {
+        int lines = 0;
+        for (Recipe r : e.recipes()) lines = Math.max(lines, cardText(font, r, e.note(), w).size());   // the tallest of the recipes it cycles through
+        return Math.max(CARD_H, 12 + lines * 10 + 8);
+    }
+
+    private static int otherH(Font font, String[] o, int w) { return 10 + wrap(font, o[1], w - 4).size() * 10 + 6; }
+
+    /** How tall the page is, drawn this wide. */
+    static int height(Font font, int w) {
         load();
         int h = 0;
-        for (Section s : sections) h += HEAD_H + s.entries().size() * CARD_H;
-        if (!other.isEmpty()) h += HEAD_H + other.size() * OTHER_H;
+        for (Section s : sections) { h += HEAD_H; for (Entry e : s.entries()) h += cardH(font, e, w); }
+        if (!other.isEmpty()) { h += HEAD_H; for (String[] o : other) h += otherH(font, o, w); }
         return h;
     }
 
@@ -149,7 +168,7 @@ public final class RecipeGuide {
             for (Entry e : s.entries()) {
                 Recipe r = e.recipes().get(Math.floorMod(frame, e.recipes().size()));
                 card(g, font, r, e.note(), x, y, w, top, bottom);
-                y += CARD_H;
+                y += cardH(font, e, w);
             }
         }
         if (!other.isEmpty()) {
@@ -158,8 +177,8 @@ public final class RecipeGuide {
             for (String[] o : other) {
                 if (in(y, 9, top, bottom)) g.text(font, o[0], x, y, TEXT);
                 List<String> rows = wrap(font, o[1], w - 4);
-                for (int i = 0; i < rows.size() && i < 2; i++) if (in(y + 10 + i * 10, 9, top, bottom)) g.text(font, rows.get(i), x + 4, y + 10 + i * 10, DIM);
-                y += OTHER_H + (rows.size() > 1 ? 0 : -6);
+                for (int i = 0; i < rows.size(); i++) if (in(y + 10 + i * 10, 9, top, bottom)) g.text(font, rows.get(i), x + 4, y + 10 + i * 10, DIM);
+                y += otherH(font, o, w);
             }
         }
     }
@@ -168,7 +187,7 @@ public final class RecipeGuide {
 
     private static void card(GuiGraphicsExtractor g, Font font, Recipe r, String note, int x, int y, int w, int top, int bottom) {
         boolean smith = r.station().startsWith("Smithing");
-        if (in(y, 9, top, bottom)) g.text(font, r.result().getHoverName().getString() + (r.result().getCount() > 1 ? " x" + r.result().getCount() : ""), x, y, TEXT);
+        if (in(y, 9, top, bottom)) g.text(font, font.plainSubstrByWidth(r.result().getHoverName().getString() + (r.result().getCount() > 1 ? " x" + r.result().getCount() : ""), w), x, y, TEXT);
         int gy = y + 12, gx = x;
         int slots = smith ? 3 : 9;
         for (int i = 0; i < slots; i++) {
@@ -187,16 +206,12 @@ public final class RecipeGuide {
             g.item(r.result(), rx + 1, ry + 1);
             if (r.result().getCount() > 1) g.text(font, String.valueOf(r.result().getCount()), rx + 11, ry + 10, TEXT);
         }
-        int tx = x + 96, tw = w - 96, ty = y + 12;
-        List<String> lines = new ArrayList<>();
-        lines.add(r.station());
-        lines.add("Needs: " + needs(r));
-        List<String> out = new ArrayList<>();
-        for (String l : lines) out.addAll(wrap(font, l, tw));
-        out.addAll(wrap(font, note, tw));
-        for (int i = 0; i < out.size() && i < 6; i++) {
+        int tx = x + 96, ty = y + 12;
+        List<String> out = cardText(font, r, note, w);
+        int station = wrap(font, r.station(), w - 96).size(), needs = wrap(font, "Needs: " + needs(r), w - 96).size();
+        for (int i = 0; i < out.size(); i++) {
             int ly = ty + i * 10;
-            if (in(ly, 9, top, bottom)) g.text(font, out.get(i), tx, ly, i == 0 ? 0xFF8FD3FF : i < 2 + (out.size() > 6 ? 0 : 0) && out.get(i).startsWith("Needs") ? TEXT : DIM);
+            if (in(ly, 9, top, bottom)) g.text(font, out.get(i), tx, ly, i < station ? 0xFF8FD3FF : i < station + needs ? TEXT : DIM);
         }
     }
 
