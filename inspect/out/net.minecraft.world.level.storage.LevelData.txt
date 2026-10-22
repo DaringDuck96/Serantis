@@ -1,0 +1,10 @@
+Compiled from "LevelData.java"
+public interface net.minecraft.world.level.storage.LevelData {
+  public abstract net.minecraft.world.level.storage.LevelData$RespawnData getRespawnData();
+  public abstract long getGameTime();
+  public abstract boolean isHardcore();
+  public abstract net.minecraft.world.Difficulty getDifficulty();
+  public abstract boolean isDifficultyLocked();
+  public default void fillCrashReportCategory(net.minecraft.CrashReportCategory, net.minecraft.world.level.LevelHeightAccessor);
+  private java.lang.String lambda$fillCrashReportCategory$0(net.minecraft.world.level.LevelHeightAccessor) throws java.lang.Exception;
+}

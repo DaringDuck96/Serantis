@@ -1,0 +1,22 @@
+Compiled from "ClientLevel.java"
+public class net.minecraft.client.multiplayer.ClientLevel$ClientLevelData implements net.minecraft.world.level.storage.WritableLevelData {
+  private final boolean hardcore;
+  private final boolean isFlat;
+  private net.minecraft.world.level.storage.LevelData$RespawnData respawnData;
+  private long gameTime;
+  private net.minecraft.world.Difficulty difficulty;
+  private boolean difficultyLocked;
+  public net.minecraft.client.multiplayer.ClientLevel$ClientLevelData(net.minecraft.world.Difficulty, boolean, boolean);
+  public net.minecraft.world.level.storage.LevelData$RespawnData getRespawnData();
+  public long getGameTime();
+  public void setGameTime(long);
+  public void setSpawn(net.minecraft.world.level.storage.LevelData$RespawnData);
+  public boolean isHardcore();
+  public net.minecraft.world.Difficulty getDifficulty();
+  public boolean isDifficultyLocked();
+  public void fillCrashReportCategory(net.minecraft.CrashReportCategory, net.minecraft.world.level.LevelHeightAccessor);
+  public void setDifficulty(net.minecraft.world.Difficulty);
+  public void setDifficultyLocked(boolean);
+  public double getHorizonHeight(net.minecraft.world.level.LevelHeightAccessor);
+  public float voidDarknessOnsetRange();
+}
