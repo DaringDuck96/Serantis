@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * Every fifth night (nights 5, 10, 15...) is a Blood Moon: the moon rises red (client: mixin/client/SkyMoonMixin)
- * and everyone in the Overworld is told as night falls. Bloodfang Shreekers (Rare, Normal) appear only then: on the
+ * and everyone in the Overworld is told as night falls. Bloodfang Skreechers (Rare, Normal) appear only then: on the
  * open surface (under the sky, never in caves or oceans) around players, and they're gone again by morning.
  */
 public final class BloodMoon {
@@ -35,7 +35,7 @@ public final class BloodMoon {
         MinecraftServer server = p.level().getServer();
         if (seenFor != server) { seenFor = server; announced = -1; }
         ServerLevel ow = server.overworld();
-        shreekers(p, ow);
+        skreechers(p, ow);
         if (!tonight(ow) || announced == day(ow)) return;
         announced = day(ow);
         if (timeOfDay(ow) > 14000) return;                              // already well into the night (just joined): no fanfare
@@ -45,26 +45,26 @@ public final class BloodMoon {
         }
     }
 
-    // ------------------------------------------------------------------ Bloodfang Shreekers
+    // ------------------------------------------------------------------ Bloodfang Skreechers
 
-    public static final String SHREEKER = "bloodfang_shreeker";
+    public static final String SKREECHER = "bloodfang_skreecher";
     /** Chance per check (every 2 seconds, per player) that one appears: about 4 to 5 over a Blood Moon night. */
-    public static final double SHREEKER_CHANCE = 0.015;
-    public static final int SHREEKER_NEAR = 2, MIN_DIST = 24, MAX_DIST = 48;
+    public static final double SKREECHER_CHANCE = 0.015;
+    public static final int SKREECHER_NEAR = 2, MIN_DIST = 24, MAX_DIST = 48;
 
-    private static boolean isShreeker(dev.ahrivaea.creature.CreatureEntity e) { return SHREEKER.equals(e.getSpeciesId()); }
+    private static boolean isSkreecher(dev.ahrivaea.creature.CreatureEntity e) { return SKREECHER.equals(e.getSpeciesId()); }
 
-    private static void shreekers(ServerPlayer p, ServerLevel ow) {
+    private static void skreechers(ServerPlayer p, ServerLevel ow) {
         if (p.level() != ow) return;
         var around = ow.getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, p.getBoundingBox().inflate(96),
-                e -> isShreeker(e) && !e.isTame() && !dev.ahrivaea.battle.Battles.inBattle(e) && !BattleHold.isHeld(e));
+                e -> isSkreecher(e) && !e.isTame() && !dev.ahrivaea.battle.Battles.inBattle(e) && !BattleHold.isHeld(e));
         if (!tonight(ow)) {                                             // morning: the wild ones have gone
             if (ow.isDarkOutside()) return;
             for (var e : around) e.discard();
             return;
         }
-        if (around.size() >= SHREEKER_NEAR || ow.getRandom().nextDouble() >= SHREEKER_CHANCE) return;
-        var species = dev.ahrivaea.creature.Species.get(SHREEKER).orElse(null);
+        if (around.size() >= SKREECHER_NEAR || ow.getRandom().nextDouble() >= SKREECHER_CHANCE) return;
+        var species = dev.ahrivaea.creature.Species.get(SKREECHER).orElse(null);
         if (species == null) return;
         var r = ow.getRandom();
         for (int tries = 0; tries < 12; tries++) {
