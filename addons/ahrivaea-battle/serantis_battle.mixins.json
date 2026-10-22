@@ -61,6 +61,8 @@
     "client.PartyScreenMixin",
     "client.AvatarArmorMixin",
     "client.HudCutsceneMixin",
+    "client.MinimapSizeMixin",
+    "client.BattleLogMixin",
     "client.SkyMoonMixin",
     "client.InventoryFeedMixin",
     "client.CreatureRenderStateMixin",
