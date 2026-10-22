@@ -17,6 +17,7 @@ public abstract class MinecraftTradeMixin {
         dev.serantis.battle.client.IntroScreen.autoOpen();
         dev.serantis.battle.client.FigureScreen.autoOpen();
         dev.serantis.battle.client.DialogueScreen.autoOpen();
+        dev.serantis.battle.client.DialogueScreen.autoOpenGift();
         dev.serantis.battle.client.HarbingerScreen.autoOpen();
         dev.serantis.battle.client.WelcomeScreen.autoOpen();
         dev.serantis.battle.client.ClassScreen.autoOpen();

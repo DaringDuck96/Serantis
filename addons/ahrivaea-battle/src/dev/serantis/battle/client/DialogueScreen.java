@@ -36,7 +36,9 @@ public class DialogueScreen extends Screen {
     private boolean villager;                                    // a villager's talk (see VillagerTalk), not a Master's
     private static JsonObject villagers;
     private static String lastTalk = "";
-    private int warnLevel = -1;                                  // a new player's level, for the "villagers are tough" warning
+    private int warnLevel = -1;
+    private boolean gift;                                        // a Grandmaster's End Crystal (no choice at the end)
+    private static String lastGift = "";                                  // a new player's level, for the "villagers are tough" warning
 
     private DialogueScreen(Entity master, String title, JsonObject convo) {
         super(Component.literal(title));
@@ -92,6 +94,45 @@ public class DialogueScreen extends Screen {
         DialogueScreen screen = new DialogueScreen(e, v.get("title").getAsString(), convo);
         screen.villager = true;
         if (t.has("warn")) screen.warnLevel = t.get("warn").getAsInt();
+        mc.gui.setScreen(screen);
+    }
+
+    /** Back from beating a Grandmaster for the first time: it gives you an End Crystal and says why. */
+    public static void autoOpenGift() {
+        Minecraft mc = Minecraft.getInstance();
+        JsonObject s = TradeClient.state();
+        JsonObject t = s != null && s.has("serantis_master_gift") ? s.getAsJsonObject("serantis_master_gift") : null;
+        if (t == null) { lastGift = ""; return; }
+        if (mc.player == null || mc.level == null || mc.gui.screen() != null || t.toString().equals(lastGift)) return;
+        lastGift = t.toString();
+        String inf = t.get("influence").getAsString();
+        Entity e = t.get("entity").getAsInt() >= 0 ? mc.level.getEntity(t.get("entity").getAsInt()) : null;
+        boolean here = e != null;
+        if (e == null) e = mc.player;                                   // it has already gone: just the words
+        String name = dev.serantis.battle.Masters.influenceName(inf) + " Grandmaster";
+        JsonObject convo = new JsonObject();
+        JsonArray lines = new JsonArray();
+        for (String[] l : new String[][]{
+                {"master", "Well fought. You've earned more than another stone today."},
+                {"master", "We Masters hear things on the road. They say the crystals that grow at the edge of the world, in the End, each hold a unique power."},
+                {"master", "Some say four of them, set around the old portal there, can wake something ancient beneath the ground."},
+                {"master", "I've carried this one long enough. Take it. Perhaps you'll learn what it can do."},
+                {"master", here ? "*The " + name + " hands you an End Crystal*" : "*An End Crystal waits in your pack: the " + name + "'s gift*"}}) {
+            JsonArray a = new JsonArray();
+            a.add(l[0]);
+            a.add(l[1]);
+            lines.add(a);
+        }
+        convo.add("lines", lines);
+        float face = e.getBbHeight() * 0.85f;
+        try {
+            float h = dev.ahrivaea.client.GeoModels.height("villager", "master_" + inf);
+            if (here && h > face) face = h * 0.88f;
+        } catch (RuntimeException ignored) { }
+        DialogueCamera.start(e, face);
+        DialogueScreen screen = new DialogueScreen(e, name, convo);
+        screen.gift = true;
+        screen.done = true;                                             // no choice at the end
         mc.gui.setScreen(screen);
     }
 
@@ -154,6 +195,12 @@ public class DialogueScreen extends Screen {
     }
 
     private void finish() {
+        if (gift) {
+            TradeClient.send("serantis_master_gift_done", null, null);
+            DialogueCamera.end(true);
+            Minecraft.getInstance().gui.setScreen(null);
+            return;
+        }
         if (villager) {
             JsonObject o = new JsonObject();
             o.addProperty("kind", "serantis_villager_answer");
@@ -182,6 +229,7 @@ public class DialogueScreen extends Screen {
 
     @Override
     public void onClose() {
+        if (gift) { finish(); return; }
         if (villager) {                                          // walked away: no fight
             JsonObject o = new JsonObject();
             o.addProperty("kind", "serantis_villager_answer");

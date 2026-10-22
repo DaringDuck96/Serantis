@@ -412,6 +412,11 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_master_gift_done".equals(kind)) {    // the Grandmaster's End Crystal cutscene is over
+                dev.serantis.battle.Masters.giftDone(player);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_achievements_claim".equals(kind)) {   // claim waiting golden apple rewards
                 dev.serantis.battle.Achievements.claim(player);
                 cir.setReturnValue(null);

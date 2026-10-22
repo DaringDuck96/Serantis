@@ -203,6 +203,42 @@ public final class Masters {
             give(p, net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(new net.minecraft.world.item.enchantment.EnchantmentInstance(holder.get(), lvl)));
         give(p, new ItemStack(net.minecraft.world.item.Items.GOLDEN_APPLE, 3));
         p.sendSystemMessage(Component.literal("You beat the " + name + " Grandmaster! It leaves you an enchanted book and 3 golden apples.").withStyle(ChatFormatting.LIGHT_PURPLE));
+        if (p.entityTags().contains(CRYSTAL_TAG + inf)) return;     // the End Crystal: only the first time
+        p.addTag(CRYSTAL_TAG + inf);
+        give(p, new ItemStack(net.minecraft.world.item.Items.END_CRYSTAL));
+        GIFTS.put(p.getUUID(), inf);
+        dev.ahrivaea.party.PartySync.sync(p);
+    }
+
+    // ------------------------------------------------------------------ the Grandmaster's End Crystal
+
+    /**
+     * The first time you beat each influence's Grandmaster it also gives you an End Crystal (never again for that
+     * influence), and once you're back from the arena it tells you why, in a short cutscene (client: DialogueScreen.openGift).
+     * The Grandmaster waits around for it before moving on.
+     */
+    public static final String CRYSTAL_TAG = "serantis_gm_crystal_";
+    private static final java.util.Map<java.util.UUID, String> GIFTS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** Just beaten for the first time: hold the Grandmaster here a little while for its words. */
+    public static boolean giftPending(Player p) { return p != null && GIFTS.containsKey(p.getUUID()); }
+
+    /** "serantis_master_gift" in the party state, once the player is back in the world: the influence and the Grandmaster (or -1). */
+    public static void describeGift(ServerPlayer p, com.google.gson.JsonObject state) {
+        String inf = GIFTS.get(p.getUUID());
+        if (inf == null || dev.ahrivaea.battle.Battles.of(p) != null || p.level().dimension() == dev.ahrivaea.battle.Arena.DIMENSION) return;
+        int id = -1;
+        for (var e : p.level().getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, p.getBoundingBox().inflate(48), x -> inf.equals(influenceOf(x))))
+            { id = e.getId(); break; }
+        com.google.gson.JsonObject o = new com.google.gson.JsonObject();
+        o.addProperty("influence", inf);
+        o.addProperty("entity", id);
+        state.add("serantis_master_gift", o);
+    }
+
+    /** The cutscene is over. */
+    public static void giftDone(ServerPlayer p) {
+        if (GIFTS.remove(p.getUUID()) != null) dev.ahrivaea.party.PartySync.sync(p);
     }
 
     public static boolean allStones(Player p) {
