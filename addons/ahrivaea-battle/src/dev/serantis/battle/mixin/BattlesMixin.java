@@ -352,6 +352,11 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_hello".equals(kind)) {            // the player's game says which Serantis version it has
+                dev.serantis.battle.VersionCheck.hello(player, o.has("version") ? o.get("version").getAsString() : "?");
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_mark".equals(kind)) {             // a public map marker added, changed or removed
                 dev.serantis.battle.PublicMarks.handle(player, o);
                 cir.setReturnValue(null);

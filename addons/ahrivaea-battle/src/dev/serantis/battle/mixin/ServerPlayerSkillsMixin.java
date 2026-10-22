@@ -74,6 +74,7 @@ public abstract class ServerPlayerSkillsMixin {
         dev.serantis.battle.Safe.run("WorldScope.check for " + self.getPlainTextName(), () -> dev.serantis.battle.WorldScope.check(self.level().getServer()));   // a different world in the same run: forget the last one's state
         if (self.tickCount % 20 == 5)       // note the biome the player is standing in
             dev.serantis.battle.Safe.run("biome note", () -> ((dev.serantis.battle.Achievements.Holder) self).serantis$biomes().add(self.level().getBiome(self.blockPosition()).getRegisteredName()));
+        if (self.tickCount % 20 == 1) dev.serantis.battle.Safe.run("VersionCheck.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.VersionCheck.tick(self));
         if (self.tickCount % 100 == 37) dev.serantis.battle.Safe.run("Achievements.check for " + self.getPlainTextName(), () -> dev.serantis.battle.Achievements.check(self));
         if (self.tickCount % 20 == 11) dev.serantis.battle.Safe.run("Welcome.tick for " + self.getPlainTextName(), () -> dev.serantis.battle.Welcome.tick(self));
         if (self.tickCount % 20 == 3) dev.serantis.battle.Safe.run("Companions.check for " + self.getPlainTextName(), () -> dev.serantis.battle.Companions.check(self));

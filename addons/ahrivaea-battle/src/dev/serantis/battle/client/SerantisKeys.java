@@ -23,8 +23,29 @@ public final class SerantisKeys {
 
     private SerantisKeys() {}
 
+    private static Object helloFor;                                     // the connection we last said hello on
+    private static int helloTicks;
+
     public static void tick() {
         Minecraft mc = Minecraft.getInstance();
+        if (mc.player != null && mc.getConnection() != null && helloFor != mc.getConnection()) { helloFor = mc.getConnection(); helloTicks = 0; }
+        var vst = TradeClient.state();
+        boolean confirmed = vst != null && vst.has("serantis_version_ok");
+        if (mc.player != null && mc.getConnection() != null && (!confirmed || helloTicks == 0) && helloTicks >= 0 && helloTicks % 60 == 0) {   // tell the server our version until it confirms (see VersionCheck)
+            com.google.gson.JsonObject o = new com.google.gson.JsonObject();
+            o.addProperty("kind", "serantis_hello");
+            o.addProperty("version", dev.serantis.battle.VersionCheck.version());
+            dev.ahrivaea.client.battle.BattleClient.send(o);
+        }
+        if (mc.player != null && mc.getConnection() != null && helloTicks >= 0 && ++helloTicks > 20 * 20) {   // 20 s in: does this server have Serantis?
+            var st = TradeClient.state();
+            if (st == null || !st.has("serantis_server_version")) {
+                helloTicks = -1;
+                mc.getConnection().getConnection().disconnect(net.minecraft.network.chat.Component.literal(
+                        "This server doesn't have the Serantis mods, so they can't be used here.\nAsk its owner to install Serantis "
+                                + dev.serantis.battle.VersionCheck.version() + " (" + dev.serantis.battle.VersionCheck.DOWNLOAD + ")."));
+            } else helloTicks = -1;                                 // it does: nothing more to check on this connection
+        }
         BaseLooksClient.tick();                                          // base looks (see BaseLooks)
         if (mc.player == null) return;
         boolean sneak = mc.player.isShiftKeyDown();

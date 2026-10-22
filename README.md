@@ -425,7 +425,7 @@ The Harbinger of Calamity is summoned like a Warden (see below). **The False Hyd
 3. Unzip the download and copy every `.jar` from its `mods` folder into your `mods` folder (Fabric API is included). If you're updating, delete the old Ahrivaea, Serantis and Fabric API jars first.
 4. Launch Minecraft 26.3 with your Fabric profile (Fabric Loader 0.19.5 or newer; install it from fabricmc.net if you haven't) and play.
 
-Everyone playing together needs the same mods. A server gets the same jars in its own `mods` folder.
+Everyone playing together needs the same mods. A server gets the same jars in its own `mods` folder. **This is enforced:** when you join a server, your game and the server compare Serantis versions. If yours is missing, older or different, the server disconnects you with a message saying which version it runs and where to get it; and if the server doesn't have Serantis at all, your game leaves it with a message saying so. Single-player and LAN games skip the check (everyone shares the host's game).
 
 ## License
 

@@ -15,5 +15,6 @@ public abstract class PlayerListLeaveMixin {
         dev.serantis.battle.coop.CoopBattles.disconnected(player);
         dev.serantis.battle.WingedBoots.forget(player);
         dev.serantis.battle.SpawnAlerts.forget(player);
+        dev.serantis.battle.VersionCheck.forget(player);
     }
 }

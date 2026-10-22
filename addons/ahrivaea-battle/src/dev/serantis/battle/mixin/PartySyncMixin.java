@@ -46,6 +46,7 @@ public abstract class PartySyncMixin {
         if (o != null) dev.serantis.battle.Safe.run("Ailments.describe", () -> dev.serantis.battle.Ailments.describe(player, o));
         if (o != null) dev.serantis.battle.Safe.run("BaseLooks.describe", () -> dev.serantis.battle.BaseLooks.describe(player, o));
         if (o != null) dev.serantis.battle.Safe.run("PublicMarks.describe", () -> dev.serantis.battle.PublicMarks.describe(player, o));
+        if (o != null) dev.serantis.battle.VersionCheck.describe(player, o);
         if (o != null && o.has("out") && o.get("out").isJsonArray())        // creatures out with you: a knocked-out one shows 0 HP too
             for (var el : o.getAsJsonArray("out"))
                 if (el.isJsonObject() && el.getAsJsonObject().has("serantis_ko")) el.getAsJsonObject().addProperty("hp", 0);
