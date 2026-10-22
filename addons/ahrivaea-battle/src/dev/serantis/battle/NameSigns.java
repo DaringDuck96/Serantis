@@ -43,7 +43,7 @@ public final class NameSigns {
         if (!name.isEmpty()) out.computeIfAbsent(name, k -> new ArrayList<>()).add(pos);
     }
 
-    private static void read(Map<String, List<BlockPos>> out, Component[] lines, BlockPos pos) {
+    private static void read(Map<String, List<BlockPos>> out, List<Component> lines, BlockPos pos) {
         StringBuilder all = new StringBuilder();
         for (Component c : lines) {
             String line = clean(c.getString());
@@ -68,8 +68,8 @@ public final class NameSigns {
                     if (!(e instanceof SignBlockEntity sign)) continue;
                     BlockPos p = sign.getBlockPos();
                     if (p.getX() < be.minX() || p.getX() > be.maxX() || p.getZ() < be.minZ() || p.getZ() > be.maxZ()) continue;
-                    read(out, sign.getFrontText().getMessages(false), p);
-                    read(out, sign.getBackText().getMessages(false), p);
+                    for (var side : net.minecraft.world.level.block.entity.SignTextSlot.values())
+                        read(out, sign.getText(side).getMessages(false), p);
                 }
             }
         CACHE.put(key, new Signs(now, out));
@@ -86,7 +86,7 @@ public final class NameSigns {
         Species sp = Species.get(c.getSpeciesId()).orElse(null);
         if (found.isEmpty() && sp != null) found.addAll(signs.getOrDefault(clean(sp.nameFor(c.getInfluence())), List.of()));
         BlockPos best = null;
-        for (BlockPos p : found) if (best == null || c.distanceToSqr(p.getCenter()) < c.distanceToSqr(best.getCenter())) best = p;
+        for (BlockPos p : found) if (best == null || c.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(p)) < c.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(best))) best = p;
         return best;
     }
 
@@ -95,7 +95,7 @@ public final class NameSigns {
         BlockPos sign = signFor(level, be, c);
         if (sign == null) return false;
         var nav = c.getNavigation();
-        double d = Math.sqrt(c.distanceToSqr(sign.getCenter()));
+        double d = Math.sqrt(c.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(sign)));
         if (d > RADIUS - 0.5) {                                          // too far: walk back to the sign
             if (!nav.isInProgress() || c.tickCount % 40 == 0) nav.moveTo(sign.getX() + 0.5, sign.getY(), sign.getZ() + 0.5, 1.0);
             return true;
