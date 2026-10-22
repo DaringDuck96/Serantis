@@ -1,2 +1,2 @@
-# 1792635030
-dev.ahrivaea.client.battle.BattleScreen
+# 1792635113
+compile wip/clean-battle
