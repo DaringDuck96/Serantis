@@ -1,0 +1,4 @@
+Compiled from "Consumable.java"
+public interface net.minecraft.world.item.component.Consumable$OverrideConsumeSound {
+  public abstract net.minecraft.sounds.SoundEvent getConsumeSound(net.minecraft.world.item.ItemStack);
+}
