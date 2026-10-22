@@ -17,6 +17,12 @@ public abstract class WorkerBrainMixin {
     @Shadow @Final private CreatureEntity self;
     @Shadow @Final private net.minecraft.core.BlockPos core;
 
+    // Nothing to do: a creature with a name sign at the base stays by it (see NameSigns).
+    @Inject(method = "wander", at = @At("HEAD"), cancellable = true)
+    private void serantis$nameSign(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.base.BaseCoreBlockEntity be, org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if (dev.serantis.battle.NameSigns.idle(level, be, self)) ci.cancel();
+    }
+
     @Inject(method = "speed", at = @At("HEAD"), cancellable = true)
     private void serantis$speed(CallbackInfoReturnable<Double> cir) {
         if (self == null || self.getInfluence() == null) return;

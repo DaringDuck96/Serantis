@@ -328,6 +328,9 @@ Place a hay bale anywhere in your base's area and farm animals start turning up 
 
 **Leading animals.** Hold the food they like and animals follow you, wild or yours (never in battle): cows, sheep and goats follow wheat; chickens, wheat seeds; pigs, carrots or potatoes; horses, carrots.
 
+### Name signs: where creatures hang out
+Write a creature's nickname on any sign in your base (or its kind, like "Fire Salamander"), and while it has nothing to do it stays within 5 blocks of that sign instead of wandering around the base. Every creature at the base with that name huddles there; with several signs of the same name, each creature goes to the nearest. The name can fill the whole sign or be any one line of it, front or back, and capitals don't matter. Creatures still go wherever their work takes them, and come back to the sign when they're done.
+
 ### Taking down a base
 
 Hitting a Base Core asks first: creatures can't be recovered from a destroyed core, so if you say yes, every creature working at that base is sent back to your party (or box) before the core breaks and drops. Only the core's owner can take a base down. "No, keep it" leaves everything as it was.
