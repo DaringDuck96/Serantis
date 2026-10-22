@@ -1,0 +1,24 @@
+Compiled from "Biome.java"
+public class net.minecraft.world.level.biome.Biome$BiomeBuilder {
+  private boolean hasPrecipitation;
+  private java.lang.Float temperature;
+  private net.minecraft.world.level.biome.Biome$TemperatureModifier temperatureModifier;
+  private java.lang.Float downfall;
+  private final net.minecraft.world.attribute.EnvironmentAttributeMap$Builder attributes;
+  private net.minecraft.world.level.biome.BiomeSpecialEffects specialEffects;
+  private net.minecraft.world.level.biome.BiomeGenerationSettings generationSettings;
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder();
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder hasPrecipitation(boolean);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder temperature(float);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder downfall(float);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder putAttributes(net.minecraft.world.attribute.EnvironmentAttributeMap);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder putAttributes(net.minecraft.world.attribute.EnvironmentAttributeMap$Builder);
+  public <Value> net.minecraft.world.level.biome.Biome$BiomeBuilder setAttribute(net.minecraft.world.attribute.EnvironmentAttribute<Value>, Value);
+  public <Value, Parameter> net.minecraft.world.level.biome.Biome$BiomeBuilder modifyAttribute(net.minecraft.world.attribute.EnvironmentAttribute<Value>, net.minecraft.world.attribute.modifier.AttributeModifier<Value, Parameter>, Parameter);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder specialEffects(net.minecraft.world.level.biome.BiomeSpecialEffects);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder mobSpawnSettings(net.minecraft.world.level.biome.MobSpawnSettings);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder generationSettings(net.minecraft.world.level.biome.BiomeGenerationSettings);
+  public net.minecraft.world.level.biome.Biome$BiomeBuilder temperatureAdjustment(net.minecraft.world.level.biome.Biome$TemperatureModifier);
+  public net.minecraft.world.level.biome.Biome build();
+  public java.lang.String toString();
+}

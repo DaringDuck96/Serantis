@@ -1,0 +1,22 @@
+Compiled from "Biome.java"
+final class net.minecraft.world.level.biome.Biome$ClimateSettings extends java.lang.Record {
+  private final boolean hasPrecipitation;
+  private final float temperature;
+  private final net.minecraft.world.level.biome.Biome$TemperatureModifier temperatureModifier;
+  private final float downfall;
+  public static final com.mojang.serialization.MapCodec<net.minecraft.world.level.biome.Biome$ClimateSettings> CODEC;
+  private net.minecraft.world.level.biome.Biome$ClimateSettings(boolean, float, net.minecraft.world.level.biome.Biome$TemperatureModifier, float);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public boolean hasPrecipitation();
+  public float temperature();
+  public net.minecraft.world.level.biome.Biome$TemperatureModifier temperatureModifier();
+  public float downfall();
+  private static com.mojang.datafixers.kinds.App lambda$static$0(com.mojang.serialization.codecs.RecordCodecBuilder$Instance);
+  private static java.lang.Float lambda$static$4(net.minecraft.world.level.biome.Biome$ClimateSettings);
+  private static net.minecraft.world.level.biome.Biome$TemperatureModifier lambda$static$3(net.minecraft.world.level.biome.Biome$ClimateSettings);
+  private static java.lang.Float lambda$static$2(net.minecraft.world.level.biome.Biome$ClimateSettings);
+  private static java.lang.Boolean lambda$static$1(net.minecraft.world.level.biome.Biome$ClimateSettings);
+  static {};
+}

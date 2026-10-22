@@ -1,0 +1,11 @@
+Compiled from "LevelRenderer.java"
+final class net.minecraft.client.renderer.LevelRenderer$FinalizedGizmos extends java.lang.Record {
+  private final net.minecraft.client.renderer.gizmos.DrawableGizmoPrimitives standardPrimitives;
+  private final net.minecraft.client.renderer.gizmos.DrawableGizmoPrimitives alwaysOnTopPrimitives;
+  private net.minecraft.client.renderer.LevelRenderer$FinalizedGizmos(net.minecraft.client.renderer.gizmos.DrawableGizmoPrimitives, net.minecraft.client.renderer.gizmos.DrawableGizmoPrimitives);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.renderer.gizmos.DrawableGizmoPrimitives standardPrimitives();
+  public net.minecraft.client.renderer.gizmos.DrawableGizmoPrimitives alwaysOnTopPrimitives();
+}

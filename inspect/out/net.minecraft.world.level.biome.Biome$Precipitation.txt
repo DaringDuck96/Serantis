@@ -1,0 +1,15 @@
+Compiled from "Biome.java"
+public final class net.minecraft.world.level.biome.Biome$Precipitation extends java.lang.Enum<net.minecraft.world.level.biome.Biome$Precipitation> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.level.biome.Biome$Precipitation NONE;
+  public static final net.minecraft.world.level.biome.Biome$Precipitation RAIN;
+  public static final net.minecraft.world.level.biome.Biome$Precipitation SNOW;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.biome.Biome$Precipitation> CODEC;
+  private final java.lang.String name;
+  private static final net.minecraft.world.level.biome.Biome$Precipitation[] $VALUES;
+  public static net.minecraft.world.level.biome.Biome$Precipitation[] values();
+  public static net.minecraft.world.level.biome.Biome$Precipitation valueOf(java.lang.String);
+  private net.minecraft.world.level.biome.Biome$Precipitation(java.lang.String);
+  public java.lang.String getSerializedName();
+  private static net.minecraft.world.level.biome.Biome$Precipitation[] $values();
+  static {};
+}

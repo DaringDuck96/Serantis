@@ -1,0 +1,15 @@
+Compiled from "LevelRenderer.java"
+final class net.minecraft.client.renderer.LevelRenderer$ChunkDrawGroup extends java.lang.Record {
+  private final com.mojang.renderpearl.api.buffers.GpuBufferSlice vertexBuffer;
+  private final com.mojang.renderpearl.api.buffers.GpuBufferSlice indexBuffer;
+  private final com.mojang.renderpearl.api.pipeline.IndexType indexType;
+  private final java.util.List<net.minecraft.client.renderer.DynamicGpuData$IndexedDraw> draws;
+  private net.minecraft.client.renderer.LevelRenderer$ChunkDrawGroup(com.mojang.renderpearl.api.buffers.GpuBufferSlice, com.mojang.renderpearl.api.buffers.GpuBufferSlice, com.mojang.renderpearl.api.pipeline.IndexType, java.util.List<net.minecraft.client.renderer.DynamicGpuData$IndexedDraw>);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.mojang.renderpearl.api.buffers.GpuBufferSlice vertexBuffer();
+  public com.mojang.renderpearl.api.buffers.GpuBufferSlice indexBuffer();
+  public com.mojang.renderpearl.api.pipeline.IndexType indexType();
+  public java.util.List<net.minecraft.client.renderer.DynamicGpuData$IndexedDraw> draws();
+}
