@@ -1,0 +1,23 @@
+Compiled from "RenderSectionRegion.java"
+public class net.minecraft.client.renderer.chunk.RenderSectionRegion implements net.minecraft.client.renderer.block.BlockAndTintGetter {
+  public static final int RADIUS = 1;
+  public static final int SIZE = 3;
+  private final int minSectionX;
+  private final int minSectionY;
+  private final int minSectionZ;
+  private final net.minecraft.client.renderer.chunk.SectionCopy[] sections;
+  private final net.minecraft.client.multiplayer.ClientLevel level;
+  private final net.minecraft.world.level.CardinalLighting cardinalLighting;
+  private final net.minecraft.world.level.lighting.LevelLightEngine lightEngine;
+  public net.minecraft.client.renderer.chunk.RenderSectionRegion(net.minecraft.client.multiplayer.ClientLevel, int, int, int, net.minecraft.client.renderer.chunk.SectionCopy[]);
+  public net.minecraft.world.level.block.state.BlockState getBlockState(net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.material.FluidState getFluidState(net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.CardinalLighting cardinalLighting();
+  public net.minecraft.world.level.lighting.LevelLightEngine getLightEngine();
+  public net.minecraft.world.level.block.entity.BlockEntity getBlockEntity(net.minecraft.core.BlockPos);
+  private net.minecraft.client.renderer.chunk.SectionCopy getSection(int, int, int);
+  public int getBlockTint(net.minecraft.core.BlockPos, net.minecraft.world.level.ColorResolver);
+  public int getMinY();
+  public int getHeight();
+  public static int index(int, int, int, int, int, int);
+}
