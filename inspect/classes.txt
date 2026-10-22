@@ -1,4 +1,2 @@
-# 1792711132
-sig:net.minecraft.client.renderer.ViewArea
-sig:net.minecraft.client.multiplayer.ClientLevel
-sig:net.minecraft.client.renderer.SectionOcclusionGraph
+# 1792711194
+compile fix/base-look-redraw
