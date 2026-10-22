@@ -53,6 +53,11 @@ public final class Riddles {
         return d.has("dragons") && d.getAsJsonObject("dragons").has(species) ? d.getAsJsonObject("dragons").getAsJsonObject(species) : null;
     }
 
+    /** Is this one of the End dragons (any that asks a riddle)? */
+    public static boolean isDragon(String species) {
+        return species != null && riddle(species) != null;
+    }
+
     public static boolean isRiddleDragon(Entity e) {
         return e instanceof CreatureEntity c && !c.isTame() && riddle(c.getSpeciesId()) != null;
     }
