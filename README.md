@@ -202,6 +202,8 @@ That's 1,285 golden apples in all. Where the counts come from: blocks placed, di
 
 **One XP currency.** Battles give ordinary Minecraft XP: 10 for a win plus 3 × its level for each creature beaten (x1.5 for Super Rare and Legendary), and then the whole amount x1.5. Beating one creature pays 20 XP at Level 1, 38 at Level 5, 60 at Level 10 and 105 at Level 20, so tougher fights pay much more, on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.
 
+**Levelling creatures.** On the party screen you spend XP to level a creature: 8,000 XP in all from Level 1 to Level 20, rising steadily from 150 (Level 1 to 2) by about 30 per level to 692 (19 to 20), and on in the same way past 20. Presence discounts apply.
+
 **Defeat.** XP is never lost. You keep all of it when you lose a battle or die, and dying drops no XP orbs. Instead, everything you're wearing or holding (armour, weapon, shield, tools) loses half of its full durability. It's never destroyed outright and is left with at least 1 use. On a normal death your items still drop as usual.
 
 **Your player level** is the number of skills you've learned on the skill tree (you start at 0). It sets the level of the wild creatures around you (see the level window) and when villagers stop warning you off.

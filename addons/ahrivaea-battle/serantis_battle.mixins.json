@@ -51,6 +51,7 @@
     "BaseShareMixin",
     "BaseCoreShareMixin",
     "PlayerListLeaveMixin",
+    "CreatureLevelCostMixin",
     "WildChestMixin",
     "WildChestBreakMixin",
     "BaseCoreAccess",
