@@ -1,0 +1,235 @@
+Compiled from "InputConstants.java"
+public final class com.mojang.blaze3d.platform.InputConstants$Key {
+  private final java.lang.String name;
+
+  private final com.mojang.blaze3d.platform.InputConstants$Type type;
+
+  private final int value;
+
+  private static final java.util.Map<java.lang.String, com.mojang.blaze3d.platform.InputConstants$Key> NAME_MAP;
+
+  private com.mojang.blaze3d.platform.InputConstants$Key(java.lang.String, com.mojang.blaze3d.platform.InputConstants$Type, int);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field name:Ljava/lang/String;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field type:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+        14: aload_0
+        15: iload_3
+        16: putfield      #17                 // Field value:I
+        19: getstatic     #21                 // Field NAME_MAP:Ljava/util/Map;
+        22: aload_1
+        23: aload_0
+        24: invokeinterface #25,  3           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        29: pop
+        30: return
+
+  public com.mojang.blaze3d.platform.InputConstants$Type getType();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field type:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+         4: areturn
+
+  public int getValue();
+    Code:
+         0: aload_0
+         1: getfield      #17                 // Field value:I
+         4: ireturn
+
+  public java.lang.String getName();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field name:Ljava/lang/String;
+         4: areturn
+
+  public net.minecraft.network.chat.Component getDisplayName();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field type:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+         4: getfield      #31                 // Field com/mojang/blaze3d/platform/InputConstants$Type.displayTextSupplier:Ljava/util/function/BiFunction;
+         7: aload_0
+         8: getfield      #17                 // Field value:I
+        11: invokestatic  #37                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        14: aload_0
+        15: getfield      #7                  // Field name:Ljava/lang/String;
+        18: invokeinterface #43,  3           // InterfaceMethod java/util/function/BiFunction.apply:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        23: checkcast     #48                 // class net/minecraft/network/chat/Component
+        26: areturn
+
+  public java.util.OptionalInt getNumericKeyValue();
+    Code:
+         0: aload_0
+         1: getfield      #17                 // Field value:I
+         4: tableswitch   { // 30 to 98
+                      30: 303
+                      31: 310
+                      32: 317
+                      33: 324
+                      34: 331
+                      35: 338
+                      36: 346
+                      37: 354
+                      38: 362
+                      39: 296
+                      40: 370
+                      41: 370
+                      42: 370
+                      43: 370
+                      44: 370
+                      45: 370
+                      46: 370
+                      47: 370
+                      48: 370
+                      49: 370
+                      50: 370
+                      51: 370
+                      52: 370
+                      53: 370
+                      54: 370
+                      55: 370
+                      56: 370
+                      57: 370
+                      58: 370
+                      59: 370
+                      60: 370
+                      61: 370
+                      62: 370
+                      63: 370
+                      64: 370
+                      65: 370
+                      66: 370
+                      67: 370
+                      68: 370
+                      69: 370
+                      70: 370
+                      71: 370
+                      72: 370
+                      73: 370
+                      74: 370
+                      75: 370
+                      76: 370
+                      77: 370
+                      78: 370
+                      79: 370
+                      80: 370
+                      81: 370
+                      82: 370
+                      83: 370
+                      84: 370
+                      85: 370
+                      86: 370
+                      87: 370
+                      88: 370
+                      89: 303
+                      90: 310
+                      91: 317
+                      92: 324
+                      93: 331
+                      94: 338
+                      95: 346
+                      96: 354
+                      97: 362
+                      98: 296
+                 default: 370
+            }
+       296: iconst_0
+       297: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       300: goto          373
+       303: iconst_1
+       304: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       307: goto          373
+       310: iconst_2
+       311: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       314: goto          373
+       317: iconst_3
+       318: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       321: goto          373
+       324: iconst_4
+       325: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       328: goto          373
+       331: iconst_5
+       332: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       335: goto          373
+       338: bipush        6
+       340: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       343: goto          373
+       346: bipush        7
+       348: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       351: goto          373
+       354: bipush        8
+       356: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       359: goto          373
+       362: bipush        9
+       364: invokestatic  #50                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       367: goto          373
+       370: invokestatic  #56                 // Method java/util/OptionalInt.empty:()Ljava/util/OptionalInt;
+       373: areturn
+
+  public boolean equals(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: if_acmpne     7
+         5: iconst_1
+         6: ireturn
+         7: aload_1
+         8: ifnull        22
+        11: aload_0
+        12: invokevirtual #60                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+        15: aload_1
+        16: invokevirtual #60                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+        19: if_acmpeq     24
+        22: iconst_0
+        23: ireturn
+        24: aload_1
+        25: checkcast     #8                  // class com/mojang/blaze3d/platform/InputConstants$Key
+        28: astore_2
+        29: aload_0
+        30: getfield      #17                 // Field value:I
+        33: aload_2
+        34: getfield      #17                 // Field value:I
+        37: if_icmpne     55
+        40: aload_0
+        41: getfield      #13                 // Field type:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+        44: aload_2
+        45: getfield      #13                 // Field type:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+        48: if_acmpne     55
+        51: iconst_1
+        52: goto          56
+        55: iconst_0
+        56: ireturn
+
+  public int hashCode();
+    Code:
+         0: iconst_2
+         1: anewarray     #2                  // class java/lang/Object
+         4: dup
+         5: iconst_0
+         6: aload_0
+         7: getfield      #13                 // Field type:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+        10: aastore
+        11: dup
+        12: iconst_1
+        13: aload_0
+        14: getfield      #17                 // Field value:I
+        17: invokestatic  #37                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        20: aastore
+        21: invokestatic  #64                 // Method java/util/Objects.hash:([Ljava/lang/Object;)I
+        24: ireturn
+
+  public java.lang.String toString();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field name:Ljava/lang/String;
+         4: areturn
+
+  static {};
+    Code:
+         0: invokestatic  #70                 // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+         3: putstatic     #21                 // Field NAME_MAP:Ljava/util/Map;
+         6: return
+}

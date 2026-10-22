@@ -1,0 +1,473 @@
+Compiled from "InputConstants.java"
+public class com.mojang.blaze3d.platform.InputConstants {
+  private static final org.slf4j.Logger LOGGER;
+
+  public static final int KEY_0 = 39;
+
+  public static final int KEY_1 = 30;
+
+  public static final int KEY_2 = 31;
+
+  public static final int KEY_3 = 32;
+
+  public static final int KEY_4 = 33;
+
+  public static final int KEY_5 = 34;
+
+  public static final int KEY_6 = 35;
+
+  public static final int KEY_7 = 36;
+
+  public static final int KEY_8 = 37;
+
+  public static final int KEY_9 = 38;
+
+  public static final int KEY_A = 4;
+
+  public static final int KEY_B = 5;
+
+  public static final int KEY_C = 6;
+
+  public static final int KEY_D = 7;
+
+  public static final int KEY_E = 8;
+
+  public static final int KEY_F = 9;
+
+  public static final int KEY_G = 10;
+
+  public static final int KEY_H = 11;
+
+  public static final int KEY_I = 12;
+
+  public static final int KEY_J = 13;
+
+  public static final int KEY_K = 14;
+
+  public static final int KEY_L = 15;
+
+  public static final int KEY_M = 16;
+
+  public static final int KEY_N = 17;
+
+  public static final int KEY_O = 18;
+
+  public static final int KEY_P = 19;
+
+  public static final int KEY_Q = 20;
+
+  public static final int KEY_R = 21;
+
+  public static final int KEY_S = 22;
+
+  public static final int KEY_T = 23;
+
+  public static final int KEY_U = 24;
+
+  public static final int KEY_V = 25;
+
+  public static final int KEY_W = 26;
+
+  public static final int KEY_X = 27;
+
+  public static final int KEY_Y = 28;
+
+  public static final int KEY_Z = 29;
+
+  public static final int KEY_F1 = 58;
+
+  public static final int KEY_F2 = 59;
+
+  public static final int KEY_F3 = 60;
+
+  public static final int KEY_F4 = 61;
+
+  public static final int KEY_F5 = 62;
+
+  public static final int KEY_F6 = 63;
+
+  public static final int KEY_F7 = 64;
+
+  public static final int KEY_F8 = 65;
+
+  public static final int KEY_F9 = 66;
+
+  public static final int KEY_F10 = 67;
+
+  public static final int KEY_F11 = 68;
+
+  public static final int KEY_F12 = 69;
+
+  public static final int KEY_F13 = 104;
+
+  public static final int KEY_F14 = 105;
+
+  public static final int KEY_F15 = 106;
+
+  public static final int KEY_F16 = 107;
+
+  public static final int KEY_F17 = 108;
+
+  public static final int KEY_F18 = 109;
+
+  public static final int KEY_F19 = 110;
+
+  public static final int KEY_F20 = 111;
+
+  public static final int KEY_F21 = 112;
+
+  public static final int KEY_F22 = 113;
+
+  public static final int KEY_F23 = 114;
+
+  public static final int KEY_F24 = 115;
+
+  public static final int KEY_NUMLOCK = 83;
+
+  public static final int KEY_NUMPAD0 = 98;
+
+  public static final int KEY_NUMPAD1 = 89;
+
+  public static final int KEY_NUMPAD2 = 90;
+
+  public static final int KEY_NUMPAD3 = 91;
+
+  public static final int KEY_NUMPAD4 = 92;
+
+  public static final int KEY_NUMPAD5 = 93;
+
+  public static final int KEY_NUMPAD6 = 94;
+
+  public static final int KEY_NUMPAD7 = 95;
+
+  public static final int KEY_NUMPAD8 = 96;
+
+  public static final int KEY_NUMPAD9 = 97;
+
+  public static final int KEY_NUMPADCOMMA = 220;
+
+  public static final int KEY_NUMPADENTER = 88;
+
+  public static final int KEY_NUMPADEQUALS = 103;
+
+  public static final int KEY_DOWN = 81;
+
+  public static final int KEY_LEFT = 80;
+
+  public static final int KEY_RIGHT = 79;
+
+  public static final int KEY_UP = 82;
+
+  public static final int KEY_ADD = 87;
+
+  public static final int KEY_APOSTROPHE = 52;
+
+  public static final int KEY_BACKSLASH = 49;
+
+  public static final int KEY_COMMA = 54;
+
+  public static final int KEY_EQUALS = 46;
+
+  public static final int KEY_GRAVE = 53;
+
+  public static final int KEY_LBRACKET = 47;
+
+  public static final int KEY_MINUS = 45;
+
+  public static final int KEY_MULTIPLY = 85;
+
+  public static final int KEY_PERIOD = 55;
+
+  public static final int KEY_RBRACKET = 48;
+
+  public static final int KEY_SEMICOLON = 51;
+
+  public static final int KEY_SLASH = 56;
+
+  public static final int KEY_SPACE = 44;
+
+  public static final int KEY_TAB = 43;
+
+  public static final int KEY_LALT = 226;
+
+  public static final int KEY_LCONTROL = 224;
+
+  public static final int KEY_LSHIFT = 225;
+
+  public static final int KEY_LGUI = 227;
+
+  public static final int KEY_RALT = 230;
+
+  public static final int KEY_RCONTROL = 228;
+
+  public static final int KEY_RSHIFT = 229;
+
+  public static final int KEY_RGUI = 231;
+
+  public static final int KEY_RETURN = 40;
+
+  public static final int KEY_ESCAPE = 41;
+
+  public static final int KEY_BACKSPACE = 42;
+
+  public static final int KEY_DELETE = 76;
+
+  public static final int KEY_END = 77;
+
+  public static final int KEY_HOME = 74;
+
+  public static final int KEY_INSERT = 73;
+
+  public static final int KEY_PAGEDOWN = 78;
+
+  public static final int KEY_PAGEUP = 75;
+
+  public static final int KEY_CAPSLOCK = 57;
+
+  public static final int KEY_PAUSE = 72;
+
+  public static final int KEY_SCROLLLOCK = 71;
+
+  public static final int KEY_PRINTSCREEN = 70;
+
+  public static final int PRESS = 1;
+
+  public static final int RELEASE = 0;
+
+  public static final int REPEAT = -1;
+
+  public static final int MOUSE_BUTTON_LEFT = 1;
+
+  public static final int MOUSE_BUTTON_MIDDLE = 2;
+
+  public static final int MOUSE_BUTTON_RIGHT = 3;
+
+  public static final int MOUSE_BUTTON_4 = 4;
+
+  public static final int MOUSE_BUTTON_5 = 5;
+
+  public static final int MOUSE_BUTTON_6 = 6;
+
+  public static final int MOUSE_BUTTON_7 = 7;
+
+  public static final int MOUSE_BUTTON_8 = 8;
+
+  public static final int MOD_SHIFT = 3;
+
+  public static final int MOD_CONTROL = 192;
+
+  public static final int MOD_ALT = 768;
+
+  public static final int MOD_SUPER = 3072;
+
+  public static final int MOD_CAPS_LOCK = 8192;
+
+  public static final int MOD_NUM_LOCK = 4096;
+
+  public static final int KEYCODE_A = 97;
+
+  public static final int KEYCODE_B = 98;
+
+  public static final int KEYCODE_C = 99;
+
+  public static final int KEYCODE_E = 101;
+
+  public static final int KEYCODE_F = 102;
+
+  public static final int KEYCODE_L = 108;
+
+  public static final int KEYCODE_M = 109;
+
+  public static final int KEYCODE_O = 111;
+
+  public static final int KEYCODE_R = 114;
+
+  public static final int KEYCODE_U = 117;
+
+  public static final int KEYCODE_V = 118;
+
+  public static final int KEYCODE_W = 119;
+
+  public static final int KEYCODE_X = 120;
+
+  public static final int KEYCODE_Y = 121;
+
+  public static final int KEYCODE_Z = 122;
+
+  public static final int KEYCODE_RETURN = 13;
+
+  public static final int KEYCODE_NUMPADENTER = 1073741912;
+
+  public static final int KEYCODE_PAGEUP = 1073741899;
+
+  public static final int KEYCODE_PAGEDOWN = 1073741902;
+
+  public static final int KEYCODE_BACKSPACE = 8;
+
+  public static final int KEYCODE_UP = 1073741906;
+
+  public static final int KEYCODE_DOWN = 1073741905;
+
+  public static final int KEYCODE_FORWARD = 1073741906;
+
+  public static final int KEYCODE_BACKWARD = 1073741905;
+
+  public static final int KEYCODE_LEFT = 1073741904;
+
+  public static final int KEYCODE_RIGHT = 1073741903;
+
+  public static final int KEYCODE_NUMPAD9 = 1073741921;
+
+  public static final int KEYCODE_NUMPAD3 = 1073741915;
+
+  public static final int KEYCODE_DELETE = 127;
+
+  public static final int KEYCODE_HOME = 1073741898;
+
+  public static final int KEYCODE_END = 1073741901;
+
+  public static final int KEYCODE_F5 = 1073741886;
+
+  public static final int KEYCODE_TAB = 9;
+
+  public static final int KEYCODE_LCONTROL = 1073742048;
+
+  public static final int KEYCODE_RCONTROL = 1073742052;
+
+  public static final int KEYCODE_SPACE = 32;
+
+  public static final com.mojang.blaze3d.platform.InputConstants$Key UNKNOWN;
+
+  public com.mojang.blaze3d.platform.InputConstants();
+    Code:
+         0: aload_0
+         1: invokespecial #9                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static com.mojang.blaze3d.platform.InputConstants$Key getKey(net.minecraft.client.input.KeyEvent);
+    Code:
+         0: getstatic     #15                 // Field com/mojang/blaze3d/platform/InputConstants$Type.KEYBOARD:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+         3: aload_0
+         4: invokevirtual #21                 // Method net/minecraft/client/input/KeyEvent.key:()I
+         7: invokevirtual #27                 // Method com/mojang/blaze3d/platform/InputConstants$Type.getOrCreate:(I)Lcom/mojang/blaze3d/platform/InputConstants$Key;
+        10: areturn
+
+  public static com.mojang.blaze3d.platform.InputConstants$Key getKey(java.lang.String);
+    Code:
+         0: getstatic     #31                 // Field com/mojang/blaze3d/platform/InputConstants$Key.NAME_MAP:Ljava/util/Map;
+         3: aload_0
+         4: invokeinterface #37,  2           // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+         9: ifeq          25
+        12: getstatic     #31                 // Field com/mojang/blaze3d/platform/InputConstants$Key.NAME_MAP:Ljava/util/Map;
+        15: aload_0
+        16: invokeinterface #43,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+        21: checkcast     #32                 // class com/mojang/blaze3d/platform/InputConstants$Key
+        24: areturn
+        25: invokestatic  #47                 // Method com/mojang/blaze3d/platform/InputConstants$Type.values:()[Lcom/mojang/blaze3d/platform/InputConstants$Type;
+        28: astore_1
+        29: aload_1
+        30: arraylength
+        31: istore_2
+        32: iconst_0
+        33: istore_3
+        34: iload_3
+        35: iload_2
+        36: if_icmpge     93
+        39: aload_1
+        40: iload_3
+        41: aaload
+        42: astore        4
+        44: aload_0
+        45: aload         4
+        47: getfield      #51                 // Field com/mojang/blaze3d/platform/InputConstants$Type.defaultPrefix:Ljava/lang/String;
+        50: invokevirtual #55                 // Method java/lang/String.startsWith:(Ljava/lang/String;)Z
+        53: ifeq          87
+        56: aload_0
+        57: aload         4
+        59: getfield      #51                 // Field com/mojang/blaze3d/platform/InputConstants$Type.defaultPrefix:Ljava/lang/String;
+        62: invokevirtual #61                 // Method java/lang/String.length:()I
+        65: iconst_1
+        66: iadd
+        67: invokevirtual #64                 // Method java/lang/String.substring:(I)Ljava/lang/String;
+        70: astore        5
+        72: aload         5
+        74: invokestatic  #68                 // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+        77: istore        6
+        79: aload         4
+        81: iload         6
+        83: invokevirtual #27                 // Method com/mojang/blaze3d/platform/InputConstants$Type.getOrCreate:(I)Lcom/mojang/blaze3d/platform/InputConstants$Key;
+        86: areturn
+        87: iinc          3, 1
+        90: goto          34
+        93: new           #74                 // class java/lang/IllegalArgumentException
+        96: dup
+        97: aload_0
+        98: invokedynamic #76,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+       103: invokespecial #80                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+       106: athrow
+
+  public static boolean isKeyDown(int);
+    Code:
+         0: invokestatic  #83                 // Method org/lwjgl/sdl/SDLKeyboard.SDL_GetKeyboardState:()Ljava/nio/ByteBuffer;
+         3: astore_1
+         4: aload_1
+         5: ifnull        20
+         8: aload_1
+         9: iload_0
+        10: invokevirtual #89                 // Method java/nio/ByteBuffer.get:(I)B
+        13: ifeq          20
+        16: iconst_1
+        17: goto          21
+        20: iconst_0
+        21: ireturn
+
+  public static void grabMouse(com.mojang.blaze3d.platform.Window, double, double);
+    Code:
+         0: aload_0
+         1: invokevirtual #94                 // Method com/mojang/blaze3d/platform/Window.handle:()J
+         4: dload_1
+         5: d2f
+         6: dload_3
+         7: d2f
+         8: invokestatic  #100                // Method org/lwjgl/sdl/SDLMouse.SDL_WarpMouseInWindow:(JFF)V
+        11: aload_0
+        12: invokevirtual #94                 // Method com/mojang/blaze3d/platform/Window.handle:()J
+        15: iconst_1
+        16: invokestatic  #104                // Method org/lwjgl/sdl/SDLMouse.SDL_SetWindowRelativeMouseMode:(JZ)Z
+        19: ifne          35
+        22: getstatic     #108                // Field LOGGER:Lorg/slf4j/Logger;
+        25: ldc           #112                // String Failed to enable relative mouse mode: {}
+        27: invokestatic  #114                // Method org/lwjgl/sdl/SDLError.SDL_GetError:()Ljava/lang/String;
+        30: invokeinterface #120,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+        35: return
+
+  public static void releaseMouse(com.mojang.blaze3d.platform.Window, double, double);
+    Code:
+         0: aload_0
+         1: invokevirtual #94                 // Method com/mojang/blaze3d/platform/Window.handle:()J
+         4: dload_1
+         5: d2f
+         6: dload_3
+         7: d2f
+         8: invokestatic  #100                // Method org/lwjgl/sdl/SDLMouse.SDL_WarpMouseInWindow:(JFF)V
+        11: aload_0
+        12: invokevirtual #94                 // Method com/mojang/blaze3d/platform/Window.handle:()J
+        15: iconst_0
+        16: invokestatic  #104                // Method org/lwjgl/sdl/SDLMouse.SDL_SetWindowRelativeMouseMode:(JZ)Z
+        19: ifne          35
+        22: getstatic     #108                // Field LOGGER:Lorg/slf4j/Logger;
+        25: ldc           #126                // String Failed to disable relative mouse mode: {}
+        27: invokestatic  #114                // Method org/lwjgl/sdl/SDLError.SDL_GetError:()Ljava/lang/String;
+        30: invokeinterface #120,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+        35: return
+
+  static {};
+    Code:
+         0: invokestatic  #128                // Method com/mojang/logging/LogUtils.getLogger:()Lorg/slf4j/Logger;
+         3: putstatic     #108                // Field LOGGER:Lorg/slf4j/Logger;
+         6: getstatic     #15                 // Field com/mojang/blaze3d/platform/InputConstants$Type.KEYBOARD:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+         9: iconst_0
+        10: invokevirtual #27                 // Method com/mojang/blaze3d/platform/InputConstants$Type.getOrCreate:(I)Lcom/mojang/blaze3d/platform/InputConstants$Key;
+        13: putstatic     #134                // Field UNKNOWN:Lcom/mojang/blaze3d/platform/InputConstants$Key;
+        16: return
+}
