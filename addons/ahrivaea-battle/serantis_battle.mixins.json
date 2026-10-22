@@ -44,6 +44,7 @@
     "VillagersRolesMixin",
     "FloatGoalMixin",
     "ProjectileBattleMixin",
+    "PlayerStabMixin",
     "EntityRemovedMixin",
     "BasesInvoker",
     "BaseCoreUpgradeMixin",
