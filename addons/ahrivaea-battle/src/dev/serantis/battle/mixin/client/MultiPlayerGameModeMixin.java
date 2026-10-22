@@ -74,6 +74,29 @@ public abstract class MultiPlayerGameModeMixin {
         if (TradeClient.askToTrade(other)) cir.setReturnValue(InteractionResult.SUCCESS);
     }
 
+    // Placing a block on a tower's protected land: stopped here, with a message (see TowerZones), instead of the block
+    // appearing and then vanishing when the server refuses it.
+    @Inject(method = "useItemOn", at = @At("HEAD"), cancellable = true)
+    private void serantis$towerLand(net.minecraft.client.player.LocalPlayer player, InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit,
+                                    CallbackInfoReturnable<InteractionResult> cir) {
+        if (!(player.getItemInHand(hand).getItem() instanceof net.minecraft.world.item.BlockItem) || player.isCreative()) return;
+        var st = dev.serantis.battle.client.TradeClient.state();
+        if (st == null || !st.has("serantis_tower_zones")) return;
+        var level = net.minecraft.client.Minecraft.getInstance().level;
+        if (level == null) return;
+        net.minecraft.core.BlockPos at = level.getBlockState(hit.getBlockPos()).canBeReplaced() ? hit.getBlockPos() : hit.getBlockPos().relative(hit.getDirection());
+        if (hit.getBlockPos().equals(at) && !level.getBlockState(at).canBeReplaced()) return;
+        for (var el : st.getAsJsonArray("serantis_tower_zones")) {
+            var z = el.getAsJsonObject();
+            if (at.getX() < z.get("x0").getAsInt() || at.getX() > z.get("x1").getAsInt() || at.getZ() < z.get("z0").getAsInt()
+                    || at.getZ() > z.get("z1").getAsInt() || at.getY() < z.get("y0").getAsInt()) continue;
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("You can't place that here: " + z.get("name").getAsString()
+                    + " and the land around it are protected until it's rebuilt (then it's its claimer's).").withStyle(net.minecraft.ChatFormatting.GOLD));
+            cir.setReturnValue(InteractionResult.FAIL);
+            return;
+        }
+    }
+
     // Right-clicking an enchanting table with a Magic Staff that has no spell yet: choose its spell (see Staffs).
     @Inject(method = "useItemOn", at = @At("HEAD"), cancellable = true)
     private void serantis$linkStaff(net.minecraft.client.player.LocalPlayer player, InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit,

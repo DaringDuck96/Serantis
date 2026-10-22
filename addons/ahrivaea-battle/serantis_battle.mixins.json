@@ -64,7 +64,8 @@
     "BaseAreaMixin",
     "BasesRoundMixin",
     "BaseOverlapMixin",
-    "BaseCorePlaceMixin"
+    "BaseCorePlaceMixin",
+    "ChallengesInvoker"
   ],
   "client": [
     "client.PartyScreenMixin",
@@ -100,7 +101,8 @@
     "client.ConfusedInputMixin",
     "client.FrightenedViewMixin",
     "client.BiomeColorsMixin",
-    "client.BaseGroundMixin"
+    "client.BaseGroundMixin",
+    "client.ChatMinimapDragMixin"
   ],
   "injectors": {
     "defaultRequire": 1

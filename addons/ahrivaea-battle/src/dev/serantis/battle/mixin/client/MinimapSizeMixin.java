@@ -21,4 +21,16 @@ public abstract class MinimapSizeMixin {
     private static void serantis$coords(GuiGraphicsExtractor g, Font font, String text, int x, int y, int color) {
         g.text(font, text, Math.min(x - font.width(text) / 2, g.guiWidth() - 4 - font.width(text)), y, color);
     }
+
+    // Wherever you've dragged it (see client/MinimapDrag): everything the minimap draws is shifted by that offset.
+    @org.spongepowered.asm.mixin.injection.Inject(method = "minimap", at = @org.spongepowered.asm.mixin.injection.At("HEAD"))
+    private static void serantis$moveStart(GuiGraphicsExtractor g, net.minecraft.client.Minecraft mc, org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        g.pose().pushMatrix();
+        g.pose().translate(dev.serantis.battle.client.MinimapDrag.dx(g.guiWidth()), dev.serantis.battle.client.MinimapDrag.dy(g.guiHeight()));
+    }
+
+    @org.spongepowered.asm.mixin.injection.Inject(method = "minimap", at = @org.spongepowered.asm.mixin.injection.At("RETURN"))
+    private static void serantis$moveEnd(GuiGraphicsExtractor g, net.minecraft.client.Minecraft mc, org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        g.pose().popMatrix();
+    }
 }
