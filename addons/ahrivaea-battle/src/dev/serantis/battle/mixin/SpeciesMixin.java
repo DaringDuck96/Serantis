@@ -38,8 +38,13 @@ public abstract class SpeciesMixin {
                                              BiPredicate<Species, Influence> filter,
                                              CallbackInfoReturnable<Optional<Species.Pick>> cir) {
         if (SpawnOdds.INSIDE.get()) return;
-        Optional<Species.Pick> pick = SpawnOdds.pick(biome, level, random, filter);
-        if (pick.isPresent()) cir.setReturnValue(pick);
+        BiPredicate<Species, Influence> f = dev.serantis.battle.NightOnly.wrap(level, filter);   // by day: no creatures of the night
+        Optional<Species.Pick> pick = SpawnOdds.pick(biome, level, random, f);
+        if (pick.isPresent()) { cir.setReturnValue(pick); return; }
+        if (f != filter) {                                              // the creatures mod's own pick, with the same filter
+            SpawnOdds.INSIDE.set(true);
+            try { cir.setReturnValue(Species.pickFor(biome, level, random, f)); } finally { SpawnOdds.INSIDE.set(false); }
+        }
     }
 
     // Wild spawns look for creatures within 5 levels of the player's own level, which goes up to 50.

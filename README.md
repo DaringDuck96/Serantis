@@ -234,6 +234,9 @@ That's 1,285 golden apples in all. Where the counts come from: blocks placed, di
 Right after you recruit a creature in battle, or pick your starter, a box pops up to name it (up to 20 characters). **Keep** leaves it with its species name. A named creature shows its name over its head, in battle and on the party screen, where its temperament and species follow in brackets, e.g. "Sparky (Brave Scrap Goblin)". Names are saved with the creature and kept when it's sent out, boxed or levelled up.
 
 
+### Creatures of the night
+Six creatures only appear at night in the Overworld, at their usual odds, but never by day: **Ghost** (Darkness, Common), **Nightmare Stalker** (Darkness, Common), **Night Hag** (Darkness, Uncommon), **Yurei** (Darkness, Uncommon), **Vampire** (Darkness, Rare) and **Werewolf** (Normal, Rare). That goes for battle reinforcements too. In the Nether and the End nothing changes. The list is in `NightOnly.java`.
+
 ### Blood Moons
 Every fifth night (nights 5, 10, 15 and so on) is a **Blood Moon**: the moon rises red instead of white, and everyone in the Overworld gets a "A Blood Moon rises..." message as night falls. **Bloodfang Shreekers** (a Rare, Normal creature) appear only on Blood Moon nights: now and then one turns up 24–48 blocks from a player, on the open surface (under the sky, never in caves or oceans), at most two near you at once, about four or five over the night. Their levels follow your level window. The wild ones are gone by morning; recruit one to keep it. Until its model arrives it shows as a plain grey body.
 
