@@ -1,0 +1,41 @@
+Compiled from "ChatScreen.java"
+public class net.minecraft.client.gui.screens.ChatScreen extends net.minecraft.client.gui.screens.Screen {
+  public static final double MOUSE_SCROLL_SPEED = 7.0d;
+  private static final net.minecraft.network.chat.Component USAGE_TEXT;
+  private static final net.minecraft.network.chat.Component RESTRICTED_NARRATION_TEXT;
+  public static final int USAGE_BACKGROUND_COLOR = -805306368;
+  private final boolean closeOnSubmit;
+  private java.lang.String historyBuffer;
+  private int historyPos;
+  protected net.minecraft.client.gui.components.EditBox input;
+  protected java.lang.String initial;
+  protected boolean isDraft;
+  private net.minecraft.client.gui.components.ChatComponent$DisplayMode displayMode;
+  protected net.minecraft.client.gui.screens.ChatScreen$ExitReason exitReason;
+  private net.minecraft.client.gui.components.CommandSuggestions commandSuggestions;
+  public net.minecraft.client.gui.screens.ChatScreen(java.lang.String, boolean);
+  public net.minecraft.client.gui.screens.ChatScreen(java.lang.String, boolean, boolean);
+  protected void init();
+  protected void setInitialFocus();
+  public void resize(int, int);
+  public void onClose();
+  public void removed();
+  protected boolean shouldDiscardDraft();
+  private void onEdited(java.lang.String);
+  public boolean keyPressed(net.minecraft.client.input.KeyEvent);
+  public boolean mouseScrolled(double, double, double, double);
+  public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);
+  private boolean insertionClickMode();
+  private boolean handleComponentClicked(net.minecraft.network.chat.Style, boolean);
+  public void insertText(java.lang.String, boolean);
+  public void moveInHistory(int);
+  private net.minecraft.util.FormattedCharSequence formatChat(java.lang.String, int);
+  public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+  public void extractBackground(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+  public boolean isPauseScreen();
+  public boolean isAllowedInPortal();
+  protected void updateNarrationState(net.minecraft.client.gui.narration.NarrationElementOutput);
+  public void handleChatInput(java.lang.String, boolean);
+  public java.lang.String normalizeChatMessage(java.lang.String);
+  static {};
+}

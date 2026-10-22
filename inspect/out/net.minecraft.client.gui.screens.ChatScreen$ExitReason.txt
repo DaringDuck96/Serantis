@@ -1,0 +1,12 @@
+Compiled from "ChatScreen.java"
+public final class net.minecraft.client.gui.screens.ChatScreen$ExitReason extends java.lang.Enum<net.minecraft.client.gui.screens.ChatScreen$ExitReason> {
+  public static final net.minecraft.client.gui.screens.ChatScreen$ExitReason INTENTIONAL;
+  public static final net.minecraft.client.gui.screens.ChatScreen$ExitReason INTERRUPTED;
+  public static final net.minecraft.client.gui.screens.ChatScreen$ExitReason DONE;
+  private static final net.minecraft.client.gui.screens.ChatScreen$ExitReason[] $VALUES;
+  public static net.minecraft.client.gui.screens.ChatScreen$ExitReason[] values();
+  public static net.minecraft.client.gui.screens.ChatScreen$ExitReason valueOf(java.lang.String);
+  private net.minecraft.client.gui.screens.ChatScreen$ExitReason();
+  private static net.minecraft.client.gui.screens.ChatScreen$ExitReason[] $values();
+  static {};
+}

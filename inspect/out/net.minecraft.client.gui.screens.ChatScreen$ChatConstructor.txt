@@ -1,0 +1,4 @@
+Compiled from "ChatScreen.java"
+public interface net.minecraft.client.gui.screens.ChatScreen$ChatConstructor<T extends net.minecraft.client.gui.screens.ChatScreen> {
+  public abstract T create(java.lang.String, boolean);
+}
