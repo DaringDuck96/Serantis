@@ -1,0 +1,18 @@
+Compiled from "SkyRenderState.java"
+public class net.minecraft.client.renderer.state.level.SkyRenderState {
+  public net.minecraft.world.level.dimension.DimensionType$Skybox skybox;
+  public boolean shouldRenderDarkDisc;
+  public float sunAngle;
+  public float moonAngle;
+  public float starAngle;
+  public float rainBrightness;
+  public float starBrightness;
+  public org.joml.Vector4fc sunriseAndSunsetColor;
+  public net.minecraft.world.level.MoonPhase moonPhase;
+  public org.joml.Vector3fc skyColor;
+  public float endFlashIntensity;
+  public float endFlashXAngle;
+  public float endFlashYAngle;
+  public net.minecraft.client.renderer.state.level.SkyRenderState();
+  public void reset();
+}
