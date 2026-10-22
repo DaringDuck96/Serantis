@@ -130,7 +130,7 @@ jobs:
           grep -qE '^clientsmoke' inspect/classes.txt || exit 0
           set -x
           mkdir -p inspect/out
-          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri mesa-utils x11-utils > /dev/null
+          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri libglx-mesa0 libgl1 libegl1 mesa-utils x11-utils > /dev/null
           pip install -q portablemc
           C="$RUNNER_TEMP/client"; mkdir -p "$C/mods"
           url="$(gh api repos/${{ github.repository }}/releases/latest --jq '.assets[0].url')"
@@ -145,7 +145,7 @@ jobs:
           MCV="$(jq -r .id "$RUNNER_TEMP/version.json")"
           export LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450
           (portablemc --help; portablemc start --help) > inspect/out/pmc-help.txt 2>&1 || true
-          ( timeout 900 xvfb-run -a -s "-screen 0 1280x720x24" portablemc --main-dir "$C" start "fabric:$MCV" > "$RUNNER_TEMP/client-console.txt" 2>&1 & )
+          ( timeout 900 xvfb-run -a -s "-screen 0 1280x720x24 +extension GLX +render -noreset" portablemc --main-dir "$C" start "fabric:$MCV" > "$RUNNER_TEMP/client-console.txt" 2>&1 & )
           for i in $(seq 1 160); do
             sleep 5
             if grep -qE 'Created: .*textures|Sound engine started|SMOKE: mixin audit (finished|FAILED)' "$C/logs/latest.log" 2>/dev/null && grep -q 'Sound engine started\|Reloading ResourceManager' "$C/logs/latest.log" 2>/dev/null; then sleep 45; break; fi

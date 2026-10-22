@@ -1,3 +1,2 @@
-# 1792697728
-compile wip/playtest-fixes
-smoke
+# 1792697874
+clientsmoke
