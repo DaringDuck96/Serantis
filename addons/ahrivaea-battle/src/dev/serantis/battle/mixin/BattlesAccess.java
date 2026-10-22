@@ -17,6 +17,9 @@ public interface BattlesAccess {
     static Set<UUID> serantis$previewing() { throw new AssertionError(); }
 
     @Accessor("SPAWNING")
+    static boolean serantis$spawning() { throw new AssertionError(); }
+
+    @Accessor("SPAWNING")
     static void serantis$setSpawning(boolean spawning) { throw new AssertionError(); }
 
     @Accessor("ACTIVE")

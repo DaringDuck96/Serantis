@@ -14,7 +14,7 @@ public final class BattleFeel {
     private static long shakeStart = -1;
     private static double shakePower;
     private static boolean dip;
-    private static final long SHAKE_MS = 320, LABEL_MS = 1100;
+    private static final long SHAKE_MS = 420, LABEL_MS = 1500;
 
     private BattleFeel() {}
 

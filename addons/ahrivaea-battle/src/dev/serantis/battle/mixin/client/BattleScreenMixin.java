@@ -48,7 +48,7 @@ public abstract class BattleScreenMixin {
     private static final List<long[]> serantis$playing = new ArrayList<>();
     private static long serantis$seen = 0;
     private static int serantis$battle = -1;
-    private static final long SERANTIS_FLASH_MS = 650, SERANTIS_SHAKE_MS = 450;
+    private static final long SERANTIS_FLASH_MS = 1000, SERANTIS_SHAKE_MS = 700;   // a little slower, so the sequence can be followed
 
     private static int serantis$zoneColor(String kind) {
         return switch (kind) {
@@ -134,7 +134,7 @@ public abstract class BattleScreenMixin {
                     if (!grid.inside(x, z)) continue;
                     double[] r = cellRect(x, z);
                     if (kind == Fx.ATTACK) {
-                        int dx = (int) Math.round(Math.sin(t * Math.PI * 6) * 4 * (1 - t));
+                        int dx = (int) Math.round(Math.sin(t * Math.PI * 4) * 4 * (1 - t));
                         int alpha = (int) (110 * (1 - t));
                         g.fill((int) r[0] + 1 + dx, (int) r[1] + 1, (int) r[2] + dx, (int) r[3], (alpha << 24) | Fx.color(kind));
                     } else {

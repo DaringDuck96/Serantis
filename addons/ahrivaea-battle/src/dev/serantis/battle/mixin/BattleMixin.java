@@ -372,6 +372,7 @@ public abstract class BattleMixin implements BattleAccess {
     @Inject(method = "enemyStep", at = @At("HEAD"), cancellable = true)
     private void serantis$enemyStep(CallbackInfoReturnable<Boolean> cir) {
         Battle self = (Battle) (Object) this;
+        if (dev.serantis.battle.BattleWalk.busy(self)) { cir.setReturnValue(true); return; }   // the last one is still walking
         if (dev.serantis.battle.coop.CoopBattles.holdEnemyStep(self)) { cir.setReturnValue(true); return; }   // a spar: the rival plays this phase
         while (!enemyQueue.isEmpty() && !enemyQueue.getFirst().alive()) enemyQueue.removeFirst();
         if (enemyQueue.isEmpty() || self.phase != Battle.Phase.ENEMY) return;

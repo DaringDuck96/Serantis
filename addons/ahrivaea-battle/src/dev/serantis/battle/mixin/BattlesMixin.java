@@ -138,8 +138,34 @@ public abstract class BattlesMixin {
             z += (n - 1) / 2.0;
             for (int c : Body.cells(battle, unit)) y = Math.max(y, battle.grid.worldPos(c % battle.grid.size, c / battle.grid.size).getY());
         }
+        if (dev.serantis.battle.BattleWalk.walk(battle, entity, x, y, z)) return;   // it walks there, tile by tile
         entity.snapTo(x, y, z);
     }
+
+    // Pacing (see BattleWalk): players walk to their tile too, updates wait for walks, enemies take turns slowly.
+    @Inject(method = "placeEntity", at = @At("HEAD"))
+    private static void serantis$walkPlayer(Battle battle, Unit unit, CallbackInfo ci) {
+        if (unit != null && unit.isPlayer) dev.serantis.battle.BattleWalk.walkPlayer(battle, unit);
+    }
+
+    @Inject(method = "send", at = @At("HEAD"), cancellable = true)
+    private static void serantis$holdForWalks(Battle battle, CallbackInfo ci) {
+        if (dev.serantis.battle.BattleWalk.hold(battle)) ci.cancel();
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private static void serantis$walkTick(net.minecraft.server.MinecraftServer server, CallbackInfo ci) {
+        dev.serantis.battle.BattleWalk.tick(server);
+    }
+
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;teleport(DDDFF)V"))
+    private static void serantis$playerWalk(net.minecraft.server.network.ServerGamePacketListenerImpl conn, double x, double y, double z, float yaw, float pitch) {
+        var at = dev.serantis.battle.BattleWalk.playerAt(conn.player, x, y, z);
+        conn.teleport(at.x, at.y, at.z, yaw, pitch);
+    }
+
+    @org.spongepowered.asm.mixin.injection.ModifyConstant(method = "tick", constant = @org.spongepowered.asm.mixin.injection.Constant(intValue = 15))
+    private static int serantis$enemyPause(int ticks) { return 22; }     // a pause between one enemy's turn and the next
 
     // A recruited creature keeps the moves it fought with.
     @Redirect(method = "recruit", at = @At(value = "INVOKE",
