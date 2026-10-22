@@ -1,7 +1,0 @@
-Compiled from "LevelRenderer.java"
-class net.minecraft.client.renderer.LevelRenderer$1 implements com.mojang.blaze3d.framegraph.FrameGraphBuilder$Inspector {
-  final net.minecraft.util.profiling.ProfilerFiller val$profiler;
-  net.minecraft.client.renderer.LevelRenderer$1();
-  public void beforeExecutePass(java.lang.String);
-  public void afterExecutePass(java.lang.String);
-}

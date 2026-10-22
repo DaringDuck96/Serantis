@@ -1,5 +1,0 @@
-Compiled from "Biome.java"
-final class net.minecraft.world.level.biome.Biome$TemperatureModifier$1 extends net.minecraft.world.level.biome.Biome$TemperatureModifier {
-  private net.minecraft.world.level.biome.Biome$TemperatureModifier$1(java.lang.String, int, java.lang.String);
-  public float modifyTemperature(net.minecraft.core.BlockPos, float);
-}

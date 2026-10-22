@@ -1,6 +1,0 @@
-Compiled from "Biome.java"
-class net.minecraft.world.level.biome.Biome$1 extends it.unimi.dsi.fastutil.longs.Long2FloatLinkedOpenHashMap {
-  final net.minecraft.world.level.biome.Biome this$0;
-  net.minecraft.world.level.biome.Biome$1(net.minecraft.world.level.biome.Biome, int, float);
-  protected void rehash(int);
-}
