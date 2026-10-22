@@ -1,2 +1,2 @@
-# 1792629428
-compile wip/claim-rewards
+# 1792629504
+smoke
