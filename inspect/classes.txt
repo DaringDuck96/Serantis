@@ -1,4 +1,3 @@
-# 1792675346
-sig:net.minecraft.server.level.ServerLevel
-sig:net.minecraft.world.level.Level
-full.net.minecraft.world.entity.boss.wither.WitherBoss
+# 1792675460
+compile wip/false-hydra-summon
+smoke
