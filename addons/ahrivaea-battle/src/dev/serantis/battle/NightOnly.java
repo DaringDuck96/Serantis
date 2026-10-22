@@ -19,6 +19,7 @@ public final class NightOnly {
             "night_hag/darkness",           // Uncommon
             "yurei/darkness",               // Uncommon
             "vampire/darkness",             // Rare
+            "gloomwing/darkness",           // Rare
             "werewolf/none");               // Rare
 
     private NightOnly() {}
