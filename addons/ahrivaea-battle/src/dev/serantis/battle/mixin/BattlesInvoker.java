@@ -13,4 +13,9 @@ public interface BattlesInvoker {
     static void serantis$placeEntity(Battle battle, Unit unit) {
         throw new AssertionError();
     }
+
+    @Invoker("recruit")
+    static String serantis$recruit(net.minecraft.server.level.ServerPlayer player, Battle battle, int index) {
+        throw new AssertionError();
+    }
 }

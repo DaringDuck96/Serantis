@@ -54,7 +54,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * side; each ally brings one more enemy along too. Everyone controls only their own units, and the turn passes to
  * the enemies once every player is done (or after {@value #TURN_SECONDS} seconds once someone is waiting). The
  * battle is lost only when every player is knocked out. Allies who win get the same XP, battle credit and bounty
- * progress; loot and recruits stay with the player whose battle it was.
+ * progress; loot stays with the player whose battle it was, and everyone who fought can recruit (see allyRecruit).
  *
  * <p><b>Spars.</b> Two players can fight each other: right-click a player and challenge them. The challenger's
  * side moves first, then the other player's (the creatures mod's "enemy phase", held for them to play). Spars are
@@ -82,6 +82,8 @@ public final class CoopBattles {
         Battle.Phase lastPhase;
         int lastTurn;
         boolean warned;
+        /** Each ally's own copy of the beaten creatures they can still recruit (a won co-op battle). */
+        final Map<UUID, List<Battle.Defeated>> recruits = new HashMap<>();
     }
 
     private static final Map<Battle, Info> INFO = Collections.synchronizedMap(new WeakHashMap<>());
@@ -662,7 +664,7 @@ public final class CoopBattles {
                 String out = r.get("outcome").getAsString();
                 r.addProperty("outcome", "WON".equals(out) ? "LOST" : "WON");
             }
-            r.add("recruits", new JsonArray());
+            r.add("recruits", allyRecruits(b, viewer));                     // their own recruit list (see allyRecruit)
             r.add("loot", new JsonArray());
         }
     }
@@ -707,11 +709,54 @@ public final class CoopBattles {
         Battle done = DONE.get(id);
         if (done != null) {
             if ("leave".equals(kind)) { leave(p); return null; }
-            String msg = "recruit".equals(kind) ? "Only " + name(done, done.playerId) + " can recruit from this battle." : "The battle is over.";
-            p.sendSystemMessage(Component.literal(msg).withStyle(ChatFormatting.RED));
+            String msg = "recruit".equals(kind) ? allyRecruit(p, done, j.has("index") ? j.get("index").getAsInt() : -1) : "The battle is over.";
+            if (msg != null) p.sendSystemMessage(Component.literal(msg).withStyle(ChatFormatting.RED));
+            if (DONE.get(id) == done) send(p, done.view(id).toString());
             return msg;
         }
         return PASS;
+    }
+
+    /**
+     * Everyone who fought a won co-op battle can recruit its beaten creatures, not just its owner: each ally has their
+     * own copy of the list and pays with their own XP, and what one recruits doesn't take it away from the others.
+     * The creatures mod's recruiting does the work, on the ally's list (swapped in for the moment).
+     */
+    private static String allyRecruit(ServerPlayer p, Battle b, int index) {
+        Info i = info(b);
+        List<Battle.Defeated> mine = i == null ? null : i.recruits.get(p.getUUID());
+        if (mine == null) return "There's nothing for you to recruit from this battle.";
+        List<Battle.Defeated> owners = new ArrayList<>(b.defeated);
+        b.defeated.clear();
+        b.defeated.addAll(mine);
+        try {
+            return dev.serantis.battle.mixin.BattlesInvoker.serantis$recruit(p, b, index);
+        } finally {
+            mine.clear();
+            mine.addAll(b.defeated);                                    // what's left for them
+            b.defeated.clear();
+            b.defeated.addAll(owners);
+        }
+    }
+
+    /** An ally's recruit list for the result screen. */
+    private static JsonArray allyRecruits(Battle b, UUID viewer) {
+        JsonArray out = new JsonArray();
+        Info i = info(b);
+        List<Battle.Defeated> mine = i == null ? null : i.recruits.get(viewer);
+        if (mine == null) return out;
+        ServerPlayer p = online(b, viewer);
+        for (Battle.Defeated d : mine) {
+            JsonObject dj = new JsonObject();
+            dj.addProperty("name", d.name());
+            dj.addProperty("level", d.level());
+            dj.addProperty("cost", dev.serantis.battle.skills.Skills.price(p, d.cost()));
+            dj.addProperty("rarity", d.rarity());
+            String why = b.whyNotRecruit(d);
+            if (why != null) dj.addProperty("why", why);
+            out.add(dj);
+        }
+        return out;
     }
 
     /** An ally leaves a battle that's still going (fled, or logged out); a rival who does forfeits the spar. */
@@ -781,6 +826,7 @@ public final class CoopBattles {
                 if (o == Battle.Outcome.WON) reward(b, p);
                 if (o != Battle.Outcome.FLED) dev.serantis.battle.FigureVisit.battleOver(p);
             }
+            if (i.rival == null && o == Battle.Outcome.WON) i.recruits.put(id, new ArrayList<>(b.defeated));   // they can recruit too
             DONE.put(id, b);
             send(p, b.view(id).toString());
         }
