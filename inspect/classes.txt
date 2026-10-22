@@ -1,2 +1,3 @@
-# 1792709472
-smoke
+# 1792711080
+sig:net.minecraft.client.renderer.LevelRenderer
+net.minecraft.client.renderer.LevelRenderer
