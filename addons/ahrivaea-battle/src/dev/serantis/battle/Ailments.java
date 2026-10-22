@@ -326,7 +326,7 @@ public final class Ailments {
     /** Cure a creature (a party one or one that's out). Returns the message, or null if it had nothing to cure. */
     public static String cureCreature(Object creature, String name) {
         String s = status(creature);
-        if (s == null) return null;
+        if (s == null || label(s) == null) return null;
         if (creature instanceof MovesHolder h) h.serantis$setAilment(null);
         if (creature instanceof CreatureEntity e) e.removeEffect(MobEffects.SLOWNESS);
         return name + " is no longer " + label(s).toLowerCase() + ".";
@@ -346,6 +346,6 @@ public final class Ailments {
     /** Party screen: " - Poisoned" after the name while an ailment lingers. */
     public static String suffix(Object creature) {
         String s = status(creature);
-        return s == null ? "" : " - " + label(s);
+        return s == null || label(s) == null ? "" : " - " + label(s);
     }
 }

@@ -52,7 +52,7 @@ public final class HayBales {
         try {
             java.nio.file.Path f = file(server);
             if (java.nio.file.Files.exists(f))
-                for (String line : java.nio.file.Files.readAllLines(f)) if (!line.isBlank()) OFF.add(line.trim());
+                for (String line : SafeFiles.lines(f)) if (!line.isBlank()) OFF.add(line.trim());
         } catch (Exception e) {
             // nothing saved: every bale is on
         }
@@ -60,7 +60,7 @@ public final class HayBales {
 
     private static synchronized void save(MinecraftServer server) {
         try {
-            java.nio.file.Files.write(file(server), new java.util.ArrayList<>(OFF));
+            SafeFiles.write(file(server), new java.util.ArrayList<>(OFF));
         } catch (Exception e) {
             // couldn't save: it still holds until a restart
         }

@@ -73,9 +73,10 @@ public final class Towns {
             Path f = file(server);
             if (Files.exists(f)) {
                 JsonObject all = JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject();
-                for (var e : all.entrySet()) VILLAGES.put(e.getKey(), e.getValue().getAsJsonObject());
+                for (var e : all.entrySet()) if (e.getValue().isJsonObject()) VILLAGES.put(e.getKey(), e.getValue().getAsJsonObject());
             }
         } catch (Exception e) {
+            SafeFiles.keepBad(file(server));
             Ahrivaea.LOGGER.warn("Serantis: couldn't read the village file: {}", e.toString());
         }
     }
@@ -84,7 +85,7 @@ public final class Towns {
         JsonObject all = new JsonObject();
         VILLAGES.forEach(all::add);
         try {
-            Files.writeString(file(server), GSON.toJson(all), StandardCharsets.UTF_8);
+            SafeFiles.write(file(server), GSON.toJson(all));
         } catch (Exception e) {
             Ahrivaea.LOGGER.warn("Serantis: couldn't save the village file: {}", e.toString());
         }

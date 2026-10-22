@@ -81,7 +81,7 @@ public final class PublicMarks {
         JsonObject root = new JsonObject();
         root.add("marks", a);
         try {
-            Files.writeString(file(server), new GsonBuilder().setPrettyPrinting().create().toJson(root), StandardCharsets.UTF_8);
+            SafeFiles.write(file(server), new GsonBuilder().setPrettyPrinting().create().toJson(root));
         } catch (Exception e) {
             // couldn't save: kept until a restart
         }

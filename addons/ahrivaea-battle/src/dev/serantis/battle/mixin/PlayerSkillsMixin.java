@@ -171,7 +171,8 @@ public abstract class PlayerSkillsMixin implements SkillHolder, dev.serantis.bat
         serantis$gone.clear();
         var outIds = in.read("SerantisOutIds", com.mojang.serialization.Codec.STRING.listOf()).orElse(java.util.List.of());
         var outCreatures = in.read("SerantisOut", dev.ahrivaea.party.CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
-        for (int i = 0; i < Math.min(outIds.size(), outCreatures.size()); i++)
+        if (outIds.size() == outCreatures.size())                         // a creature that failed to load would shift every pair after it: then trust none
+        for (int i = 0; i < outIds.size(); i++)
             try { serantis$out.put(java.util.UUID.fromString(outIds.get(i)), outCreatures.get(i)); } catch (IllegalArgumentException ignored) { }
         for (String s : in.read("SerantisGone", com.mojang.serialization.Codec.STRING.listOf()).orElse(java.util.List.of()))
             try { serantis$gone.add(java.util.UUID.fromString(s)); } catch (IllegalArgumentException ignored) { }

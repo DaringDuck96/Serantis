@@ -90,7 +90,7 @@ public final class Groups {
             Path f = file(server);
             if (!Files.exists(f)) return;
             JsonObject root = JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject();
-            for (var el : root.getAsJsonArray("groups")) {
+            for (var el : root.getAsJsonArray("groups")) try {
                 JsonObject o = el.getAsJsonObject();
                 Group g = new Group();
                 g.id = o.get("id").getAsInt();
@@ -106,9 +106,10 @@ public final class Groups {
                 ALL.add(g);
                 for (UUID m : g.members.keySet()) BY_PLAYER.put(m, g);
                 nextId = Math.max(nextId, g.id + 1);
-            }
+            } catch (Exception bad) { /* skip just that group */ }
             if (root.has("claimedDay"))
-                for (var e : root.getAsJsonObject("claimedDay").entrySet()) CLAIMED_DAY.put(UUID.fromString(e.getKey()), e.getValue().getAsLong());
+                for (var e : root.getAsJsonObject("claimedDay").entrySet())
+                    try { CLAIMED_DAY.put(UUID.fromString(e.getKey()), e.getValue().getAsLong()); } catch (Exception bad) { /* skip */ }
         } catch (Exception e) {
             dev.ahrivaea.Ahrivaea.LOGGER.warn("Couldn't read serantis_groups.json", e);
         }
@@ -137,7 +138,7 @@ public final class Groups {
         CLAIMED_DAY.forEach((id, day) -> cd.addProperty(id.toString(), day));
         root.add("claimedDay", cd);
         try {
-            Files.writeString(file(server), GSON.toJson(root), StandardCharsets.UTF_8);
+            dev.serantis.battle.SafeFiles.write(file(server), GSON.toJson(root));
         } catch (Exception e) {
             dev.ahrivaea.Ahrivaea.LOGGER.warn("Couldn't save serantis_groups.json", e);
         }

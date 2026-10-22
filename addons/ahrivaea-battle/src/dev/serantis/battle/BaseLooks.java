@@ -56,9 +56,9 @@ public final class BaseLooks {
         try {
             java.nio.file.Path f = file(server);
             if (java.nio.file.Files.exists(f))
-                for (String line : java.nio.file.Files.readAllLines(f)) {
+                for (String line : SafeFiles.lines(f)) {
                     String[] p = line.trim().split("=", 2);
-                    if (p.length == 2 && BIOMES.contains(p[1])) LOOKS.put(Long.parseLong(p[0]), p[1]);
+                    try { if (p.length == 2 && BIOMES.contains(p[1])) LOOKS.put(Long.parseLong(p[0]), p[1]); } catch (NumberFormatException bad) { /* skip */ }
                 }
         } catch (Exception e) {
             // nothing saved: every base looks like its own biome
@@ -69,7 +69,7 @@ public final class BaseLooks {
         List<String> lines = new ArrayList<>();
         for (var e : LOOKS.entrySet()) lines.add(e.getKey() + "=" + e.getValue());
         try {
-            java.nio.file.Files.write(file(server), lines);
+            SafeFiles.write(file(server), lines);
         } catch (Exception e) {
             // couldn't save: it holds until a restart
         }

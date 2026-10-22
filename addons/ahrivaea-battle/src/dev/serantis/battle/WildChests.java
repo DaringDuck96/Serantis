@@ -90,12 +90,13 @@ public final class WildChests {
             Path f = file(server);
             if (!Files.exists(f)) return;
             JsonObject root = JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject();
-            for (var el : root.getAsJsonArray("chests")) CHESTS.add(read(el.getAsJsonObject()));
-            if (root.has("stale")) for (var el : root.getAsJsonArray("stale")) STALE.add(read(el.getAsJsonObject()));
+            if (root.has("chests")) for (var el : root.getAsJsonArray("chests")) try { CHESTS.add(read(el.getAsJsonObject())); } catch (Exception bad) { /* skip */ }
+            if (root.has("stale")) for (var el : root.getAsJsonArray("stale")) try { STALE.add(read(el.getAsJsonObject())); } catch (Exception bad) { /* skip */ }
             wasDark = !root.has("wasDark") || root.get("wasDark").getAsBoolean();
             placedToday = root.has("placedToday") && root.get("placedToday").getAsBoolean();
-            if (root.has("served")) for (var el : root.getAsJsonArray("served")) SERVED.add(java.util.UUID.fromString(el.getAsString()));
+            if (root.has("served")) for (var el : root.getAsJsonArray("served")) try { SERVED.add(java.util.UUID.fromString(el.getAsString())); } catch (Exception bad) { /* skip */ }
         } catch (Exception e) {
+            SafeFiles.keepBad(file(server));
             Ahrivaea.LOGGER.warn("Couldn't read serantis_wild_chests.json", e);
         }
     }
@@ -130,7 +131,7 @@ public final class WildChests {
         root.addProperty("wasDark", wasDark);
         root.addProperty("placedToday", placedToday);
         try {
-            Files.writeString(file(server), new GsonBuilder().setPrettyPrinting().create().toJson(root), StandardCharsets.UTF_8);
+            SafeFiles.write(file(server), new GsonBuilder().setPrettyPrinting().create().toJson(root));
         } catch (Exception e) {
             Ahrivaea.LOGGER.warn("Couldn't save serantis_wild_chests.json", e);
         }
