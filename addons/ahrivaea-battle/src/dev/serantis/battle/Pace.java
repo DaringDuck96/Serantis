@@ -28,8 +28,10 @@ public final class Pace {
         return (int) Math.round(low + (high - low) * t);
     }
 
+    /** Work speed at a base: 35% at Level 1, rising slowly at first and faster later, to 50% + Charisma/63 at Level 20 (150% typical). */
     public static double workSpeed(int level, int charisma20) {
         double lv = (BattleStats.clampLevel(level) - 1) / (double) (BattleStats.MAX_LEVEL - 1);
-        return 0.5 + lv * (charisma20 / TYPICAL_CHARISMA);
+        double top = 0.5 + charisma20 / TYPICAL_CHARISMA;
+        return 0.35 + (top - 0.35) * Math.pow(lv, 1.4);
     }
 }

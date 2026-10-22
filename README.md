@@ -351,7 +351,7 @@ Right-click another player and choose **Send trade request**. They get a request
 ### Movement and work speed
 
 - **Battle movement** comes from Speed and level. Level 1 creatures move 2 to 4 tiles a turn and Level 20 creatures 7 to 10, with the range rising in a straight line between. Where a creature falls in its level's range depends on its Speed: Level 20 Speed 44 is the slowest and 103 the fastest. For example, a typical creature (Speed 62) moves 3 tiles at Level 1, 5 at Level 10 and 8 at Level 20. Speed changes, Slowed, extra movement and terrain costs still apply on top. The player's own movement is unchanged.
-- **Work speed at a base** starts at 50% for every creature at Level 1 and climbs with level, faster the higher its Charisma: 50% + (level − 1) ÷ 19 × (Level 20 Charisma ÷ 63). At Level 20 a typical creature (Charisma 63) works at 150%, the most charming (115) about 230% and the least (51) about 130%. At Level 10 those are about 100%, 140% and 90%. The base screen shows each worker's speed.
+- **Work speed at a base** starts at 35% for every creature at Level 1 and climbs slowly at first, then faster, up to 50% + (Level 20 Charisma ÷ 63) at Level 20: 35% + (that − 35%) × ((level − 1) ÷ 19)^1.4. A typical creature (Charisma 63) works at 35% at Level 1, 48% at Level 5, 75% at Level 10, 110% at Level 15 and 150% at Level 20; the most charming (115) reaches about 230% and the least (51) about 130%. The base screen shows each worker's speed.
 
 ### Creature sizes and terrain
 
