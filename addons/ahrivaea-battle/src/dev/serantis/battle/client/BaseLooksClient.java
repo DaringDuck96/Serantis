@@ -48,7 +48,7 @@ public final class BaseLooksClient {
             }
         boolean changed = !out.equals(looks);
         looks = List.copyOf(out);
-        if (changed && mc.level != null) mc.levelRenderer.invalidateCompiledGeometry(mc.level, mc.options, mc.gameRenderer.getMainCamera(), mc.getBlockColors());
+        if (changed && mc.level != null) mc.levelRenderer.invalidateCompiledGeometry(mc.level, mc.options, mc.gameRenderer.mainCamera(), mc.getBlockColors());
     }
 
     /** The biome whose colours this spot takes, or null for its own. */
