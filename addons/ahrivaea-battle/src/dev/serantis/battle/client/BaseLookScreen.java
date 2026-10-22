@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The base screen's Look picker: give an Overworld base the grass, leaf and water colours of any Overworld biome
- * (see BaseLooks). Each choice shows its three colours; "Its own biome" puts it back.
+ * The base screen's Look picker: give an Overworld base the grass, leaf and water colours of any Overworld biome,
+ * or a Nether one, with its drifting spores or ash (see BaseLooks). Each choice shows its three colours; "Its own biome" puts it back.
  */
 public class BaseLookScreen extends Screen {
     private static final int COL_W = 170, ROW_H = 22, SWATCH = 9;
@@ -51,12 +51,15 @@ public class BaseLookScreen extends Screen {
             String id = all.get(page * per + i);
             int col = i / rows, row = i % rows;
             int x = left + col * COL_W, y = top + row * ROW_H;
-            String name = id.isEmpty() ? "Its own biome" : Component.translatable("biome.minecraft." + id).getString();
+            String name = id.isEmpty() ? "Its own biome" : Component.translatable("biome.minecraft." + id).getString()
+                    + (BaseLooksClient.NETHER.containsKey(id) ? " (Nether)" : "");
             boolean on = id.equals(current);
             addRenderableWidget(Button.builder(Component.literal((on ? "» " : "") + name), b -> pick(id))
                     .bounds(x + 3 * (SWATCH + 2) + 4, y, COL_W - 3 * (SWATCH + 2) - 10, 20).build());
-            Biome biome = id.isEmpty() ? null : BaseLooksClient.biome(id);
-            if (biome != null) swatches.add(new int[]{x, y + 5, biome.getGrassColor(0, 0), biome.getFoliageColor(), biome.getWaterColor()});
+            var nether = BaseLooksClient.NETHER.get(id);
+            Biome biome = id.isEmpty() || nether != null ? null : BaseLooksClient.biome(id);
+            if (nether != null) swatches.add(new int[]{x, y + 5, nether.grass(), nether.foliage(), nether.water()});
+            else if (biome != null) swatches.add(new int[]{x, y + 5, biome.getGrassColor(0, 0), biome.getFoliageColor(), biome.getWaterColor()});
         }
         int by = height - 28;
         if (pages > 1) {

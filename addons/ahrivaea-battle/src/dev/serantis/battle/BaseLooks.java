@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * A base's look: an Overworld base can take the grass, leaf and water colours of any Overworld biome, across its
+ * A base's look: an Overworld base can take the grass, leaf and water colours of any Overworld or Nether biome, across its
  * whole area. Purely how it looks (client/BaseLooksClient tints it on everyone's screen); the real biome, and with it
  * spawns, weather and everything else, stays as it was. Chosen from the base screen ("Look") by the owner or their
  * group; saved in serantis_base_looks.txt in the world folder.
@@ -30,7 +30,10 @@ public final class BaseLooks {
             "windswept_gravelly_hills", "windswept_forest", "savanna", "savanna_plateau", "windswept_savanna", "desert", "badlands",
             "wooded_badlands", "eroded_badlands", "jungle", "sparse_jungle", "bamboo_jungle", "swamp", "mangrove_swamp",
             "mushroom_fields", "river", "frozen_river", "beach", "snowy_beach", "stony_shore", "warm_ocean", "lukewarm_ocean",
-            "ocean", "cold_ocean", "frozen_ocean", "lush_caves", "dripstone_caves", "deep_dark");
+            "ocean", "cold_ocean", "frozen_ocean", "lush_caves", "dripstone_caves", "deep_dark",
+            // Nether looks: their own colours and floating particles (see client/BaseLooksClient), since the Nether's
+            // real grass and water colours are just a desert's
+            "nether_wastes", "crimson_forest", "warped_forest", "soul_sand_valley", "basalt_deltas");
 
     /** Base core position (Overworld) -> biome id. */
     private static final Map<Long, String> LOOKS = new ConcurrentHashMap<>();

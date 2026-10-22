@@ -33,7 +33,7 @@ public abstract class BaseScreenMixin extends Screen {
             var core = new net.minecraft.core.BlockPos(pos.get(0).getAsInt(), pos.get(1).getAsInt(), pos.get(2).getAsInt());
             String look = st.get("serantis_look").getAsString();
             addRenderableWidget(Button.builder(Component.literal("Look"), btn -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.BaseLookScreen(self, core, look)))
-                    .tooltip(Tooltip.create(Component.literal("Give this base the grass, leaf and water colours of any Overworld biome. Only the look changes.")))
+                    .tooltip(Tooltip.create(Component.literal("Give this base the grass, leaf and water colours of any Overworld or Nether biome. Only the look changes.")))
                     .bounds(width - 178, 6, 50, 20).build());
         }
         if (st == null || !st.has("serantis_skills")) return;
