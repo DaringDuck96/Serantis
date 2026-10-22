@@ -1,6 +1,0 @@
-Compiled from "TemptGoal.java"
-public class net.minecraft.world.entity.ai.goal.TemptGoal$ForNonPathfinders extends net.minecraft.world.entity.ai.goal.TemptGoal {
-  public net.minecraft.world.entity.ai.goal.TemptGoal$ForNonPathfinders(net.minecraft.world.entity.Mob, double, java.util.function.Predicate<net.minecraft.world.item.ItemStack>, boolean, double);
-  protected void stopNavigation();
-  protected void navigateTowards(net.minecraft.world.entity.player.Player);
-}
