@@ -26,7 +26,7 @@ public abstract class DropsMixin {
         return SkillEffects.dropChance(drop.chance());
     }
 
-    /** Farm animals, crabs and fish drop three times the meat and fish (food shouldn't be a grind). */
+    /** Farm animals, crabs and fish drop three times the meat and fish (food shouldn't be a grind); cows give milk 20% of the time. */
     @Unique private static final Set<String> SERANTIS_FOOD_ANIMALS = Set.of("cow", "pig", "chicken", "sheep", "rabbit", "goat", "duck", "crab", "fish");
     @Unique private static final Set<String> SERANTIS_MEAT = Set.of("beef", "porkchop", "chicken", "mutton", "rabbit", "cod", "salmon", "tropical_fish",
             "cooked_beef", "cooked_porkchop", "cooked_chicken", "cooked_mutton", "cooked_rabbit", "cooked_cod", "cooked_salmon");
@@ -46,6 +46,10 @@ public abstract class DropsMixin {
                     total -= n;
                 }
             } else out.add(s);
+        }
+        if ("cow".equals(species.id())) {                                // cows: a bucket of milk 20% of the time (instead of 5%)
+            out.removeIf(st -> st.is(net.minecraft.world.item.Items.MILK_BUCKET));
+            if (random.nextFloat() < SkillEffects.dropChance(0.20f)) out.add(new ItemStack(net.minecraft.world.item.Items.MILK_BUCKET));
         }
         cir.setReturnValue(out);
     }
