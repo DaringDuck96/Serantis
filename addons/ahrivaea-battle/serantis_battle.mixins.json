@@ -51,6 +51,7 @@
     "BaseShareMixin",
     "BaseCoreShareMixin",
     "PlayerListLeaveMixin",
+    "HealingKoMixin",
     "CreatureLevelCostMixin",
     "WildChestMixin",
     "WildChestBreakMixin",

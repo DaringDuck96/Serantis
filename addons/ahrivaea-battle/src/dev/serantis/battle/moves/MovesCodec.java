@@ -13,6 +13,7 @@ public final class MovesCodec implements Codec<CaughtCreature> {
     private static final String NAME = "serantis_name";
     private static final String APPLES = "serantis_apples";
     private static final String TUTOR = "serantis_tutor";
+    private static final String KO = "serantis_ko_until";
     private final Codec<CaughtCreature> inner;
 
     private MovesCodec(Codec<CaughtCreature> inner) { this.inner = inner; }
@@ -34,6 +35,8 @@ public final class MovesCodec implements Codec<CaughtCreature> {
         if (apples != null) base = base.flatMap(t -> ops.mergeToMap(t, ops.createString(APPLES), ops.createString(apples)));
         String tutor = h.serantis$tutor();
         if (tutor != null) base = base.flatMap(t -> ops.mergeToMap(t, ops.createString(TUTOR), ops.createString(tutor)));
+        long ko = h.serantis$koUntil();
+        if (ko > System.currentTimeMillis()) base = base.flatMap(t -> ops.mergeToMap(t, ops.createString(KO), ops.createLong(ko)));
         return base;
     }
 
@@ -50,6 +53,8 @@ public final class MovesCodec implements Codec<CaughtCreature> {
                     .ifPresent(s -> ((MovesHolder) (Object) pair.getFirst()).serantis$setApples(s));
             ops.get(input, TUTOR).flatMap(ops::getStringValue).result()
                     .ifPresent(s -> ((MovesHolder) (Object) pair.getFirst()).serantis$setTutor(s));
+            ops.get(input, KO).flatMap(ops::getNumberValue).result()
+                    .ifPresent(n -> ((MovesHolder) (Object) pair.getFirst()).serantis$setKoUntil(n.longValue()));
             return pair;
         });
     }

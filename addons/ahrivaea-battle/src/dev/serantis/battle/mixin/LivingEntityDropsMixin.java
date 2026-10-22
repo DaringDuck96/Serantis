@@ -28,6 +28,12 @@ public abstract class LivingEntityDropsMixin {
         try { dropFromLootTable(level, source, true); } finally { SERANTIS_AGAIN.set(false); }
     }
 
+    // A knocked-out creature (see Knockout) doesn't heal.
+    @Inject(method = "heal", at = @At("HEAD"), cancellable = true)
+    private void serantis$koHeal(float amount, CallbackInfo ci) {
+        if ((Object) this instanceof dev.ahrivaea.creature.CreatureEntity && dev.serantis.battle.Knockout.is(this)) ci.cancel();
+    }
+
     // Winged Boots: a fall after a flight doesn't hurt.
     @Inject(method = "causeFallDamage", at = @At("HEAD"), cancellable = true)
     private void serantis$wingedFall(double distance, float multiplier, DamageSource source,

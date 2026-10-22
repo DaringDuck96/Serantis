@@ -16,4 +16,7 @@ public interface MovesHolder {
     /** The Move Tutor's standing offer for it (move ids), or null. */
     default String serantis$tutor() { return null; }
     default void serantis$setTutor(String offer) { }
+    /** Knocked out in battle: until this time (epoch ms) it can't be healed or fight (see Knockout); 0 if not. */
+    default long serantis$koUntil() { return 0; }
+    default void serantis$setKoUntil(long until) { }
 }

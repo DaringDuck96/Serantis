@@ -29,6 +29,16 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
     @Unique private String serantis$nickname;
     @Unique private String serantis$apples;
     @Unique private String serantis$tutor;
+    @Unique private long serantis$koUntil;
+    @Override public long serantis$koUntil() { return serantis$koUntil; }
+    @Override public void serantis$setKoUntil(long until) { serantis$koUntil = until; }
+
+    // Knocked out (see Knockout): nothing heals it until it's back on its feet.
+    @Inject(method = "withHealth", at = @At("HEAD"), cancellable = true)
+    private void serantis$noHealWhileKo(float health, CallbackInfoReturnable<CaughtCreature> cir) {
+        CaughtCreature self = (CaughtCreature) (Object) this;
+        if (serantis$koUntil > System.currentTimeMillis() && health > self.health()) cir.setReturnValue(self);
+    }
     @Override public String serantis$tutor() { return serantis$tutor; }
     @Override public void serantis$setTutor(String offer) { serantis$tutor = offer; }
 
@@ -74,5 +84,6 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
         if (next != null && serantis$nickname != null) ((MovesHolder) (Object) next).serantis$setNickname(serantis$nickname);
         if (next != null && serantis$apples != null) ((MovesHolder) (Object) next).serantis$setApples(serantis$apples);
         if (next != null && serantis$tutor != null) ((MovesHolder) (Object) next).serantis$setTutor(serantis$tutor);
+        if (next != null && serantis$koUntil != 0) ((MovesHolder) (Object) next).serantis$setKoUntil(serantis$koUntil);
     }
 }

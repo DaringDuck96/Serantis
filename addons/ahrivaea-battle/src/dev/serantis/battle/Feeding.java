@@ -69,6 +69,7 @@ public final class Feeding {
             CaughtCreature c = party.get(partySlot);
             Optional<Species> sp = Species.get(c.species());
             if (sp.isEmpty()) return;
+            if (Knockout.is(c)) { say(p, sp.get().nameFor(c.influence()) + " is knocked out: it can't be healed for another " + Knockout.clock(c) + "."); return; }
             max = sp.get().statsFor(c.influence()).maxHealth(c.level());
             name = sp.get().nameFor(c.influence());
             before = Math.round(c.health());
@@ -78,6 +79,7 @@ public final class Feeding {
             after = Math.round(healed);
         } else {
             if (!(p.level().getEntity(entity) instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(p) || Battles.inBattle(e)) return;
+            if (Knockout.is(e)) { say(p, e.displayName() + " is knocked out: it can't be healed for another " + Knockout.clock(e) + "."); return; }
             max = Math.round(e.getMaxHealth());
             name = e.getDisplayName().getString();
             before = Math.round(e.getHealth());

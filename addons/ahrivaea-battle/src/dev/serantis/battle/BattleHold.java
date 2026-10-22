@@ -67,6 +67,7 @@ public final class BattleHold {
         if (from.serantis$moves() != null) to.serantis$setMoves(from.serantis$moves());
         if (from.serantis$temperament() != null) to.serantis$setTemperament(from.serantis$temperament());
         if (from.serantis$apples() != null) to.serantis$setApples(from.serantis$apples());
+        if (from.serantis$koUntil() != 0) to.serantis$setKoUntil(from.serantis$koUntil());
         if (from.serantis$nickname() != null) to.serantis$setNickname(from.serantis$nickname());
         if (from.serantis$tutor() != null) to.serantis$setTutor(from.serantis$tutor());
         var job = Villages.jobOf(src);

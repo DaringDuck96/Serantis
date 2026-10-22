@@ -499,4 +499,19 @@ public abstract class BattlesMixin {
         var sp = entity.getSpecies().orElse(null);
         if (sp != null && entity.getCreatureLevel() > cap) entity.setup(sp, entity.getInfluence(), cap, -1f);
     }
+
+    // Knocked-out creatures (see Knockout) sit battles out: they're left out of the party list the battle takes
+    // its creatures from (after being moved to the back, so the slots still match), and out of the ones following you.
+    @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/party/Party;get(Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;"))
+    private static java.util.List<dev.ahrivaea.party.CaughtCreature> serantis$fighters(net.minecraft.world.entity.player.Player player) {
+        return player instanceof ServerPlayer sp ? dev.serantis.battle.Knockout.fighters(sp) : dev.ahrivaea.party.Party.get(player);
+    }
+
+    @Redirect(method = "start", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getEntitiesOfClass(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;"))
+    private static <T extends net.minecraft.world.entity.Entity> java.util.List<T> serantis$outFighters(net.minecraft.server.level.ServerLevel level, Class<T> type,
+            net.minecraft.world.phys.AABB box, java.util.function.Predicate<? super T> filter) {
+        java.util.List<T> list = new java.util.ArrayList<>(level.getEntitiesOfClass(type, box, filter));
+        list.removeIf(dev.serantis.battle.Knockout::is);
+        return list;
+    }
 }

@@ -305,7 +305,7 @@ public final class CoopBattles {
     /** A party creature into a battle: its unit (with its moves and temperament) and its entity, tamed to its owner. */
     private static Unit addCreature(Battle b, Unit.Side side, CaughtCreature c, int nearX, int nearZ, ServerPlayer owner) {
         Species sp = c == null ? null : Species.get(c.species()).orElse(null);
-        if (sp == null) return null;
+        if (sp == null || dev.serantis.battle.Knockout.is(c)) return null;   // knocked out: sits this one out
         var acc = (BattleRaidAccess) (Object) b;
         int[] cell = acc.serantis$freeCellNear(nearX, nearZ, side);
         if (b.unitAt(cell[0], cell[1]) != null) return null;              // the field is full
@@ -806,7 +806,9 @@ public final class CoopBattles {
             Unit u = b.unit(e.getKey());
             int slot = e.getValue();
             if (u == null || slot < 0 || slot >= party.size()) continue;
-            Party.set(p, slot, party.get(slot).withHealth((float) Math.max(1, u.hp)));
+            CaughtCreature saved = party.get(slot).withHealth((float) Math.max(1, u.hp));
+            if (u.hp <= 0) saved = dev.serantis.battle.Knockout.knockedOut(saved, p);   // fell: knocked out for 5 minutes
+            Party.set(p, slot, saved);
         }
     }
 

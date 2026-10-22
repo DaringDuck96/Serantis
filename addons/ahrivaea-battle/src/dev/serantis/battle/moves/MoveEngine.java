@@ -116,7 +116,7 @@ public final class MoveEngine {
             }
         }
         if (specs == null) specs = MoveBook.roll(u.influence, b.random);
-        ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(specs));
+        ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(specs, u.level));
     }
 
     /** A creature that isn't in the party (a raid's base defender): its own temperament, apples, nickname and moves. */
@@ -127,7 +127,7 @@ public final class MoveEngine {
         if (h.serantis$temperament() != null) setTemperament(u, h.serantis$temperament(), h.serantis$apples());
         if (dev.serantis.battle.FigureVisit.isFigure(c)) ((UnitAccess) (Object) u).serantis$setStats(dev.serantis.battle.Apples.of(c, null));
         List<MoveSpec> saved = MoveBook.available() ? MoveBook.decode(h.serantis$moves()) : null;
-        if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved));
+        if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved, u.level));
     }
 
     /** Moves a big creature to the nearest spot its whole body fits (or makes it smaller if none does). */
@@ -167,7 +167,7 @@ public final class MoveEngine {
             var job = dev.serantis.battle.Villages.jobOf((CreatureEntity) e);           // villagers show their profession
             if (job != null) ((UnitAccess) (Object) u).serantis$setName(u.name + " (" + dev.serantis.battle.Villages.professionName(job.profession()) + ")");
             List<MoveSpec> saved = MoveBook.decode(h.serantis$moves());
-            if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved));
+            if (saved != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(saved, u.level));
             else h.serantis$setMoves(encodeUnit(u));
         }
     }
@@ -200,7 +200,7 @@ public final class MoveEngine {
                     for (MoveSpec m : roll) power += Math.max(0, m.sheetPower);
                     if (power > bestPower) { bestPower = power; best = roll; }
                 }
-                if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best));
+                if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best, u.level));
             }
         }
         acc(b).serantis$say(grand ? "The " + name + " sends out its team, stronger than ever! Winning pays double XP, an enchanted book and golden apples."
@@ -226,7 +226,7 @@ public final class MoveEngine {
                 for (MoveSpec m : roll) power += Math.max(0, m.sheetPower);
                 if (power > bestPower) { bestPower = power; best = roll; }
             }
-            if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best));
+            if (best != null) ((UnitAccess) (Object) u).serantis$setMoves(MoveBook.toBattleMoves(best, u.level));
         }
         acc(b).serantis$say("The " + name + " stands alone against you all. Prove you're worthy of the Eternita Stone.");
     }
@@ -260,7 +260,7 @@ public final class MoveEngine {
             List<Unit> near = new ArrayList<>();
             for (Unit u : b.units) {
                 int dd = dist(a, u);
-                if (u != a && u.alive() && dd >= Math.max(1, spec.min) && dd <= spec.max) near.add(u);
+                if (u != a && u.alive() && dd >= Math.max(1, spec.min) && dd <= MoveBook.reach(spec.max, spec.min, a.level)) near.add(u);
             }
             if (!near.isEmpty()) {
                 t = near.get(b.random.nextInt(near.size()));

@@ -80,7 +80,7 @@ public final class MoveBook {
         if (m == null) return null;
         load();
         MoveSpec s = byName.get(m.name());
-        return s != null && s.min == m.minRange() && s.max == m.maxRange() ? s : null;
+        return s != null && s.min == m.minRange() && m.maxRange() <= Math.max(s.max, reach(s.max, s.min, 20)) ? s : null;   // reach scales with level
     }
 
     /** Every move in the catalog. */
@@ -106,6 +106,27 @@ public final class MoveBook {
     public static List<BattleMove> toBattleMoves(List<MoveSpec> specs) {
         List<BattleMove> out = new ArrayList<>();
         for (MoveSpec s : specs) out.add(toBattleMove(s));
+        return out;
+    }
+
+    /**
+     * Ranged moves reach further as a creature levels up: on average about 2-3 tiles at Levels 1-4, 3-5 at 5-8, 6 at
+     * 9-15 and 7-8 at 16-20 (the Move Dex's reach times 0.42, 0.62, 0.92 or 1.2). Never under 2, nor under the
+     * move's own minimum. Melee moves (reach 1) don't change.
+     */
+    public static int reach(int max, int min, int level) {
+        if (max <= 1) return max;
+        double f = level <= 4 ? 0.42 : level <= 8 ? 0.62 : level <= 15 ? 0.92 : 1.2;
+        return Math.max(Math.max(2, min), (int) Math.floor(max * f + 0.5));
+    }
+
+    /** As toBattleMoves, for a creature of this level (see reach). */
+    public static List<BattleMove> toBattleMoves(List<MoveSpec> specs, int level) {
+        List<BattleMove> out = new ArrayList<>();
+        for (MoveSpec s : specs) {
+            BattleMove m = toBattleMove(s);
+            out.add(new BattleMove(m.name(), m.move(), m.minRange(), reach(m.maxRange(), m.minRange(), level)));
+        }
         return out;
     }
 

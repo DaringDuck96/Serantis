@@ -89,5 +89,6 @@ public abstract class ServerPlayerSkillsMixin {
         if (self.tickCount % 100 == 83) dev.serantis.battle.GoblinRaids.sweep(self);
         if (self.tickCount % 100 == 47) dev.serantis.battle.WildChests.tick(self);
         if (self.tickCount % 40 == 23) dev.serantis.battle.BloodMoon.tick(self);
+        if (self.tickCount % 100 == 71) dev.serantis.battle.Knockout.tick(self);
     }
 }

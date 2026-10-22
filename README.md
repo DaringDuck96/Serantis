@@ -73,7 +73,7 @@ The first time a player joins, a welcome guide pops up (over the starter screen,
 - Damage = Power × 4 × level factor × (Attack + 10) ÷ (Defense + 10). Magic moves use Magic on both sides. Influence matchups and the same-influence bonus (×1.2) still apply.
 - Moves that reach more than 1 tile are ranged: 85% base hit chance. Moves that only reach 1 tile are melee: they deal 15% more damage. Luck shifts hit chance either way.
 - Crits: a flat 10% chance (20% with high ground: standing at least 1 block above the target), and they double damage.
-- Reach: universal ranged moves reach twice the Move Dex's maximum; magic ranged moves 1.5× (rounded up). Ranged attacks average about 6 tiles.
+- Reach: universal ranged moves reach twice the Move Dex's maximum; magic ranged moves 1.5× (rounded up). Reach also grows with the creature's level: ranged attacks average about 2-3 tiles at Levels 1-4, 3-5 at Levels 5-8, 6 at Levels 9-15 and 7-8 at Levels 16-20 (never under 2 tiles). Melee moves always reach 1. (Your own bow, crossbow and staff spells don't change with level.)
 - Stat changes in the Move Dex are 10% of that stat per point (Defense +2 = +20%); accuracy changes are percentage points. Healing and damage over time use the same scale as Power.
 - Statuses: Bleeding and Poison lose 5% of max HP each turn; Burning deals its stated damage each turn; Frozen, Stunned and Asleep skip turns (Asleep wakes when hit); Immobilized can't move; Slowed moves 2 fewer tiles; Confused attacks a random nearby unit half the time; Frightened deals about 30% less damage.
 - Counter Stance: Defense +2 until the user's next turn, and anyone who damages it before then takes 25% of that damage back as recoil.
@@ -203,6 +203,8 @@ That's 1,285 golden apples in all. Where the counts come from: blocks placed, di
 **One XP currency.** Battles give ordinary Minecraft XP: 10 for a win plus 3 × its level for each creature beaten (x1.5 for Super Rare and Legendary), and then the whole amount x1.5. Beating one creature pays 20 XP at Level 1, 38 at Level 5, 60 at Level 10 and 105 at Level 20, so tougher fights pay much more, on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.
 
 **Levelling creatures.** On the party screen you spend XP to level a creature: 8,000 XP in all from Level 1 to Level 20, rising steadily from 150 (Level 1 to 2) by about 30 per level to 692 (19 to 20), and on in the same way past 20. Presence discounts apply.
+
+**Knocked out.** A creature of yours that drops to 0 HP in battle is knocked out for 5 minutes: its party card shows 0 HP and "knocked out", nothing heals it (food, potions, resting) and it sits out battles (it's moved to the back of your party). After 5 minutes it's back on its feet at 1 HP, you get a message, and food or a potion can heal it again. Friendly spars knock no one out. If you fall in battle yourself, the battle is lost; you're back at full health, but everything you're wearing or holding loses half its durability (see Defeat).
 
 **Defeat.** XP is never lost. You keep all of it when you lose a battle or die, and dying drops no XP orbs. Instead, everything you're wearing or holding (armour, weapon, shield, tools) loses half of its full durability. It's never destroyed outright and is left with at least 1 use. On a normal death your items still drop as usual.
 

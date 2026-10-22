@@ -126,6 +126,12 @@ public abstract class BattleMixin implements BattleAccess {
         return !dev.serantis.battle.coop.CoopBattles.isSpar((Battle) (Object) this) && level.isDarkOutside();
     }
 
+    // Creatures that fell are knocked out for 5 minutes (see Knockout).
+    @Inject(method = "saveParty", at = @At("RETURN"))
+    private void serantis$knockouts(net.minecraft.server.level.ServerPlayer p, CallbackInfo ci) {
+        dev.serantis.battle.Knockout.afterBattle((Battle) (Object) this, p);
+    }
+
     @Inject(method = "saveParty", at = @At("HEAD"), cancellable = true)
     private void serantis$sparParty(net.minecraft.server.level.ServerPlayer p, CallbackInfo ci) {
         if (dev.serantis.battle.coop.CoopBattles.skipSaveParty((Battle) (Object) this)) ci.cancel();
