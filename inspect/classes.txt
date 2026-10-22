@@ -1,3 +1,4 @@
-# 1792711080
-sig:net.minecraft.client.renderer.LevelRenderer
-net.minecraft.client.renderer.LevelRenderer
+# 1792711132
+sig:net.minecraft.client.renderer.ViewArea
+sig:net.minecraft.client.multiplayer.ClientLevel
+sig:net.minecraft.client.renderer.SectionOcclusionGraph
