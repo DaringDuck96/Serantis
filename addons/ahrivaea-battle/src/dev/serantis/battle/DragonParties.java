@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * End dragons and who they belong to. When a dragon finishes rising, the players around it are sorted into parties
  * (a group together, everyone else on their own). With one party there, the dragon is everyone's, as before. With
- * more, the first party keeps it and every other party gets its own dragon of the same kind beside it, which only that
+ * more, the first party keeps it and every other party gets its own dragon beside it, of a random other kind (each party a different one while there are kinds to go round), which only that
  * party can see, hear asked its riddle or fight. A party's dragon remembers its people (entity tags "serantis_for_<id>",
  * every member of the group), so they still see it after a restart.
  *
@@ -67,16 +67,21 @@ public final class DragonParties {
             out.put(dragon, parties.isEmpty() ? List.of() : parties.values().iterator().next());
             return out;
         }
-        Species species = Species.get(dragon.getSpeciesId()).orElse(null);
+        List<String> pool = new ArrayList<>();                          // every dragon with a riddle, the risen one's kind last
+        var dragons = Riddles.data().has("dragons") ? Riddles.data().getAsJsonObject("dragons").keySet() : java.util.Set.<String>of();
+        for (String id : dragons) if (!id.equals(dragon.getSpeciesId()) && Species.get(id).isPresent()) pool.add(id);
+        java.util.Collections.shuffle(pool);
         int n = 0;
         for (List<ServerPlayer> party : parties.values()) {
             CreatureEntity mine = dragon;
-            if (n > 0 && species != null) {                             // the next party's own dragon, a few steps away
+            if (n > 0) {                                                 // the next party's own dragon, a random kind, a few steps away
+                String id = pool.isEmpty() ? dragon.getSpeciesId() : pool.get((n - 1) % pool.size());
+                Species species = Species.get(id).orElse(null);
+                if (species == null) continue;
                 double a = n * 2.1;
-                mine = dev.ahrivaea.Ahrivaea.spawn(level, species, dragon.getInfluence(), dragon.getCreatureLevel(), -1f,
-                        dragon.getX() + Math.cos(a) * 3, dragon.getY(), dragon.getZ() + Math.sin(a) * 3);
+                mine = dev.ahrivaea.Ahrivaea.spawn(level, species, species.formOrDefault(dev.ahrivaea.creature.Influence.NONE),
+                        dragon.getCreatureLevel(), -1f, dragon.getX() + Math.cos(a) * 4, dragon.getY(), dragon.getZ() + Math.sin(a) * 4);
                 if (mine == null) continue;
-                mine.setVariant(dragon.getVariant());
             }
             claim(mine, party);
             out.put(mine, party);
