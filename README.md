@@ -387,7 +387,7 @@ The 20 End dragons (Lindworm, Ddraig Goch, Hrimwyrm, Piasa, Fafnir, Gargouille, 
 
 ### About the Batch 3 bosses
 
-The Harbinger of Calamity is summoned like a Warden (see below). **The False Hydra** is summoned exactly like the Wither: a T of four soul sand or soul soil blocks with three wither skeleton skulls on top (Death Knights in the Nether drop them, 4%, and Netherwright villagers sell them). The blocks vanish and the False Hydra (Legendary, Arcane, Level 20) appears instead of the Wither. Like the Wither, it charges for 11 seconds first, glowing and untouchable while its health and purple boss bar fill, then bursts out in a big explosion (as strong as the Wither's, and it breaks blocks unless mob griefing is off), with the Wither's spawn sound heard across the world. Then it's a wild creature you can battle and recruit; its boss bar shows its health to everyone within 64 blocks. In a group, the first member to start the battle gets a join pop-up sent to the others within 48 blocks, the same as any battle.
+The Harbinger of Calamity is summoned like a Warden (see below). **The False Hydra** is summoned exactly like the Wither: a T of four soul sand or soul soil blocks with three wither skeleton skulls on top (Death Knights in the Nether drop them, 4%, and Netherwright villagers sell them). The blocks vanish and the False Hydra (Legendary, Arcane, Level 20) appears instead of the Wither, a wild creature you can battle and recruit. In a group, whoever starts the battle sends a join pop-up to the others within 48 blocks, the same as any battle.
 
 ## How to install
 

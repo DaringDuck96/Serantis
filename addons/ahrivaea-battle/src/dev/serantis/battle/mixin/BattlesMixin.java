@@ -272,12 +272,7 @@ public abstract class BattlesMixin {
         if (dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null) return;   // a spar's stand-in creature
         if (dev.serantis.battle.BattleHold.isHeld(entity)) { serantis$refuse(cir); return; }   // waiting out another player's battle
         if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { serantis$refuse(cir); return; }   // the Mysterious Figure doesn't fight
-        if (!dev.serantis.battle.DragonParties.allowed(entity, player.getUUID())) { serantis$refuse(cir); return; }
-        if (dev.serantis.battle.FalseHydra.charging(entity)) {           // the False Hydra is still charging up
-            player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The False Hydra is still gathering its power...").withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
-            serantis$refuse(cir);
-            return;
-        }   // another party's End dragon
+        if (!dev.serantis.battle.DragonParties.allowed(entity, player.getUUID())) { serantis$refuse(cir); return; }   // another party's End dragon
         if (dev.serantis.battle.VillagerTalk.ask(player, entity)) { serantis$refuse(cir); return; }   // a villager talks before it fights
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
             dev.serantis.battle.GoblinRaids.open(player, entity);
