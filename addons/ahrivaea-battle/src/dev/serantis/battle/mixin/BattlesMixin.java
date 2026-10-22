@@ -379,6 +379,13 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_eat".equals(kind) || "serantis_feed".equals(kind)) {   // right-clicked food in the inventory (FeedScreen)
+                int slot = o.has("slot") ? o.get("slot").getAsInt() : -1;
+                if ("serantis_eat".equals(kind)) dev.serantis.battle.Feeding.eat(player, slot);
+                else dev.serantis.battle.Feeding.feed(player, slot, o.has("party") ? o.get("party").getAsInt() : -1, o.has("entity") ? o.get("entity").getAsInt() : -1);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_achievements_claim".equals(kind)) {   // claim waiting golden apple rewards
                 dev.serantis.battle.Achievements.claim(player);
                 cir.setReturnValue(null);

@@ -60,6 +60,7 @@
     "client.PartyScreenMixin",
     "client.AvatarArmorMixin",
     "client.HudCutsceneMixin",
+    "client.InventoryFeedMixin",
     "client.CreatureRenderStateMixin",
     "client.CreatureBattleSizeMixin",
     "client.NameTagCutsceneMixin",

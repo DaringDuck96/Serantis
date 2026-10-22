@@ -138,6 +138,8 @@ Every creature gets one of 25 temperaments at random when it first appears and k
 
 ### Golden apples
 
+**Right-click food in your inventory.** Open your inventory (E) and right-click food or any other consumable (with nothing on your cursor) for a menu: eat or drink it yourself, or give it to a creature in your party (or one of yours that's out nearby). Food and healing potions heal a creature like feeding it from the party screen; a golden apple opens the stat picker for the creature you choose. (Right-clicking other items still splits stacks as usual.)
+
 Feed golden apples to creatures in your party to raise their stats. This lets weaker creatures keep up late in the game. On the party screen, pick a creature and press **Apple**, then choose the stat. Each apple uses one golden apple from your inventory (none in Creative). Every stat of every creature can take up to 10 apples. How much each apple adds depends on the creature's rarity:
 
 | Rarity | Per apple | After 10 apples |
