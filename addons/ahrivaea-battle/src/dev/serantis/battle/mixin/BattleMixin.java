@@ -138,6 +138,18 @@ public abstract class BattleMixin implements BattleAccess {
         if (dev.serantis.battle.coop.CoopBattles.skipSaveParty((Battle) (Object) this)) ci.cancel();
     }
 
+    // A bucket of milk cures statuses in battle (see Ailments): the Item action on a unit with a status uses milk if
+    // you have some (the bucket is used up), otherwise a healing potion as before.
+    @Inject(method = "itemCheck", at = @At("HEAD"), cancellable = true)
+    private void serantis$milkCheck(Unit u, Unit target, CallbackInfoReturnable<String> cir) {
+        if (dev.serantis.battle.Ailments.milkFor((Battle) (Object) this, u, target) != null) cir.setReturnValue(null);
+    }
+
+    @Inject(method = "useItem", at = @At("HEAD"), cancellable = true)
+    private void serantis$milk(Unit u, Unit target, CallbackInfo ci) {
+        if (dev.serantis.battle.Ailments.useMilk((Battle) (Object) this, u, target)) ci.cancel();
+    }
+
     // Potions come from whoever is acting (an ally uses their own).
     @Redirect(method = {"itemCheck", "useItem"}, at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battle;player()Lnet/minecraft/server/level/ServerPlayer;"))
     private net.minecraft.server.level.ServerPlayer serantis$itemUser(Battle self) {

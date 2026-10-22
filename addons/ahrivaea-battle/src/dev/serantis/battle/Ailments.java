@@ -37,7 +37,9 @@ import java.util.UUID;
  * Your creatures (one ailment each, shown on the party screen, "Name - Poisoned"):
  *   Poison, Bleeding, Burning, Doom: it slowly loses HP (1% of its max every 5 seconds), but never below half its max.
  *   Anything else: it's sluggish while it's out with you (slow to follow, slow to ride).
- *   Feeding it a bucket of milk or a honey bottle (right-click it in your inventory) cures it.
+ *   Feeding it a bucket of milk (right-click it in your inventory) cures it. The bucket is used up.
+ * In battle, the Item action on a unit with a status (you, or a creature next to you) uses a bucket of milk if you have
+ * one: every status on it is cured and the bucket is used up. Drinking milk never gives the bucket back.
  * The same goes for a co-op ally's creatures, and for enemies still standing when you flee or lose (a wild creature
  * keeps it while it roams, and if you recruit it, it comes with it). Nothing carries into the next battle.
  */
@@ -182,7 +184,7 @@ public final class Ailments {
             else for (CreatureEntity e : owner.level().getEntitiesOfClass(CreatureEntity.class, owner.getBoundingBox().inflate(64),
                     x -> x.isTame() && x.isOwnedBy(owner) && x.getSpeciesId().equals(u.speciesId))) { set(e, s); break; }
             owner.sendSystemMessage(Component.literal(name(c) + " is still " + label(s).toLowerCase() + ": for 3 minutes " + what(s)
-                    + ". Feed it milk or a honey bottle to cure it.").withStyle(ChatFormatting.GRAY));
+                    + ". Feed it a bucket of milk to cure it.").withStyle(ChatFormatting.GRAY));
             any = true;
         }
         if (any) PartySync.sync(owner);
@@ -194,7 +196,7 @@ public final class Ailments {
         if (s == null || Knockout.is(c)) return c;
         set(c, s);
         p.sendSystemMessage(Component.literal(name(c) + " is still " + label(s).toLowerCase() + ": for 3 minutes " + what(s)
-                + ". Feed it milk or a honey bottle to cure it.").withStyle(ChatFormatting.GRAY));
+                + ". Feed it a bucket of milk to cure it.").withStyle(ChatFormatting.GRAY));
         return c;
     }
 
@@ -254,7 +256,45 @@ public final class Ailments {
     // ------------------------------------------------------------------ cures
 
     public static boolean cure(ItemStack s) {
-        return s.is(Items.MILK_BUCKET) || s.is(Items.HONEY_BOTTLE);
+        return s.is(Items.MILK_BUCKET);
+    }
+
+    // ------------------------------------------------------------------ milk in battle
+
+    private static boolean hasStatus(Unit t) {
+        UnitState st = MoveEngine.state(t);
+        if (st != null) for (UnitState.Effect e : st.effects) if ("status".equals(e.kind) && label(e.key) != null) return true;
+        return false;
+    }
+
+    /** The milk the acting player would use on this unit (it has a status, is them or next to them), or null. */
+    public static ItemStack milkFor(Battle b, Unit u, Unit target) {
+        if (u == null || target == null || !u.isPlayer || !target.alive() || target.side != u.side || !hasStatus(target)) return null;
+        if (dev.serantis.battle.coop.CoopBattles.isSpar(b)) return null;
+        if (target != u && dev.serantis.battle.moves.Body.distance(b, u.x, u.z, target.x, target.z) > 1) return null;
+        ServerPlayer p = dev.serantis.battle.coop.CoopBattles.itemUser(b);
+        if (p == null) return null;
+        var inv = p.getInventory();
+        for (int i = 0; i < inv.getContainerSize(); i++) if (inv.getItem(i).is(Items.MILK_BUCKET)) return inv.getItem(i);
+        return null;
+    }
+
+    /** The Item action with milk: every status on the unit is cured, and the bucket is used up. */
+    public static boolean useMilk(Battle b, Unit u, Unit target) {
+        ItemStack milk = milkFor(b, u, target);
+        if (milk == null) return false;
+        ServerPlayer p = dev.serantis.battle.coop.CoopBattles.itemUser(b);
+        UnitState st = MoveEngine.state(target);
+        List<String> cured = new java.util.ArrayList<>();
+        st.effects.removeIf(e -> {
+            if (!"status".equals(e.kind) || label(e.key) == null) return false;
+            if (!cured.contains(label(e.key))) cured.add(label(e.key));
+            return true;
+        });
+        if (p != null && !p.getAbilities().instabuild) milk.shrink(1);
+        ((dev.serantis.battle.moves.BattleAccess) (Object) b).serantis$say(u.name + (target == u ? " drinks a bucket of milk" : " gives " + target.name + " a bucket of milk")
+                + ": no longer " + String.join(", ", cured).toLowerCase() + ".");
+        return true;
     }
 
     /** Cure a creature (a party one or one that's out). Returns the message, or null if it had nothing to cure. */

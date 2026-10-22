@@ -57,7 +57,8 @@
     "WildChestBreakMixin",
     "BaseCoreAccess",
     "WorkerBrainAccess",
-    "PlayerAilmentMilkMixin"
+    "PlayerAilmentMilkMixin",
+    "MilkBucketMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

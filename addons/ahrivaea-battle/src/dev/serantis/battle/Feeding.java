@@ -57,7 +57,7 @@ public final class Feeding {
         ItemStack s = slot(p, slot);
         if (!feedable(s)) return;
         if (Battles.of(p) != null) { say(p, "Not in the middle of a battle."); return; }
-        if (Ailments.cure(s) && cure(p, s, partySlot, entity)) return;    // milk or honey: cures a lingering status
+        if (Ailments.cure(s) && cure(p, s, partySlot, entity)) return;    // milk: cures a lingering status
         int pct = Healing.foodPercent(s);
         var potion = Healing.potion(s);
         if (pct <= 0 && potion != null) pct = potion.percent();
@@ -96,7 +96,7 @@ public final class Feeding {
         PartySync.sync(p);
     }
 
-    /** Milk or honey for a creature with a lingering status: cures it. False if there was nothing to cure (honey then feeds it as food). */
+    /** Milk for a creature with a lingering status: cures it (the bucket is used up). */
     private static boolean cure(ServerPlayer p, ItemStack s, int partySlot, int entity) {
         String msg;
         if (partySlot >= 0) {
@@ -112,13 +112,10 @@ public final class Feeding {
             msg = Ailments.cureCreature(e, e.getDisplayName().getString());
         }
         if (msg == null) {
-            if (Healing.foodPercent(s) > 0) return false;
-            say(p, "Nothing to cure: milk and honey cure a status left over from a battle.");
+            say(p, "Nothing to cure: milk cures a status left over from a battle.");
             return true;
         }
-        ItemStack left = Healing.remainder(s);
-        s.consume(1, p);
-        Healing.giveBack(p, left);
+        s.consume(1, p);                                                  // the bucket goes too
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.GENERIC_DRINK.value(), SoundSource.PLAYERS, 0.7f, 1.1f);
         say(p, msg);
         PartySync.sync(p);
