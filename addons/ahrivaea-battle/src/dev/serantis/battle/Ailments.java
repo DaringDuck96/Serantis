@@ -182,14 +182,19 @@ public final class Ailments {
             if (c == null && out != null && o >= 0 && o < out.size()) c = out.get(o);
             if (c == null || Knockout.is(c)) continue;
             set(c, s);
-            if (u.partySlot >= 0) Party.set(owner, u.partySlot, c);
-            else for (CreatureEntity e : owner.level().getEntitiesOfClass(CreatureEntity.class, owner.getBoundingBox().inflate(64),
-                    x -> x.isTame() && x.isOwnedBy(owner) && x.getSpeciesId().equals(u.speciesId))) { set(e, s); break; }
+            if (u.partySlot >= 0) Party.set(owner, u.partySlot, c);      // (a creature that's out takes it from c when it comes back)
             owner.sendSystemMessage(Component.literal(name(c) + " is still " + label(s).toLowerCase() + ": for 3 minutes " + what(s)
                     + ". Feed it a bucket of milk to cure it.").withStyle(ChatFormatting.GRAY));
             any = true;
         }
         if (any) PartySync.sync(owner);
+    }
+
+    /** The wild creature you fled from (or lost to) is sent back from the arena: it keeps its leftover status. */
+    public static void goneHome(Unit lead, CreatureEntity back) {
+        if (lead == null || back == null || lead.hp <= 0) return;
+        String s = leftover(lead);
+        if (s != null) set(back, s);
     }
 
     /** A co-op ally's creature saved back to their party (CoopBattles): it keeps what it was left with. */
@@ -281,6 +286,7 @@ public final class Ailments {
     /** Why milk can't be used on this unit now, or null if it can. */
     public static String milkProblem(Battle b, Unit u, Unit target) {
         if (milkFor(b, u, target) != null) return null;
+        if (dev.serantis.battle.coop.CoopBattles.isSpar(b)) return "No milk in a friendly spar.";
         if (target == null || !target.alive() || target.side != u.side) return "Give milk to yourself or a creature of yours next to you.";
         if (target != u && dev.serantis.battle.moves.Body.distance(b, u.x, u.z, target.x, target.z) > 1) return "Give milk to yourself or a creature of yours next to you.";
         if (!hasStatus(target)) return target.name + " has no status to cure.";

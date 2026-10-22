@@ -253,8 +253,10 @@ public final class MoveEngine {
             acc.serantis$say(a.name + " hesitates.");
             return;
         }
-        as.lastMoveId = spec.id;
-        as.lastMoveTurn = b.turn;
+        if (ownTurn(b, a)) {                                             // a strike-back on the other side's turn doesn't count as a repeat
+            as.lastMoveId = spec.id;
+            as.lastMoveTurn = b.turn;
+        }
 
         if (as.has("confused") && !spec.support() && b.random.nextBoolean()) {
             List<Unit> near = new ArrayList<>();
@@ -424,7 +426,7 @@ public final class MoveEngine {
                 double share = switch (when == null ? "" : when) {
                     case "higher" -> !a.flies() && Body.height(b, a) - Body.height(b, t) >= 1 ? pct : 0;
                     case "water_target" -> t.influence == dev.ahrivaea.creature.Influence.WATER ? pct : 0;
-                    case "raining" -> b.level.isRaining() ? pct : 0;
+                    case "raining" -> b.level.getServer().overworld().isRaining() ? pct : 0;
                     case "far" -> pct * Math.max(0, Math.min(3, Body.gap(a, t) - 3));
                     default -> 0;
                 };
@@ -787,6 +789,8 @@ public final class MoveEngine {
                 return --e.turns <= 0;
             });
         }
+        for (Unit u : b.units)                                            // a mace swing's opening lasts only through the other side's turn
+            if (u.side != side && u.alive()) state(u).remove("exposed");
         Field.of(b).endTurn(b, side);
     }
 
@@ -830,7 +834,7 @@ public final class MoveEngine {
                 if (spec == null) continue;
                 JsonObject mj = moves.get(n).getAsJsonObject();
                 mj.addProperty("serantis_target", spec.target);
-                mj.addProperty("power", spec.sheetPower);
+                mj.addProperty("power", dev.serantis.battle.WeaponStyles.isWeaponMove(u.moves.get(n)) ? u.moves.get(n).move().power() : spec.sheetPower);   // a weapon: this player's own
                 if (spec.hits > 1) mj.addProperty("name", spec.name + " x" + spec.hits);
                 if (spec.text != null) mj.addProperty("info", spec.text);
                 mj.addProperty("serantis_line", MoveExplain.line(spec));

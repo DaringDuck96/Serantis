@@ -21,7 +21,7 @@ public abstract class BaseAreaMixin {
     @Unique private int serantis$out() { return level + EXTRA; }
 
     @Inject(method = "chunks", at = @At("HEAD"), cancellable = true)
-    private void serantis$chunks(CallbackInfoReturnable<Integer> cir) { cir.setReturnValue(serantis$out()); }
+    private void serantis$chunks(CallbackInfoReturnable<Integer> cir) { cir.setReturnValue(serantis$out() + 1); }   // loading reaches past the circle's edge
 
     @Inject(method = "radius", at = @At("HEAD"), cancellable = true)
     private void serantis$radius(CallbackInfoReturnable<Integer> cir) { cir.setReturnValue(serantis$out() * 16 + 8); }

@@ -330,6 +330,7 @@ public final class GoblinRaids {
             CaughtCreature c = w.creature();
             if (c == null || c.influence() == null) continue;
             Species sp = Species.get(c.species()).orElse(null);
+            if (w.entity() != null && level.getEntity(w.entity()) instanceof CreatureEntity e && Knockout.is(e)) continue;   // still knocked out from the last raid
             if (sp != null && w.active(sp.jobsFor(c.influence())).contains(Job.DEFENSE)) out.add(w);
         }
         return out;

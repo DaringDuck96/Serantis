@@ -48,7 +48,10 @@ public abstract class BattlesMixin {
     private static CreatureEntity serantis$noLookAlike(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.creature.Species sp, dev.ahrivaea.creature.Influence inf,
                                                       int lvl, float hp, double x, double y, double z, ServerPlayer p, Battle b) {
         if (dev.serantis.battle.BattleHold.keptFor(b)) return null;      // the real one is still there
-        return dev.ahrivaea.Ahrivaea.spawn(level, sp, inf, lvl, hp, x, y, z);
+        CreatureEntity back = dev.ahrivaea.Ahrivaea.spawn(level, sp, inf, lvl, hp, x, y, z);
+        Unit lead = b == null ? null : ((BattleRaidAccess) (Object) b).serantis$lead();
+        if (back != null && lead != null) dev.serantis.battle.Ailments.goneHome(lead, back);   // its leftover status goes with it
+        return back;
     }
 
     // ---- co-op (see CoopBattles)

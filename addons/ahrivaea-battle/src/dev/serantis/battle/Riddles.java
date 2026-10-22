@@ -143,6 +143,13 @@ public final class Riddles {
         }
         if (!e.entityTags().contains(ASK_TAG) || !(e.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
         e.removeTag(ASK_TAG);
+        boolean claimed = false;                                          // a party's own dragon (reloaded mid-rise): only its party is asked
+        for (String t : e.entityTags()) if (t.startsWith(DragonParties.FOR)) claimed = true;
+        if (claimed) {
+            for (ServerPlayer p : level.players())
+                if (DragonParties.allowed(e, p.getUUID()) && p.distanceToSqr(e) < 48 * 48) ask(p, e);
+            return;
+        }
         for (var en : DragonParties.share(level, e).entrySet())         // players not in one group each get their own dragon
             for (ServerPlayer p : en.getValue())
                 if (p.distanceToSqr(en.getKey()) < 48 * 48) ask(p, en.getKey());

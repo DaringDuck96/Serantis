@@ -116,8 +116,8 @@ public class FeedScreen extends Screen {
         int l = (width - W) / 2, y = height / 2 - 70;
         g.item(s, l, y);
         g.text(font, s.getHoverName().getString(), l + 22, y + 4, GOLD);
-        if (dev.serantis.battle.Ailments.cure(s)) g.text(font, "Cures a creature's lingering status.", l, y + 47 - 11, DIM);
-        else if (dev.serantis.battle.Feeding.feedable(s) && !s.is(Items.GOLDEN_APPLE)) g.text(font, "Heals a creature outside battle.", l, y + 47 - 11, DIM);
+        if (dev.serantis.battle.Ailments.cure(s)) g.text(font, "Cures a creature's lingering status.", l + 22, y + 14, DIM);
+        else if (dev.serantis.battle.Feeding.feedable(s) && !s.is(Items.GOLDEN_APPLE)) g.text(font, "Heals a creature outside battle.", l + 22, y + 14, DIM);
     }
 
     @Override

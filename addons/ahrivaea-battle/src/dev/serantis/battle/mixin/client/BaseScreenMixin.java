@@ -26,7 +26,7 @@ public abstract class BaseScreenMixin extends Screen {
         addRenderableWidget(Button.builder(Component.literal("Guide"),
                         btn -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.WelcomeScreen(self, 1)))
                 .tooltip(Tooltip.create(Component.literal("How creatures work at your base: their jobs, and what to expect from them.")))
-                .bounds(width - 124, 6, 50, 20).build());
+                .bounds(width - 124, 2, 50, 18).build());
         JsonObject st = self.state();
         if (st != null && st.has("serantis_look") && st.has("pos")) {   // an Overworld base you can use: pick its look (see BaseLooks)
             var pos = st.getAsJsonArray("pos");
@@ -34,13 +34,13 @@ public abstract class BaseScreenMixin extends Screen {
             String look = st.get("serantis_look").getAsString();
             addRenderableWidget(Button.builder(Component.literal("Look"), btn -> Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.BaseLookScreen(self, core, look)))
                     .tooltip(Tooltip.create(Component.literal("Give this base the grass, leaf and water colours of any Overworld or Nether biome. Only the look changes.")))
-                    .bounds(width - 178, 6, 50, 20).build());
+                    .bounds(width - 178, 2, 50, 18).build());
         }
         if (st == null || !st.has("serantis_skills")) return;
         JsonObject s = st.getAsJsonObject("serantis_skills");
         if (!s.get("owner").getAsBoolean()) return;
         Button b = Button.builder(Component.literal("Skills"), btn -> Minecraft.getInstance().gui.setScreen(new SkillTreeScreen(self)))
-                .bounds(width - 70, 6, 64, 20).build();
+                .bounds(width - 70, 2, 64, 18).build();
         if (s.get("baseLevel").getAsInt() < 1) {
             b.active = false;
             b.setTooltip(Tooltip.create(Component.literal("Upgrade this base to Level 1 to train your skills here.")));
@@ -62,6 +62,7 @@ public abstract class BaseScreenMixin extends Screen {
     private static void serantis$keepTree(Gui gui, Screen screen) {
         if (gui.screen() instanceof SkillTreeScreen tree && screen instanceof BaseScreen base) { tree.setParent(base); return; }
         if (gui.screen() instanceof dev.serantis.battle.client.WelcomeScreen guide && screen instanceof BaseScreen base) { guide.setParent(base); return; }
+        if (gui.screen() instanceof dev.serantis.battle.client.BaseLookScreen look && screen instanceof BaseScreen base) { look.setParent(base); return; }   // keep picking
         gui.setScreen(screen);
     }
 }

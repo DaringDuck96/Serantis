@@ -21,6 +21,7 @@ public abstract class HayToggleMixin {
     @Inject(method = "useWithoutItem", at = @At("HEAD"), cancellable = true)
     private void serantis$hay(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if (!state.is(Blocks.HAY_BLOCK) || !player.getMainHandItem().isEmpty()) return;
+        if (level.isClientSide()) { cir.setReturnValue(InteractionResult.SUCCESS); return; }   // the server decides; don't use the off-hand item
         if (level instanceof ServerLevel sl && player instanceof ServerPlayer sp && dev.serantis.battle.HayBales.toggle(sl, pos, sp))
             cir.setReturnValue(InteractionResult.SUCCESS);
     }

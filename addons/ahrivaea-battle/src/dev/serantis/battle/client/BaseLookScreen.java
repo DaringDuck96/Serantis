@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class BaseLookScreen extends Screen {
     private static final int COL_W = 170, ROW_H = 22, SWATCH = 9;
-    private final Screen parent;
+    private Screen parent;
     private final BlockPos core;
     private String current;
     private int page;
@@ -67,6 +67,15 @@ public class BaseLookScreen extends Screen {
             addRenderableWidget(Button.builder(Component.literal(">"), b -> { page++; rebuildWidgets(); }).bounds(width / 2 + 74, by, 30, 20).build()).active = page < pages - 1;
         }
         addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose()).bounds(width / 2 - 40, by, 80, 20).build());
+    }
+
+    /** The base screen was refreshed (after a pick): come back to the new one, showing what the base now looks like. */
+    public void setParent(Screen base) {
+        parent = base;
+        if (base instanceof dev.ahrivaea.client.base.BaseScreen bs && bs.state() != null && bs.state().has("serantis_look")) {
+            current = bs.state().get("serantis_look").getAsString();
+            rebuildWidgets();
+        }
     }
 
     private void pick(String id) {

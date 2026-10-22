@@ -64,6 +64,9 @@ public final class Harbinger {
     private static void spawn(Pending p) {
         Species sp = Species.get(SPECIES).orElse(null);
         if (sp == null) return;
+        var near = new net.minecraft.world.phys.AABB(p.x() - 48, p.y() - 48, p.z() - 48, p.x() + 48, p.y() + 48, p.z() + 48);
+        if (!p.level().getEntitiesOfClass(CreatureEntity.class, near, c -> is(c) && !c.isTame()).isEmpty()) return;   // one's already here (shriekers keep calling)
+        for (Rising r : RISING) if (r.e().level() == p.level() && r.e().distanceToSqr(p.x(), p.y(), p.z()) < 48 * 48) return;
         Influence inf = sp.formOrDefault(Influence.DARKNESS);
         int lvl = 16 + p.level().getRandom().nextInt(3);                     // always Level 16-18
         CreatureEntity e = Ahrivaea.spawn(p.level(), sp, inf, lvl, -1f, p.x(), p.y() - DEPTH, p.z());

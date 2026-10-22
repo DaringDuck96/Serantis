@@ -75,9 +75,27 @@ public final class HayBales {
         return !OFF.contains(id(level, pos));
     }
 
+    /** Switched-off spots in this level whose bale is gone: forgotten, so a new bale there starts on. */
+    private static void prune(ServerLevel level) {
+        String dim = level.dimension().identifier() + "@";
+        boolean changed = false;
+        for (String id : new java.util.ArrayList<>(OFF)) {
+            if (!id.startsWith(dim)) continue;
+            BlockPos pos;
+            try { pos = BlockPos.of(Long.parseLong(id.substring(dim.length()))); } catch (NumberFormatException e) { OFF.remove(id); changed = true; continue; }
+            if (level.isLoaded(pos) && !level.getBlockState(pos).is(Blocks.HAY_BLOCK)) { OFF.remove(id); changed = true; }
+        }
+        if (changed) save(level.getServer());
+    }
+
     /** Right-clicked a hay bale with an empty hand. False if it isn't in a base (nothing to switch). */
     public static boolean toggle(ServerLevel level, BlockPos pos, net.minecraft.server.level.ServerPlayer p) {
-        if (Bases.baseAt(level, pos) == null) return false;
+        BaseCoreBlockEntity base = Bases.baseAt(level, pos);
+        if (base == null) return false;
+        if (!dev.serantis.battle.coop.Groups.canUseBase(p, base)) {
+            p.sendOverlayMessage(net.minecraft.network.chat.Component.literal("Only the base's owner (or their group) can switch its hay bales."));
+            return true;
+        }
         load(level.getServer());
         String id = id(level, pos);
         boolean on = OFF.remove(id);
@@ -94,7 +112,9 @@ public final class HayBales {
     /** Every server tick. */
     public static void tick(MinecraftServer server) {
         if (server.getTickCount() % EVERY != 37) return;
-        for (ServerLevel level : server.getAllLevels())
+        load(server);
+        for (ServerLevel level : server.getAllLevels()) {
+            prune(level);
             for (BlockPos core : Bases.cores(level)) {
                 BaseCoreBlockEntity be = Bases.coreAt(level, core);
                 if (be == null) continue;
@@ -106,12 +126,14 @@ public final class HayBales {
                     HAY.put(key, hay);
                 }
                 if (level.getRandom().nextFloat() >= 0.5f) continue;
-                AABB box = new AABB(be.minX(), level.getMinY(), be.minZ(), be.maxX() + 1, level.getMaxY(), be.maxZ() + 1);
-                int there = level.getEntitiesOfClass(CreatureEntity.class, box, c -> c.entityTags().contains(TAG) && !c.isTame()
-                        && BaseShape.inside(be, c.getBlockX(), c.getBlockZ())).size();
+                final BlockPos bale = hay;                                  // only while someone's around to see them
+                if (level.players().stream().noneMatch(pl -> !pl.isSpectator() && pl.distanceToSqr(bale.getX(), bale.getY(), bale.getZ()) < 128 * 128)) continue;
+                AABB box = new AABB(be.minX() - 48, level.getMinY(), be.minZ() - 48, be.maxX() + 49, level.getMaxY(), be.maxZ() + 49);
+                int there = level.getEntitiesOfClass(CreatureEntity.class, box, c -> c.entityTags().contains(TAG) && !c.isTame()).size();   // ones that wandered off still count
                 if (there >= CAP) continue;
                 spawn(level, be, hay);
             }
+        }
     }
 
     /** A switched-on hay bale in the base's area, or null. Only chunk sections whose palette has hay are looked through. */

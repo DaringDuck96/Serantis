@@ -73,6 +73,9 @@ public final class WeaponStyles {
     /** The battle move for this weapon: name is what the battle screen shows, damage its attack damage (with Sharpness). */
     public static BattleMove build(ItemStack hand, String name, double damage) {
         Kind k = kind(hand);
+        MoveSpec same = BY_NAME.get(name);                               // two kinds of weapon renamed alike: keep them apart
+        if (same != null && !same.id.equals("weapon_" + k.name().toLowerCase()))
+            name = name + " (" + k.name().charAt(0) + k.name().substring(1).toLowerCase() + ")";
         boolean ranged = k == Kind.BOW || k == Kind.CROSSBOW;
         double base = ranged ? 35 + 4 * Math.max(0, damage - 1) : 20 + 4 * damage;
         MoveSpec s = new MoveSpec();

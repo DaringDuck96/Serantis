@@ -59,7 +59,7 @@ public final class Waypoints {
         try {
             Path f = file(w);
             if (!Files.exists(f)) return;
-            for (var el : JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonArray("marks")) {
+            for (var el : JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonArray("marks")) try {
                 JsonObject o = el.getAsJsonObject();
                 Mark m = new Mark();
                 m.name = o.get("name").getAsString();
@@ -68,7 +68,7 @@ public final class Waypoints {
                 m.z = o.get("z").getAsInt();
                 m.color = o.get("color").getAsInt();
                 MARKS.add(m);
-            }
+            } catch (Exception bad) { /* skip just that one */ }
         } catch (Exception ignored) { }
     }
 

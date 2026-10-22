@@ -75,6 +75,8 @@ public final class BaseLooksClient {
                 Biome b = n == null ? biome(id) : null;
                 if (b != null || n != null) out.add(new Look(o.get("cx").getAsInt(), o.get("cz").getAsInt(), o.get("r").getAsInt(), b, n));
             }
+        Biome plains = mc.level == null ? null : biome("plains");
+        if (plains != null) alpha = plains.getGrassColor(0, 0) & 0xFF000000;
         boolean changed = !out.equals(looks);
         looks = List.copyOf(out);
         if (changed && mc.level != null) mc.levelRenderer.invalidateCompiledGeometry(mc.level, mc.options, mc.gameRenderer.mainCamera(), mc.getBlockColors());
@@ -126,8 +128,11 @@ public final class BaseLooksClient {
         return (a & 0xFF000000) | (r << 16) | (g << 8) | bl;
     }
 
+    /** The top byte the game's own biome colours carry (read from a real biome), so the Nether palette matches it. */
+    private static volatile int alpha = 0xFF000000;
+
     private static int color(Look k, BlockPos pos, int kind) {
-        if (k.nether() != null) return switch (kind) { case 0 -> k.nether().grass(); case 3 -> k.nether().water(); default -> k.nether().foliage(); };
+        if (k.nether() != null) return alpha | (0xFFFFFF & switch (kind) { case 0 -> k.nether().grass(); case 3 -> k.nether().water(); default -> k.nether().foliage(); });
         return switch (kind) {
             case 0 -> k.biome().getGrassColor(pos.getX(), pos.getZ());
             case 1 -> k.biome().getFoliageColor();

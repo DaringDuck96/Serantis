@@ -44,7 +44,7 @@ public final class PublicMarks {
         try {
             Path f = file(server);
             if (!Files.exists(f)) return;
-            for (var el : JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonArray("marks")) {
+            for (var el : JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonArray("marks")) try {
                 JsonObject o = el.getAsJsonObject();
                 Mark m = new Mark();
                 m.id = o.get("id").getAsString();
@@ -56,6 +56,8 @@ public final class PublicMarks {
                 m.z = o.get("z").getAsInt();
                 m.color = o.get("color").getAsInt();
                 MARKS.add(m);
+            } catch (Exception bad) {
+                // skip just that one
             }
         } catch (Exception e) {
             // nothing saved

@@ -407,6 +407,8 @@ public abstract class BattleScreenMixin {
         for (var c : self.children())
             if (c instanceof net.minecraft.client.gui.components.Button b && "Wait".equals(b.getMessage().getString())) wait = b;
         if (wait == null) return;
+        JsonObject me = unit(selected);
+        if (me == null || !me.has("player") || !me.get("player").getAsBoolean()) return;   // only you change gear
         final int unit = selected, x = destX, z = destZ;
         ((ScreenAccessor) self).serantis$add(net.minecraft.client.gui.components.Button.builder(net.minecraft.network.chat.Component.literal("Equip"),
                         btn -> net.minecraft.client.Minecraft.getInstance().gui.setScreen(new dev.serantis.battle.client.EquipScreen(self, (slot, hand) -> {
