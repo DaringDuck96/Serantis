@@ -50,9 +50,9 @@ Unpacking org/joml/joml/1.10.9/joml-1.10.9.jar (libraries:org.joml:joml:1.10.9) 
 Unpacking org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar (libraries:org.jspecify:jspecify:1.0.0) to libraries/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar
 Unpacking org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar (libraries:org.slf4j:slf4j-api:2.0.17) to libraries/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar
 Starting net.fabricmc.loader.impl.game.minecraft.BundlerClassPathCapture
-[14:26:44] [main/INFO]: Loading Minecraft 26.3 with Fabric Loader 0.20.1
-[14:26:44] [main/INFO]: Mappings not present!
-[14:26:45] [main/INFO]: Loading 60 mods:
+[14:42:24] [main/INFO]: Loading Minecraft 26.3 with Fabric Loader 0.20.1
+[14:42:24] [main/INFO]: Mappings not present!
+[14:42:24] [main/INFO]: Loading 60 mods:
 	- ahrivaea 0.1.0
 	- ahrivaea_batch3 0.13.1
 	- ahrivaea_guide 0.1.0
@@ -106,197 +106,197 @@ Starting net.fabricmc.loader.impl.game.minecraft.BundlerClassPathCapture
 	   \-- mixinextras 0.5.5
 	- java 25
 	- minecraft 26.3
-	- serantis_battle 0.132.1
+	- serantis_battle 0.133.0
 	- serantis_dyed_water 0.1.1
 	- serantis_end_dragons 0.3.1
 	- serantis_grinding 0.1.1
 	- serantis_smoke 1.0.0
 	- serantis_starters 0.1.0
 	- serantis_towers 0.1.1
-[14:26:45] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/work/_temp/server/libraries/net/fabricmc/sponge-mixin/0.17.5+mixin.0.8.7/sponge-mixin-0.17.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[14:26:46] [main/INFO]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[14:42:25] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/work/_temp/server/libraries/net/fabricmc/sponge-mixin/0.17.5+mixin.0.8.7/sponge-mixin-0.17.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[14:42:25] [main/INFO]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
 WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
 WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/home/runner/work/_temp/server/libraries/org/joml/joml/1.10.9/joml-1.10.9.jar)
 WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
 WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
-[14:26:53] [main/INFO]: Ahrivaea loaded
-[14:26:53] [main/INFO]: Ahrivaea Guilds loaded
-[14:26:53] [main/INFO]: Ahrivaea Swift Horses loaded
-[14:26:53] [main/INFO]: Ahrivaea Handheld Lights loaded
-[14:26:53] [main/INFO]: Ahrivaea Map loaded
-[14:26:53] [main/INFO]: Ahrivaea Fast Minecarts loaded: top speed 30.0 blocks/sec
-[14:26:53] [main/INFO]: Ahrivaea Stellar Gear loaded
-[14:26:53] [main/INFO]: Ahrivaea Tower Challenges loaded
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTransformRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.item.enchantment.Enchantment$Builder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.Connection
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeMap
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.network.config.SynchronizeRegistriesTask
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$3
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection$1BlockCounter
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.protocol.configuration.ServerboundSelectKnownPacks
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.players.PlayerList
-[14:26:53] [main/INFO]: Force-loading class dev.ahrivaea.base.WorkerBrain
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$2
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.tags.BlockItemTagAppender
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.BrewingRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.registries.RegistriesDatapackGenerator
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.Swim
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.network.ServerLoginPacketListenerImpl
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.commands.execution.CommandQueueEntry
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.level.ServerLevel$EntityCallbacks
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootTable$Builder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider$1
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.resources.RegistryDataLoader
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.dimension.end.EnderDragonFight
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.gametest.framework.GameTestServer
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.core.RegistrySynchronization
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.locale.Language
-[14:26:53] [main/INFO]: Force-loading class dev.ahrivaea.creature.BattleSettings
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.CompoundContainer
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.tags.TagAppender$1
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.PacketEncoder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.SimpleCookingRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.SpecialRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand$1
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.ReloadableServerRegistries
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.Resource
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.ShapedRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkHolder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.commands.CommandSourceStack
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkMap
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.core.component.DataComponentInitializers$1
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.PacketDecoder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueOutput
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.storage.ValueInput
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.ShapelessRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.CustomCraftingRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.item.enchantment.EnchantmentHelper
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.GiveGiftToHero
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$TagSet$2
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.loot.BlockLootSubProvider
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.tags.TagFile
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.core.RegistryAccess$ImmutableRegistryAccess
-[14:26:53] [main/INFO]: Force-loading class net.fabricmc.fabric.impl.attachment.GlobalAttachmentsImpl
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.resources.ResourceManagerRegistryLoadTask
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleReloadInstance
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.registries.RegistryPatchGenerator
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkMap$TrackedEntity
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.HashCache$ProviderCache
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.biome.Climate$Sampler
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.pathfinder.PathfindingContext
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.packs.repository.PackRepository
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.entity.PersistentEntitySectionManager
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.ServerFunctionLibrary
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.data.BlockDataAccessor
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTrimRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.resources.FileToIdConverter
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueInput
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.SingleItemRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.PlayerAdvancements
-[14:26:53] [main/INFO]: Force-loading class dev.ahrivaea.battle.Unit
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.packs.repository.Pack
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.tags.TagLoader
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.data.EntityDataAccessor
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.network.ServerHandshakePacketListenerImpl
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.advancements.Advancement$Builder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.DebugConfigCommand
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.pathfinder.WalkNodeEvaluator
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool$Builder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.TransmuteRecipeBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.dedicated.DedicatedServer
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.ImposterProtoChunk
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.tags.TagAppender
-[14:26:53] [main/INFO]: Force-loading class dev.ahrivaea.battle.Battle
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.commands.Commands
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeAccess
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.DataPackCommand
-[14:26:53] [main/INFO]: Force-loading class dev.ahrivaea.battle.DamageCalc
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.protocol.BundlePacket
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.storage.SavedDataStorage
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.HelpCommand
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.util.ParticleUtils
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeManager
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.levelgen.RandomState
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.tags.TagEntry
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.ReloadableServerResources
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.tags.TagsProvider
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.levelgen.WorldDimensions
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.level.ServerEntity
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.tags.TagBuilder
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.protocol.login.ServerboundCustomQueryAnswerPacket
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.util.debug.ServerDebugSubscribers
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.MultiPackResourceManager
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.storage.SerializableChunkData
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeOutput
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.dedicated.ServerWatchdog
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.advancements.packs.VanillaAdventureAdvancements
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket
-[14:26:53] [main/INFO]: Force-loading class dev.ahrivaea.creature.Healing
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.commands.execution.tasks.BuildContexts
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.WorkAtComposter
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.HashCache
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.recipes.BrewingProvider
-[14:26:53] [main/INFO]: Force-loading class dev.ahrivaea.creature.Drops
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.network.PlayerChunkSender
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.resources.RegistryLoadTask$PendingRegistration
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.commands.EnchantCommand
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.dedicated.DedicatedServerProperties
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.level.ServerPlayerGameMode
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.server.WorldLoader
-[14:26:53] [main/INFO]: Force-loading class com.mojang.brigadier.context.ContextChain
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.status.ChunkStatusTasks
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.codec.IdDispatchCodec
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.DataProvider
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.data.loot.EntityLootSubProvider
-[14:26:53] [main/INFO]: Force-loading class net.minecraft.network.protocol.login.ClientboundCustomQueryPacket
-[14:26:53] [main/INFO]: [STDOUT]: SMOKE: mixin audit finished
-[14:26:53] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
-[14:26:53] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
-[14:26:53] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
-[14:26:53] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
-[14:26:53] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
-[14:26:53] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
-[14:26:53] [main/INFO]: Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
-[14:26:54] [Worker-Main-2/INFO]: No existing world data, creating new world
-[14:26:55] [Worker-Main-1/INFO]: Loaded 1866 advancements
-[14:26:55] [main/INFO]: Loaded 128 challenges: paintings, spidereye, boats, berries, warped, cake, honey, granite, netherite, dripstone, planks, bricks, diamond, fish, apples, obsidian, observers, kelp, bookshelves, cobblestone, clay, gold, shroomlight, pumpkin, flint, endstone, prismarine, diorite, redstone, flowers, pork, glass, moss, carrot, sand, concrete, snow, cocoa, arrows, ice, paper, amethyst, pie, cookies, wart, ladders, chests, coal, maps, quartz, leaves, saplings, feather, chorus, frames, lanterns, logs, melon, andesite, chicken, wool, magmacream, honeycomb, mud, pots, hoppers, bars, blaze, blackstone, banners, iron, slime, sugarcane, goldencarrot, stew, crimson, purpur, terracotta, ink, wheat, netherbrick, pearls, wither, bamboo, flesh, soulsand, bread, glowstone, gunpowder, torch, glazed, ghast, tuff, dyes, lapis, candles, glowberries, carpets, gravel, lilypads, mutton, vines, phantom, eggs, string, beds, beetroot, basalt, copper, pistons, mushrooms, campfires, rabbit, rails, seeds, beef, calcite, clocks, anvils, echo, emerald, leather, potato, shulker, cactus, deepslate, bones, netherrack; tower order: coal, logs, cobblestone, wheat, iron, copper, bones, string, flesh, sand, clay, potato, carrot, beetroot, pumpkin, melon, flint, gravel, torch, redstone, lapis, gold, planks, feather, leather, eggs, sugarcane, paper, glass, bricks, kelp, spidereye, gunpowder, arrows, berries, apples, bread, cocoa, bamboo, cactus, mushrooms, saplings, flowers, leaves, wool, ink, slime, honey, honeycomb, fish, prismarine, ice, snow, granite, diorite, andesite, deepslate, tuff, calcite, dripstone, amethyst, mud, moss, glowberries, vines, lilypads, seeds, stew, beef, pork, chicken, mutton, rabbit, pie, cookies, cake, goldencarrot, lanterns, bookshelves, rails, ladders, chests, candles, dyes, terracotta, glazed, concrete, beds, boats, carpets, banners, frames, paintings, pots, campfires, anvils, bars, hoppers, pistons, observers, clocks, maps, pearls, blaze, ghast, magmacream, phantom, netherrack, basalt, blackstone, soulsand, glowstone, quartz, wart, crimson, warped, shroomlight, netherbrick, obsidian, emerald, diamond, chorus, endstone, purpur, shulker, wither, echo, netherite
-[14:26:55] [main/WARN]: Villager (villager) has a stat total of 410; it should be 500–600
-[14:26:55] [main/INFO]: Loaded 362 creature species: imp, giant_octopus, poisonous_frog, sasquatch, thunderstripe, feyheart, mimic, giant_beetle, rhinocerous, insect_swarm, wyrm, oreback_titan, crab, lion, myconid, giant_boar, griffon, mokele_mbembe, gnoll, horse, sand_spider, terrasque, aether_beamer, giant_angler_fish, rift_shadow, efreeti, purified_spirit, fairy_queen, dread_knight, arcanum, artificer, gnome, sleipnir, stone_shadow, birdfolk, orb_of_light, namean_lion, pig, hollow_phantom, sunlit_dancer, fox, chimaera, cockatrice, electric_eel, pegasus, aspidochelone, llama, scylla, peryton, t_rex, zombie, deer, cow, cultist, enchanted_bell, crowned_gleeok, giant_rat, revenant, sanctum_sentinel, false_hydra, snapvine, hag, rabbit, hydrabill, bandit, cinderwing, orc, unicorn, seal, jotunn, swirling_psychosis, coral_crawler, ruin_sentinel, valkyrie, wendigo, djinni, polar_bear_folk, dracolich, drider, archangel, giant_snail, giant_ape, stormjaw_leviathan, dream_dancer, garden_fairy, ironjaw_brute, giant_eagle, penguin, crystalline_construct, grave_lurker, giant_frog, mage, troll, tortoise, gilded_sentinel, hell_hound, bloom_eye_horror, nidhogg, ratfolk, elephant, enchanted_lantern, yurei, glimmer_sprite, lamia, giant_snake, medusa, piasa, isonade, shield_guardian, goblin, sixpaw_marauder, duck, werewolf, moonwing, huma, enchanted_broom, aboleth, leaf_web_spider, reef_spitter, dawn_owlbear, phoenix, sphinx, shambling_mound, clockwork_dragon, grick, squid, axe_beak, fish, jackalope, abyssal_maw, gloomwing, fortune, satyr, drathkuhl_balor, centaur, clockwork_horse, cambion, giant_wasp, hraesvelgr, fafnir, ember_magus, galewing, nautiloper, moonlit_stag, elderwood_guardian, whirlpool_leech, pixie, mephit, caladrius, ranger, tempest_roc, owlbear, saber_toothed_cat, stirge, clockwork_beetle, one_eyed_devourer, caldera_wyrm, runic_colossus, hollow_grunt, wild_hunt_rider, magma_dryad, dragon, ziz, black_pudding, fairy_flower, treant, lantern_trickster, drill_shark, river_zorling, dolphin, dog, lamassu, the_last_dragon, gravewrap, rendmaw, magma_bulwark, spriggan, fallen_angel, thorncoil, dreadwalker, glyph_guardian, enchanted_axe, kraken, minotaur, thunder_magus, voidshell, gremlin, jellyfish, three_headed_cobra, bone_golem, iron_golem, canopy_skullspider, bai_ze, ghost, mind_eater, omukade, paladin, rune_magus, wolf, komainu, glacier_spitter, sahuagin, cerberus, pebble_spitter, glistening_gator, lich, cat, lumina_wyrm, thorn_shadow, quake_brute, will_o_the_wisp, wyvern, catoblepas, ddraig_goch, celestial_watcher, brain_dog, assassin_vine, chicken, ladon, nightmare_stalker, dawn_magus, quickling, rune_crawler, sheep, snowfang, shardheart, rime_magus, doppleganger, salamander, elemental, living_spellbook, treasure_goblin, shadow_stepper, void_hand, brownie, burrowcoil, cinder_pangolith, lightning, ibong_adarna, dimensional_duelist, ironclad_ravager, water_gull, one_eye_colossus, enchanted_furnace, grove_behemoth, umbral_revenant, gear_guzzler, gargoyle, animated_armor, cloud_of_darkness, lindworm, rift_clutch, roper, draugr, cyclops, night_hag, angel, cinder_shadow, bear, runeback_basilisk, seraphim, bugbear, boggart, goat, tempest_flyer, bastion, death_knight, living_statue, mermaid, villager, bake_kujira, poltergeist, giant_scorpion, dryad, bloodfang_skreecher, psychic_vampire, gloom_shadow, mushussu, delver_horror, prism_sentinel, bubble_stalker, clockwork_soldier, oxe_turtle, ancient_spell_engine, gargouille, charybdis, the_first_dragon, gloomgazer, blaze_dancer, masked_puck, ouroboros, embering_flame, tidecore_horror, wraith, homunculus, magma_viper, gelatinous_cube, empyrean, leshy, water_weird, clockwork_raven, eye_tyrant, behemoth, dark_elf, rimewing, warrior, helebrog, azi_dahaka, rime_dancer, sand_spirit, pale_duelist, rift_wraith, harbinger_of_calamity, stormstrider, couatl, giant, catfolk, six_armed_serpent_demon, magma_crawler, wight, ashback_devourer, burrowing_horror, cloud_rider, yeti, camel, phase_panther, tide_shadow, crawling_mimic, cloaker, leviathan, skeleton, whale, sunwatcher, zmey_gorymych, orca, golden_owl, enchanted_rug, vampire, ooze, lizardfolk, regalia, coral_dancer, scrap_goblin, basalt_maw, golem, ogre, stormblade_phantom, long, hrimwyrm, leprechaun, fairy_dragon, nue, krampus, voltwing, flying_sword, phantom_jester, kitsune, sea_turtle, siren, moose, rime_chimaera, oni
-[14:26:55] [main/INFO]: Loaded 15 influence rules
-[14:26:55] [main/INFO]: Loaded 13 tower palettes
-[14:26:55] [main/INFO]: Loaded 22 villager professions selling 1687 items
-[14:26:55] [main/INFO]: Applied 67 biome modifications to 67 of 67 new biomes in 10.40 ms
-[14:26:56] [Server thread/INFO]: Starting minecraft server version 26.3
-[14:26:56] [Server thread/INFO]: Loading properties
-[14:26:56] [Server thread/INFO]: Default game type: SURVIVAL
-[14:26:56] [Server thread/INFO]: Generating keypair
-[14:26:56] [Server thread/INFO]: Starting Minecraft server on *:25565
-[14:26:56] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[14:26:56] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
-[14:26:56] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[14:26:56] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
-[14:26:56] [Server thread/INFO]: Preparing level "world"
-[14:26:56] [Server thread/INFO]: Selecting global world spawn...
-[14:26:59] [Server thread/INFO]: Loading 0 persistent chunks...
-[14:26:59] [Server thread/INFO]: Preparing spawn area: 100%
-[14:26:59] [Server thread/INFO]: Time elapsed: 3165 ms
-[14:26:59] [Server thread/INFO]: Done (3.370s)! For help, type "help"
-[14:26:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[14:26:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/ahrivaea:battle_arena
-[14:26:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
-[14:26:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
-[14:26:59] [Server thread/INFO]: Battle arena dimension ready
-[14:27:22] [Server thread/INFO]: System chat: Stopping the server
-[14:27:22] [Server thread/INFO]: Stopping server
-[14:27:22] [Server thread/INFO]: Saving players
-[14:27:22] [Server thread/INFO]: Saving worlds
-[14:27:22] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[14:27:22] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/ahrivaea:battle_arena
-[14:27:22] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
-[14:27:22] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[14:42:31] [main/INFO]: Ahrivaea loaded
+[14:42:31] [main/INFO]: Ahrivaea Guilds loaded
+[14:42:31] [main/INFO]: Ahrivaea Swift Horses loaded
+[14:42:31] [main/INFO]: Ahrivaea Handheld Lights loaded
+[14:42:31] [main/INFO]: Ahrivaea Map loaded
+[14:42:31] [main/INFO]: Ahrivaea Fast Minecarts loaded: top speed 30.0 blocks/sec
+[14:42:31] [main/INFO]: Ahrivaea Stellar Gear loaded
+[14:42:31] [main/INFO]: Ahrivaea Tower Challenges loaded
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTransformRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.item.enchantment.Enchantment$Builder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.Connection
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeMap
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.network.config.SynchronizeRegistriesTask
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$3
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection$1BlockCounter
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.protocol.configuration.ServerboundSelectKnownPacks
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.players.PlayerList
+[14:42:31] [main/INFO]: Force-loading class dev.ahrivaea.base.WorkerBrain
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$2
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.tags.BlockItemTagAppender
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.BrewingRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.registries.RegistriesDatapackGenerator
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.Swim
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.network.ServerLoginPacketListenerImpl
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.commands.execution.CommandQueueEntry
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.level.ServerLevel$EntityCallbacks
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootTable$Builder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider$1
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.resources.RegistryDataLoader
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.dimension.end.EnderDragonFight
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.gametest.framework.GameTestServer
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.core.RegistrySynchronization
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.locale.Language
+[14:42:31] [main/INFO]: Force-loading class dev.ahrivaea.creature.BattleSettings
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.CompoundContainer
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.tags.TagAppender$1
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.PacketEncoder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.SimpleCookingRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.SpecialRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand$1
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.ReloadableServerRegistries
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.Resource
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.ShapedRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkHolder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.commands.CommandSourceStack
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkMap
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.core.component.DataComponentInitializers$1
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.PacketDecoder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueOutput
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.storage.ValueInput
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.ShapelessRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.CustomCraftingRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.item.enchantment.EnchantmentHelper
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.GiveGiftToHero
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.core.MappedRegistry$TagSet$2
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.loot.BlockLootSubProvider
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.tags.TagFile
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.core.RegistryAccess$ImmutableRegistryAccess
+[14:42:31] [main/INFO]: Force-loading class net.fabricmc.fabric.impl.attachment.GlobalAttachmentsImpl
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.resources.ResourceManagerRegistryLoadTask
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleReloadInstance
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.registries.RegistryPatchGenerator
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.level.ChunkMap$TrackedEntity
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.HashCache$ProviderCache
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.biome.Climate$Sampler
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.pathfinder.PathfindingContext
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.packs.repository.PackRepository
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.entity.PersistentEntitySectionManager
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.ServerFunctionLibrary
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.data.BlockDataAccessor
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTrimRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.resources.FileToIdConverter
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueInput
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.SingleItemRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.PlayerAdvancements
+[14:42:31] [main/INFO]: Force-loading class dev.ahrivaea.battle.Unit
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.packs.repository.Pack
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.tags.TagLoader
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.data.EntityDataAccessor
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.network.ServerHandshakePacketListenerImpl
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.advancements.Advancement$Builder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.DebugConfigCommand
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.pathfinder.WalkNodeEvaluator
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool$Builder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.TransmuteRecipeBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.dedicated.DedicatedServer
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.ImposterProtoChunk
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.tags.TagAppender
+[14:42:31] [main/INFO]: Force-loading class dev.ahrivaea.battle.Battle
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.commands.Commands
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeAccess
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.DataPackCommand
+[14:42:31] [main/INFO]: Force-loading class dev.ahrivaea.battle.DamageCalc
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.protocol.BundlePacket
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.storage.SavedDataStorage
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.HelpCommand
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.util.ParticleUtils
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeManager
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.levelgen.RandomState
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.tags.TagEntry
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.ReloadableServerResources
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.tags.TagsProvider
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.levelgen.WorldDimensions
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.level.ServerEntity
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.tags.TagBuilder
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.protocol.login.ServerboundCustomQueryAnswerPacket
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.util.debug.ServerDebugSubscribers
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.packs.resources.MultiPackResourceManager
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.storage.SerializableChunkData
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.RecipeOutput
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.dedicated.ServerWatchdog
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.advancements.packs.VanillaAdventureAdvancements
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket
+[14:42:31] [main/INFO]: Force-loading class dev.ahrivaea.creature.Healing
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.commands.execution.tasks.BuildContexts
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.WorkAtComposter
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.HashCache
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.recipes.BrewingProvider
+[14:42:31] [main/INFO]: Force-loading class dev.ahrivaea.creature.Drops
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.network.PlayerChunkSender
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.resources.RegistryLoadTask$PendingRegistration
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.commands.EnchantCommand
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.dedicated.DedicatedServerProperties
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.level.ServerPlayerGameMode
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.server.WorldLoader
+[14:42:31] [main/INFO]: Force-loading class com.mojang.brigadier.context.ContextChain
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.world.level.chunk.status.ChunkStatusTasks
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.codec.IdDispatchCodec
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.DataProvider
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.data.loot.EntityLootSubProvider
+[14:42:31] [main/INFO]: Force-loading class net.minecraft.network.protocol.login.ClientboundCustomQueryPacket
+[14:42:31] [main/INFO]: [STDOUT]: SMOKE: mixin audit finished
+[14:42:31] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
+[14:42:31] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
+[14:42:31] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
+[14:42:31] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
+[14:42:31] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
+[14:42:31] [main/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
+[14:42:31] [main/INFO]: Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[14:42:32] [Worker-Main-2/INFO]: No existing world data, creating new world
+[14:42:33] [Worker-Main-1/INFO]: Loaded 1866 advancements
+[14:42:33] [main/INFO]: Loaded 128 challenges: feather, saplings, leaves, quartz, maps, coal, chests, ladders, wart, cookies, pie, amethyst, paper, ice, arrows, cocoa, snow, concrete, sand, carrot, moss, glass, pork, flowers, redstone, diorite, prismarine, endstone, flint, pumpkin, shroomlight, gold, clay, cobblestone, bookshelves, kelp, observers, obsidian, apples, fish, diamond, bricks, planks, dripstone, netherite, granite, honey, cake, warped, berries, boats, spidereye, paintings, netherrack, bones, deepslate, cactus, shulker, potato, leather, emerald, echo, anvils, clocks, calcite, beef, seeds, rails, rabbit, campfires, mushrooms, pistons, copper, basalt, beetroot, beds, string, eggs, phantom, vines, mutton, lilypads, gravel, carpets, glowberries, candles, lapis, dyes, tuff, ghast, glazed, torch, gunpowder, glowstone, bread, soulsand, flesh, bamboo, wither, pearls, netherbrick, wheat, ink, terracotta, purpur, crimson, stew, goldencarrot, sugarcane, slime, iron, banners, blackstone, blaze, bars, hoppers, pots, mud, honeycomb, magmacream, wool, chicken, andesite, melon, logs, lanterns, frames, chorus; tower order: coal, logs, cobblestone, wheat, iron, copper, bones, string, flesh, sand, clay, potato, carrot, beetroot, pumpkin, melon, flint, gravel, torch, redstone, lapis, gold, planks, feather, leather, eggs, sugarcane, paper, glass, bricks, kelp, spidereye, gunpowder, arrows, berries, apples, bread, cocoa, bamboo, cactus, mushrooms, saplings, flowers, leaves, wool, ink, slime, honey, honeycomb, fish, prismarine, ice, snow, granite, diorite, andesite, deepslate, tuff, calcite, dripstone, amethyst, mud, moss, glowberries, vines, lilypads, seeds, stew, beef, pork, chicken, mutton, rabbit, pie, cookies, cake, goldencarrot, lanterns, bookshelves, rails, ladders, chests, candles, dyes, terracotta, glazed, concrete, beds, boats, carpets, banners, frames, paintings, pots, campfires, anvils, bars, hoppers, pistons, observers, clocks, maps, pearls, blaze, ghast, magmacream, phantom, netherrack, basalt, blackstone, soulsand, glowstone, quartz, wart, crimson, warped, shroomlight, netherbrick, obsidian, emerald, diamond, chorus, endstone, purpur, shulker, wither, echo, netherite
+[14:42:33] [main/WARN]: Villager (villager) has a stat total of 410; it should be 500–600
+[14:42:33] [main/INFO]: Loaded 362 creature species: spriggan, magma_bulwark, rendmaw, gravewrap, the_last_dragon, lamassu, dog, dolphin, river_zorling, drill_shark, lantern_trickster, treant, fairy_flower, black_pudding, ziz, dragon, magma_dryad, wild_hunt_rider, hollow_grunt, runic_colossus, caldera_wyrm, one_eyed_devourer, clockwork_beetle, stirge, saber_toothed_cat, owlbear, tempest_roc, ranger, caladrius, mephit, pixie, whirlpool_leech, elderwood_guardian, moonlit_stag, nautiloper, galewing, ember_magus, fafnir, hraesvelgr, giant_wasp, cambion, clockwork_horse, centaur, drathkuhl_balor, satyr, fortune, gloomwing, abyssal_maw, jackalope, fish, axe_beak, squid, grick, clockwork_dragon, shambling_mound, sphinx, phoenix, dawn_owlbear, reef_spitter, leaf_web_spider, aboleth, enchanted_broom, huma, moonwing, werewolf, duck, sixpaw_marauder, goblin, shield_guardian, isonade, piasa, medusa, giant_snake, lamia, glimmer_sprite, yurei, enchanted_lantern, elephant, ratfolk, nidhogg, bloom_eye_horror, hell_hound, gilded_sentinel, tortoise, troll, mage, giant_frog, grave_lurker, crystalline_construct, penguin, giant_eagle, ironjaw_brute, garden_fairy, dream_dancer, stormjaw_leviathan, giant_ape, giant_snail, archangel, drider, dracolich, polar_bear_folk, djinni, wendigo, valkyrie, ruin_sentinel, coral_crawler, swirling_psychosis, jotunn, seal, unicorn, orc, cinderwing, bandit, hydrabill, rabbit, hag, snapvine, false_hydra, sanctum_sentinel, revenant, giant_rat, crowned_gleeok, enchanted_bell, cultist, cow, deer, zombie, t_rex, peryton, scylla, llama, aspidochelone, pegasus, electric_eel, cockatrice, chimaera, fox, sunlit_dancer, hollow_phantom, pig, namean_lion, orb_of_light, birdfolk, stone_shadow, sleipnir, gnome, artificer, arcanum, dread_knight, fairy_queen, purified_spirit, efreeti, rift_shadow, giant_angler_fish, aether_beamer, terrasque, sand_spider, horse, gnoll, mokele_mbembe, griffon, giant_boar, myconid, lion, crab, oreback_titan, wyrm, insect_swarm, rhinocerous, giant_beetle, mimic, feyheart, thunderstripe, sasquatch, poisonous_frog, giant_octopus, imp, oni, rime_chimaera, moose, siren, sea_turtle, kitsune, phantom_jester, flying_sword, voltwing, krampus, nue, fairy_dragon, leprechaun, hrimwyrm, long, stormblade_phantom, ogre, golem, basalt_maw, scrap_goblin, coral_dancer, regalia, lizardfolk, ooze, vampire, enchanted_rug, golden_owl, orca, zmey_gorymych, sunwatcher, whale, skeleton, leviathan, cloaker, crawling_mimic, tide_shadow, phase_panther, camel, yeti, cloud_rider, burrowing_horror, ashback_devourer, wight, magma_crawler, six_armed_serpent_demon, catfolk, giant, couatl, stormstrider, harbinger_of_calamity, rift_wraith, pale_duelist, sand_spirit, rime_dancer, azi_dahaka, helebrog, warrior, rimewing, dark_elf, behemoth, eye_tyrant, clockwork_raven, water_weird, leshy, empyrean, gelatinous_cube, magma_viper, homunculus, wraith, tidecore_horror, embering_flame, ouroboros, masked_puck, blaze_dancer, gloomgazer, the_first_dragon, charybdis, gargouille, ancient_spell_engine, oxe_turtle, clockwork_soldier, bubble_stalker, prism_sentinel, delver_horror, mushussu, gloom_shadow, psychic_vampire, bloodfang_skreecher, dryad, giant_scorpion, poltergeist, bake_kujira, villager, mermaid, living_statue, death_knight, bastion, tempest_flyer, goat, boggart, bugbear, seraphim, runeback_basilisk, bear, cinder_shadow, angel, night_hag, cyclops, draugr, roper, rift_clutch, lindworm, cloud_of_darkness, animated_armor, gargoyle, gear_guzzler, umbral_revenant, grove_behemoth, enchanted_furnace, one_eye_colossus, water_gull, ironclad_ravager, dimensional_duelist, ibong_adarna, lightning, cinder_pangolith, burrowcoil, brownie, void_hand, shadow_stepper, treasure_goblin, living_spellbook, elemental, salamander, doppleganger, rime_magus, shardheart, snowfang, sheep, rune_crawler, quickling, dawn_magus, nightmare_stalker, ladon, chicken, assassin_vine, brain_dog, celestial_watcher, ddraig_goch, catoblepas, wyvern, will_o_the_wisp, quake_brute, thorn_shadow, lumina_wyrm, cat, lich, glistening_gator, pebble_spitter, cerberus, sahuagin, glacier_spitter, komainu, wolf, rune_magus, paladin, omukade, mind_eater, ghost, bai_ze, canopy_skullspider, iron_golem, bone_golem, three_headed_cobra, jellyfish, gremlin, voidshell, thunder_magus, minotaur, kraken, enchanted_axe, glyph_guardian, dreadwalker, thorncoil, fallen_angel
+[14:42:33] [main/INFO]: Loaded 15 influence rules
+[14:42:33] [main/INFO]: Loaded 13 tower palettes
+[14:42:33] [main/INFO]: Loaded 22 villager professions selling 1687 items
+[14:42:33] [main/INFO]: Applied 67 biome modifications to 67 of 67 new biomes in 7.262 ms
+[14:42:33] [Server thread/INFO]: Starting minecraft server version 26.3
+[14:42:33] [Server thread/INFO]: Loading properties
+[14:42:33] [Server thread/INFO]: Default game type: SURVIVAL
+[14:42:33] [Server thread/INFO]: Generating keypair
+[14:42:33] [Server thread/INFO]: Starting Minecraft server on *:25565
+[14:42:33] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[14:42:33] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[14:42:33] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[14:42:33] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[14:42:33] [Server thread/INFO]: Preparing level "world"
+[14:42:34] [Server thread/INFO]: Selecting global world spawn...
+[14:42:36] [Server thread/INFO]: Loading 0 persistent chunks...
+[14:42:36] [Server thread/INFO]: Preparing spawn area: 100%
+[14:42:36] [Server thread/INFO]: Time elapsed: 2951 ms
+[14:42:36] [Server thread/INFO]: Done (3.094s)! For help, type "help"
+[14:42:36] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[14:42:37] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/ahrivaea:battle_arena
+[14:42:37] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[14:42:37] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
+[14:42:37] [Server thread/INFO]: Battle arena dimension ready
+[14:42:57] [Server thread/INFO]: System chat: Stopping the server
+[14:42:57] [Server thread/INFO]: Stopping server
+[14:42:57] [Server thread/INFO]: Saving players
+[14:42:57] [Server thread/INFO]: Saving worlds
+[14:42:57] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[14:42:57] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/ahrivaea:battle_arena
+[14:42:57] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[14:42:57] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
