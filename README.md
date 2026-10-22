@@ -200,7 +200,7 @@ That's 1,285 golden apples in all. Where the counts come from: blocks placed, di
 
 ### Experience and the skill tree
 
-**One XP currency.** Battles give ordinary Minecraft XP (10 for a win plus 4 + its level for each creature beaten, x1.5 for Super Rare and Legendary), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.
+**One XP currency.** Battles give ordinary Minecraft XP: 10 for a win plus 4 + its level for each creature beaten (x1.5 for Super Rare and Legendary), and then the whole amount x1.5 (an early win is about 25-35 XP, a mid-game one about 75), on top of mining, mobs, smelting and so on. Recruiting, villager trades, levelling creatures, enchanting, anvils and the skill tree all spend the same XP bar. Party XP saved from before this update is moved into your XP bar, one for one, the first time you play.
 
 **Defeat.** XP is never lost. You keep all of it when you lose a battle or die, and dying drops no XP orbs. Instead, everything you're wearing or holding (armour, weapon, shield, tools) loses half of its full durability. It's never destroyed outright and is left with at least 1 use. On a normal death your items still drop as usual.
 
