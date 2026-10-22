@@ -234,6 +234,9 @@ That's 1,285 golden apples in all. Where the counts come from: blocks placed, di
 Right after you recruit a creature in battle, or pick your starter, a box pops up to name it (up to 20 characters). **Keep** leaves it with its species name. A named creature shows its name over its head, in battle and on the party screen, where its temperament and species follow in brackets, e.g. "Sparky (Brave Scrap Goblin)". Names are saved with the creature and kept when it's sent out, boxed or levelled up.
 
 
+### Blood Moons
+Every fifth night (nights 5, 10, 15 and so on) is a **Blood Moon**: the moon rises red instead of white, and everyone in the Overworld gets a "A Blood Moon rises..." message as night falls. For now it's just the look and the warning.
+
 ### Shiny and angry creatures
 When a Mutated creature appears anywhere within your render distance you hear a cheerful jingle and see "Did you see something shiny?". When an Enraged one appears you hear a roar and see "Ooh! They look mad!".
 
