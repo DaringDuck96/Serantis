@@ -167,7 +167,7 @@ public abstract class BattleMixin implements BattleAccess {
             for (Unit u : self.units)
                 if (u.entity != null && self.level.getEntity(u.entity) instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Masters.isMaster(c))
                     ((dev.serantis.battle.Market.Holder) c).serantis$setLeaveAt(self.level.getGameTime()
-                            + (dev.serantis.battle.Masters.giftPending(self.player()) ? 20 * 45 : 0));   // a Grandmaster's End Crystal: it stays to explain
+                            + (dev.serantis.battle.Masters.giftPending(self.player()) ? 20 * 45 : 0));   // its End Crystal (first win): it stays to explain
     }
 
     @Override public Map<Object, String> serantis$defeatedMoves() {

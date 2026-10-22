@@ -167,6 +167,7 @@ public final class Masters {
         String name = influenceName(inf);
         p.sendSystemMessage(Component.literal("You beat the " + name + " Creature Master! Double XP for this battle.").withStyle(ChatFormatting.GOLD));
         int have = h.serantis$stones(inf);
+        crystal(p, inf);                                // the first time only: an End Crystal (and a word about it)
         if (have >= MAX_STONES) {                       // a Grandmaster: an influence book and golden apples
             grandmasterReward(p, inf);
             return;
@@ -203,7 +204,11 @@ public final class Masters {
             give(p, net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(new net.minecraft.world.item.enchantment.EnchantmentInstance(holder.get(), lvl)));
         give(p, new ItemStack(net.minecraft.world.item.Items.GOLDEN_APPLE, 3));
         p.sendSystemMessage(Component.literal("You beat the " + name + " Grandmaster! It leaves you an enchanted book and 3 golden apples.").withStyle(ChatFormatting.LIGHT_PURPLE));
-        if (p.entityTags().contains(CRYSTAL_TAG + inf)) return;     // the End Crystal: only the first time
+    }
+
+    /** The first win against this influence's Creature Master: an End Crystal (never again for that influence). */
+    private static void crystal(ServerPlayer p, String inf) {
+        if (p.entityTags().contains(CRYSTAL_TAG + inf)) return;
         p.addTag(CRYSTAL_TAG + inf);
         give(p, new ItemStack(net.minecraft.world.item.Items.END_CRYSTAL));
         GIFTS.put(p.getUUID(), inf);
@@ -213,14 +218,14 @@ public final class Masters {
     // ------------------------------------------------------------------ the Grandmaster's End Crystal
 
     /**
-     * The first time you beat each influence's Grandmaster it also gives you an End Crystal (never again for that
-     * influence), and once you're back from the arena it tells you why, in a short cutscene (client: DialogueScreen.openGift).
-     * The Grandmaster waits around for it before moving on.
+     * The first time you beat each influence's Creature Master it also gives you an End Crystal (never again for that
+     * influence), and once you're back from the arena it tells you why, in a short cutscene (client: DialogueScreen.autoOpenGift).
+     * The Master waits around for it before moving on.
      */
     public static final String CRYSTAL_TAG = "serantis_gm_crystal_";
     private static final java.util.Map<java.util.UUID, String> GIFTS = new java.util.concurrent.ConcurrentHashMap<>();
 
-    /** Just beaten for the first time: hold the Grandmaster here a little while for its words. */
+    /** Just beaten for the first time: hold the Master here a little while for its words. */
     public static boolean giftPending(Player p) { return p != null && GIFTS.containsKey(p.getUUID()); }
 
     /** "serantis_master_gift" in the party state, once the player is back in the world: the influence and the Grandmaster (or -1). */

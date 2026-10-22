@@ -37,7 +37,7 @@ public class DialogueScreen extends Screen {
     private static JsonObject villagers;
     private static String lastTalk = "";
     private int warnLevel = -1;
-    private boolean gift;                                        // a Grandmaster's End Crystal (no choice at the end)
+    private boolean gift;                                        // a Creature Master's End Crystal (no choice at the end)
     private static String lastGift = "";                                  // a new player's level, for the "villagers are tough" warning
 
     private DialogueScreen(Entity master, String title, JsonObject convo) {
@@ -97,7 +97,7 @@ public class DialogueScreen extends Screen {
         mc.gui.setScreen(screen);
     }
 
-    /** Back from beating a Grandmaster for the first time: it gives you an End Crystal and says why. */
+    /** Back from beating a Creature Master for the first time: it gives you an End Crystal and says why. */
     public static void autoOpenGift() {
         Minecraft mc = Minecraft.getInstance();
         JsonObject s = TradeClient.state();
@@ -109,7 +109,7 @@ public class DialogueScreen extends Screen {
         Entity e = t.get("entity").getAsInt() >= 0 ? mc.level.getEntity(t.get("entity").getAsInt()) : null;
         boolean here = e != null;
         if (e == null) e = mc.player;                                   // it has already gone: just the words
-        String name = dev.serantis.battle.Masters.influenceName(inf) + " Grandmaster";
+        String name = dev.serantis.battle.Masters.influenceName(inf) + " Creature Master";
         JsonObject convo = new JsonObject();
         JsonArray lines = new JsonArray();
         for (String[] l : new String[][]{

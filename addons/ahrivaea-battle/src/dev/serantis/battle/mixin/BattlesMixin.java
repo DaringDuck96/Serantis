@@ -412,7 +412,7 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
-            if ("serantis_master_gift_done".equals(kind)) {    // the Grandmaster's End Crystal cutscene is over
+            if ("serantis_master_gift_done".equals(kind)) {    // the Creature Master's End Crystal cutscene is over
                 dev.serantis.battle.Masters.giftDone(player);
                 cir.setReturnValue(null);
                 return;
