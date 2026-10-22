@@ -1,0 +1,12 @@
+Compiled from "SectionOcclusionGraph.java"
+final class net.minecraft.client.renderer.SectionOcclusionGraph$GraphState extends java.lang.Record {
+  private final net.minecraft.client.renderer.SectionOcclusionGraph$GraphStorage storage;
+  private final java.util.concurrent.BlockingQueue<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> sectionsToPropagateFrom;
+  private net.minecraft.client.renderer.SectionOcclusionGraph$GraphState(net.minecraft.client.renderer.ViewArea);
+  private net.minecraft.client.renderer.SectionOcclusionGraph$GraphState(net.minecraft.client.renderer.SectionOcclusionGraph$GraphStorage, java.util.concurrent.BlockingQueue<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection>);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.renderer.SectionOcclusionGraph$GraphStorage storage();
+  public java.util.concurrent.BlockingQueue<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> sectionsToPropagateFrom();
+}

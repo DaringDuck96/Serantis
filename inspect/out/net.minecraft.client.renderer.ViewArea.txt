@@ -1,0 +1,21 @@
+Compiled from "ViewArea.java"
+public class net.minecraft.client.renderer.ViewArea {
+  private final net.minecraft.client.renderer.SectionOcclusionGraph sectionOcclusionGraph;
+  private final net.minecraft.client.RotatingSectionStorage<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> sections;
+  private final int minY;
+  private final int maxY;
+  public net.minecraft.client.renderer.ViewArea(net.minecraft.client.renderer.chunk.SectionRenderDispatcher, int, int, int, int, int, net.minecraft.client.renderer.SectionOcclusionGraph);
+  public void releaseAllBuffers();
+  public int size();
+  public int minY();
+  public int maxY();
+  public int minSectionY();
+  public int maxSectionY();
+  public int sectionCount();
+  public int getViewDistance();
+  public boolean repositionCamera(net.minecraft.core.SectionPos);
+  public net.minecraft.core.SectionPos getCameraSectionPos();
+  public net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection getRenderSectionAt(net.minecraft.core.BlockPos);
+  protected net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection getRenderSection(long);
+  private static net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection lambda$new$0(net.minecraft.client.renderer.chunk.SectionRenderDispatcher, int, long);
+}
