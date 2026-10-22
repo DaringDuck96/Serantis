@@ -22,8 +22,18 @@ public abstract class HarbingerMixin {
         ci.cancel();
     }
 
+    // A Wither summoned (soul sand T and three wither skeleton skulls) is replaced by the False Hydra (see FalseHydra).
+    @Inject(method = "lambda$init$1", at = @At("HEAD"), cancellable = true)
+    private static void serantis$wither(Entity entity, ServerLevel level, CallbackInfo ci) {
+        if (!"minecraft:wither".equals(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString())) return;
+        dev.serantis.battle.FalseHydra.queue(level, entity.getX(), entity.getY(), entity.getZ());
+        entity.discard();
+        ci.cancel();
+    }
+
     @Inject(method = "lambda$init$2", at = @At("HEAD"))
     private static void serantis$tick(MinecraftServer server, CallbackInfo ci) {
         dev.serantis.battle.Harbinger.tick();
+        dev.serantis.battle.FalseHydra.tick();
     }
 }

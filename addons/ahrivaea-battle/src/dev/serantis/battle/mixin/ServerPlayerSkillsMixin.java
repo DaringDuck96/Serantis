@@ -86,6 +86,7 @@ public abstract class ServerPlayerSkillsMixin {
         dev.serantis.battle.BaseCredit.ride(self);
         if (self.tickCount % 20 == 7) dev.serantis.battle.GoblinRaids.tick(self);
         if (self.tickCount % 20 == 9) dev.serantis.battle.Harbinger.check(self);
+        if (self.tickCount % 20 == 11) dev.serantis.battle.FalseHydra.check(self);
         if (self.tickCount % 100 == 83) dev.serantis.battle.GoblinRaids.sweep(self);
         if (self.tickCount % 100 == 47) dev.serantis.battle.WildChests.tick(self);
         if (self.tickCount % 40 == 23) dev.serantis.battle.BloodMoon.tick(self);

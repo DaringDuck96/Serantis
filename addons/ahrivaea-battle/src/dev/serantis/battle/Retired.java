@@ -19,6 +19,6 @@ public final class Retired {
 
     /** Creatures that only come from their own events (the 20 End dragons, the summoned bosses): never sold or traded. */
     public static boolean unbuyable(String species) {
-        return Harbinger.SPECIES.equals(species) || "false_hydra".equals(species) || Riddles.riddle(species) != null;
+        return Harbinger.SPECIES.equals(species) || FalseHydra.SPECIES.equals(species) || Riddles.riddle(species) != null;
     }
 }

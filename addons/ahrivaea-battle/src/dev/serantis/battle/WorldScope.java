@@ -21,6 +21,7 @@ public final class WorldScope {
             {"dev.serantis.battle.Intro", "ACTIVE"},
             {"dev.serantis.battle.Riddles", "ASKING", "SOLVED"},
             {"dev.serantis.battle.Harbinger", "PENDING", "RISING", "WATCHING"},
+            {"dev.serantis.battle.FalseHydra", "PENDING", "CHARGING", "BARS"},
             {"dev.serantis.battle.Honing", "TALKING"},
             {"dev.serantis.battle.Linx", "LIFTS", "UNDO"},
             {"dev.serantis.battle.Market", "VIEWING"},

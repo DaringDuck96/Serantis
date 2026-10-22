@@ -272,7 +272,12 @@ public abstract class BattlesMixin {
         if (dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null) return;   // a spar's stand-in creature
         if (dev.serantis.battle.BattleHold.isHeld(entity)) { serantis$refuse(cir); return; }   // waiting out another player's battle
         if (dev.serantis.battle.Intro.isFigure(entity) && !dev.serantis.battle.FigureVisit.FIGHTING.get()) { serantis$refuse(cir); return; }   // the Mysterious Figure doesn't fight
-        if (!dev.serantis.battle.DragonParties.allowed(entity, player.getUUID())) { serantis$refuse(cir); return; }   // another party's End dragon
+        if (!dev.serantis.battle.DragonParties.allowed(entity, player.getUUID())) { serantis$refuse(cir); return; }
+        if (dev.serantis.battle.FalseHydra.charging(entity)) {           // the False Hydra is still charging up
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The False Hydra is still gathering its power...").withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+            serantis$refuse(cir);
+            return;
+        }   // another party's End dragon
         if (dev.serantis.battle.VillagerTalk.ask(player, entity)) { serantis$refuse(cir); return; }   // a villager talks before it fights
         if (dev.serantis.battle.GoblinRaids.isRaider(entity)) {       // a raiding goblin: bargain first
             dev.serantis.battle.GoblinRaids.open(player, entity);
@@ -519,11 +524,11 @@ public abstract class BattlesMixin {
 
     // New players' fights stay in their level window (see LevelBand): a wild creature above it (spawned near a
     // stronger friend, an old one, a villager) is brought down to the top of the window when the battle starts, and its
-    // reinforcements follow it. Masters, the Harbinger, the Acolytes, raids and spars keep their levels.
+    // reinforcements follow it. Masters, the Harbinger, the False Hydra, the Acolytes, raids and spars keep their levels.
     @Inject(method = "start", at = @At("HEAD"))
     private static void serantis$levelWindow(ServerPlayer player, dev.ahrivaea.creature.CreatureEntity entity, CallbackInfoReturnable<Battle> cir) {
         if (entity == null || entity.isTame() || dev.serantis.battle.coop.CoopBattles.SPAR_STARTING.get() != null || dev.serantis.battle.FigureVisit.FIGHTING.get()
-                || dev.serantis.battle.GoblinRaids.raidSize() > 0 || dev.serantis.battle.Masters.isMaster(entity) || dev.serantis.battle.Harbinger.is(entity)
+                || dev.serantis.battle.GoblinRaids.raidSize() > 0 || dev.serantis.battle.Masters.isMaster(entity) || dev.serantis.battle.Harbinger.is(entity) || dev.serantis.battle.FalseHydra.is(entity)
                 || dev.serantis.battle.Intro.isFigure(entity)) return;
         int me = dev.ahrivaea.character.PlayerCharacter.get(player).level();
         if (dev.serantis.battle.LevelBand.above(me) >= 5) return;      // the window is fully open from level 8
