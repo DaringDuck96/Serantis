@@ -31,7 +31,7 @@ public final class SkillEffects {
         double mult = 1;
         ServerPlayer p = dev.serantis.battle.coop.CoopBattles.playerOf(b, attacker);    // co-op: each player's own gear and skills
         if (attacker.isPlayer && p != null) {
-            if (dev.serantis.battle.moves.MoveBook.of(move) == null)        // the weapon attack (not a spell): its enchantments count
+            if (dev.serantis.battle.WeaponStyles.isWeaponMove(move) || dev.serantis.battle.moves.MoveBook.of(move) == null)   // the weapon attack (not a spell): its enchantments count
                 mult *= dev.serantis.battle.WeaponEnchants.multiplier(p, p.getMainHandItem(), target.influence);
             if (move.maxRange() <= 1 && Skills.has(p, "might_4")) mult *= 1.05;
             if (move.move().category() == DamageCalc.Category.MAGIC && Skills.has(p, "arcana_3")) mult *= 1.05;

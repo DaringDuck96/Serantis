@@ -258,7 +258,16 @@ Hit a wild creature with any weapon to battle it: a sword, axe, spear, mace, tri
 ### Shields and changing gear in battle
 
 - **Shields:** a shield in your off hand gives you **+20 Defense** in battle (players start at 33), for as long as it's there.
-- **Bows and crossbows:** after choosing where to move, pick your bow and you can shoot any enemy 1 to 6 tiles from that spot (a crossbow 7). Smith improvements and Sharpness add Power, like they do for melee weapons.
+- **Every weapon fights differently.** Your weapon attack starts from the weapon's own damage and Sharpness (20 + 4 × damage for melee weapons, 35 + 4 × (damage − 1) for bows and crossbows), then each kind has its own reach, accuracy and tricks (the battle screen explains yours):
+  - **Bare hands:** reach 1, never misses, weak.
+  - **Sword:** reach 1, never misses, and critical hits are half again as likely. The dependable choice.
+  - **Axe:** reach 1, 90% of the Power, 85% hit. Cleaves the target and up to 2 more enemies next to you, and lowers the Defense of everything it hits (1 stage, 2 turns). Good when you're surrounded.
+  - **Mace:** reach 1, 135% of the Power, 80% hit, 25% chance to stun for a turn, and +25% Power from higher ground. But swinging it leaves you **Exposed**: critical hits on you are twice as likely (and +10%) until your next turn.
+  - **Spear:** reach 1-2, 95% hit, and it pierces: every enemy in the line up to 2 tiles out is hit. Strike from behind an ally.
+  - **Trident:** hurled 1-3 tiles, 80% of the Power, 90% hit, +40% Power against Water creatures and +20% while it's raining.
+  - **Bow:** shoots 2-6 tiles (not point blank), 85% hit, +10% Power for each tile past 3 (+30% at 6 tiles).
+  - **Crossbow:** shoots 2-7 tiles, 130% of the Power, 90% hit, ignores 20% of Defense, but it has to reload: it can't fire two turns in a row.
+  - Axe cleaves and spear thrusts are too wide or too far for the target to strike straight back; sword, mace and fist hits can be answered. Smith improvements, Sharpness and influence enchantments count for every weapon.
 - **Changing gear:** on your turn, after choosing where to move, pick **Equip** (under Wait) to put a weapon, shield or staff from your inventory into a hand, or to empty a hand. It takes the place of your attack that turn. Shields always go in the off hand; staffs can go in either. Your attack, your staff spells and your Defense change straight away.
 
 ### Creature sounds

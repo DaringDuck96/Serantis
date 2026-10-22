@@ -78,6 +78,8 @@ public final class MoveBook {
     /** The catalog move behind a BattleMove, or null for the creatures mod's own moves (weapons, etc.). */
     public static MoveSpec of(BattleMove m) {
         if (m == null) return null;
+        MoveSpec w = dev.serantis.battle.WeaponStyles.spec(m);           // a player's weapon attack
+        if (w != null) return w;
         load();
         MoveSpec s = byName.get(m.name());
         return s != null && s.min == m.minRange() && m.maxRange() <= Math.max(s.max, reach(s.max, s.min, 20)) ? s : null;   // reach scales with level

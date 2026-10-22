@@ -112,9 +112,10 @@ public final class MoveExplain {
                         case "frightened" -> "is Frightened for " + turns(t) + " (Attack and Magic −30%)";
                         case "immobilized" -> "is Rooted for " + turns(t) + " (can't move)";
                         case "slowed" -> "is Slowed for " + turns(t) + " (moves 2 fewer tiles)";
+                        case "exposed" -> "is Exposed until its next turn (critical hits on it are twice as likely)";
                         default -> "is " + status + " for " + turns(t);
                     };
-                    out.add(chance + (whoKey == null ? "The target" : who) + " " + what + ".");
+                    out.add(chance + ("self".equals(whoKey) ? "The user" : whoKey == null ? "The target" : who) + " " + what + ".");
                 }
                 case "movement" -> {
                     int n = i(e, "amount", 0);
@@ -123,7 +124,14 @@ public final class MoveExplain {
                 }
                 case "heal" -> out.add(who + " recovers HP (Power " + i(e, "amount", 0) + ", grows with the user's level).");
                 case "ignore" -> out.add("Ignores " + i(e, "amount", 0) + " points (" + (i(e, "amount", 0) * 10) + "%) of the target's " + title(s(e, "stat")) + ".");
-                case "bonus" -> out.add("moved2".equals(s(e, "when"))
+                case "keen" -> out.add("Critical hits are half again as likely.");
+                case "bonus" -> out.add(e.has("pct") ? switch (String.valueOf(s(e, "when"))) {
+                            case "higher" -> "+" + i(e, "pct", 0) + "% Power from higher ground.";
+                            case "water_target" -> "+" + i(e, "pct", 0) + "% Power against Water creatures.";
+                            case "raining" -> "+" + i(e, "pct", 0) + "% Power while it's raining.";
+                            case "far" -> "+" + i(e, "pct", 0) + "% Power for each tile past 3 (up to +" + 3 * i(e, "pct", 0) + "%).";
+                            default -> "Bonus Power.";
+                        } : "moved2".equals(s(e, "when"))
                         ? "+" + i(e, "amount", 0) + " Power if the user moved at least 2 tiles before attacking."
                         : "+" + i(e, "amount", 0) + " Power against a target that has a boost.");
                 case "cleanse" -> out.add(who + " shake" + (who.contains(" and ") ? "" : "s") + " off " + i(e, "count", 1) + " bad effect" + (i(e, "count", 1) == 1 ? "" : "s") + ".");

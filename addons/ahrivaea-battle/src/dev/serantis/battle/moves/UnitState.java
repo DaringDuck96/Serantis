@@ -82,11 +82,11 @@ public final class UnitState {
         StringBuilder sb = new StringBuilder();
         if (temperament != null) add(sb, temperament);
         if (trait != null) add(sb, trait);
-        for (String s : new String[]{"burning", "bleeding", "poison", "freeze", "stun", "sleep", "confused", "frightened", "immobilized", "slowed", "doom"}) {
+        for (String s : new String[]{"burning", "bleeding", "poison", "freeze", "stun", "sleep", "confused", "frightened", "immobilized", "slowed", "doom", "exposed"}) {
             if (has(s)) add(sb, switch (s) {
                 case "burning" -> "Burn"; case "bleeding" -> "Bleed"; case "poison" -> "Poison"; case "freeze" -> "Frozen";
                 case "stun" -> "Stun"; case "sleep" -> "Asleep"; case "confused" -> "Confused"; case "frightened" -> "Scared";
-                case "immobilized" -> "Rooted"; case "slowed" -> "Slowed"; default -> "Grasped"; });
+                case "immobilized" -> "Rooted"; case "slowed" -> "Slowed"; case "exposed" -> "Exposed"; default -> "Grasped"; });
         }
         String[][] stats = {{"attack", "Atk"}, {"defense", "Def"}, {"magic", "Mag"}, {"speed", "Spd"}, {"accuracy", "Acc"}};
         for (String[] s : stats) { int v = stage(s[0]); if (v != 0) add(sb, s[1] + (v > 0 ? "+" : "") + v); }

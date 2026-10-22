@@ -290,7 +290,7 @@ public final class MoveEngine {
         if (spec.has("dash")) { field.dash(b, a, t); if (!a.alive()) return; }
         int cx = t.x, cz = t.z;                     // where the move was aimed, before anything moves
 
-        int bonus = bonusPower(a, t, spec);
+        int bonus = bonusPower(b, a, t, spec, m.move().power());
         BattleMove bm = bonus == 0 ? m : withPower(m, m.move().power() + bonus);
         List<Unit> targets = area(b, a, t, spec);
         for (JsonObject e : spec.effects)
@@ -413,12 +413,24 @@ public final class MoveEngine {
         }
     }
 
-    private static int bonusPower(Unit a, Unit t, MoveSpec spec) {
+    private static int bonusPower(Battle b, Unit a, Unit t, MoveSpec spec, int basePower) {
         int bonus = 0;
         UnitState as = state(a);
         for (JsonObject e : spec.effects) {
             if (!"bonus".equals(s(e, "type"))) continue;
             String when = s(e, "when");
+            if (e.has("pct")) {                                             // weapon bonuses, a share of the weapon's Power
+                double pct = d(e, "pct", 0);
+                double share = switch (when == null ? "" : when) {
+                    case "higher" -> !a.flies() && Body.height(b, a) - Body.height(b, t) >= 1 ? pct : 0;
+                    case "water_target" -> t.influence == dev.ahrivaea.creature.Influence.WATER ? pct : 0;
+                    case "raining" -> b.level.isRaining() ? pct : 0;
+                    case "far" -> pct * Math.max(0, Math.min(3, Body.gap(a, t) - 3));
+                    default -> 0;
+                };
+                bonus += (int) Math.round(basePower * share / 100.0);
+                continue;
+            }
             boolean ok = "moved2".equals(when)
                     ? as.startX != Integer.MIN_VALUE && Pathing.distance(as.startX, as.startZ, a.x, a.z) >= 2
                     : "target_buffed".equals(when) && state(t).hasBuff();
@@ -501,6 +513,7 @@ public final class MoveEngine {
                 case "stat" -> { if (onTarget) addStat(b, u, s(e, "stat"), i(e, "amount", 0), i(e, "turns", 2)); }
                 case "movement" -> { if (onTarget) addTiles(b, u, i(e, "amount", 0)); }
                 case "status" -> {
+                    if ("self".equals(who)) break;                         // on the user: see selfEffects
                     if (b.random.nextDouble() < d(e, "chance", 1.0)) {
                         int p = e.has("power") ? scaled(i(e, "power", 0), a) : 0;
                         addStatus(b, u, s(e, "status"), i(e, "turns", 2), p);
@@ -527,6 +540,7 @@ public final class MoveEngine {
             else if ("stat".equals(type) && "allies_near_self".equals(who))
                 for (Unit u : allies(b, a, i(e, "radius", 1))) addStat(b, u, s(e, "stat"), i(e, "amount", 0), i(e, "turns", 2));
             else if ("movement".equals(type) && "self".equals(who)) addTiles(b, a, i(e, "amount", 0));
+            else if ("status".equals(type) && "self".equals(who)) addStatus(b, a, s(e, "status"), i(e, "turns", 1), 0);   // a mace swing leaves you exposed
             else if ("cleanse".equals(type) && "allies_near_self".equals(who))
                 for (Unit u : allies(b, a, i(e, "radius", 1))) cleanse(b, u, i(e, "count", 1));
             else if ("recoil_stance".equals(type)) { state(a).recoil = true; acc(b).serantis$say(a.name + " takes a Counter Stance."); Fx.flash(b, a, Fx.BUFF); }
@@ -603,7 +617,7 @@ public final class MoveEngine {
         return switch (s) {
             case "burning" -> "burning"; case "bleeding" -> "bleeding"; case "poison" -> "poisoned"; case "freeze" -> "frozen";
             case "stun" -> "stunned"; case "sleep" -> "asleep"; case "confused" -> "confused"; case "frightened" -> "frightened";
-            case "immobilized" -> "immobilized"; case "slowed" -> "slowed"; case "doom" -> "held in a deadly grasp"; default -> s;
+            case "immobilized" -> "immobilized"; case "slowed" -> "slowed"; case "doom" -> "held in a deadly grasp"; case "exposed" -> "exposed (open to critical hits)"; default -> s;
         };
     }
 
@@ -649,6 +663,8 @@ public final class MoveEngine {
         double crit = r.critChance();
         if (!a.flies() && Body.height(b, a) - Body.height(b, t) >= 1) crit = Math.min(1, crit * 2);   // flyers never have high ground
         MoveSpec spec = MoveBook.of(m);
+        if (spec != null && spec.has("keen")) crit = Math.min(1, crit * 1.5);              // a sword
+        if (state(t).has("exposed")) crit = Math.min(1, crit * 2 + 0.10);                 // after swinging a mace
         int hits = spec == null ? 1 : spec.hits;
         int damage = r.damage();
         double expected;
