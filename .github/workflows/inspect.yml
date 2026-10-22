@@ -149,7 +149,7 @@ jobs:
           ( timeout 900 xvfb-run -a -s "-screen 0 1280x720x24 +extension GLX +render -noreset" portablemc --main-dir "$C" start "fabric:$MCV" > "$RUNNER_TEMP/client-console.txt" 2>&1 & )
           for i in $(seq 1 160); do
             sleep 5
-            if grep -qE 'Created: .*textures|Sound engine started|SMOKE: mixin audit (finished|FAILED)' "$C/logs/latest.log" 2>/dev/null && grep -q 'Sound engine started\|Reloading ResourceManager' "$C/logs/latest.log" 2>/dev/null; then sleep 45; break; fi
+            if grep -qE 'Created: .*textures|Sound engine started|SMOKE: mixin audit (finished|FAILED)' "$C/logs/latest.log" 2>/dev/null && grep -q 'Sound engine started\|Reloading ResourceManager' "$C/logs/latest.log" 2>/dev/null; then sleep 90; break; fi
             if [ -n "$(ls "$C"/crash-reports 2>/dev/null)" ]; then break; fi
           done
           pkill -f portablemc || true; pkill -f java || true; sleep 3
