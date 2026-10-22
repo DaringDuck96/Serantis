@@ -109,14 +109,13 @@ public final class BaseLooks {
             if (level.isLoaded(core)) {
                 BaseCoreBlockEntity be = Bases.coreAt(level, core);
                 if (be == null) { LOOKS.remove(e.getKey()); AREA.remove(e.getKey()); continue; }   // the core is gone
-                a = new int[]{be.minX(), be.maxX(), be.minZ(), be.maxZ()};
+                a = new int[]{core.getX(), core.getZ(), be.radius()};
                 AREA.put(e.getKey(), a);
             } else if ((a = AREA.get(e.getKey())) == null) continue;     // never seen since the server started: shows once it loads
             JsonObject o = new JsonObject();
-            o.addProperty("x0", a[0]);
-            o.addProperty("x1", a[1]);
-            o.addProperty("z0", a[2]);
-            o.addProperty("z1", a[3]);
+            o.addProperty("cx", a[0]);
+            o.addProperty("cz", a[1]);
+            o.addProperty("r", a[2]);
             o.addProperty("biome", e.getValue());
             out.add(o);
         }

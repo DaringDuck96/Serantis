@@ -61,7 +61,8 @@
     "MilkBucketMixin",
     "MobGoalsAccess",
     "HayToggleMixin",
-    "BaseAreaMixin"
+    "BaseAreaMixin",
+    "BasesRoundMixin"
   ],
   "client": [
     "client.PartyScreenMixin",

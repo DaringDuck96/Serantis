@@ -67,7 +67,7 @@ public final class NameSigns {
                 for (BlockEntity e : chunk.getBlockEntities().values()) {
                     if (!(e instanceof SignBlockEntity sign)) continue;
                     BlockPos p = sign.getBlockPos();
-                    if (p.getX() < be.minX() || p.getX() > be.maxX() || p.getZ() < be.minZ() || p.getZ() > be.maxZ()) continue;
+                    if (!BaseShape.inside(be, p.getX(), p.getZ())) continue;
                     for (var side : net.minecraft.world.level.block.entity.SignTextSlot.values())
                         read(out, sign.getText(side).getMessages(false), p);
                 }

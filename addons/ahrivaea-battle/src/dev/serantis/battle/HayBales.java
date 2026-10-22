@@ -107,7 +107,8 @@ public final class HayBales {
                 }
                 if (level.getRandom().nextFloat() >= 0.5f) continue;
                 AABB box = new AABB(be.minX(), level.getMinY(), be.minZ(), be.maxX() + 1, level.getMaxY(), be.maxZ() + 1);
-                int there = level.getEntitiesOfClass(CreatureEntity.class, box, c -> c.entityTags().contains(TAG) && !c.isTame()).size();
+                int there = level.getEntitiesOfClass(CreatureEntity.class, box, c -> c.entityTags().contains(TAG) && !c.isTame()
+                        && BaseShape.inside(be, c.getBlockX(), c.getBlockZ())).size();
                 if (there >= CAP) continue;
                 spawn(level, be, hay);
             }
@@ -129,7 +130,7 @@ public final class HayBales {
                             for (int x = 0; x < 16; x++) {
                                 if (!s.getBlockState(x, y, z).is(Blocks.HAY_BLOCK)) continue;
                                 int wx = (cx << 4) + x, wz = (cz << 4) + z;
-                                if (wx < be.minX() || wx > be.maxX() || wz < be.minZ() || wz > be.maxZ()) continue;
+                                if (!BaseShape.inside(be, wx, wz)) continue;
                                 BlockPos found = new BlockPos(wx, baseY + y, wz);
                                 if (isOn(level, found)) return found;
                             }
@@ -143,7 +144,7 @@ public final class HayBales {
         if (sp == null) return;
         for (int tries = 0; tries < 12; tries++) {
             int x = hay.getX() + level.getRandom().nextInt(13) - 6, z = hay.getZ() + level.getRandom().nextInt(13) - 6;
-            if (x < be.minX() || x > be.maxX() || z < be.minZ() || z > be.maxZ() || !level.isLoaded(new BlockPos(x, hay.getY(), z))) continue;
+            if (!BaseShape.inside(be, x, z) || !level.isLoaded(new BlockPos(x, hay.getY(), z))) continue;
             int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
             BlockPos at = new BlockPos(x, y, z);
             if (Math.abs(y - hay.getY()) > 8) continue;                           // stay near the bale's level (not on a roof far above)

@@ -29,7 +29,7 @@ public final class BaseCredit {
             BaseCoreBlockEntity core = Bases.coreAt(level, c);
             if (core == null) continue;
             int r = core.radius();
-            if (Math.abs(pos.getX() - c.getX()) <= r && Math.abs(pos.getZ() - c.getZ()) <= r
+            if (BaseShape.inside(c.getX(), c.getZ(), r, pos.getX(), pos.getZ())
                     && pos.getY() >= c.getY() - BaseCoreBlockEntity.DOWN && pos.getY() <= c.getY() + BaseCoreBlockEntity.UP) return core;
         }
         return null;

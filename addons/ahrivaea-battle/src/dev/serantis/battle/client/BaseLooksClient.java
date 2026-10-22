@@ -19,7 +19,7 @@ import java.util.List;
  */
 public final class BaseLooksClient {
     /** A base's look: a real biome's colours, or a Nether palette (nether != null). */
-    private record Look(int x0, int x1, int z0, int z1, Biome biome, Nether nether) {}
+    private record Look(int cx, int cz, int r, Biome biome, Nether nether) {}
 
     /** The Nether looks: grass, leaves, water, and the particles that drift about (with how many a tick). */
     public record Nether(int grass, int foliage, int water, net.minecraft.core.particles.ParticleOptions particle, int perTick,
@@ -51,7 +51,7 @@ public final class BaseLooksClient {
         var r = mc.level.getRandom();
         for (int i = 0; i < k.nether().perTick(); i++) {
             double x = mc.player.getX() + (r.nextDouble() - 0.5) * 32, z = mc.player.getZ() + (r.nextDouble() - 0.5) * 32;
-            if (x < k.x0() || x > k.x1() + 1 || z < k.z0() || z > k.z1() + 1) continue;
+            if (!dev.serantis.battle.BaseShape.inside(k.cx(), k.cz(), k.r(), (int) Math.floor(x), (int) Math.floor(z))) continue;
             double y = mc.player.getY() + (r.nextDouble() - 0.3) * 16;
             mc.level.addParticle(k.nether().particle(), x, y, z, 0, 0, 0);
         }
@@ -73,7 +73,7 @@ public final class BaseLooksClient {
                 String id = o.get("biome").getAsString();
                 Nether n = NETHER.get(id);
                 Biome b = n == null ? biome(id) : null;
-                if (b != null || n != null) out.add(new Look(o.get("x0").getAsInt(), o.get("x1").getAsInt(), o.get("z0").getAsInt(), o.get("z1").getAsInt(), b, n));
+                if (b != null || n != null) out.add(new Look(o.get("cx").getAsInt(), o.get("cz").getAsInt(), o.get("r").getAsInt(), b, n));
             }
         boolean changed = !out.equals(looks);
         looks = List.copyOf(out);
@@ -84,7 +84,7 @@ public final class BaseLooksClient {
         List<Look> l = looks;
         if (l.isEmpty()) return null;
         int x = pos.getX(), z = pos.getZ();
-        for (Look k : l) if (x >= k.x0() && x <= k.x1() && z >= k.z0() && z <= k.z1()) return k;
+        for (Look k : l) if (dev.serantis.battle.BaseShape.inside(k.cx(), k.cz(), k.r(), x, z)) return k;
         return null;
     }
 
