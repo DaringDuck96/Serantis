@@ -1,7 +1,0 @@
-Compiled from "SectionOcclusionGraph.java"
-class net.minecraft.client.renderer.SectionOcclusionGraph$SectionToNodeMap {
-  private final net.minecraft.client.renderer.SectionOcclusionGraph$Node[] nodes;
-  private net.minecraft.client.renderer.SectionOcclusionGraph$SectionToNodeMap(int);
-  public void put(net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection, net.minecraft.client.renderer.SectionOcclusionGraph$Node);
-  public net.minecraft.client.renderer.SectionOcclusionGraph$Node get(net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection);
-}

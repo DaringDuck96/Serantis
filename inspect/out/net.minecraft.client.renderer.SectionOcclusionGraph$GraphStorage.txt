@@ -1,7 +1,0 @@
-Compiled from "SectionOcclusionGraph.java"
-class net.minecraft.client.renderer.SectionOcclusionGraph$GraphStorage {
-  public final net.minecraft.client.renderer.SectionOcclusionGraph$SectionToNodeMap sectionToNodeMap;
-  public final net.minecraft.client.renderer.Octree sectionTree;
-  public final it.unimi.dsi.fastutil.longs.Long2ObjectMap<it.unimi.dsi.fastutil.longs.LongList> sectionsWaitingForChunkLoads;
-  public net.minecraft.client.renderer.SectionOcclusionGraph$GraphStorage(net.minecraft.client.renderer.ViewArea);
-}
