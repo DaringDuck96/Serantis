@@ -1,0 +1,33 @@
+Compiled from "LevelRenderer.java"
+class net.minecraft.client.renderer.LevelRenderer$1 implements com.mojang.blaze3d.framegraph.FrameGraphBuilder$Inspector {
+  final net.minecraft.util.profiling.ProfilerFiller val$profiler;
+
+  net.minecraft.client.renderer.LevelRenderer$1();
+    Code:
+         0: aload_0
+         1: aload_2
+         2: putfield      #1                  // Field val$profiler:Lnet/minecraft/util/profiling/ProfilerFiller;
+         5: aload_1
+         6: dup
+         7: invokestatic  #7                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+        10: pop
+        11: pop
+        12: aload_0
+        13: invokespecial #13                 // Method java/lang/Object."<init>":()V
+        16: return
+
+  public void beforeExecutePass(java.lang.String);
+    Code:
+         0: aload_0
+         1: getfield      #1                  // Field val$profiler:Lnet/minecraft/util/profiling/ProfilerFiller;
+         4: aload_1
+         5: invokeinterface #19,  2           // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.push:(Ljava/lang/String;)V
+        10: return
+
+  public void afterExecutePass(java.lang.String);
+    Code:
+         0: aload_0
+         1: getfield      #1                  // Field val$profiler:Lnet/minecraft/util/profiling/ProfilerFiller;
+         4: invokeinterface #25,  1           // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.pop:()V
+         9: return
+}
