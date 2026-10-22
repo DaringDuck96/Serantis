@@ -1,3 +1,3 @@
-# 1792683320
-compile wip/name-signs
-smoke
+# 1792683413
+sig:net.minecraft.world.level.block.entity.SignBlockEntity
+sig:net.minecraft.world.level.block.entity.SignText
