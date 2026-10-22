@@ -1,5 +1,3 @@
-# 1792631220
-sig:net.minecraft.client.renderer.SkyRenderer
-sig:net.minecraft.world.level.Level
-sig:net.minecraft.world.level.storage.LevelData
-sig:net.minecraft.client.multiplayer.ClientLevel
+# 1792631278
+net.minecraft.client.renderer.SkyRenderer
+sig:net.minecraft.client.renderer.state.level.SkyRenderState
