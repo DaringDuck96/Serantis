@@ -1,3 +1,6 @@
-# 1792680104
-compile wip/ailments-all
-smoke
+# 1792680791
+sig:net.minecraft.client.player.ClientInput
+sig:net.minecraft.client.player.KeyboardInput
+sig:net.minecraft.world.entity.player.Input
+sig:net.minecraft.client.Options
+sig:net.minecraft.world.entity.LivingEntity
