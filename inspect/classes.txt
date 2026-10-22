@@ -1,2 +1,2 @@
-# 1792672779
-compile wip/dragon-parties
+# 1792672872
+smoke
