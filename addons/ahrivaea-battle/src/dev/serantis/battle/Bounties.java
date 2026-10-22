@@ -168,9 +168,18 @@ public final class Bounties {
     }
 
     /** Hand in a delivery, or claim a finished contract. */
+    /** A bell within 8 blocks (bounties are claimed at one). */
+    private static boolean nearBell(ServerPlayer p) {
+        net.minecraft.core.BlockPos at = p.blockPosition();
+        for (net.minecraft.core.BlockPos q : net.minecraft.core.BlockPos.betweenClosed(at.offset(-8, -6, -8), at.offset(8, 6, 8)))
+            if (p.level().isLoaded(q) && p.level().getBlockState(q).is(net.minecraft.world.level.block.Blocks.BELL)) return true;
+        return false;
+    }
+
     public static void act(ServerPlayer p, int index) {
         List<Contract> list = today(p);
         if (index < 0) { PartySync.sync(p); return; }                   // opened the board: fresh contracts
+        if (!nearBell(p)) { p.sendOverlayMessage(Component.literal("Bounties are claimed at a village bell.")); return; }
         if (index == list.size()) { groupAct(p); return; }              // the row after yours: the group contract
         if (index >= list.size()) return;
         Contract c = list.get(index);

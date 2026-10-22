@@ -24,6 +24,9 @@ public final class BattleHold {
 
     /** Battles.start is about to throw the wild creature away (it fights a copy in the arena): remember it. */
     public static void source(CreatureEntity wild) { SOURCE.set(wild); }
+
+    /** After any battle start (even one that failed): nothing left over for the next one. */
+    public static void resetStart() { STARTING.remove(); SOURCE.remove(); }
     private static final Map<Battle, Object[]> HELD = Collections.synchronizedMap(new WeakHashMap<>());   // {ServerLevel, UUID}
     private static final Set<UUID> HIDDEN = ConcurrentHashMap.newKeySet();
 

@@ -26,6 +26,8 @@ public abstract class SafeBattlesTickMixin {
         } catch (Throwable t) {
             dev.serantis.battle.Safe.caught("a battle message from " + (p == null ? "?" : p.getPlainTextName()), t);
             return "Something went wrong with that. (It's been logged.)";
+        } finally {
+            dev.serantis.battle.coop.CoopBattles.ACTOR.remove();
         }
     }
 }

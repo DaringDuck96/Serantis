@@ -17,6 +17,8 @@ public abstract class WildChestBreakMixin {
 
     @Inject(method = "destroyBlock", at = @At("HEAD"), cancellable = true)
     private void serantis$mimic(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        try {
         if (dev.serantis.battle.WildChests.touched(player, pos)) cir.setReturnValue(false);
+            } catch (Throwable serantisT) { dev.serantis.battle.Safe.caught("serantis.mimic", serantisT); }
     }
 }

@@ -238,11 +238,17 @@ public final class Groups {
 
     // ------------------------------------------------------------------ actions
 
+    private static final java.util.Map<UUID, Long> LAST_INVITE = new java.util.concurrent.ConcurrentHashMap<>();
+
     public static void invite(ServerPlayer from, String targetId) {
         UUID id;
         try { id = UUID.fromString(targetId); } catch (IllegalArgumentException e) { return; }
         ServerPlayer to = server(from).getPlayerList().getPlayer(id);
         if (to == null || to == from) return;
+        long now = System.currentTimeMillis();                              // no invite spam
+        Long last = LAST_INVITE.get(from.getUUID());
+        if (last != null && now - last < 3000) { tell(from, "Wait a moment before inviting again.", ChatFormatting.YELLOW); return; }
+        LAST_INVITE.put(from.getUUID(), now);
         Group g = of(from), theirs = of(to);
         if (g != null && g.members.containsKey(id)) { tell(from, to.getPlainTextName() + " is already in your group.", ChatFormatting.YELLOW); return; }
         if (theirs != null) { tell(from, to.getPlainTextName() + " is already in a group.", ChatFormatting.RED); return; }

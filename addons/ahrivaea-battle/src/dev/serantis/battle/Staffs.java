@@ -170,8 +170,8 @@ public final class Staffs {
     }
 
     private static boolean atTable(ServerPlayer p, BlockPos table) {
-        return table != null && p.level().getBlockState(table).is(Blocks.ENCHANTING_TABLE)
-                && p.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(table)) < 6 * 6;
+        return table != null && p.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(table)) < 6 * 6   // near first: never loads far chunks
+                && p.level().isLoaded(table) && p.level().getBlockState(table).is(Blocks.ENCHANTING_TABLE);
     }
 
     /** Right-clicked an enchanting table with an unlinked staff: show its three spells (rolled once, kept on the staff). */

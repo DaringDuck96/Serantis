@@ -19,13 +19,17 @@ public abstract class TunnelerMixin {
 
     @Inject(method = "destroyBlock", at = @At("HEAD"))
     private void serantis$tunnelBefore(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        try {
         serantis$tunnel = dev.serantis.battle.Tunneler.before(player, pos);
+            } catch (Throwable serantisT) { dev.serantis.battle.Safe.caught("serantis.tunnelBefore", serantisT); }
     }
 
     @Inject(method = "destroyBlock", at = @At("RETURN"))
     private void serantis$tunnelAfter(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        try {
         float[] info = serantis$tunnel;
         serantis$tunnel = null;
         if (info != null && Boolean.TRUE.equals(cir.getReturnValue())) dev.serantis.battle.Tunneler.after(player, pos, info);
+            } catch (Throwable serantisT) { dev.serantis.battle.Safe.caught("serantis.tunnelAfter", serantisT); }
     }
 }

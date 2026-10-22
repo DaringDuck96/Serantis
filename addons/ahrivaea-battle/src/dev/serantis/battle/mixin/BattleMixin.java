@@ -140,6 +140,19 @@ public abstract class BattleMixin implements BattleAccess {
 
     // A bucket of milk cures statuses in battle (see Ailments): the Item action on a unit with a status uses milk if
     // you have some (the bucket is used up), otherwise a healing potion as before.
+    // A player's action that goes wrong is logged and refused (see Safe), and leaves no milk/potion choice behind.
+    @com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod(method = "act")
+    private String serantis$safeAct(Battle.Action action, com.llamalad7.mixinextras.injector.wrapoperation.Operation<String> original) {
+        try {
+            return original.call(action);
+        } catch (Throwable t) {
+            dev.serantis.battle.Safe.caught("a battle action", t);
+            return "Something went wrong with that. (It's been logged.)";
+        } finally {
+            dev.serantis.battle.Ailments.WANT_MILK.set(false);
+        }
+    }
+
     // The battle screen's Milk action is the Item action with move 1 (Potion is move 0).
     @Inject(method = "act", at = @At("HEAD"))
     private void serantis$whichItem(Battle.Action action, CallbackInfoReturnable<String> cir) {

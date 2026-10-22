@@ -36,11 +36,18 @@ public final class Feeding {
     }
 
     /** Eat or drink the item in this inventory slot, as if it had been used from the hand. */
+    private static final java.util.Map<java.util.UUID, Long> LAST_EAT = new java.util.concurrent.ConcurrentHashMap<>();
+
     public static void eat(ServerPlayer p, int slot) {
         ItemStack s = slot(p, slot);
         var c = s.get(DataComponents.CONSUMABLE);
         if (c == null) return;
         if (Battles.of(p) != null) { say(p, "Not in the middle of a battle."); return; }
+        if (!p.isAlive() || p.isSpectator() || p.getCooldowns().isOnCooldown(s)) return;
+        long now = p.level().getGameTime();                               // one bite per second from the menu
+        Long last = LAST_EAT.get(p.getUUID());
+        if (last != null && now - last < 20 && now >= last) return;
+        LAST_EAT.put(p.getUUID(), now);
         if (!c.canConsume(p, s)) { say(p, "You're not hungry."); return; }
         String what = s.getHoverName().getString();
         ItemStack result = s.finishUsingItem(p.level(), p);
@@ -79,7 +86,7 @@ public final class Feeding {
             Party.set(p, partySlot, c.withHealth(healed));
             after = Math.round(healed);
         } else {
-            if (!(p.level().getEntity(entity) instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(p) || Battles.inBattle(e)) return;
+            if (!(p.level().getEntity(entity) instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(p) || Battles.inBattle(e) || p.distanceToSqr(e) > 24 * 24) return;
             if (Knockout.is(e)) { say(p, e.displayName() + " is knocked out: it can't be healed for another " + Knockout.clock(e) + "."); return; }
             max = Math.round(e.getMaxHealth());
             name = e.getDisplayName().getString();
@@ -108,7 +115,7 @@ public final class Feeding {
             msg = Ailments.cureCreature(c, nick != null && !nick.isEmpty() ? nick : name);
             if (msg != null) Party.set(p, partySlot, c);
         } else {
-            if (!(p.level().getEntity(entity) instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(p)) return true;
+            if (!(p.level().getEntity(entity) instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(p) || p.distanceToSqr(e) > 24 * 24) return true;
             msg = Ailments.cureCreature(e, e.getDisplayName().getString());
         }
         if (msg == null) {

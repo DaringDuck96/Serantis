@@ -82,7 +82,13 @@ public final class BaseLooks {
     }
 
     /** From the base screen: give the base this biome's look ("" for its own). */
+    private static final java.util.Map<java.util.UUID, Long> LAST_SET = new java.util.concurrent.ConcurrentHashMap<>();
+
     public static void set(ServerPlayer p, BlockPos core, String biome) {
+        long now = System.currentTimeMillis();                              // every change re-renders the base for everyone near
+        Long last = LAST_SET.get(p.getUUID());
+        if (last != null && now - last < 1000) { p.sendOverlayMessage(net.minecraft.network.chat.Component.literal("One moment...")); return; }
+        LAST_SET.put(p.getUUID(), now);
         ServerLevel level = p.level().getServer().overworld();
         if (p.level() != level) { p.sendOverlayMessage(net.minecraft.network.chat.Component.literal("Only Overworld bases can change their look.")); return; }
         BaseCoreBlockEntity be = Bases.coreAt(level, core);

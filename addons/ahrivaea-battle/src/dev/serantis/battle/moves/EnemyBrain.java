@@ -70,6 +70,7 @@ public final class EnemyBrain {
         Field field = Field.of(b);
         int ox = u.x, oz = u.z, n = Body.size(u);
         Plan best = null;
+        try {                                                           // whatever happens while it thinks, it's put back where it stands
         for (Map.Entry<Integer, Integer> cell : reach.entrySet()) {
             int cx = cell.getKey() % size, cz = cell.getKey() / size;
             if (!b.canStop(u, cx, cz)) continue;
@@ -121,7 +122,9 @@ public final class EnemyBrain {
                 }
             }
         }
-        u.x = ox; u.z = oz;
+        } finally {
+            u.x = ox; u.z = oz;
+        }
 
         if (best != null) {
             u.x = best.cell % size; u.z = best.cell / size;

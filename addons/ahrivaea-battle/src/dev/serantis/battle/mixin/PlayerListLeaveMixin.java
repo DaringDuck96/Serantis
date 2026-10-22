@@ -12,9 +12,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PlayerListLeaveMixin {
     @Inject(method = "remove", at = @At("HEAD"))
     private void serantis$leaving(ServerPlayer player, CallbackInfo ci) {
-        dev.serantis.battle.coop.CoopBattles.disconnected(player);
-        dev.serantis.battle.WingedBoots.forget(player);
-        dev.serantis.battle.SpawnAlerts.forget(player);
-        dev.serantis.battle.VersionCheck.forget(player);
+        dev.serantis.battle.Safe.run("leaving battles for " + player.getPlainTextName(), () -> dev.serantis.battle.coop.CoopBattles.disconnected(player));
+        dev.serantis.battle.Safe.run("WingedBoots.forget", () -> dev.serantis.battle.WingedBoots.forget(player));
+        dev.serantis.battle.Safe.run("SpawnAlerts.forget", () -> dev.serantis.battle.SpawnAlerts.forget(player));
+        dev.serantis.battle.Safe.run("VersionCheck.forget", () -> dev.serantis.battle.VersionCheck.forget(player));
     }
 }

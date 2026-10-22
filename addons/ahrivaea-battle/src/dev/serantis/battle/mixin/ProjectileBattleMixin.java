@@ -22,7 +22,9 @@ public abstract class ProjectileBattleMixin {
         if (!(self instanceof AbstractArrow) || self.level().isClientSide()) return;
         if (!(hit instanceof EntityHitResult eh) || !(eh.getEntity() instanceof CreatureEntity target)) return;
         if (!(self.getOwner() instanceof ServerPlayer player)) return;
-        if (!Weapons.shot(player, target)) return;
+        boolean shot;
+        try { shot = Weapons.shot(player, target); } catch (Throwable t) { dev.serantis.battle.Safe.caught("an arrow starting a battle", t); return; }
+        if (!shot) return;
         self.setDeltaMovement(Vec3.ZERO);           // the arrow drops where it hit, and can be picked up
         ci.cancel();
     }

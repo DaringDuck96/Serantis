@@ -53,16 +53,16 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
             ((CreatureEntity) (Object) this).spawnAtLocation(sl, serantis$carriedLoad);
             serantis$carriedLoad = null;
         }
-        if (serantis$leaveAt > 0) dev.serantis.battle.Market.tick((CreatureEntity) (Object) this);
+        if (serantis$leaveAt > 0) dev.serantis.battle.Safe.run("Market.tick", () -> dev.serantis.battle.Market.tick((CreatureEntity) (Object) this));
         CreatureEntity self = (CreatureEntity) (Object) this;
         if (!self.level().isClientSide()) {
-            dev.serantis.battle.Locomotion.tick(self);
+            dev.serantis.battle.Safe.run("Locomotion.tick", () -> dev.serantis.battle.Locomotion.tick(self));
             if (!serantis$announced && self.tickCount >= 2) {            // just appeared: a Mutated or Enraged one gets noticed
                 serantis$announced = true;
-                dev.serantis.battle.SpawnAlerts.announce(self);
+                dev.serantis.battle.Safe.run("SpawnAlerts.announce", () -> dev.serantis.battle.SpawnAlerts.announce(self));
             }
-            dev.serantis.battle.Companions.tick(self);                  // never left behind
-            dev.serantis.battle.Riddles.tick(self);                     // a risen End dragon asks its riddle
+            dev.serantis.battle.Safe.run("Companions.tick", () -> dev.serantis.battle.Companions.tick(self));                  // never left behind
+            dev.serantis.battle.Safe.run("Riddles.tick", () -> dev.serantis.battle.Riddles.tick(self));                     // a risen End dragon asks its riddle
             if (self.getVariant() != dev.ahrivaea.creature.Variant.NONE && dev.ahrivaea.villager.Villagers.SPECIES.equals(self.getSpeciesId()))
                 self.setVariant(dev.ahrivaea.creature.Variant.NONE);     // villagers and Creature Masters are never Enraged or Mutated
         }

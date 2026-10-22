@@ -11,7 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class FurnaceSmeltedMixin {
     @Inject(method = "setRecipeUsed", at = @At("HEAD"))
     private void serantis$smelted(net.minecraft.world.item.crafting.RecipeHolder<?> recipe, CallbackInfo ci) {
+        try {
         AbstractFurnaceBlockEntity self = (AbstractFurnaceBlockEntity) (Object) this;
         if (recipe != null && self.getLevel() instanceof net.minecraft.server.level.ServerLevel level) dev.serantis.battle.BaseCredit.smelted(level, self.getBlockPos());
+            } catch (Throwable serantisT) { dev.serantis.battle.Safe.caught("serantis.smelted", serantisT); }
     }
 }

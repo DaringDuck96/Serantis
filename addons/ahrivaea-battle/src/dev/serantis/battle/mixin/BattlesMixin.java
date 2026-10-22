@@ -41,6 +41,36 @@ public abstract class BattlesMixin {
         dev.serantis.battle.BattleHold.started(cir.getReturnValue());
     }
 
+    // ---- safety (see Safe): starting, cleaning up and sending players home from a battle never crash the server, and
+    // a start that fails leaves nothing behind (Town Guards, a Master, a held creature...) for the next battle.
+    @com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod(method = "start")
+    private static Battle serantis$safeStart(ServerPlayer player, CreatureEntity wild, com.llamalad7.mixinextras.injector.wrapoperation.Operation<Battle> original) {
+        try {
+            return original.call(player, wild);
+        } catch (Throwable t) {
+            dev.serantis.battle.Safe.caught("starting a battle for " + (player == null ? "?" : player.getPlainTextName()), t);
+            return null;
+        } finally {
+            SERANTIS_GUARDED.set(false);
+            SERANTIS_MASTER.remove();
+            SERANTIS_BIGGEST.remove();
+            dev.serantis.battle.BattleHold.resetStart();
+            dev.serantis.battle.Villages.NEXT_GUARD.set(false);
+            dev.serantis.battle.Masters.SPAWN_PLAYER.remove();
+            dev.serantis.battle.coop.CoopBattles.clearStart();
+        }
+    }
+
+    @com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod(method = "cleanUp")
+    private static void serantis$safeCleanUp(Battle b, com.llamalad7.mixinextras.injector.wrapoperation.Operation<Void> original) {
+        try { original.call(b); } catch (Throwable t) { dev.serantis.battle.Safe.caught("cleaning up after a battle", t); }
+    }
+
+    @com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod(method = "goHome")
+    private static void serantis$safeGoHome(ServerPlayer p, Battle b, com.llamalad7.mixinextras.injector.wrapoperation.Operation<Void> original) {
+        try { original.call(p, b); } catch (Throwable t) { dev.serantis.battle.Safe.caught("sending " + (p == null ? "a player" : p.getPlainTextName()) + " home from a battle", t); }
+    }
+
     @Inject(method = "cleanUp", at = @At("TAIL"))
     private static void serantis$heldEnded(Battle b, CallbackInfo ci) { dev.serantis.battle.BattleHold.ended(b); }
 
@@ -158,7 +188,7 @@ public abstract class BattlesMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private static void serantis$walkTick(net.minecraft.server.MinecraftServer server, CallbackInfo ci) {
-        dev.serantis.battle.BattleWalk.tick(server);
+        dev.serantis.battle.Safe.run("battle walks", () -> dev.serantis.battle.BattleWalk.tick(server));
     }
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;teleport(DDDFF)V"))
@@ -323,7 +353,7 @@ public abstract class BattlesMixin {
                     case "serantis_riddle_ask" -> {
                         var e = player.level().getEntity(o.has("entity") ? o.get("entity").getAsInt() : -1);
                         if (e instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Riddles.isRiddleDragon(c) && player.distanceToSqr(c) < 16 * 16) {
-                            if (dev.serantis.battle.Riddles.solved(player, c)) { if (dev.ahrivaea.battle.Battles.of(player) == null) dev.ahrivaea.battle.Battles.start(player, c); }
+                            if (dev.serantis.battle.Riddles.solved(player, c)) { if (dev.ahrivaea.battle.Battles.of(player) == null && !dev.ahrivaea.battle.Battles.inBattle(c)) dev.ahrivaea.battle.Battles.start(player, c); }
                             else dev.serantis.battle.Riddles.ask(player, c);
                         }
                     }
@@ -382,7 +412,7 @@ public abstract class BattlesMixin {
             if ("serantis_master_challenge".equals(kind)) {   // challenged a Creature Master from the conversation
                 var e = player.level().getEntity(o.has("entity") ? o.get("entity").getAsInt() : -1);
                 if (e instanceof dev.ahrivaea.creature.CreatureEntity c && dev.serantis.battle.Masters.isMaster(c) && c.isAlive()
-                        && player.distanceToSqr(c) < 12 * 12 && dev.ahrivaea.battle.Battles.of(player) == null)
+                        && player.distanceToSqr(c) < 12 * 12 && dev.ahrivaea.battle.Battles.of(player) == null && !dev.ahrivaea.battle.Battles.inBattle(c))
                     dev.ahrivaea.battle.Battles.start(player, c);
                 cir.setReturnValue(null);
                 return;
@@ -533,8 +563,14 @@ public abstract class BattlesMixin {
             if (!"serantis_rename".equals(kind)) return;
             cir.setReturnValue(dev.serantis.battle.Naming.rename(player, o.has("name") ? o.get("name").getAsString() : ""));
         } catch (RuntimeException e) {
-            // not ours
+            // one of ours that went wrong: logged, and never handed on to the original as an unknown message
+            if (kind0(json).startsWith("serantis_")) { dev.serantis.battle.Safe.caught("a serantis message", e); cir.setReturnValue(null); }
         }
+    }
+
+    private static String kind0(String raw) {
+        try { var o = com.google.gson.JsonParser.parseString(raw).getAsJsonObject(); return o.has("kind") ? o.get("kind").getAsString() : ""; }
+        catch (RuntimeException e) { return ""; }
     }
 
     // New players' fights stay in their level window (see LevelBand): a wild creature above it (spawned near a

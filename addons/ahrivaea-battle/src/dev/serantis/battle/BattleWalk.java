@@ -106,7 +106,7 @@ public final class BattleWalk {
     /** Every server tick: step the walkers, and send held updates once a battle's walks are done. */
     public static void tick(net.minecraft.server.MinecraftServer server) {
         for (var it = WALKS.entrySet().iterator(); it.hasNext(); ) {
-            var en = it.next();
+            var en = it.next(); try {
             Walk w = en.getValue();
             Entity e = w.battle.level.getEntity(en.getKey());
             if (e == null) e = server.getPlayerList().getPlayer(en.getKey());
@@ -125,6 +125,7 @@ public final class BattleWalk {
                 e.setPos(now.x, now.y, now.z);
             }
             if (w.done()) { it.remove(); STARTS.remove(en.getKey()); if (w.battle.phase == Battle.Phase.OVER || !busy(w.battle)) dev.serantis.battle.fx.Fx.flush(w.battle); }
+            } catch (Throwable t) { it.remove(); STARTS.remove(en.getKey()); dev.serantis.battle.Safe.caught("walking a battle step", t); }
         }
         List<Battle> ready = new ArrayList<>();
         synchronized (PENDING) {

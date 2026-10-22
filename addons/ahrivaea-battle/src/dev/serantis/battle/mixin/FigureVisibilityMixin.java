@@ -12,9 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class FigureVisibilityMixin {
     @Inject(method = "broadcastToPlayer", at = @At("HEAD"), cancellable = true)
     private void serantis$ownCutscene(ServerPlayer player, CallbackInfoReturnable<Boolean> cir) {
+        try {
         Entity self = (Entity) (Object) this;
         boolean spawning = dev.serantis.battle.Intro.SPAWNING_FOR.get() != null && self instanceof dev.ahrivaea.creature.CreatureEntity;
         if ((spawning || dev.serantis.battle.Intro.isFigure(self)) && !dev.serantis.battle.Intro.visibleTo(self, player)) cir.setReturnValue(false);
         else if (!dev.serantis.battle.DragonParties.allowed(self, player.getUUID())) cir.setReturnValue(false);   // another party's End dragon
+            } catch (Throwable serantisT) { dev.serantis.battle.Safe.caught("serantis.ownCutscene", serantisT); }
     }
 }

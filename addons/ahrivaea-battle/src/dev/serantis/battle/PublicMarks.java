@@ -29,7 +29,8 @@ public final class PublicMarks {
 
     private static final List<Mark> MARKS = new ArrayList<>();
     private static MinecraftServer loadedFor;
-    private static final int MAX_PER_PLAYER = 64;
+    private static final int MAX_PER_PLAYER = 64, MAX_TOTAL = 2000;
+    private static final java.util.Map<UUID, Long> LAST = new java.util.concurrent.ConcurrentHashMap<>();
 
     private PublicMarks() {}
 
@@ -88,7 +89,7 @@ public final class PublicMarks {
     }
 
     private static String clean(String name) {
-        name = name == null ? "" : name.trim();
+        name = name == null ? "" : name.replaceAll("[\\p{Cntrl}\u00a7]", "").trim();
         if (name.length() > 32) name = name.substring(0, 32);
         return name.isEmpty() ? "Marker" : name;
     }
@@ -98,11 +99,16 @@ public final class PublicMarks {
         MinecraftServer server = p.level().getServer();
         load(server);
         String op = o.has("op") ? o.get("op").getAsString() : "";
+        long now = System.currentTimeMillis();                              // a few changes a second at most
+        Long last = LAST.get(p.getUUID());
+        if (last != null && now - last < 300) return;
+        LAST.put(p.getUUID(), now);
         Mark found = null;
         if (o.has("id")) for (Mark m : MARKS) if (m.id.equals(o.get("id").getAsString())) found = m;
         switch (op) {
             case "add" -> {
                 long mine = MARKS.stream().filter(m -> m.owner.equals(p.getUUID())).count();
+                if (MARKS.size() >= MAX_TOTAL) { p.sendOverlayMessage(net.minecraft.network.chat.Component.literal("The server's map is full of public markers.")); return; }
                 if (mine >= MAX_PER_PLAYER) { p.sendOverlayMessage(net.minecraft.network.chat.Component.literal("You have " + MAX_PER_PLAYER + " public markers already.")); return; }
                 Mark m = new Mark();
                 m.id = UUID.randomUUID().toString();
@@ -110,6 +116,8 @@ public final class PublicMarks {
                 m.ownerName = p.getPlainTextName();
                 m.name = clean(o.get("name").getAsString());
                 m.dim = o.get("dim").getAsString();
+                if (server.getAllLevels() == null || java.util.stream.StreamSupport.stream(server.getAllLevels().spliterator(), false)
+                        .noneMatch(l -> l.dimension().identifier().toString().equals(m.dim))) return;
                 m.x = o.get("x").getAsInt();
                 m.z = o.get("z").getAsInt();
                 m.color = o.get("color").getAsInt();
