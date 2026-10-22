@@ -349,6 +349,13 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_base_look".equals(kind)) {        // the base screen's Look picker
+                if (o.has("x") && o.has("y") && o.has("z"))
+                    dev.serantis.battle.BaseLooks.set(player, new net.minecraft.core.BlockPos(o.get("x").getAsInt(), o.get("y").getAsInt(), o.get("z").getAsInt()),
+                            o.has("biome") ? o.get("biome").getAsString() : "");
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_villager_talk".equals(kind)) {     // right-clicked a villager: it talks (and offers a fight)
                 if (o.has("entity")) dev.serantis.battle.VillagerTalk.talk(player, o.get("entity").getAsInt());
                 cir.setReturnValue(null);

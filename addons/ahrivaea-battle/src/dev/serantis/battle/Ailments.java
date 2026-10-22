@@ -204,6 +204,7 @@ public final class Ailments {
 
     /** Every 5 seconds, per player. */
     public static void tick(ServerPlayer p) {
+        BaseLooks.check(p);                                              // (piggybacks on this 5-second tick)
         String mine = PLAYERS.get(p.getUUID());
         if (mine != null && status(mine) == null) {
             PLAYERS.remove(p.getUUID());

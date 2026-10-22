@@ -25,6 +25,7 @@ public final class SerantisKeys {
 
     public static void tick() {
         Minecraft mc = Minecraft.getInstance();
+        BaseLooksClient.tick();                                          // base looks (see BaseLooks)
         if (mc.player == null) return;
         boolean sneak = mc.player.isShiftKeyDown();
         while (BACKPACK.consumeClick()) {

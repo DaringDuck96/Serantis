@@ -47,6 +47,11 @@ public abstract class BasesMixin {
     private static void serantis$skillsView(net.minecraft.server.level.ServerPlayer player, dev.ahrivaea.base.BaseCoreBlockEntity core,
                                             org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<com.google.gson.JsonObject> cir) {
         if (cir.getReturnValue() != null) cir.getReturnValue().add("serantis_skills", dev.serantis.battle.skills.Skills.view(player, core));
+        if (cir.getReturnValue() != null && core.getLevel() != null && core.getLevel().dimension() == net.minecraft.world.level.Level.OVERWORLD
+                && dev.serantis.battle.coop.Groups.canUseBase(player, core)) {   // the Look button (see BaseLooks)
+            String look = dev.serantis.battle.BaseLooks.of(core);
+            cir.getReturnValue().addProperty("serantis_look", look == null ? "" : look);
+        }
     }
 
     @Unique private static CaughtCreature serantis$shown;

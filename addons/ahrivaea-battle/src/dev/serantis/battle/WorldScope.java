@@ -26,6 +26,7 @@ public final class WorldScope {
             {"dev.serantis.battle.Ailments", "PLAYERS"},
             {"dev.serantis.battle.HayBales", "HAY"},
             {"dev.serantis.battle.NameSigns", "CACHE"},
+            {"dev.serantis.battle.BaseLooks", "AREA", "SENT"},
             {"dev.serantis.battle.Linx", "LIFTS", "UNDO"},
             {"dev.serantis.battle.Market", "VIEWING"},
             {"dev.serantis.battle.Naming", "WAITING"},

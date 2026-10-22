@@ -326,6 +326,9 @@ A **Backpack** is a reward: the base's owner gets one every time one of their ba
 ### Base size
 Bases are bigger than in the creatures mod. A base is a square of whole chunks around the chunk its Base Core is in, from bedrock to the sky: **Level 1 is 7×7 chunks (112 blocks across)** and every level adds 2 chunks (32 blocks): Level 2 is 144 blocks, Level 3 176, Level 4 208 and Level 5 240. The edges follow chunk lines (F3 + G shows them), so put the core near the middle of a chunk to centre the base on it. Everything that works with a base's area (workers, chunk loading, raids, hay bales, name signs, the base screen) uses this size.
 
+### Base looks
+An Overworld base can take the grass, leaf and water colours of any Overworld biome, across its whole area: press **Look** on the Base Core screen and pick one (each shows its grass, leaf and water colours), or "Its own biome" to put it back. It's only the look: the real biome, and with it spawns, weather and everything else, stays the same. Everyone sees it. Only the owner (or their group) can change it, and bases in the Nether or the End keep their own colours.
+
 ### Hay bales: farm animals at your base
 Place a hay bale anywhere in your base's area and farm animals start turning up beside it: cows, sheep, goats and chickens (wild, Level 1-5, so they're easy to battle for meat, or to recruit). This is its own system, apart from the ordinary wild spawns: every minute there's a 50% chance one arrives, until 6 of them are in the base. More hay bales don't bring more. They don't wander off or despawn when you leave, and once you've battled one, another can come. **Right-click a hay bale with an empty hand to switch it off** (and again to switch it back on); each bale is switched on its own, and a new one starts on. A base gets animals while at least one of its bales is on.
 

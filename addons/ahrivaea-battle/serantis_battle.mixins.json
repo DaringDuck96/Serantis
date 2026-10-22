@@ -95,7 +95,8 @@
     "client.BattleCameraMixin",
     "client.ItemTipsMixin",
     "client.ConfusedInputMixin",
-    "client.FrightenedViewMixin"
+    "client.FrightenedViewMixin",
+    "client.BiomeColorsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
