@@ -1,2 +1,3 @@
-# 1792633618
-smoke
+# 1792634275
+sig:net.minecraft.client.renderer.entity.state.AvatarRenderState
+sig:net.minecraft.client.renderer.entity.state.EntityRenderState
