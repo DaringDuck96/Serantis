@@ -1,0 +1,27 @@
+Compiled from "AvatarRenderState.java"
+public class net.minecraft.client.renderer.entity.state.AvatarRenderState extends net.minecraft.client.renderer.entity.state.HumanoidRenderState {
+  public net.minecraft.world.entity.player.PlayerSkin skin;
+  public float capeFlap;
+  public float capeLean;
+  public float capeLean2;
+  public int arrowCount;
+  public int stingerCount;
+  public boolean isSpectator;
+  public boolean showHat;
+  public boolean showJacket;
+  public boolean showLeftPants;
+  public boolean showRightPants;
+  public boolean showLeftSleeve;
+  public boolean showRightSleeve;
+  public boolean showCape;
+  public float fallFlyingTimeInTicks;
+  public boolean shouldApplyFlyingYRot;
+  public float flyingYRot;
+  public net.minecraft.world.entity.animal.parrot.Parrot$Variant parrotOnLeftShoulder;
+  public net.minecraft.world.entity.animal.parrot.Parrot$Variant parrotOnRightShoulder;
+  public int id;
+  public boolean showExtraEars;
+  public final net.minecraft.client.renderer.item.ItemStackRenderState heldOnHead;
+  public net.minecraft.client.renderer.entity.state.AvatarRenderState();
+  public float fallFlyingScale();
+}

@@ -1,0 +1,12 @@
+Compiled from "EntityRenderState.java"
+public class net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState {
+  public net.minecraft.world.phys.Vec3 offset;
+  public net.minecraft.world.phys.Vec3 start;
+  public net.minecraft.world.phys.Vec3 end;
+  public int startBlockLight;
+  public int endBlockLight;
+  public int startSkyLight;
+  public int endSkyLight;
+  public boolean slack;
+  public net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState();
+}
