@@ -123,6 +123,38 @@ jobs:
           ( sleep 1; until grep -q 'Done (' logs/latest.log 2>/dev/null; do sleep 5; if ! pgrep -f server.jar >/dev/null; then break; fi; done; sleep 20; echo stop ) | timeout 900 java -Xmx3G -jar server.jar nogui > console.txt 2>&1 || true
           cp console.txt "$GITHUB_WORKSPACE/inspect/out/smoke-console.txt"
           grep -nE 'SMOKE|ERROR|Exception|Caused by|Mixin.*(fail|error)|InvalidInjection|InjectionError|Critical|Done \(' console.txt | head -300 > "$GITHUB_WORKSPACE/inspect/out/smoke-summary.txt" || true
+      - name: Launch a real client under a virtual display (lines "clientsmoke")
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          grep -qE '^clientsmoke' inspect/classes.txt || exit 0
+          set -x
+          mkdir -p inspect/out
+          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri mesa-utils x11-utils > /dev/null
+          pip install -q portablemc
+          C="$RUNNER_TEMP/client"; mkdir -p "$C/mods"
+          url="$(gh api repos/${{ github.repository }}/releases/latest --jq '.assets[0].url')"
+          gh api -H "Accept: application/octet-stream" "$url" > "$RUNNER_TEMP/relc.zip"
+          (cd "$RUNNER_TEMP" && unzip -qo relc.zip -d relc)
+          cp "$RUNNER_TEMP"/relc/mods/*.jar "$C/mods/"
+          ls "$C"/mods/fabric-api-*.jar >/dev/null 2>&1 || cp "$RUNNER_TEMP/fapi/fabric-api.jar" "$C/mods/"
+          git fetch -q origin main; St="$RUNNER_TEMP/stubs2"; mkdir -p "$St"; git archive FETCH_HEAD tools/compile-stubs | tar -x -C "$St"
+          SC="$(mktemp -d)"; javac --release 25 -d "$SC" -sourcepath "$St/tools/compile-stubs" tools/smoke/src/serantis/smoke/SmokeInit.java
+          rm -rf "$SC/net"; cp tools/smoke/fabric.mod.json "$SC/"; (cd "$SC" && jar cf "$C/mods/serantis-smoke.jar" .)
+          ls "$C/mods"
+          MCV="$(jq -r .id "$RUNNER_TEMP/version.json")"
+          export LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450
+          ( timeout 900 xvfb-run -a -s "-screen 0 1280x720x24" portablemc --main-dir "$C" --work-dir "$C" start "fabric:$MCV" -u Tester > "$RUNNER_TEMP/client-console.txt" 2>&1 & )
+          for i in $(seq 1 160); do
+            sleep 5
+            if grep -qE 'Created: .*textures|Sound engine started|SMOKE: mixin audit (finished|FAILED)' "$C/logs/latest.log" 2>/dev/null && grep -q 'Sound engine started\|Reloading ResourceManager' "$C/logs/latest.log" 2>/dev/null; then sleep 45; break; fi
+            if [ -n "$(ls "$C"/crash-reports 2>/dev/null)" ]; then break; fi
+          done
+          pkill -f portablemc || true; pkill -f java || true; sleep 3
+          cp "$RUNNER_TEMP/client-console.txt" inspect/out/client-console.txt || true
+          cp "$C/logs/latest.log" inspect/out/client-latest.log 2>/dev/null || true
+          mkdir -p inspect/out/client-crash; cp "$C"/crash-reports/* inspect/out/client-crash/ 2>/dev/null || true
+          grep -nE 'SMOKE|ERROR|Exception|Caused by|Mixin.*(fail|error)|InvalidInjection|InjectionError|Critical|Sound engine|Reloading ResourceManager|OpenGL' "$C/logs/latest.log" "$RUNNER_TEMP/client-console.txt" 2>/dev/null | head -300 > inspect/out/client-summary.txt || true
       - name: Commit output
         run: |
           git config user.name "github-actions"

@@ -1,3 +1,2 @@
-# 1792692457
-compile wip/wider-window
-smoke
+# 1792695773
+clientsmoke
