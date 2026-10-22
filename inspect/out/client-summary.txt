@@ -1,29 +1,0 @@
-/home/runner/work/_temp/client/logs/latest.log:239:[19:20:03] [Download-2/ERROR]: Failed to fetch user properties
-/home/runner/work/_temp/client/logs/latest.log:240:com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
-/home/runner/work/_temp/client/logs/latest.log:241:	at knot//com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:70)
-/home/runner/work/_temp/client/logs/latest.log:248:Caused by: MinecraftClientHttpException[type=HTTP_ERROR, status=401, response=ErrorResponse[path=/player/attributes, error=null, errorMessage=null, details=null]]
-/home/runner/work/_temp/client/logs/latest.log:249:	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.buildHttpException(MinecraftClient.java:170)
-/home/runner/work/_temp/client/logs/latest.log:396:[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: mixin audit finished
-/home/runner/work/_temp/client/logs/latest.log:397:[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
-/home/runner/work/_temp/client/logs/latest.log:398:[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
-/home/runner/work/_temp/client/logs/latest.log:399:[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
-/home/runner/work/_temp/client/logs/latest.log:400:[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
-/home/runner/work/_temp/client/logs/latest.log:401:[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
-/home/runner/work/_temp/client/logs/latest.log:402:[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
-/home/runner/work/_temp/client/logs/latest.log:410:[19:20:06] [Render thread/ERROR]: Failed to create backend OpenGL
-/home/runner/work/_temp/client/logs/latest.log:411:com.mojang.renderpearl.api.device.BackendCreationException: Failed to create window for OpenGL context: Couldn't find matching GLX visual
-/home/runner/work/_temp/client/logs/latest.log:419:[19:20:06] [Render thread/ERROR]: Failed to create backend Vulkan
-/home/runner/work/_temp/client/logs/latest.log:420:com.mojang.renderpearl.api.device.BackendCreationException: Vulkan is not supported: Installed Vulkan doesn't implement the VK_KHR_surface extension
-/home/runner/work/_temp/client-console.txt:249:[19:20:03] [Download-2] [ERROR] com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
-/home/runner/work/_temp/client-console.txt:250:	at knot//com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:70)
-/home/runner/work/_temp/client-console.txt:257:Caused by: MinecraftClientHttpException[type=HTTP_ERROR, status=401, response=ErrorResponse[path=/player/attributes, error=null, errorMessage=null, details=null]]
-/home/runner/work/_temp/client-console.txt:258:	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.buildHttpException(MinecraftClient.java:170)
-/home/runner/work/_temp/client-console.txt:405:[19:20:03] [Render thread] [INFO] [STDOUT]: SMOKE: mixin audit finished
-/home/runner/work/_temp/client-console.txt:406:[19:20:03] [Render thread] [INFO] [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
-/home/runner/work/_temp/client-console.txt:407:[19:20:03] [Render thread] [INFO] [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
-/home/runner/work/_temp/client-console.txt:408:[19:20:03] [Render thread] [INFO] [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
-/home/runner/work/_temp/client-console.txt:409:[19:20:03] [Render thread] [INFO] [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
-/home/runner/work/_temp/client-console.txt:410:[19:20:03] [Render thread] [INFO] [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
-/home/runner/work/_temp/client-console.txt:411:[19:20:03] [Render thread] [INFO] [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
-/home/runner/work/_temp/client-console.txt:419:[19:20:06] [Render thread] [ERROR] com.mojang.renderpearl.api.device.BackendCreationException: Failed to create window for OpenGL context: Couldn't find matching GLX visual
-/home/runner/work/_temp/client-console.txt:427:[19:20:06] [Render thread] [ERROR] com.mojang.renderpearl.api.device.BackendCreationException: Vulkan is not supported: Installed Vulkan doesn't implement the VK_KHR_surface extension
