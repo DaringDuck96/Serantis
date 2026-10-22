@@ -1,4 +1,3 @@
-# 1792684157
-sig:net.minecraft.client.renderer.BiomeColors
-sig:net.minecraft.world.level.biome.Biome
-sig:net.minecraft.client.renderer.LevelRenderer
+# 1792684342
+compile wip/base-looks
+smoke
