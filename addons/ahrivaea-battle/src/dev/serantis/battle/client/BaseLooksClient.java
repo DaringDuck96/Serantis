@@ -22,14 +22,15 @@ public final class BaseLooksClient {
     private record Look(int x0, int x1, int z0, int z1, Biome biome, Nether nether) {}
 
     /** The Nether looks: grass, leaves, water, and the particles that drift about (with how many a tick). */
-    public record Nether(int grass, int foliage, int water, net.minecraft.core.particles.ParticleOptions particle, int perTick) {}
+    public record Nether(int grass, int foliage, int water, net.minecraft.core.particles.ParticleOptions particle, int perTick,
+                         net.minecraft.world.level.block.Block ground) {}
 
     public static final java.util.Map<String, Nether> NETHER = java.util.Map.of(
-            "nether_wastes", new Nether(0x8E3B2A, 0x7A2C1E, 0xD0561E, net.minecraft.core.particles.ParticleTypes.ASH, 1),
-            "crimson_forest", new Nether(0xA3152B, 0x8E0F22, 0x7A1022, net.minecraft.core.particles.ParticleTypes.CRIMSON_SPORE, 6),
-            "warped_forest", new Nether(0x168A8C, 0x14A59E, 0x2A8F9A, net.minecraft.core.particles.ParticleTypes.WARPED_SPORE, 6),
-            "soul_sand_valley", new Nether(0x6B5E50, 0x584C42, 0x4FC3D6, net.minecraft.core.particles.ParticleTypes.ASH, 4),
-            "basalt_deltas", new Nether(0x5E5D66, 0x4A4952, 0x6C6B76, net.minecraft.core.particles.ParticleTypes.WHITE_ASH, 8));
+            "nether_wastes", new Nether(0x8E3B2A, 0x7A2C1E, 0xD0561E, net.minecraft.core.particles.ParticleTypes.ASH, 1, net.minecraft.world.level.block.Blocks.NETHERRACK),
+            "crimson_forest", new Nether(0xA3152B, 0x8E0F22, 0x7A1022, net.minecraft.core.particles.ParticleTypes.CRIMSON_SPORE, 6, net.minecraft.world.level.block.Blocks.CRIMSON_NYLIUM),
+            "warped_forest", new Nether(0x168A8C, 0x14A59E, 0x2A8F9A, net.minecraft.core.particles.ParticleTypes.WARPED_SPORE, 6, net.minecraft.world.level.block.Blocks.WARPED_NYLIUM),
+            "soul_sand_valley", new Nether(0x6B5E50, 0x584C42, 0x4FC3D6, net.minecraft.core.particles.ParticleTypes.ASH, 4, net.minecraft.world.level.block.Blocks.SOUL_SAND),
+            "basalt_deltas", new Nether(0x5E5D66, 0x4A4952, 0x6C6B76, net.minecraft.core.particles.ParticleTypes.WHITE_ASH, 8, net.minecraft.world.level.block.Blocks.BASALT));
 
     private static volatile List<Look> looks = List.of();
     private static String last = "";
@@ -85,6 +86,13 @@ public final class BaseLooksClient {
         int x = pos.getX(), z = pos.getZ();
         for (Look k : l) if (x >= k.x0() && x <= k.x1() && z >= k.z0() && z <= k.z1()) return k;
         return null;
+    }
+
+    /** A Nether look turns grass blocks into its ground (netherrack, nylium, soul sand, basalt) on screen; null: leave it. */
+    public static net.minecraft.world.level.block.state.BlockState ground(BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+        if (!state.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK)) return null;
+        Look k = look(pos);
+        return k == null || k.nether() == null ? null : k.nether().ground().defaultBlockState();
     }
 
     /** The colours this spot takes (kind 0 grass, 1 leaves, 2 dry leaves, 3 water), or -1 for its own. */

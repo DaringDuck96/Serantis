@@ -96,7 +96,8 @@
     "client.ItemTipsMixin",
     "client.ConfusedInputMixin",
     "client.FrightenedViewMixin",
-    "client.BiomeColorsMixin"
+    "client.BiomeColorsMixin",
+    "client.BaseGroundMixin"
   ],
   "injectors": {
     "defaultRequire": 1
