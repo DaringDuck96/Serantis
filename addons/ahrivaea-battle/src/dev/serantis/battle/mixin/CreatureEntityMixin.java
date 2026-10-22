@@ -57,6 +57,8 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         CreatureEntity self = (CreatureEntity) (Object) this;
         if (!self.level().isClientSide()) {
             dev.serantis.battle.Safe.run("Locomotion.tick", () -> dev.serantis.battle.Locomotion.tick(self));
+            if (serantis$swims(self) && self.getAirSupply() < self.getMaxAirSupply())
+                self.setAirSupply(self.getMaxAirSupply());              // swimmers (and Water creatures) never drown
             if (!serantis$announced && self.tickCount >= 2) {            // just appeared: a Mutated or Enraged one gets noticed
                 serantis$announced = true;
                 dev.serantis.battle.Safe.run("SpawnAlerts.announce", () -> dev.serantis.battle.SpawnAlerts.announce(self));
@@ -66,6 +68,13 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
             if (self.getVariant() != dev.ahrivaea.creature.Variant.NONE && dev.ahrivaea.villager.Villagers.SPECIES.equals(self.getSpeciesId()))
                 self.setVariant(dev.ahrivaea.creature.Variant.NONE);     // villagers and Creature Masters are never Enraged or Mutated
         }
+    }
+
+    /** Can this creature swim: a swimming species, or a Water form of any species. */
+    @Unique
+    private static boolean serantis$swims(CreatureEntity c) {
+        return c.getInfluence() == dev.ahrivaea.creature.Influence.WATER
+                || c.getSpecies().map(sp -> sp.movement() == dev.ahrivaea.creature.Species.Movement.SWIM).orElse(false);
     }
 
     @org.spongepowered.asm.mixin.injection.ModifyVariable(method = "setVariant", at = @At("HEAD"), argsOnly = true)
