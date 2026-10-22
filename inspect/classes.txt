@@ -1,2 +1,3 @@
-# 1792684425
-sig:net.minecraft.client.renderer.GameRenderer
+# 1792684470
+compile wip/base-looks
+smoke
