@@ -152,7 +152,7 @@ The gain goes on the stat's Level 20 value, like the rest of the stat, so it is 
 
 ### Achievements
 
-Milestones in twelve areas, plus a line for each influence, pay out golden apples (see Golden apples), each tier with its own title. They're checked every few seconds and paid straight into your inventory (anything that doesn't fit drops at your feet), with a chat message. Open your party screen and press **Achievements** to see the log: the title you've earned in each, your progress toward the next tier, every tier and what it pays (hover a tier for its title and details), and how many golden apples you've earned so far.
+Milestones in twelve areas, plus a line for each influence, pay out golden apples (see Golden apples), each tier with its own title. They're checked every few seconds and unlocked with a chat message; the golden apples wait for you to claim them, so a full inventory never loses any. Press **Claim** on the Achievements page (party screen) to collect every waiting reward that fits in your inventory; anything that doesn't fit stays waiting until you make room. Tiers with a reward waiting blink green. XP rewards are still paid straight away. Open your party screen and press **Achievements** to see the log: the title you've earned in each, your progress toward the next tier, every tier and what it pays (hover a tier for its title and details), and how many golden apples you've earned so far.
 
 | Achievement | Tiers and titles | Golden apples per tier |
 |---|---|---|

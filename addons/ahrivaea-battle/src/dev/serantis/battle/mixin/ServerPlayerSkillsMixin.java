@@ -49,7 +49,10 @@ public abstract class ServerPlayerSkillsMixin {
         ((dev.serantis.battle.TypeMastery.Holder) (Object) this).serantis$typeGained().putAll(((dev.serantis.battle.TypeMastery.Holder) (Object) old).serantis$typeGained());
         ((dev.serantis.battle.TypeMastery.Holder) (Object) this).serantis$typeTrophies().putAll(((dev.serantis.battle.TypeMastery.Holder) (Object) old).serantis$typeTrophies());
         co.serantis$gone().addAll(cb.serantis$gone());
-        for (var t : dev.serantis.battle.Achievements.TRACKS) a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
+        for (var t : dev.serantis.battle.Achievements.TRACKS) {
+            a.serantis$setClaimed(t.id(), b.serantis$claimed(t.id()));
+            a.serantis$setClaimed("paid_" + t.id(), b.serantis$claimed("paid_" + t.id()));   // golden apples still to claim
+        }
         // XP is the main currency: it's kept through death.
         ServerPlayer self = (ServerPlayer) (Object) this;
         self.experienceLevel = old.experienceLevel;

@@ -58,12 +58,30 @@ public class AchievementScreen extends Screen {
     protected void init() {
         refresh();
         addRenderableWidget(Button.builder(Component.literal("Back"), b -> onClose()).bounds(width - 66, height - 26, 60, 20).build());
+        claim = addRenderableWidget(Button.builder(Component.literal("Claim rewards"), b -> {
+            JsonObject o = new JsonObject();
+            o.addProperty("kind", "serantis_achievements_claim");
+            dev.ahrivaea.client.battle.BattleClient.send(o);
+        }).bounds(6, height - 26, 170, 20).build());
+        updateClaim();
     }
 
     @Override
     public void tick() {
         super.tick();
         if (++ticks % 40 == 0) refresh();             // keep the numbers fresh while it's open
+        updateClaim();
+    }
+
+    private Button claim;
+
+    /** "Claim N golden apples" while rewards are waiting. */
+    private void updateClaim() {
+        if (claim == null) return;
+        JsonObject st = TradeClient.state();
+        int owed = st != null && st.has("serantis_apples_owed") ? st.get("serantis_apples_owed").getAsInt() : 0;
+        claim.active = owed > 0;
+        claim.setMessage(Component.literal(owed > 0 ? "Claim " + owed + " golden apple" + (owed == 1 ? "" : "s") : "No rewards to claim"));
     }
 
     private float scale() { return Math.min(1f, (width - 12) / (float) W); }
@@ -152,7 +170,8 @@ public class AchievementScreen extends Screen {
             int cx = px + k * 22;
             boolean got = k < claimed;
             g.fill(cx, y + 1, cx + 20, y + 21, got ? 0xFF6B5420 : 0xFF22242C);
-            g.outline(cx, y + 1, 20, 21, got ? GOLD : (k == claimed ? 0xFF8FD16A : 0xFF3A3D48));
+            boolean waiting = got && a.has("paid") && k >= a.get("paid").getAsInt();     // unlocked, reward not claimed yet
+            g.outline(cx, y + 1, 20, 21, waiting ? ((ticks / 10) % 2 == 0 ? 0xFF7FE08A : 0xFFFFFFFF) : got ? GOLD : (k == claimed ? 0xFF8FD16A : 0xFF3A3D48));
             String num = a.has("badges") ? a.getAsJsonArray("badges").get(k).getAsString()
                     : a.has("badge") ? a.get("badge").getAsString() : "+" + apples.get(k).getAsInt();
             float ns = Math.min(0.75f, 17f / Math.max(1, font.width(num)));       // always fits inside its box
@@ -168,7 +187,8 @@ public class AchievementScreen extends Screen {
                             Component.literal(a.get("name").getAsString() + (a.has("badges") ? "" : " " + ROMAN[k])).withColor(0xFF9AA4B4),
                             Component.literal(String.format("%,d %s", tiers.get(k).getAsLong(), a.get("verb").getAsString())).withColor(0xFFFFFFFF),
                             Component.literal("Reward: " + (a.has("reward") ? a.get("reward").getAsString() : apples.get(k).getAsInt() + " golden apples")).withColor(0xFFE8C860),
-                            Component.literal(k < claimed ? "✔ Earned" : "Not yet").withColor(k < claimed ? 0xFF7FE08A : 0xFF9AA4B4));
+                            Component.literal(k < claimed ? (a.has("paid") && k >= a.get("paid").getAsInt() ? "✔ Earned: press Claim for the reward" : "✔ Earned") : "Not yet")
+                                    .withColor(k < claimed ? 0xFF7FE08A : 0xFF9AA4B4));
             }
     }
 

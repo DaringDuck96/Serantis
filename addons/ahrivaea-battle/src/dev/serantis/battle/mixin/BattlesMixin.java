@@ -379,6 +379,11 @@ public abstract class BattlesMixin {
                 cir.setReturnValue(null);
                 return;
             }
+            if ("serantis_achievements_claim".equals(kind)) {   // claim waiting golden apple rewards
+                dev.serantis.battle.Achievements.claim(player);
+                cir.setReturnValue(null);
+                return;
+            }
             if ("serantis_craft".equals(kind)) {             // a Tradesman crafts anywhere
                 dev.serantis.battle.PlayerClass.openCrafting(player);
                 cir.setReturnValue(null);

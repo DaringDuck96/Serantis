@@ -227,7 +227,67 @@ public final class Achievements {
         };
     }
 
-    /** Pays out every tier the player has reached and not been paid for. */
+    // Golden apple rewards wait to be claimed (Achievements page): "paid_<track>" in the claimed map holds tiers paid + 1
+    // (0: not saved yet, from before claiming existed, when everything unlocked had been paid).
+    private static int paid(Holder h, Track t) {
+        int v = h.serantis$claimed("paid_" + t.id());
+        return v == 0 ? h.serantis$claimed(t.id()) : v - 1;
+    }
+
+    private static void setPaid(Holder h, Track t, int n) { h.serantis$setClaimed("paid_" + t.id(), n + 1); }
+
+    /** Golden apples unlocked but not claimed yet. */
+    public static int owed(ServerPlayer p) {
+        Holder h = (Holder) p;
+        int n = 0;
+        for (Track t : TRACKS) {
+            if (XP_REWARD.containsKey(t.id()) || "bragging".equals(t.id()) || "chaos".equals(t.id())) continue;
+            for (int i = paid(h, t); i < h.serantis$claimed(t.id()) && i < t.apples().length; i++) n += t.apples()[i];
+        }
+        return n;
+    }
+
+    /** How many golden apples fit in the main inventory. */
+    private static int room(ServerPlayer p) {
+        var inv = p.getInventory();
+        int n = 0;
+        for (int i = 0; i < 36; i++) {
+            ItemStack s = inv.getItem(i);
+            if (s.isEmpty()) n += 64;
+            else if (s.is(Items.GOLDEN_APPLE) && ItemStack.isSameItemSameComponents(s, new ItemStack(Items.GOLDEN_APPLE))) n += s.getMaxStackSize() - s.getCount();
+        }
+        return n;
+    }
+
+    /** The Claim button: pays every unclaimed tier whose golden apples fit in the inventory. */
+    public static void claim(ServerPlayer p) {
+        Holder h = (Holder) p;
+        int room = room(p), got = 0, waiting = 0;
+        for (Track t : TRACKS) {
+            if (XP_REWARD.containsKey(t.id()) || "bragging".equals(t.id()) || "chaos".equals(t.id())) continue;
+            int paid = paid(h, t), unlocked = Math.min(h.serantis$claimed(t.id()), t.apples().length);
+            while (paid < unlocked) {
+                int apples = t.apples()[paid];
+                if (apples > room) { waiting += apples; break; }
+                give(p, apples);
+                room -= apples;
+                got += apples;
+                paid++;
+            }
+            for (int i = paid + 1; i < unlocked; i++) waiting += t.apples()[i];
+            setPaid(h, t, paid);
+        }
+        if (got > 0) {
+            p.level().playSound(null, p.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.4f);
+            p.sendSystemMessage(Component.literal("Claimed " + got + " golden apple" + (got == 1 ? "" : "s") + ".").withStyle(ChatFormatting.GOLD));
+        }
+        if (waiting > 0)
+            p.sendSystemMessage(Component.literal("Not enough room for the rest (" + waiting + " golden apples): make space in your inventory and claim again.")
+                    .withStyle(ChatFormatting.YELLOW));
+        PartySync.sync(p);
+    }
+
+    /** Unlocks every tier the player has reached; golden apples wait to be claimed on the Achievements page. */
     public static void check(ServerPlayer p) {
         Holder h = (Holder) p;
         if (!h.serantis$recruitsSeeded()) {
@@ -240,6 +300,7 @@ public final class Achievements {
         for (Track t : TRACKS) {
             long v = value(p, t.id());
             int claimed = h.serantis$claimed(t.id());
+            if (h.serantis$claimed("paid_" + t.id()) == 0) setPaid(h, t, claimed);   // from before claiming: all paid so far
             while (claimed < t.tiers().length && v >= t.tiers()[claimed]) {
                 int[] xp = XP_REWARD.get(t.id());
                 if ("bragging".equals(t.id())) {
@@ -255,9 +316,9 @@ public final class Achievements {
                         p.sendSystemMessage(Component.literal("You beat the game! (Nothing happens. Keep playing.)").withStyle(ChatFormatting.LIGHT_PURPLE));
                 } else {
                     int apples = t.apples()[claimed];
-                    give(p, apples);
                     p.sendSystemMessage(Component.literal("Achievement unlocked: " + t.titles()[claimed] + "! (" + t.name() + " " + ROMAN[claimed] + ": "
-                            + String.format("%,d", t.tiers()[claimed]) + " " + t.verb() + ") +" + apples + " golden apples.").withStyle(ChatFormatting.GOLD));
+                            + String.format("%,d", t.tiers()[claimed]) + " " + t.verb() + ") " + apples + " golden apples to claim: party screen > Achievements.")
+                            .withStyle(ChatFormatting.GOLD));
                 }
                 claimed++;
                 any = true;
@@ -300,6 +361,7 @@ public final class Achievements {
             o.addProperty("value", value(p, t.id()));
             int claimed = h.serantis$claimed(t.id());
             o.addProperty("claimed", claimed);
+            o.addProperty("paid", XP_REWARD.containsKey(t.id()) || "bragging".equals(t.id()) || "chaos".equals(t.id()) ? claimed : paid(h, t));
             JsonArray tiers = new JsonArray(), apples = new JsonArray();
             for (int i = 0; i < t.tiers().length; i++) {
                 tiers.add(t.tiers()[i]);
@@ -329,13 +391,18 @@ public final class Achievements {
         state.add("serantis_achievements", out);
         state.addProperty("serantis_apples_earned", earned);
         state.addProperty("serantis_apples_total", total);
+        state.addProperty("serantis_apples_owed", owed(p));
     }
 
     // ------------------------------------------------------------------ saving
 
     public static String encode(Holder h) {
         List<String> parts = new ArrayList<>();
-        for (Track t : TRACKS) parts.add(t.id() + ":" + h.serantis$claimed(t.id()));
+        for (Track t : TRACKS) {
+            parts.add(t.id() + ":" + h.serantis$claimed(t.id()));
+            int paid = h.serantis$claimed("paid_" + t.id());
+            if (paid != 0) parts.add("paid_" + t.id() + ":" + paid);
+        }
         return String.join(",", parts);
     }
 
