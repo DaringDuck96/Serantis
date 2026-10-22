@@ -40,7 +40,7 @@ public final class PlayerClass {
             new Kind("wizard", "Wizard", "magic", "Starts with a Magic Staff linked to a random spell of the influence you choose."),
             new Kind("journeyman", "Journeyman", "luck", "Starts with 2 Golden Apples. Lucky Finds: beaten creatures drop their loot twice 10% more often, and lore books drop twice as often."),
             new Kind("performer", "Performer", "charisma", "Picks the temperament (nature) of their starter. Showstopper: rallies are twice as strong, and workers at your bases work 5% faster."),
-            new Kind("tradesman", "Tradesman", "none", "Crafts anywhere: press K (Controls > Serantis) to open a crafting grid, no crafting table needed."));
+            new Kind("tradesman", "Tradesman", "none", "Crafts anywhere: press U (Controls > Serantis) to open a crafting grid, no crafting table needed."));
 
     /** Journeyman: extra chance a beaten creature drops its loot twice, and the lore book chance multiplier. */
     public static final float JOURNEYMAN_DOUBLE_LOOT = 0.10f, JOURNEYMAN_LORE = 2f;

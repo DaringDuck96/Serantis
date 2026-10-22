@@ -140,7 +140,7 @@
   "key.serantis_battle.backpack": "Open Backpack (sneak: take off)",
   "key.serantis_battle.phase_jump": "Helm of Linx: Phase Jump (sneak: undo)",
   "key.serantis_battle.shape_lift": "Helm of Linx: Shape Lift (sneak: menu)",
-  "key.serantis_battle.craft": "Tradesman: Crafting grid",
+  "key.serantis_battle.craft_u": "Tradesman: Crafting grid",
   "key.serantis_battle.waymark_home": "Helm of Linx: Waymark (sneak: set)",
   "key.serantis_battle.high_jump": "Helm of Linx: High Jump on/off"
 }

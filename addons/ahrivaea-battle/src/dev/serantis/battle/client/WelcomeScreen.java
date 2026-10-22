@@ -24,7 +24,7 @@ public class WelcomeScreen extends Screen {
             {"Choose your class", "Knight (Attack), Bulwark (Defense), Wizard (Magic), Journeyman (Luck), Performer (Charisma) or Tradesman. "
                     + "Your class gives its stat a boost that matters most early on, plus a head start: Knights get an iron chestplate and "
                     + "sword, Bulwarks a shield and an iron mace, Wizards a Magic Staff with a spell of their chosen influence, Journeymen two golden "
-                    + "apples, and Performers choose their starter's temperament. Tradesmen get no boost, but can craft anywhere: press K for a "
+                    + "apples, and Performers choose their starter's temperament. Tradesmen get no boost, but can craft anywhere: press U for a "
                     + "crafting grid, no table needed. You choose once."},
             {"Pick your starter", "Your first friend is waiting. Choose a starter creature: it fights beside you, grows with you, "
                     + "and might just carry you through your first rough night."},

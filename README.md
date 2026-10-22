@@ -9,7 +9,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 | **Ahrivaea Creatures** | 239 creatures (312 forms) replace every vanilla mob. Fire Emblem-style grid battles in biome arenas, recruiting, Palworld-style bases where creatures work, riding (saddle any medium or bigger creature; fliers fly and swimmers swim), and your own levelled-up character. |
 | **Ahrivaea Tower Challenges** | A ruined tower over every stronghold that the whole server rebuilds by donating items, with leaderboards and rewards. A finished tower opens the way to the End, becomes its top donor's base, and gives every offering back. |
 | **Ahrivaea Guilds** | Guild members can't hurt each other or each other's creatures, and can build at any tower a member owns. |
-| **Ahrivaea Map** | A minimap (75 pixels across: Serantis makes it 25% smaller) and a full-screen map of everywhere you've been, showing nearby creatures and every player on the server. |
+| **Ahrivaea Map** | A small minimap (50 pixels across in Serantis; N hides it) and a full-screen map (press M) of everywhere you've been, showing nearby creatures and the other players on the server. On the full map, right-click a spot to mark it with a name and a colour, or right-click a marker to change or delete it. Your markers show on both maps; they're yours alone, saved on your computer per world (or server) and dimension. |
 | **Ahrivaea Guide** | An in-game, searchable guide to every Ahrivaea mod: what it does, how to start, commands and recipes. |
 | **Ahrivaea Stellar Gear** | Upgrade netherite tools and armor with a nether star into Stellar gear with special powers. |
 | **Ahrivaea Swift Horses** | Faster horses, donkeys and mules with on-screen stats. Feed them up three speed tiers, then breed for the top two. Skeleton horses are always top speed. |
@@ -47,7 +47,7 @@ After the welcome guide, every player chooses a class, once (players already in 
 | Wizard | Magic | A Magic Staff linked to a random spell of the influence they choose (any but Normal) |
 | Journeyman | Luck | 2 Golden Apples. **Lucky Finds** (for good): beaten creatures drop their loot twice 10% more often (on top of Fortune), and lore books drop twice as often (5%) |
 | Performer | Charisma | Chooses their starter's temperament (if they already have a starter, the creature first in their party gets it). **Showstopper** (for good): rallies are twice as strong, and workers at bases you own work 5% faster while you're online |
-| Tradesman | None | **Crafts anywhere** (for good): press **K** (Controls > Serantis) to open a full 3×3 crafting grid wherever you are, no crafting table needed (not during a battle) |
+| Tradesman | None | **Crafts anywhere** (for good): press **U** (Controls > Serantis; K opens your party) to open a full 3×3 crafting grid wherever you are, no crafting table needed (not during a battle) |
 
 The boost is a flat +5 to the class's stat (none for the Tradesman), for good (players start at 33 in every stat).
 

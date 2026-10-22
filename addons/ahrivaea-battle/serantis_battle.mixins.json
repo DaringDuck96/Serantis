@@ -63,6 +63,8 @@
     "client.AvatarArmorMixin",
     "client.HudCutsceneMixin",
     "client.MinimapSizeMixin",
+    "client.MapViewWaypointsMixin",
+    "client.MapScreenWaypointsMixin",
     "client.BattleLogMixin",
     "client.SkyMoonMixin",
     "client.InventoryFeedMixin",

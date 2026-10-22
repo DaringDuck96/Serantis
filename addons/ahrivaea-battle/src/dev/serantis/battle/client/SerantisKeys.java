@@ -15,7 +15,7 @@ public final class SerantisKeys {
     public static final KeyMapping LIFT = new KeyMapping("key.serantis_battle.shape_lift", InputConstants.KEY_R, CATEGORY);   // X and C are vanilla's toolbar keys
     public static final KeyMapping WAYMARK = new KeyMapping("key.serantis_battle.waymark_home", InputConstants.KEY_H, CATEGORY);   // G is the guide
     public static final KeyMapping HIGH_JUMP = new KeyMapping("key.serantis_battle.high_jump", InputConstants.KEY_V, CATEGORY);
-    public static final KeyMapping CRAFT = new KeyMapping("key.serantis_battle.craft", InputConstants.KEY_K, CATEGORY);   // Tradesman
+    public static final KeyMapping CRAFT = new KeyMapping("key.serantis_battle.craft_u", InputConstants.KEY_U, CATEGORY);   // Tradesman (K is the party screen)
     public static final KeyMapping[] ALL = {BACKPACK, PHASE, LIFT, WAYMARK, HIGH_JUMP, CRAFT};
 
     /** Whether a shape has been picked from the Shape Lift menu (plain X then lifts/sets down rather than opening it). */
