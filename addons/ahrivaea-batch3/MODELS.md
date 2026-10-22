@@ -44,6 +44,7 @@ assets/ahrivaea/textures/entity/creature/ID/INF_enraged_mutated.png   enraged + 
 | Cinder Shadow | `cinder_shadow` | `fire` |
 | Cinderwing | `cinderwing` | `fire` |
 | Coral Dancer | `coral_dancer` | `water` |
+| Bloodfang Shreeker | `bloodfang_shreeker` | `none` |
 | Crawling Mimic | `crawling_mimic` | `none` |
 | Crowned Gleeok | `crowned_gleeok` | `radiant` |
 | Dawn Magus | `dawn_magus` | `radiant` |

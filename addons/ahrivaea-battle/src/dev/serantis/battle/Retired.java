@@ -9,7 +9,7 @@ import dev.ahrivaea.creature.Species;
  */
 public final class Retired {
     /** Creature forms a player can find: every form in the creatures mod and add-ons, less the retired ones. */
-    public static final int FORMS = 433;
+    public static final int FORMS = 434;
 
     private Retired() {}
 

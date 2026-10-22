@@ -8,8 +8,8 @@ import net.minecraft.server.level.ServerPlayer;
 
 /**
  * Changes to the Creature Dex the server sends: the retired Arcane Dragon is left out, the count is out of
- * the 433 forms you can find, and the Acolyte of the First gets a bonus page after them that doesn't count
- * towards the total (recruit him and the dex can read 434/433).
+ * the 434 forms you can find, and the Acolyte of the First gets a bonus page after them that doesn't count
+ * towards the total (recruit him and the dex can read 435/434).
  */
 public final class DexExtras {
     private DexExtras() {}

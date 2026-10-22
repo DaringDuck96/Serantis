@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-/** The dex counter reads out of the forms you can find (433), not the number of pages (see DexExtras). */
+/** The dex counter reads out of the forms you can find (434), not the number of pages (see DexExtras). */
 @Mixin(DexScreen.class)
 public abstract class DexScreenMixin {
     @Shadow private JsonObject data;

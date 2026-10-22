@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 /**
- * The Creature Dex counts the 433 forms you can find (the retired Arcane Dragon is left out), and has one
+ * The Creature Dex counts the 434 forms you can find (the retired Arcane Dragon is left out), and has one
  * extra page that doesn't count towards it: the Acolyte of the First (see DexExtras).
  */
 @Mixin(Dex.class)

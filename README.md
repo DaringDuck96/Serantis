@@ -26,7 +26,7 @@ A Minecraft 26.3 modpack built around the Ahrivaea mods by jeffreystu10 and Dari
 
 ### The Arcane Dragon
 
-The creatures mod's Arcane Dragon is retired: the Clockwork Dragon is the arcane dragon in Serantia. It never spawns, and Wandering Traders, Black Market Merchants and Creature Masters never hand it out, so the dex counts 433 creature forms to find.
+The creatures mod's Arcane Dragon is retired: the Clockwork Dragon is the arcane dragon in Serantia. It never spawns, and Wandering Traders, Black Market Merchants and Creature Masters never hand it out, so the dex counts 434 creature forms to find.
 
 ### The book of Serantia
 
@@ -161,7 +161,7 @@ Milestones in twelve areas, plus a line for each influence, pay out golden apple
 | Blocks Placed | 100 Some Assembly Required · 1,000 Brick by Brick · 10,000 Not Just a Dirt Hut · 50,000 Zoning Violation · 150,000 Terraformer | 3 · 6 · 12 · 24 · 48 |
 | Battles Won | 1 Beginner's Luck · 10 Getting the Hang of It · 50 Tactical Genius (Allegedly) · 100 Undefeated-ish · 250 Grid Lord · 500 Final Boss Energy | 2 · 4 · 8 · 16 · 32 · 48 |
 | Creatures Recruited | 5 Making Friends · 25 Petting Zoo · 100 Animal Magnetism · 200 Creature Hoarder · 300 Noah Would Be Proud · 400 Zookeeper Supreme | 2 · 4 · 8 · 16 · 32 · 48 |
-| Creatures Seen | 5 Wait, What Was That? · 25 Bird Watcher · 50 Taking Field Notes · 150 I've Seen Things · 300 Walking Encyclopedia · 433 (every form) Seen It All | 2 · 4 · 8 · 16 · 32 · 48 |
+| Creatures Seen | 5 Wait, What Was That? · 25 Bird Watcher · 50 Taking Field Notes · 150 I've Seen Things · 300 Walking Encyclopedia · 434 (every form) Seen It All | 2 · 4 · 8 · 16 · 32 · 48 |
 | Items Smelted | 100 Hot Stuff · 1,000 Cooking With Lava · 10,000 Total Smeltdown · 50,000 Industrial Revolution · 150,000 Forge of the Gods | 3 · 6 · 12 · 24 · 48 |
 | Armor Crafted | 5 Suit Up · 10 Fashion Forward · 25 Runway Ready · 100 Tin Can Collector · 250 Walking Armory | 2 · 4 · 8 · 16 · 32 |
 | Seeds Planted | 100 Seeds of Doubt · 1,000 Green Thumb · 10,000 Down on the Farm · 50,000 Old MacDonald Had a Lot · 150,000 Feed the World | 3 · 6 · 12 · 24 · 48 |
@@ -235,7 +235,7 @@ Right after you recruit a creature in battle, or pick your starter, a box pops u
 
 
 ### Blood Moons
-Every fifth night (nights 5, 10, 15 and so on) is a **Blood Moon**: the moon rises red instead of white, and everyone in the Overworld gets a "A Blood Moon rises..." message as night falls. For now it's just the look and the warning.
+Every fifth night (nights 5, 10, 15 and so on) is a **Blood Moon**: the moon rises red instead of white, and everyone in the Overworld gets a "A Blood Moon rises..." message as night falls. **Bloodfang Shreekers** (a Rare, Normal creature) appear only on Blood Moon nights: now and then one turns up 24–48 blocks from a player, on the open surface (under the sky, never in caves or oceans), at most two near you at once, about four or five over the night. Their levels follow your level window. The wild ones are gone by morning; recruit one to keep it. Until its model arrives it shows as a plain grey body.
 
 ### Shiny and angry creatures
 When a Mutated creature appears anywhere within your render distance you hear a cheerful jingle and see "Did you see something shiny?". When an Enraged one appears you hear a roar and see "Ooh! They look mad!".
@@ -439,7 +439,7 @@ The raid is **Easy** (3-4 raiders), **Medium** (5-6), **Hard** (7-8) or **Very H
 
 Win and you can recruit him (a standard Level 10 Legendary, like the Acolyte of the First), and you earn **Chaos Seeker**: 2% of the wild creatures that spawn near you turn up Enraged on top of the usual odds. Lose (or flee) and you still earn Chaos Seeker, at 1%, but he can't be recruited. He doesn't walk up like the Acolyte of the First: the world darkens (the Warden's Darkness effect), a heartbeat sounds, black smoke and souls gather a few steps away for two seconds, and he steps out of them. When he leaves he sinks back into black smoke and the dark lifts; before his fight it lingers a few seconds into the battle.
 
-**The Acolytes' dex pages.** The Creature Dex counts the 433 forms you can find (the retired Arcane Dragon is left out of it), and the two Acolytes have bonus pages after them that don't count towards the total: seen once you've met them, caught once you've recruited them, so a finished dex can read 434/433 or 435/433.
+**The Acolytes' dex pages.** The Creature Dex counts the 434 forms you can find (the retired Arcane Dragon is left out of it), and the two Acolytes have bonus pages after them that don't count towards the total: seen once you've met them, caught once you've recruited them, so a finished dex can read 435/434 or 436/434.
 
 The words live in `addons/ahrivaea-battle/serantis_battle/figure_scenes.json`, so they're easy to change or add to.
 
