@@ -1,0 +1,426 @@
+[19:19:52] [main/INFO]: Loading Minecraft 26.3 with Fabric Loader 0.19.5
+[19:19:52] [main/INFO]: Mappings not present!
+[19:19:52] [main/INFO]: Loading 67 mods:
+	- ahrivaea 0.1.0
+	- ahrivaea_batch3 0.13.1
+	- ahrivaea_guide 0.1.0
+	- ahrivaea_guilds 0.1.0
+	- ahrivaea_horses 0.1.0
+	- ahrivaea_lights 0.1.0
+	- ahrivaea_map 0.1.0
+	- ahrivaea_minecarts 0.1.0
+	- ahrivaea_stellar 0.1.0
+	- ahrivaea_towers 0.1.0
+	- ahrivaea_woodcutting 0.1.0
+	- fabric-api 0.164.0+26.3
+	   |-- fabric-advancement-api-v1 1.0.1+38c7a2d55d
+	   |-- fabric-api-base 2.0.6+fcdff87f5d
+	   |-- fabric-api-lookup-api-v1 2.0.24+3434d6d95d
+	   |-- fabric-biome-api-v1 20.1.0+c6aa69a85d
+	   |-- fabric-block-api-v1 3.1.0+0ae6f9115d
+	   |-- fabric-block-getter-api-v2 2.0.9+3434d6d95d
+	   |-- fabric-command-api-v2 3.1.2+fcdff87f5d
+	   |-- fabric-content-registries-v0 15.0.6+74ed1ea55d
+	   |-- fabric-convention-tags-v2 4.10.4+899e30535d
+	   |-- fabric-crash-report-info-v1 1.0.7+fcdff87f5d
+	   |-- fabric-creative-tab-api-v1 5.0.22+fcdff87f5d
+	   |-- fabric-data-attachment-api-v1 2.2.32+b9b88df45d
+	   |-- fabric-data-generation-api-v1 27.4.1+501c7ef55d
+	   |-- fabric-debug-api-v1 1.0.5+5af7744b5d
+	   |-- fabric-dimensions-v1 5.1.20+5af7744b5d
+	   |-- fabric-entity-events-v1 6.0.4+3434d6d95d
+	   |-- fabric-events-interaction-v0 5.3.8+b9b88df45d
+	   |-- fabric-game-rule-api-v1 4.0.10+3434d6d95d
+	   |-- fabric-item-api-v1 14.8.0+d1c0d72b5d
+	   |-- fabric-key-mapping-api-v1 2.0.8+3434d6d95d
+	   |-- fabric-lifecycle-events-v1 4.1.9+ffef5f675d
+	   |-- fabric-loot-api-v3 4.0.9+4068fd645d
+	   |-- fabric-menu-api-v1 2.0.29+ed66f0a35d
+	   |-- fabric-message-api-v1 7.0.10+3434d6d95d
+	   |-- fabric-model-loading-api-v1 8.0.36+fcdff87f5d
+	   |-- fabric-networking-api-v1 6.3.10+5c1fee4d5d
+	   |-- fabric-object-builder-api-v1 24.1.11+e2f63d3e5d
+	   |-- fabric-particles-v1 5.0.26+3434d6d95d
+	   |-- fabric-permission-api-v1 1.0.8+fcdff87f5d
+	   |-- fabric-recipe-api-v1 10.0.10+b9b88df45d
+	   |-- fabric-registry-sync-v0 8.0.3+1ca9f6365d
+	   |-- fabric-renderer-api-v1 17.0.16+79385d0b5d
+	   |-- fabric-renderer-indigo 9.1.24+b9d63e335d
+	   |-- fabric-rendering-fluids-v1 6.0.6+3434d6d95d
+	   |-- fabric-rendering-v1 27.1.0+5af7744b5d
+	   |-- fabric-resource-conditions-api-v1 6.2.0+0d124ae85d
+	   |-- fabric-resource-loader-v0 3.3.27+4fc5413f5d
+	   |-- fabric-resource-loader-v1 3.1.0+5af7744b5d
+	   |-- fabric-screen-api-v1 5.2.4+48607d035d
+	   |-- fabric-serialization-api-v1 2.0.7+74ed1ea55d
+	   |-- fabric-sound-api-v1 2.0.7+3434d6d95d
+	   |-- fabric-tag-api-v1 2.1.11+fcdff87f5d
+	   |-- fabric-transfer-api-v1 8.0.25+fcdff87f5d
+	   \-- fabric-transitive-access-wideners-v1 8.1.17+e2f63d3e5d
+	- fabricloader 0.19.5
+	   \-- mixinextras 0.5.5
+	- java 25
+	- minecraft 26.3
+	- serantis_battle 0.144.1
+	- serantis_dyed_water 0.1.1
+	- serantis_end_dragons 0.3.1
+	- serantis_grinding 0.1.1
+	- serantis_smoke 1.0.0
+	- serantis_starters 0.1.0
+	- serantis_towers 0.1.1
+[19:19:52] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/work/_temp/client/libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[19:19:55] [main/INFO]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[19:19:56] [Datafixer Bootstrap #0/INFO]: 307 Datafixer optimizations took 671 milliseconds
+[19:20:02] [Render thread/INFO]: Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[19:20:02] [Render thread/INFO]: Setting user: 1b498eb2
+[19:20:02] [Render thread/INFO]: Ahrivaea loaded
+[19:20:02] [Render thread/INFO]: Ahrivaea Guilds loaded
+[19:20:02] [Render thread/INFO]: Ahrivaea Swift Horses loaded
+[19:20:02] [Render thread/INFO]: Ahrivaea Handheld Lights loaded
+[19:20:02] [Render thread/INFO]: Ahrivaea Map loaded
+[19:20:02] [Render thread/INFO]: Ahrivaea Fast Minecarts loaded: top speed 30.0 blocks/sec
+[19:20:02] [Render thread/INFO]: Ahrivaea Stellar Gear loaded
+[19:20:02] [Render thread/INFO]: Ahrivaea Tower Challenges loaded
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.Camera
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.DryFoliageColorReloadListener
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTransformRecipeBuilder
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.CameraEntityRenderState
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeMap
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection$1BlockCounter
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.chunk.RenderSectionRegion
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.network.protocol.configuration.ServerboundSelectKnownPacks
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.server.players.PlayerList
+[19:20:02] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.PartyClient
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.BrewingRecipeBuilder
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.Swim
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.data.models.ModelProvider
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.WorldBorderRenderState
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.Hud
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.worldselection.WorldOpenFlows
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.MultiPlayerGameMode
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.particle.BlockMarker
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.advancements.AdvancementsScreen
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.EntityRenderDispatcher
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.sprite.MaterialBaker
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.RegistryDataCollector$ContentsCollector
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.EntityRenderer
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.GuiGraphicsExtractor
+[19:20:02] [Render thread/INFO]: Force-loading class net.minecraft.server.network.ServerLoginPacketListenerImpl
+[19:20:02] [Render thread/INFO]: Force-loading class com.mojang.renderpearl.api.pipeline.RenderPipeline
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.DexScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.particle.ParticleResources
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.sounds.SoundInstance
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.level.ServerLevel$EntityCallbacks
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.KnownPacksManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootTable$Builder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.GpuWarnlistManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.EntityRenderers
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.resources.RegistryDataLoader
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.dimension.end.EnderDragonFight
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.CompoundContainer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.tags.TagAppender$1
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.PacketEncoder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.components.toasts.AdvancementToast
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.SimpleCookingRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.dispatch.SingleVariant
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.packs.resources.Resource
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.ShapedRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.LevelRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.packs.TransferableSelectionList$PackEntry
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.commands.CommandSourceStack
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.Options$3
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.player.KeyboardInput
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.SkyRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.Gui
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.core.component.DataComponentInitializers$1
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueOutput
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.CreatureRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.MouseHandler
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.item.enchantment.EnchantmentHelper
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.ModelManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.GiveGiftToHero
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.battle.BattleScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.loot.BlockLootSubProvider
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.PartyScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.LightmapRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.ShaderManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.fabricmc.fabric.impl.attachment.GlobalAttachmentsImpl
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.GameRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.advancements.AdvancementTabType
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.resources.ResourceManagerRegistryLoadTask
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.FirstPersonHandsAndItemsRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.language.LanguageManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.advancements.AdvancementTab
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.sounds.SoundManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientLevel$EntityCallbacks
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.registries.RegistryPatchGenerator
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.model.BlockStateModelWrapper
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.HashCache$ProviderCache
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.Options
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.biome.Climate$Sampler
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.chunk.LevelChunkSection
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.SubmitNodeStorage
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.ServerFunctionLibrary
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.data.BlockDataAccessor
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.SmithingTrimRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.resources.FileToIdConverter
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.storage.TagValueInput
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientChunkCache
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.chat.ChatListener
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.fog.FogData
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.PlayerAdvancements
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.language.ClientLanguage
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.battle.Unit
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.tags.TagLoader
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.KeyMapping$Category
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.advancements.Advancement$Builder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.item.ItemStackRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.DebugConfigCommand
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.storage.loot.LootPool$Builder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.dispatch.multipart.MultiPartModel
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.feature.MovingBlockFeatureRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.chunk.RenderRegionCache
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.tags.TagAppender
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.dispatch.BlockStateModel$Unbaked
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.blockentity.BlockEntityRenderers
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.feature.FeatureRenderDispatcher
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.BiomeColors
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.WaypointStyleManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeAccess
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.DataPackCommand
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.BackupConfirmScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.packs.PackSelectionModel
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.protocol.BundlePacket
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.storage.SavedDataStorage
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.PlayerRenderState$ItemActivationRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.HelpCommand
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.SplashManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.RegistryDataCollector
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.item.crafting.RecipeManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.tags.TagEntry
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.tags.TagsProvider
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.FluidRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.levelgen.WorldDimensions
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.level.ServerEntity
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.protocol.login.ServerboundCustomQueryAnswerPacket
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.MapRenderState$MapDecorationRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.util.debug.ServerDebugSubscribers
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.Main
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.components.SubtitleOverlay
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.CreatureRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.chunk.storage.SerializableChunkData
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientCommonPacketListenerImpl
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.RecipeOutput
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.LivingEntityRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.gui.PanoramaRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.data.models.ModelProvider$BlockStateGeneratorCollector
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.advancements.packs.VanillaAdventureAdvancements
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.BuiltInBlockModels
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.font.FontManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.MovingBlockRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.worldselection.CreateWorldScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.commands.execution.tasks.BuildContexts
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.advancements.AdvancementWidget
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.HashCache
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.BrewingProvider
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientHandshakePacketListenerImpl
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.battle.BattleClient
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.map.client.MapScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.network.PlayerChunkSender
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.WindowRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.extract.LevelExtractor
+[19:20:03] [Download-2/ERROR]: Failed to fetch user properties
+com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
+	at knot//com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:70)
+	at knot//com.mojang.authlib.services.MinecraftServicesUserApiService.fetchProperties(MinecraftServicesUserApiService.java:168)
+	at knot//net.minecraft.client.Minecraft.lambda$new$1(Minecraft.java:451)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1789)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: MinecraftClientHttpException[type=HTTP_ERROR, status=401, response=ErrorResponse[path=/player/attributes, error=null, errorMessage=null, details=null]]
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.buildHttpException(MinecraftClient.java:170)
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.readServiceResponse(MinecraftClient.java:147)
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.getWithEtag(MinecraftClient.java:81)
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:65)
+	at knot//com.mojang.authlib.services.MinecraftServicesUserApiService.fetchProperties(MinecraftServicesUserApiService.java:118)
+	... 5 more
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.chunk.status.ChunkStatusTasks
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.render.GuiRenderer$Draw
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.particle.TerrainParticle
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.DataProvider
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.loot.EntityLootSubProvider
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.StarterScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.item.enchantment.Enchantment$Builder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientAdvancements
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.Connection
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.network.config.SynchronizeRegistriesTask
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.core.MappedRegistry$3
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.base.WorkerBrain
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.state.EntityRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.core.MappedRegistry$2
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.tags.BlockItemTagAppender
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.registries.RegistriesDatapackGenerator
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.BlockBreakingRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.layers.CapeLayer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.sprite.AtlasManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.ModelBakery$BakingResult
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.HumanoidMobRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.GrassColorReloadListener
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.commands.execution.CommandQueueEntry
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.LevelRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.CloudRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.RecipeProvider$1
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.VillagerScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.gametest.framework.GameTestServer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.core.RegistrySynchronization
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.creature.BattleSettings
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.worldselection.AbstractGameRulesScreen$RuleList
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.OptionsRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.ConnectScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.SubmitNodeCollection
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.SpecialRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.GameRuleCommand$1
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.player.FirstPersonHandsAndItems
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.ReloadableServerRegistries
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.dispatch.multipart.MultiPartModel$SharedBakedState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.feature.ItemFeatureRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.level.ChunkHolder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientSuggestionProvider
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.level.ChunkMap
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.GameRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.StagedVertexBuffer$Draw
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.PacketDecoder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.storage.ValueInput
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.ShapelessRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.CustomCraftingRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.core.MappedRegistry$TagSet$2
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.tags.TagFile
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.core.RegistryAccess$ImmutableRegistryAccess
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.inventory.HangingSignEditScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientRecipeContainer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.debug.DebugOptionsScreen$OptionList
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.packs.resources.SimpleReloadInstance
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.texture.SpriteLoader$Preparations
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.PlayerRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.texture.TextureManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.BlockModelRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.level.ChunkMap$TrackedEntity
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.pathfinder.PathfindingContext
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.entity.PersistentEntitySectionManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.FoliageColorReloadListener
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.model.geom.ModelLayers
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.MapRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.particle.ParticleEngine
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.debug.DebugRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.SkyRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.SingleItemRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.texture.TextureAtlas
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.worldselection.AbstractGameRulesScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.FluidStateModelSet
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.CameraRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.packs.repository.Pack
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.WeatherRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.data.EntityDataAccessor
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.network.ServerHandshakePacketListenerImpl
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.BlockModelLighter
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.render.GuiRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.pathfinder.WalkNodeEvaluator
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.data.recipes.TransmuteRecipeBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.inventory.AbstractMountInventoryScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.chunk.ImposterProtoChunk
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.ParticlesRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.player.AvatarRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.model.geom.ModelPart
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.battle.Battle
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.ModelBlockRenderer
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.map.client.MapView
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.ModelBakery
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.commands.Commands
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.KeyboardHandler
+[19:20:03] [Render thread/INFO]: Force-loading class com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.debug.DebugOptionsScreen$OptionEntry
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.gui.GuiRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.EquipmentAssetManager
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.battle.DamageCalc
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientConfigurationPacketListenerImpl
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.util.ParticleUtils
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.level.levelgen.RandomState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.state.level.BlockOutlineRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.inventory.SignEditScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.gui.screens.worldselection.AbstractGameRulesScreen$RuleList$1
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.ReloadableServerResources
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.model.geom.LayerDefinitions
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.chunk.SectionCompiler
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.tags.TagBuilder
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.data.models.ModelProvider$ItemInfoCollector
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.packs.resources.MultiPackResourceManager
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.sounds.SoundEngine
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientPacketListener
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.client.base.BaseScreen
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.cuboid.CuboidModel
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.multiplayer.ClientDebugSubscriber
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.dedicated.ServerWatchdog
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.OrderedSubmitNodeCollector
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.creature.Healing
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.model.SimpleModelWrapper
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.dispatch.WeightedVariants
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.world.entity.ai.behavior.WorkAtComposter
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.resources.palette.PalettedTextureManager
+[19:20:03] [Render thread/INFO]: Force-loading class dev.ahrivaea.creature.Drops
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.dispatch.BlockStateModel
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.resources.RegistryLoadTask$PendingRegistration
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.commands.EnchantCommand
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.dedicated.DedicatedServerProperties
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.level.ServerPlayerGameMode
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.server.WorldLoader
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.BlockStateModelSet
+[19:20:03] [Render thread/INFO]: Force-loading class com.mojang.brigadier.context.ContextChain
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.color.block.BlockColors
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.codec.IdDispatchCodec
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.client.renderer.block.dispatch.BlockStateModelPart
+[19:20:03] [Render thread/INFO]: Force-loading class net.minecraft.network.protocol.login.ClientboundCustomQueryPacket
+[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: mixin audit finished
+[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battle
+[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Battles
+[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.Bases
+[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.base.BaseCoreBlockEntity
+[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.battle.Unit
+[19:20:03] [Render thread/INFO]: [STDOUT]: SMOKE: loaded dev.ahrivaea.party.PartySync
+[19:20:04] [Render thread/INFO]: Ahrivaea Guide loaded: press G
+[19:20:04] [Render thread/INFO]: [Indigo] Registering Indigo renderer!
+[19:20:04] [Render thread/INFO]: Backend library: LWJGL version 3.4.3-snapshot
+[19:20:04] [Render thread/INFO]: SDL [SYSTEM]: App name: Minecraft
+[19:20:04] [Render thread/INFO]: SDL [SYSTEM]: App version: 26.3
+[19:20:04] [Render thread/INFO]: SDL [SYSTEM]: App ID: com.mojang.minecraft
+[19:20:04] [Render thread/INFO]: SDL [SYSTEM]: SDL revision: SDL-3.4.14--128-NOTFOUND
+[19:20:06] [Render thread/ERROR]: Failed to create backend OpenGL
+com.mojang.renderpearl.api.device.BackendCreationException: Failed to create window for OpenGL context: Couldn't find matching GLX visual
+	at knot//com.mojang.renderpearl.backend.opengl.GlDevice.<init>(GlDevice.java:83)
+	at knot//com.mojang.renderpearl.backend.opengl.GlBackend.createDevice(GlBackend.java:68)
+	at knot//net.minecraft.client.Minecraft.<init>(Minecraft.java:533)
+	at knot//net.minecraft.client.main.Main.main(Main.java:278)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+[19:20:06] [Render thread/ERROR]: Failed to create backend Vulkan
+com.mojang.renderpearl.api.device.BackendCreationException: Vulkan is not supported: Installed Vulkan doesn't implement the VK_KHR_surface extension
+	at knot//com.mojang.renderpearl.backend.vulkan.VulkanBackend.loadLibrary(VulkanBackend.java:69)
+	at knot//net.minecraft.client.Minecraft.<init>(Minecraft.java:530)
+	at knot//net.minecraft.client.main.Main.main(Main.java:278)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
