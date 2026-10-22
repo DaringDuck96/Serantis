@@ -1,2 +1,2 @@
-# 1792630977
-compile wip/level-cost
+# 1792631076
+smoke
