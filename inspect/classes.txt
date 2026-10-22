@@ -1,2 +1,2 @@
-# 1792671636
-compile wip/coop-recruit
+# 1792671737
+smoke
