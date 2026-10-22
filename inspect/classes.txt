@@ -1,5 +1,2 @@
-# 1792706078
-compile feature/version-check
-smoke
-sig:net.minecraft.client.gui.screens.ChatScreen
-sig:net.minecraft.client.MouseHandler
+# 1792706229
+clientsmoke
