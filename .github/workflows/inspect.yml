@@ -130,7 +130,7 @@ jobs:
           grep -qE '^clientsmoke' inspect/classes.txt || exit 0
           set -x
           mkdir -p inspect/out
-          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri libglx-mesa0 libgl1 libegl1 mesa-utils x11-utils > /dev/null
+          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri libglx-mesa0 libgl1 libegl1 libegl-mesa0 mesa-utils x11-utils > /dev/null
           pip install -q portablemc
           C="$RUNNER_TEMP/client"; mkdir -p "$C/mods"
           url="$(gh api repos/${{ github.repository }}/releases/latest --jq '.assets[0].url')"
@@ -143,7 +143,8 @@ jobs:
           rm -rf "$SC/net"; cp tools/smoke/fabric.mod.json "$SC/"; (cd "$SC" && jar cf "$C/mods/serantis-smoke.jar" .)
           ls "$C/mods"
           MCV="$(jq -r .id "$RUNNER_TEMP/version.json")"
-          export LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450
+          export LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450 SDL_VIDEO_FORCE_EGL=1 SDL_VIDEO_X11_FORCE_EGL=1 SDL_VIDEO_EGL_DRIVER=libEGL.so.1 SDL_VIDEO_GL_DRIVER=libGL.so.1
+          glxinfo -B > inspect/out/glxinfo.txt 2>&1 || true
           (portablemc --help; portablemc start --help) > inspect/out/pmc-help.txt 2>&1 || true
           ( timeout 900 xvfb-run -a -s "-screen 0 1280x720x24 +extension GLX +render -noreset" portablemc --main-dir "$C" start "fabric:$MCV" > "$RUNNER_TEMP/client-console.txt" 2>&1 & )
           for i in $(seq 1 160); do
