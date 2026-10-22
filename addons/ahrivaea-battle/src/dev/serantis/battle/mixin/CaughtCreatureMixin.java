@@ -32,6 +32,9 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
     @Unique private long serantis$koUntil;
     @Override public long serantis$koUntil() { return serantis$koUntil; }
     @Override public void serantis$setKoUntil(long until) { serantis$koUntil = until; }
+    @Unique private String serantis$ailment;
+    @Override public String serantis$ailment() { return serantis$ailment; }
+    @Override public void serantis$setAilment(String ailment) { serantis$ailment = ailment; }
 
     // Knocked out (see Knockout): nothing heals it until it's back on its feet.
     @Inject(method = "withHealth", at = @At("HEAD"), cancellable = true)
@@ -85,5 +88,6 @@ public abstract class CaughtCreatureMixin implements MovesHolder {
         if (next != null && serantis$apples != null) ((MovesHolder) (Object) next).serantis$setApples(serantis$apples);
         if (next != null && serantis$tutor != null) ((MovesHolder) (Object) next).serantis$setTutor(serantis$tutor);
         if (next != null && serantis$koUntil != 0) ((MovesHolder) (Object) next).serantis$setKoUntil(serantis$koUntil);
+        if (next != null && serantis$ailment != null) ((MovesHolder) (Object) next).serantis$setAilment(serantis$ailment);
     }
 }

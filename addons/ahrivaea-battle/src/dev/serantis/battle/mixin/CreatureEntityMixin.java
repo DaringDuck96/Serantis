@@ -87,6 +87,9 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
     @Unique private long serantis$koUntil;
     @Override public long serantis$koUntil() { return serantis$koUntil; }
     @Override public void serantis$setKoUntil(long until) { serantis$koUntil = until; }
+    @Unique private String serantis$ailment;
+    @Override public String serantis$ailment() { return serantis$ailment; }
+    @Override public void serantis$setAilment(String ailment) { serantis$ailment = ailment; }
     @Override public String serantis$apples() { return serantis$apples; }
     @Override public void serantis$setApples(String apples) { serantis$apples = apples; }
 
@@ -149,6 +152,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$apples != null) out.putString("SerantisApples", serantis$apples);
         if (serantis$tutor != null) out.putString("SerantisTutor", serantis$tutor);
         if (serantis$koUntil != 0) out.putLong("SerantisKoUntil", serantis$koUntil);
+        if (serantis$ailment != null) out.putString("SerantisAilment", serantis$ailment);
         if (serantis$home != null) out.putString("SerantisHome", serantis$home);
         out.putInt("SerantisMoveMode", serantis$moveMode);
         if (serantis$announced) out.putBoolean("SerantisAnnounced", true);
@@ -183,6 +187,8 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (serantis$leaveAt > 0) serantis$stock = in.read("SerantisStock", CaughtCreature.CODEC.listOf()).orElse(java.util.List.of());
         if (in.getBooleanOr("SerantisHeld", false)) dev.serantis.battle.BattleHold.loadedHeld((CreatureEntity) (Object) this);   // saved mid-battle
         serantis$koUntil = in.getLongOr("SerantisKoUntil", 0L);
+        String ailment = in.getStringOr("SerantisAilment", "");
+        serantis$ailment = ailment.isEmpty() ? null : ailment;
         serantis$carriedLoad = in.read("SerantisCarried", net.minecraft.world.item.ItemStack.CODEC).orElse(null);
         serantis$announced = in.getBooleanOr("SerantisAnnounced", false) || in.getIntOr("SerantisMoveMode", -99) != -99;   // creatures saved before this: already seen
     }
@@ -196,6 +202,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         if (cir.getReturnValue() != null && serantis$apples != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setApples(serantis$apples);
         if (cir.getReturnValue() != null && serantis$tutor != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setTutor(serantis$tutor);
         if (cir.getReturnValue() != null && serantis$koUntil != 0) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setKoUntil(serantis$koUntil);
+        if (cir.getReturnValue() != null && serantis$ailment != null) ((MovesHolder) (Object) cir.getReturnValue()).serantis$setAilment(serantis$ailment);
     }
 
     // Knocked out (see Knockout): food doesn't heal it yet.
@@ -218,6 +225,7 @@ public abstract class CreatureEntityMixin implements MovesHolder, dev.serantis.b
         serantis$apples = ((MovesHolder) (Object) caught).serantis$apples();
         serantis$tutor = ((MovesHolder) (Object) caught).serantis$tutor();
         serantis$koUntil = ((MovesHolder) (Object) caught).serantis$koUntil();
+        serantis$ailment = ((MovesHolder) (Object) caught).serantis$ailment();
     }
 
     // ---- sounds (see CreatureSounds): borrowed from Minecraft's mobs to suit each creature; humanoids stay quiet

@@ -78,6 +78,8 @@ public abstract class PartySyncMixin {
         String extra = (k != null ? k.name() : "") + (nick != null && !nick.isEmpty() ? (k != null ? " " : "") + species : "");
         String shown = nick != null && !nick.isEmpty() ? nick : species;
         o.addProperty("name", extra.isEmpty() ? shown : shown + " (" + extra + ")");
+        String ail = dev.serantis.battle.Ailments.suffix(caught);         // a status lingering after a battle
+        if (!ail.isEmpty()) o.addProperty("name", o.get("name").getAsString() + ail);
         if (dev.serantis.battle.Knockout.is(caught)) {                   // knocked out: 0 HP until it's back on its feet
             o.addProperty("hp", 0);
             o.addProperty("serantis_ko", dev.serantis.battle.Knockout.secondsLeft(caught));

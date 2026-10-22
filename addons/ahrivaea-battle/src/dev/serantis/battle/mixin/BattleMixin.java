@@ -130,6 +130,7 @@ public abstract class BattleMixin implements BattleAccess {
     @Inject(method = "saveParty", at = @At("RETURN"))
     private void serantis$knockouts(net.minecraft.server.level.ServerPlayer p, CallbackInfo ci) {
         dev.serantis.battle.Knockout.afterBattle((Battle) (Object) this, p);
+        dev.serantis.battle.Ailments.afterBattle((Battle) (Object) this, p);   // statuses linger a while
     }
 
     @Inject(method = "saveParty", at = @At("HEAD"), cancellable = true)

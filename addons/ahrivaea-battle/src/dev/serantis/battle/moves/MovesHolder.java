@@ -19,4 +19,7 @@ public interface MovesHolder {
     /** Knocked out in battle: until this time (epoch ms) it can't be healed or fight (see Knockout); 0 if not. */
     default long serantis$koUntil() { return 0; }
     default void serantis$setKoUntil(long until) { }
+    /** A status lingering after a battle, "status@until" (epoch ms), or null (see Ailments). */
+    default String serantis$ailment() { return null; }
+    default void serantis$setAilment(String ailment) { }
 }

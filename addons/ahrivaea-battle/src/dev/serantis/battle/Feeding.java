@@ -28,7 +28,7 @@ public final class Feeding {
 
     /** Can a creature take this (food, or a healing or regeneration potion)? */
     public static boolean feedable(ItemStack s) {
-        return !s.isEmpty() && (Healing.foodPercent(s) > 0 || Healing.potion(s) != null);
+        return !s.isEmpty() && (Healing.foodPercent(s) > 0 || Healing.potion(s) != null || Ailments.cure(s));
     }
 
     private static ItemStack slot(ServerPlayer p, int slot) {
@@ -57,6 +57,7 @@ public final class Feeding {
         ItemStack s = slot(p, slot);
         if (!feedable(s)) return;
         if (Battles.of(p) != null) { say(p, "Not in the middle of a battle."); return; }
+        if (Ailments.cure(s) && cure(p, s, partySlot, entity)) return;    // milk or honey: cures a lingering status
         int pct = Healing.foodPercent(s);
         var potion = Healing.potion(s);
         if (pct <= 0 && potion != null) pct = potion.percent();
@@ -93,6 +94,35 @@ public final class Feeding {
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.GENERIC_EAT.value(), SoundSource.PLAYERS, 0.7f, 1.1f);
         say(p, name + " had the " + what + ": +" + (after - before) + " HP (" + after + "/" + max + ")");
         PartySync.sync(p);
+    }
+
+    /** Milk or honey for a creature with a lingering status: cures it. False if there was nothing to cure (honey then feeds it as food). */
+    private static boolean cure(ServerPlayer p, ItemStack s, int partySlot, int entity) {
+        String msg;
+        if (partySlot >= 0) {
+            List<CaughtCreature> party = Party.get(p);
+            if (partySlot >= party.size()) return true;
+            CaughtCreature c = party.get(partySlot);
+            String name = Species.get(c.species()).map(sp -> sp.nameFor(c.influence())).orElse("Your creature");
+            String nick = ((dev.serantis.battle.moves.MovesHolder) (Object) c).serantis$nickname();
+            msg = Ailments.cureCreature(c, nick != null && !nick.isEmpty() ? nick : name);
+            if (msg != null) Party.set(p, partySlot, c);
+        } else {
+            if (!(p.level().getEntity(entity) instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(p)) return true;
+            msg = Ailments.cureCreature(e, e.getDisplayName().getString());
+        }
+        if (msg == null) {
+            if (Healing.foodPercent(s) > 0) return false;
+            say(p, "Nothing to cure: milk and honey cure a status left over from a battle.");
+            return true;
+        }
+        ItemStack left = Healing.remainder(s);
+        s.consume(1, p);
+        Healing.giveBack(p, left);
+        p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.GENERIC_DRINK.value(), SoundSource.PLAYERS, 0.7f, 1.1f);
+        say(p, msg);
+        PartySync.sync(p);
+        return true;
     }
 
     private static void say(ServerPlayer p, String msg) {
