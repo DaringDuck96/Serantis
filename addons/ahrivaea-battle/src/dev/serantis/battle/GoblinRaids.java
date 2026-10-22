@@ -75,6 +75,7 @@ public final class GoblinRaids {
         ServerBossEvent bar;
         int defenders, radius = 12;
         boolean resume;             // the raid battle was interrupted (logged out, crashed): it starts again
+        final Map<Integer, UUID> guards = new java.util.HashMap<>();   // defender unit id -> the real worker at the base
         int tier() { int n = picks.size(); return n <= 4 ? 0 : n <= 6 ? 1 : n <= 8 ? 2 : 3; }
     }
 
@@ -397,6 +398,8 @@ public final class GoblinRaids {
             e.setNoAi(true);
             e.capSize(1.4f);
             u.entity = e.getUUID();
+            Raid r = IN_BATTLE.get(b);
+            if (r != null && w.entity() != null) r.guards.put(u.id, w.entity());
         }
         } finally {
             dev.serantis.battle.mixin.BattlesAccess.serantis$setSpawning(false);
@@ -437,6 +440,7 @@ public final class GoblinRaids {
         FigureVisit.clearWild(b);                         // the raid leader doesn't stay behind
         ServerPlayer p = b.player();
         if (p == null) return;
+        knockOutFallen(p, b, r);
         clear(p);
         if (outcome == Battle.Outcome.WON) {
             p.sendSystemMessage(Component.literal("You fought off the goblin raid! Your base is safe.").withStyle(ChatFormatting.GREEN));
@@ -449,6 +453,27 @@ public final class GoblinRaids {
             try { XpBank.take(p, lose); } finally { Achievements.NOT_GAINED.set(false); }
         }
         p.sendSystemMessage(Component.literal("The goblins overran your base and made off with " + lose + " XP (" + LOSS[r.tier()] + "%).").withStyle(ChatFormatting.RED));
+    }
+
+    /** Defenders that fell in the raid battle: the real workers are knocked out at the base for DEFENDER_KO. */
+    public static final long DEFENDER_KO = 450_000L;                // 7.5 minutes
+
+    private static void knockOutFallen(ServerPlayer p, Battle b, Raid r) {
+        if (r.guards.isEmpty()) return;
+        ServerLevel level = p.level().getServer().getLevel(r.dim);
+        if (level == null) return;
+        List<String> names = new ArrayList<>();
+        for (Unit u : b.units) {
+            UUID id = r.guards.get(u.id);
+            if (id == null || u.hp > 0 || !(level.getEntity(id) instanceof CreatureEntity worker)) continue;
+            if (worker.brain() != null) worker.brain().knockOut();
+            ((dev.serantis.battle.moves.MovesHolder) (Object) worker).serantis$setKoUntil(System.currentTimeMillis() + DEFENDER_KO);
+            worker.setHealth(1f);
+            names.add(worker.getDisplayName().getString());
+        }
+        if (!names.isEmpty())
+            p.sendSystemMessage(Component.literal(String.join(", ", names) + (names.size() == 1 ? " was" : " were")
+                    + " knocked out defending the base, and will rest for 7:30 before working again.").withStyle(ChatFormatting.GRAY));
     }
 
     /** "serantis_raid" in the party state while goblins wait at the player's base. */

@@ -195,6 +195,17 @@ public abstract class WorkerBrainMixin {
         serantis$setAside.clear();
     }
 
+    // Knocked out defending the base (see GoblinRaids.finished): it rests until its time is up (saved on the creature,
+    // so a restart or an unloaded base doesn't cut it short).
+    @Shadow private int restTicks;
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void serantis$raidKnockout(net.minecraft.server.level.ServerLevel level, org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if (self == null || !dev.serantis.battle.Knockout.is(self)) return;
+        long left = dev.serantis.battle.Knockout.secondsLeft(self) * 20;
+        if (restTicks < left) restTicks = (int) Math.min(Integer.MAX_VALUE, left);
+    }
+
     // A worker its base no longer lists (a stale copy after a respawn): it leaves, dropping what it carried.
     // In water or lava it keeps working (FloatGoalMixin lets the brain run) and swims up on its own.
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
