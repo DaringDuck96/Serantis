@@ -77,9 +77,19 @@ public final class BaseLooksClient {
             }
         Biome plains = mc.level == null ? null : biome("plains");
         if (plains != null) alpha = plains.getGrassColor(0, 0) & 0xFF000000;
-        boolean changed = !out.equals(looks);
+        List<Look> before = looks;
         looks = List.copyOf(out);
-        if (changed && mc.level != null) mc.levelRenderer.invalidateCompiledGeometry(mc.level, mc.options, mc.gameRenderer.mainCamera(), mc.getBlockColors());
+        if (mc.level == null) return;
+        // Redraw only the bases whose look changed (and the blended strip around them). The old picture stays on screen
+        // until each piece is redrawn, so nothing flickers or vanishes, and nobody else's view is reloaded.
+        for (Look k : before) if (!out.contains(k)) redraw(mc.level, k);
+        for (Look k : out) if (!before.contains(k)) redraw(mc.level, k);
+    }
+
+    private static void redraw(net.minecraft.client.multiplayer.ClientLevel level, Look k) {
+        int r = k.r() + BLEND + 2;
+        level.setSectionRangeDirty((k.cx() - r) >> 4, level.getMinSectionY(), (k.cz() - r) >> 4,
+                (k.cx() + r) >> 4, level.getMaxSectionY(), (k.cz() + r) >> 4);
     }
 
     private static Look look(BlockPos pos) {
