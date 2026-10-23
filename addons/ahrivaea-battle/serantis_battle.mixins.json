@@ -46,6 +46,7 @@
     "ProjectileBattleMixin",
     "PlayerStabMixin",
     "BedSpawnMixin",
+    "ArenaReturnMixin",
     "BedRememberMixin",
     "EntityRemovedMixin",
     "BasesInvoker",
