@@ -1,5 +1,0 @@
-Compiled from "PlayerList.java"
-class net.minecraft.server.players.PlayerList$2 {
-  static final int[] $SwitchMap$net$minecraft$server$permissions$PermissionLevel;
-  static {};
-}
