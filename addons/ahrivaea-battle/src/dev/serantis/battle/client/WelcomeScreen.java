@@ -64,9 +64,10 @@ public class WelcomeScreen extends Screen {
     public void setParent(Screen parent) { this.parent = parent; }
     private final boolean first;
     private int tab;
-    private static final String[] TABS = {"Welcome", "Your Base", "Recipes"};
+    private static final String[] TABS = {"Welcome", "Your Base", "Recipes", "Enchants"};
     private static final String[] SUBTITLES = {"A world of creatures, towers and masters (and it's still Minecraft)",
-            "How creatures work at your base, and what to expect from them", "Everything you can craft that vanilla Minecraft doesn't have"};
+            "How creatures work at your base, and what to expect from them", "Everything you can craft that vanilla Minecraft doesn't have",
+            "Every enchantment in the game, and what it does in creature battles"};
     private final List<Object[]> lines = new ArrayList<>();      // {text, color, gapBefore}
     private int scroll, contentH, panelW, viewTop, viewBottom;
 
@@ -120,9 +121,10 @@ public class WelcomeScreen extends Screen {
             b.active = i != tab;
             addRenderableWidget(b);
         }
-        for (String[] part : tab == 2 ? new String[0][] : tab == 1 ? BaseGuide.TEXT : GUIDE) {
+        for (String[] part : tab == 2 ? new String[0][] : tab == 3 ? EnchantGuide.TEXT : tab == 1 ? BaseGuide.TEXT : GUIDE) {
             int gap = h == 0 ? 0 : 10;
             if (part[0] != null) { lines.add(new Object[]{part[0], HEAD, gap}); h += gap + 12; gap = 0; }
+            if (part[1] == null) continue;                              // a section heading on its own
             boolean firstLine = true;
             for (String l : wrap(part[1], panelW - 20)) {
                 int g = firstLine ? gap : 0;
@@ -158,7 +160,7 @@ public class WelcomeScreen extends Screen {
         g.pose().pushMatrix();
         g.pose().translate(width / 2f, 10);
         g.pose().scale(1.5f, 1.5f);
-        g.centeredText(font, tab == 2 ? "Recipes" : tab == 1 ? "Your Base and Its Workers" : "Welcome to Serantia!", 0, 0, GOLD);
+        g.centeredText(font, tab == 3 ? "Enchantments" : tab == 2 ? "Recipes" : tab == 1 ? "Your Base and Its Workers" : "Welcome to Serantia!", 0, 0, GOLD);
         g.pose().popMatrix();
         String sub = SUBTITLES[tab];
         if (font.width(sub) <= width - 12) g.centeredText(font, sub, width / 2, 26, DIM);

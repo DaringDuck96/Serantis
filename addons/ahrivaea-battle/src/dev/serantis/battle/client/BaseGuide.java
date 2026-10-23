@@ -8,16 +8,17 @@ final class BaseGuide {
             {null, "Your creatures can live and work at a base. Each one has jobs it's good at (the base screen lists them), "
                     + "and once it's working it just gets on with them, day and night, while you're off adventuring."},
 
-            {"Setting up", "Place a Base Core and it's yours: creatures you put to work there look after the chunk it's in and the chunks "
-                    + "around it, from 8 blocks below the core to 16 above it. Anything outside that band (crops, trees, chests, furnaces) "
-                    + "is invisible to them. The base stays loaded while you're online, wherever you are."},
+            {"Setting up", "Place a Base Core and it's yours: creatures you put to work there look after a round area around it: 56 blocks "
+                    + "out from the core at Level 1, and 16 more for every level after (120 at Level 5). They look after things from 8 "
+                    + "blocks below the core to 16 above it; anything outside that band (crops, trees, chests, furnaces) is invisible to "
+                    + "them. Mining Posts are the exception: they're found at any height. The base stays loaded while you're online, wherever you are."},
             {"Putting creatures to work", "Right-click your core and press Work here on a creature from your party or box. It appears "
                     + "beside the core and starts working. Send away brings it back to your party (or box). Always send your workers away "
                     + "before getting rid of a base: you can't break a core that still has workers, and workers whose base is gone stop "
                     + "working for good."},
             {"Base levels", "Upgrade the core by using blocks on it: 4 Iron Blocks for Level 2, 4 Gold Blocks for Level 3, 2 Diamond "
                     + "Blocks for Level 4 and 4 Emerald Blocks for Level 5. Each level gives more workers (5, 7, 9, 12, then 15) and a "
-                    + "bigger area: 3x3 chunks at Level 1, growing to 11x11 at Level 5. Your skill tree also opens at Level 1."},
+                    + "bigger area (see above). Your skill tree also opens at Level 1."},
 
             {"How a worker decides what to do", "It works through its jobs in order and does the first one that has something to do. "
                     + "Use the arrows on the base screen to reorder its jobs, and switch off any you don't want. It always picks the "
