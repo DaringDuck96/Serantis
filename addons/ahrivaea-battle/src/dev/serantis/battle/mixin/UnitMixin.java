@@ -50,7 +50,9 @@ public abstract class UnitMixin implements UnitAccess {
 
     @Inject(method = "squares", at = @At("HEAD"), cancellable = true)
     private void serantis$squares(CallbackInfoReturnable<Integer> cir) {
-        if (!isPlayer && stats != null) cir.setReturnValue(dev.serantis.battle.Pace.squares(level, stats.speed()));
+        if (stats == null) return;
+        if (!isPlayer) cir.setReturnValue(dev.serantis.battle.Pace.squares(level, stats.speed()));
+        else cir.setReturnValue(stats.squaresPerTurn() + dev.serantis.battle.Pace.EXTRA);   // players get the same extra tiles
     }
     @Unique private UnitState serantis$state;
 
