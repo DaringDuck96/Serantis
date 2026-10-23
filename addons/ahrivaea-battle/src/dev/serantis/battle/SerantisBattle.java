@@ -13,5 +13,6 @@ public final class SerantisBattle implements ModInitializer {
         InfluenceArmor.register();
         TeleportBoots.register();
         Linx.register();
+        BedSpawn.init();
     }
 }

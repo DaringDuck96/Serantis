@@ -45,6 +45,8 @@
     "FloatGoalMixin",
     "ProjectileBattleMixin",
     "PlayerStabMixin",
+    "BedSpawnMixin",
+    "BedRememberMixin",
     "EntityRemovedMixin",
     "BasesInvoker",
     "BaseCoreUpgradeMixin",
