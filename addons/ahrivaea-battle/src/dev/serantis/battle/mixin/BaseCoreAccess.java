@@ -16,4 +16,7 @@ public interface BaseCoreAccess {
 
     @Accessor("growables")
     java.util.Set<BlockPos> serantis$growables();
+
+    @Accessor("miningPosts")
+    java.util.Set<BlockPos> serantis$miningPosts();
 }

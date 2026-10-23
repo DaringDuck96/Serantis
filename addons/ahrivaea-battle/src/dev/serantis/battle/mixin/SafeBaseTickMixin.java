@@ -15,6 +15,8 @@ public abstract class SafeBaseTickMixin {
     private static void serantis$safeTick(Level level, BlockPos pos, BlockState state, BaseCoreBlockEntity be, Operation<Void> original) {
         try {
             original.call(level, pos, state, be);
+            if (level instanceof net.minecraft.server.level.ServerLevel sl && sl.getGameTime() % 100L == 37L)
+                dev.serantis.battle.MiningPosts.find(sl, be);
         } catch (Throwable t) {
             dev.serantis.battle.Safe.caught("ticking the Base Core at " + pos.toShortString(), t);
         }

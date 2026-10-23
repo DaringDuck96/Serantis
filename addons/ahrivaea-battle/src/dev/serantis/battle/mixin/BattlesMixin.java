@@ -74,10 +74,17 @@ public abstract class BattlesMixin {
     @Inject(method = "cleanUp", at = @At("TAIL"))
     private static void serantis$heldEnded(Battle b, CallbackInfo ci) { dev.serantis.battle.BattleHold.ended(b); }
 
+    // Ran away: the creature doesn't stay (see Fled).
+    @Inject(method = "cleanUp", at = @At("TAIL"))
+    private static void serantis$fledGone(Battle b, CallbackInfo ci) {
+        dev.serantis.battle.Safe.run("clearing up after fleeing", () -> dev.serantis.battle.Fled.cleanUp(b));
+    }
+
     @Redirect(method = "goHome", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/Ahrivaea;spawn(Lnet/minecraft/server/level/ServerLevel;Ldev/ahrivaea/creature/Species;Ldev/ahrivaea/creature/Influence;IFDDD)Ldev/ahrivaea/creature/CreatureEntity;", ordinal = 0))
     private static CreatureEntity serantis$noLookAlike(net.minecraft.server.level.ServerLevel level, dev.ahrivaea.creature.Species sp, dev.ahrivaea.creature.Influence inf,
                                                       int lvl, float hp, double x, double y, double z, ServerPlayer p, Battle b) {
         if (dev.serantis.battle.BattleHold.keptFor(b)) return null;      // the real one is still there
+        if (b != null && b.outcome == Battle.Outcome.FLED && !dev.serantis.battle.Fled.stays(sp == null ? null : sp.id())) return null;   // ran away: it's gone
         CreatureEntity back = dev.ahrivaea.Ahrivaea.spawn(level, sp, inf, lvl, hp, x, y, z);
         Unit lead = b == null ? null : ((BattleRaidAccess) (Object) b).serantis$lead();
         if (back != null && lead != null) dev.serantis.battle.Ailments.goneHome(lead, back);   // its leftover status goes with it

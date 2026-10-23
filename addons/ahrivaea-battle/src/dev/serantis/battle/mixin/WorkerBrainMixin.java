@@ -170,7 +170,7 @@ public abstract class WorkerBrainMixin {
             if (plantAt != null) ((BaseCoreAccess) (Object) be).serantis$claimed().remove(plantAt, self.getUUID());
             plantAt = null;
         }
-        if (target != null) serantis$setAsideTarget(level, target);
+        if (target != null && !"MINE".equals(kind)) serantis$setAsideTarget(level, target);   // a quarry digs in order: never skip a block, just try again
         finish(be, wait);
     }
 
