@@ -1,2 +1,3 @@
-# 1792715956
+# 1792716019
 compile fix/bed-respawn
+sig:net.minecraft.world.level.storage.ValueOutput
