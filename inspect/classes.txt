@@ -1,2 +1,3 @@
-# 1792718218
-compile feature/enchant-guide
+# 1792718320
+smoke
+clientsmoke
