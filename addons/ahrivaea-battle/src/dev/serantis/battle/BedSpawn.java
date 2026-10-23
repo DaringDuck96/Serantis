@@ -1,12 +1,9 @@
 package dev.serantis.battle;
 
-import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
-import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -21,24 +18,27 @@ import net.minecraft.world.phys.Vec3;
  * you go to world spawn.
  */
 public final class BedSpawn {
-    public static final AttachmentType<GlobalPos> BED = AttachmentRegistry.create(
-            Identifier.parse("serantis_battle:bed"), b -> b.persistent(GlobalPos.CODEC).copyOnDeath());
+    /** Added to players (mixin/BedRememberMixin): the last respawn point the game set, kept through death and saved. */
+    public interface Holder {
+        GlobalPos serantis$bed();
+        void serantis$setBed(GlobalPos bed);
+    }
 
     private BedSpawn() {}
 
-    public static void init() {}                                        // loads the class: registers the attachment
+    private static GlobalPos get(ServerPlayer p) { return ((Holder) p).serantis$bed(); }
 
     /** The game set this player's respawn point (a bed, an anchor, /spawnpoint): remember it. */
     public static void set(ServerPlayer p, ServerPlayer.RespawnConfig cfg) {
         if (cfg == null || cfg.respawnData() == null) return;          // the game forgetting it doesn't make us forget
-        p.setAttached(BED, cfg.respawnData().globalPos());
+        ((Holder) p).serantis$setBed(cfg.respawnData().globalPos());
     }
 
     /** Just respawned. If the game sent them to world spawn although they had a bed, put them by the bed instead. */
     public static void respawned(ServerPlayer old, ServerPlayer p) {
         if (p.getRespawnConfig() != null) return;                       // the game used their bed: nothing to do
-        GlobalPos bed = p.getAttached(BED);
-        if (bed == null) bed = old.getAttached(BED);
+        GlobalPos bed = get(p);
+        if (bed == null) bed = get(old);
         if (bed == null) return;                                        // never had one: world spawn is right
         ServerLevel level = p.level().getServer().getLevel(bed.dimension());
         if (level == null) return;
@@ -46,7 +46,7 @@ public final class BedSpawn {
         level.getChunk(pos.getX() >> 4, pos.getZ() >> 4);
         var state = level.getBlockState(pos);
         if (!state.is(BlockTags.BEDS) && !state.is(Blocks.RESPAWN_ANCHOR)) {
-            p.removeAttached(BED);
+            ((Holder) p).serantis$setBed(null);
             p.sendSystemMessage(Component.literal("Your bed was gone, so you woke up at the world spawn.").withStyle(ChatFormatting.YELLOW));
             return;
         }
