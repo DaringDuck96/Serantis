@@ -1,5 +1,2 @@
-# 1792715845
-sig:net.minecraft.server.players.PlayerList
-sig:net.minecraft.server.level.ServerPlayer
-sig:net.minecraft.server.level.ServerPlayer$RespawnConfig
-sig:net.minecraft.world.level.storage.LevelData$RespawnData
+# 1792715956
+compile fix/bed-respawn
