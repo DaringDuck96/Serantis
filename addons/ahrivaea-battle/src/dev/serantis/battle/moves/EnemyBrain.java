@@ -142,14 +142,17 @@ public final class EnemyBrain {
 
         // Nothing to do from here: reposition.
         Unit goal = focus != null ? focus : nearest(u, foes);
-        int ideal = "Archer".equals(mind) ? idealRange(u) : "Support".equals(mind) ? 3 : 1;
+        int ideal = "Archer".equals(mind) ? idealRange(u) : "Support".equals(mind) ? 2 : 1;
+        // Closing in: attackers press forward and only use cover and high ground to choose between equally close cells;
+        // archers and supporters still pick their ground carefully.
+        double care = "Archer".equals(mind) || "Support".equals(mind) ? 1.0 : 0.25;
         int bestCell = -1;
         double bestScore = -1e9;
         for (Map.Entry<Integer, Integer> cell : reach.entrySet()) {
             int cx = cell.getKey() % size, cz = cell.getKey() / size;
             if (!b.canStop(u, cx, cz)) continue;
             int d = Body.gap(cx, cz, n, goal.x, goal.z, Body.size(goal));
-            double score = -Math.abs(d - ideal) * 10 + terrain(b, cx, cz, foes, u.flies()) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
+            double score = -Math.abs(d - ideal) * 10 + care * terrain(b, cx, cz, foes, u.flies()) - field.danger(b, u, cell.getKey()) - cell.getValue() * 0.01;
             if ("Support".equals(mind) && !friends.isEmpty()) {
                 Unit ally = nearestOther(u, friends);
                 if (ally != null) score -= Body.gap(cx, cz, n, ally.x, ally.z, Body.size(ally)) * 3;

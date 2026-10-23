@@ -151,6 +151,27 @@ public abstract class BattlesMixin {
         SERANTIS_BIGGEST.set(biggest);
     }
 
+    // Arena battles start with the two sides 8 tiles apart (they used to start at opposite ends, up to 17 tiles and
+    // more apart, and spent the first turns just walking at each other). The arena itself stays as big as before.
+    @Unique private static final int SERANTIS_HALF_GAP = 4;
+
+    @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battle;freeCellNear(IILdev/ahrivaea/battle/Unit$Side;)[I", ordinal = 0))
+    private static int[] serantis$playerCloser(Battle b, int x, int z, Unit.Side side) {
+        return ((BattleRaidAccess) (Object) b).serantis$freeCellNear(x, serantis$closer(b, z, +1), side);
+    }
+
+    @Redirect(method = "start", at = @At(value = "INVOKE", target = "Ldev/ahrivaea/battle/Battle;freeCellNear(IILdev/ahrivaea/battle/Unit$Side;)[I", ordinal = 2))
+    private static int[] serantis$enemyCloser(Battle b, int x, int z, Unit.Side side) {
+        return ((BattleRaidAccess) (Object) b).serantis$freeCellNear(x, serantis$closer(b, z, -1), side);
+    }
+
+    @Unique
+    private static int serantis$closer(Battle b, int z, int towards) {
+        if (((BattleRaidAccess) (Object) b).serantis$arenaSlot() < 0) return z;   // a battle where it started: where they stand
+        int mid = b.grid.size / 2;
+        return towards > 0 ? Math.min(z, mid + SERANTIS_HALF_GAP) : Math.max(z, mid - SERANTIS_HALF_GAP);
+    }
+
     @Inject(method = "arenaField", at = @At("RETURN"), cancellable = true)
     private static void serantis$growArena(Arena.Theme theme, int a, int b, CallbackInfoReturnable<Integer> cir) {
         Integer biggest = SERANTIS_BIGGEST.get();

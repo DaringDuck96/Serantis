@@ -14,6 +14,9 @@ public interface BattleRaidAccess {
     @Invoker("addCreature")
     Unit serantis$addCreature(Unit.Side side, Species species, Influence influence, Variant variant, int level, float health, int partySlot, int x, int z);
 
+    @org.spongepowered.asm.mixin.gen.Accessor("arenaSlot")
+    int serantis$arenaSlot();
+
     @Invoker("freeCellNear")
     int[] serantis$freeCellNear(int x, int z, Unit.Side side);
 
