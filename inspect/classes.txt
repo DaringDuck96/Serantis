@@ -1,2 +1,2 @@
-# 1792718090
-sig:net.minecraft.world.item.enchantment.Enchantments
+# 1792718218
+compile feature/enchant-guide
