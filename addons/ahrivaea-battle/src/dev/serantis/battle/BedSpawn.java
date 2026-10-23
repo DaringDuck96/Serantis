@@ -39,6 +39,8 @@ public final class BedSpawn {
         if (p.getRespawnConfig() != null) return;                       // the game used their bed: nothing to do
         GlobalPos bed = get(p);
         if (bed == null) bed = get(old);
+        if (bed == null && old.getRespawnConfig() != null && old.getRespawnConfig().respawnData() != null)
+            bed = old.getRespawnConfig().respawnData().globalPos();     // a bed set before this was remembered
         if (bed == null) return;                                        // never had one: world spawn is right
         ServerLevel level = p.level().getServer().getLevel(bed.dimension());
         if (level == null) return;
