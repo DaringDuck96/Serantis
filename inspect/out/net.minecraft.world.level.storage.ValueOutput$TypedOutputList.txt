@@ -1,0 +1,5 @@
+Compiled from "ValueOutput.java"
+public interface net.minecraft.world.level.storage.ValueOutput$TypedOutputList<T> {
+  public abstract void add(T);
+  public abstract boolean isEmpty();
+}
